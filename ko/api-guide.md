@@ -1,6 +1,6 @@
-## Compute > API 가이드
+## Compute > Instance > API 가이드
 
-TOAST Compute 서비스에서는 다음 종류의 API를 제공합니다. 
+TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다. 
 
 * Token API
 * 가용성 영역 API
