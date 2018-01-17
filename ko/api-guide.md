@@ -42,7 +42,7 @@ API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
 }
 ```
 
-Response body "header"의 `resultCode`의 의미는 아래와 같이 정의되어 있습니다.
+Response body "header"의 `resultCode`는 아래와 같이 정의되어 있습니다.
 
 | isSuccessful | resultCode | resultMessage | Description |
 | --- | --- | --- | --- |
@@ -198,7 +198,7 @@ X-Auth-Token: {tokenId}
 ##### Response Body
 ```json
 {
-	"header": {
+    "header": {
         "isSuccessful": true,
         "resultCode": 0,
         "resultMessage": "SUCCESS"
@@ -252,7 +252,7 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | O | 조회할 인스턴스 식별자. 기재하지 않을 경우 모든 인스턴스들의 간략 정보를 조회합니다. |
+| instanceId | Query | String | O | 조회할 인스턴스 ID. 기재하지 않을 경우 모든 인스턴스들의 간략 정보를 조회합니다. |
 
 ##### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
@@ -277,7 +277,7 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Instance ID | Body | String | 인스턴스 식별자 |
+| Instance ID | Body | String | 인스턴스 ID |
 | Instance Name | Body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
@@ -292,7 +292,7 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | O | 조회할 인스턴스의 식별자. 생략 시 모든 인스턴스들의 상세 정보를 조회합니다. |
+| instanceId | Query | String | O | 조회할 인스턴스의 ID. 생략 시 모든 인스턴스들의 상세 정보를 조회합니다. |
 
 ##### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
@@ -359,23 +359,23 @@ X-Auth-Token: {tokenId}
 |--|--|--|--|
 | MAC Address | Body | String | NIC의 MAC 주소 |
 | IP Address | Body | String | NIC의 IP 주소 |
-| version | Body | Integer | IP 버전. TOAST에서는 IP v4만 지원 |
+| version | Body | Integer | IP 버전. (IPv4만 지원) |
 | Floating IP Address | Body | String | NIC에 할당된 플로팅 IP 주소 |
-| Zone Name | Body | String | 가용성 영역 |
-| Flavor ID | Body | String | 인스턴스 사양 식별자 |
+| Zone Name | Body | String | 가용성 영역 이름 |
+| Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
 | Flavor CPU | Body | Integer | CPU 개수 |
-| Flavor RAM | Body | Integer | RAM 크기, MB 단위 |
+| Flavor RAM | Body | Integer | RAM 크기 (MB) |
 | Status | Body | String | 인스턴스의 상태 |
 | Instance ID | Body | String | 인스턴스 ID |
 | Instance Name | Body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
 | Image ID | Body | String | 인스턴스에 설치된 이미지 ID |
 | metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터, "key": "value" 형태로 저장 |
 | PEM Key Name | Body | String | 인스턴스에 등록할 키페어 이름 |
-| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기, GB 단위 |
-| Attached Volume ID | Body | String | 추가 블록 스토리지 식별자 |
+| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기 (GB) |
+| Attached Volume ID | Body | String | 추가 블록 스토리지 ID |
 | Attached Volume Name | Body | String | 추가 블록 스토리지 이름 |
-| Attached Volume Size | Body | Integer | 추가 블록 스토리지 크기, GB 단위 |
+| Attached Volume Size | Body | Integer | 추가 블록 스토리지 크기 (GB) |
 | Security Group Name | Body | String | 인스턴스에 등록된 보안 그룹의 이름 |
 | Launched Time | Body | String | 인스턴스 최근 부팅 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Created Time | Body | String | 인스턴스 생성 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
@@ -427,13 +427,13 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
-| Image ID | Body | String | - | 인스턴스에 설치할 이미지 식별자. [Image API](/ko/Compute/Image/ko/api-guide/) 참조 |
-| Flavor ID | Body | String | - | 인스턴스 사양 식별자. 인스턴스 사양 API 참조|
-| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 식별자. 네트워크 API 참조|
-| Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름. 가용성 API 참조 |
-| Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름. 키페어 API 참조|
+| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID. [이미지 API](/ko/Compute/Image/ko/api-guide/) 참조 |
+| Flavor ID | Body | String | - | 인스턴스 사양 ID. |
+| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID. |
+| Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름. |
+| Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름. |
 | Count | Body | Integer | - | 동시 생성할 인스턴스의 개수, 최대 10개로 제한 |
-| Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [개요](./overview)를 참조. |
+| Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](./console-guide)를 참조. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
 ##### Response Body
@@ -454,7 +454,7 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Description |
 |--|--|--|--|
-| Instance ID | body | String |생성된 인스턴스 식별자 |
+| Instance ID | body | String |생성된 인스턴스 ID |
 | Instance Name | body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
@@ -469,7 +469,7 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | - | 삭제할 인스턴스 식별자 |
+| instanceId | Query | String | - | 삭제할 인스턴스 ID |
 
 #### 블록 스토리지 연결
 인스턴스에 블록 스토리지를 연결합니다.
@@ -497,7 +497,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 식별자. |
+| Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 ID. |
 
 ##### Response Body
 
@@ -519,8 +519,8 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Device ID | body | String | 인스턴스에 등록된 장치 이름, 예) "/dev/vdc" |
-| Attachement ID | body | String | Attachment 식별자 |
-| Volume ID | body | String | 블록 스토리지 식별자, 연결 해제 시 필요 |
+| Attachement ID | body | String | Attachment ID |
+| Volume ID | body | String | 블록 스토리지 ID, 연결 해제 시 필요 |
 
 #### 블록 스토리지 연결 해제
 인스턴스에 연결되어 있는 블록 스토리지 연결을 해제합니다.
@@ -534,8 +534,8 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | 인스턴스 식별자 |
-| volumeId | Path | String | - | 블록 스토리지 식별자 |
+| instanceId | Path | String | - | 인스턴스 ID |
+| volumeId | Path | String | - | 블록 스토리지 ID |
 
 ##### Request body
 이 Request는 Body를 필요로 하지 않습니다.
@@ -573,12 +573,12 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | Action을 수행할 인스턴스 식별자 |
+| instanceId | Path | String | - | Action을 수행할 인스턴스 ID |
 
 ##### Request Body Template
 ```json
 {
-	"action": "Action Name",
+    "action": "Action Name",
     "parameters" : {
     	"key": "value"
     }
@@ -587,7 +587,7 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | Action Name | Body | String | - | 인스턴스에서 실행할 Action명 |
-| parameters | Body | Object| O | Action 수행에 필요한 파라미터. Action에 따라 필요한 값을 기재하거나 없을 수 있습니다. |
+| parameters | Body | Object| O | Action 수행에 필요한 파라미터. Action에 따라 필요한 값을 기재합니다. 일부 action은 파라미터 없이 동작합니다. |
 
 #### 인스턴스 시작
 정지(STOP) 상태의 인스턴스를 시작합니다.
@@ -631,16 +631,16 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 #### 인스턴스 리부팅
-인스턴스를 리부팅합니다. 다음과 같은 리부팅 방식을 지정할 수 있습니다.
+인스턴스를 리부팅합니다. 아래와 같은 리부팅 방식을 지정할 수 있습니다.
 
- - SOFT - Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
- - HARD - 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
+ - `SOFT`: Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
+ - `HARD`: 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
 
 ##### Request Body
 
 ```json
 {
-	"action" : "reboot",
+    "action" : "reboot",
     "parameters":{
         "type":"{Reboot Type}"
     }
@@ -649,7 +649,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Reboot Type | body | String | - | Reboot 타입. "HARD" or "SOFT" |
+| Reboot Type | body | String | - | Reboot 타입. `HARD` or `SOFT` |
 
 ##### Response Body
 ```json
@@ -667,7 +667,7 @@ Content-Type: application/json;charset=UTF-8
 ##### Request Body
 ```json
 {
-	"action": "resize",
+    "action": "resize",
     "parameters":{
         "flavor":"{Flavor ID}"
     }
@@ -676,7 +676,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 변경할 인스턴스 사양 식별자. 인스턴스 사양 API 참조 |
+|  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID. |
 
 ##### Response Body
 ```json
@@ -722,7 +722,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Created Image ID | body | String | 생성된 이미지 식별자 |
+| Created Image ID | body | String | 생성된 이미지 ID |
 | Created Image Name | body | String | 생성된 이미지 이름 |
 
 #### 플로팅 IP 연결
@@ -763,7 +763,7 @@ Content-Type: application/json;charset=UTF-8
 
 ```json
 {
-	"action": "removeFloatingIp",
+    "action": "removeFloatingIp",
     "parameters" : {
         "address": "{Floating IP Address}"
     }
@@ -792,7 +792,7 @@ Content-Type: application/json;charset=UTF-8
 ##### Request Body
 ```json
 {
-	"action": "addSecurityGroup",
+    "action": "addSecurityGroup",
     "parameters": {
         "name": "{Security Group Name}"
     }
@@ -815,13 +815,13 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 보안 그룹 해제
+#### 보안 그룹 제거
 인스턴스에 등록되어 있는 보안 그룹을 제거합니다.
 
 ##### Request Body
 ```json
 {
-	"action": "removeSecurityGroup",
+    "action": "removeSecurityGroup",
     "parameters": {
         "name": "{Security Group Name}"
     }
@@ -863,7 +863,7 @@ X-Auth-Token: {tokenID}
 ##### Response Body
 ```json
 {
-	"header": {
+    "header": {
         "isSuccessful": true,
         "resultCode": 0,
         "resultMessage": "SUCCESS"
@@ -892,7 +892,7 @@ X-Auth-Token: {tokenID}
 | Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값. "general, "compute", "memory" |
 | Min Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최소 디스크 크기. GB |
 | Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기. GB |
-| Flavor ID | Body | String | 인스턴스 사양 식별자 |
+| Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
 | Is Public | Body | Boolean | 공용 인스턴스 사양 여부 |
 | RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량. MB |
@@ -939,7 +939,7 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Keypair Name | Body | String | 키페어 이름 |
-| Public Key Value | Body | String | 키페어의 Public Key 값 |
+| Public Key Value | Body | String | 키페어의 공개키 값 |
 | Fingerprint Value | Body | String | Fingerprint 값 |
 | Created At | Body | DateTime | 키페어 생성 시간. "Keypair Name"을 지정한 단건 조회 시에만 노출됩니다. |
 
