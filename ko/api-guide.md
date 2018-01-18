@@ -4,6 +4,7 @@ TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다
 
 * 가용성 영역 API
 * 인스턴스 API
+* 인스턴스 추가기능 API
 * 인스턴스 사양 API
 * 키페어 API
 
@@ -12,12 +13,12 @@ TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다
 
 인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/ko/Infrastructure%20Common/ko/api-common/)를 참조합니다.
 
-## 가용성 영역 (AZ, Availability Zone)
-### 가용성 영역 API
-#### 가용성 영역 조회
+## 가용성 영역 API
+
+### 가용성 영역 조회
 인스턴스, 블록 스토리지를 생성할 수 있는 AZ 정보를 조회합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/availability-zones
 X-Auth-Token: {tokenId}
@@ -27,10 +28,10 @@ X-Auth-Token: {tokenId}
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
 
-##### Request Body
+#### Request Body
 이 API는 request body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -54,11 +55,10 @@ X-Auth-Token: {tokenId}
 | Zone Name | Body | String | AZ 이름 |
 | Available | Body | Boolean | AZ 가용 여부 |
 
-## 인스턴스
-### 인스턴스 API
+## 인스턴스 API
 인스턴스 생성, 삭제, 정보 조회 및 블록 스토리지 연결관리 기능을 제공합니다.
 
-#### 인스턴스 상태
+### 인스턴스 상태
 인스턴스는 생성, 변경, 삭제, 운영 중 다음과 같은 상태를 갖습니다.
 ![[그림 1] 인스턴스 Status Diagram](http://static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
 
@@ -76,9 +76,9 @@ X-Auth-Token: {tokenId}
 | DELETING | 인스턴스 삭제 중 |
 | ERROR | 오류 상태 |
 
-#### 인스턴스 정보 간략 조회
+### 인스턴스 정보 간략 조회
 생성되어 있는 인스턴스의 간략한 정보를 조회합니다.
-##### Method, URL
+#### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/instances?id={instanceId}
 X-Auth-Token: {tokenId}
@@ -89,10 +89,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | instanceId | Query | String | O | 조회할 인스턴스 ID. 기재하지 않을 경우 모든 인스턴스들의 간략 정보를 조회합니다. |
 
-##### Request Body
+#### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -116,9 +116,9 @@ X-Auth-Token: {tokenId}
 | Instance Name | Body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
-#### 인스턴스 상세 조회
+### 인스턴스 상세 조회
 인스턴스의 상세한 정보를 조회합니다.
-##### Method, URL
+#### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/instances-detail?id={instanceId}
 X-Auth-Token: {tokenId}
@@ -129,10 +129,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | instanceId | Query | String | O | 조회할 인스턴스의 ID. 생략 시 모든 인스턴스들의 상세 정보를 조회합니다. |
 
-##### Request Body
+#### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -216,10 +216,10 @@ X-Auth-Token: {tokenId}
 | Created Time | Body | String | 인스턴스 생성 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Updated Time | Body | String | 인스턴스 수정 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 
-#### 인스턴스 생성
+### 인스턴스 생성
 새로운 인스턴스를 생성합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances
 X-Auth-Token: {tokenId}
@@ -230,7 +230,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
 
-##### Request Body
+#### Request Body
 ```json
 {
     "instance": {
@@ -271,7 +271,7 @@ Content-Type: application/json;charset=UTF-8
 | Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](./console-guide)를 참조. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -293,9 +293,9 @@ Content-Type: application/json;charset=UTF-8
 | Instance Name | body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
-#### 인스턴스 삭제
+### 인스턴스 삭제
 특정 인스턴스를 삭제합니다.
-##### Method, URL
+#### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/instances?id={instanceId}
 X-Auth-Token: {tokenId}
@@ -306,10 +306,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | instanceId | Query | String | - | 삭제할 인스턴스 ID |
 
-#### 블록 스토리지 연결
+### 블록 스토리지 연결
 인스턴스에 블록 스토리지를 연결합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/attachments
 X-Auth-Token: {tokenId}
@@ -321,7 +321,7 @@ Content-Type: application/json;charset=UTF-8
 | tokenId | Header | String | - | 토큰 ID |
 | instanceId | Path | String | - | 블록 스토리지를 연결할 인스턴스 ID |
 
-##### Request Body
+#### Request Body
 ```json
 {
     "attachment":{
@@ -334,7 +334,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 ID. |
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -357,10 +357,10 @@ Content-Type: application/json;charset=UTF-8
 | Attachement ID | body | String | Attachment ID |
 | Volume ID | body | String | 블록 스토리지 ID, 연결 해제 시 필요 |
 
-#### 블록 스토리지 연결 해제
+### 블록 스토리지 연결 해제
 인스턴스에 연결되어 있는 블록 스토리지 연결을 해제합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/instances/{instanceId}/attachments?volumeId={volumeId}
 X-Auth-Token: {tokenId}
@@ -372,10 +372,10 @@ X-Auth-Token: {tokenId}
 | instanceId | Path | String | - | 인스턴스 ID |
 | volumeId | Path | String | - | 블록 스토리지 ID |
 
-##### Request body
+#### Request body
 이 Request는 Body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -387,7 +387,7 @@ X-Auth-Token: {tokenId}
 }
 ```
 
-### 인스턴스 추가기능 API
+## 인스턴스 추가기능 API
 다음과 같은 인스턴스 제어 및 부가기능을 제공합니다.
 
 - 인스턴스 시작/정지/재시작
@@ -396,9 +396,9 @@ X-Auth-Token: {tokenId}
 - 플로팅 IP 연결/해제
 - 보안 그룹 등록/해제
 
-#### 공통
+### 공통
 모든 인스턴스 Action API는 동일한 Method, URL로 호출하며, Request Body로 각 Action을 구분합니다.
-##### Method, URL
+#### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/action
 X-Auth-Token: {tokenId}
@@ -410,7 +410,7 @@ Content-Type: application/json;charset=UTF-8
 | tokenId | Header | String| - | 토큰 ID |
 | instanceId | Path | String | - | Action을 수행할 인스턴스 ID |
 
-##### Request Body Template
+#### Request Body Template
 ```json
 {
     "action": "Action Name",
@@ -424,16 +424,16 @@ Content-Type: application/json;charset=UTF-8
 | Action Name | Body | String | - | 인스턴스에서 실행할 Action명 |
 | parameters | Body | Object| O | Action 수행에 필요한 파라미터. Action에 따라 필요한 값을 기재합니다. 일부 action은 파라미터 없이 동작합니다. |
 
-#### 인스턴스 시작
+### 인스턴스 시작
 정지(STOP) 상태의 인스턴스를 시작합니다.
-##### Request Body
+#### Request Body
 ```json
 {
     "action" : "start"
 }
 ```
 
-##### Response Body 
+#### Response Body 
 ```json
 {
     "header": {
@@ -444,16 +444,16 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 인스턴스 정지
+### 인스턴스 정지
 동작중(ACTIVE) 또는 오류(ERROR) 상태의 인스턴스를 정지합니다.
-##### Request Body
+#### Request Body
 ```json
 {
     "action" : "stop"
 }
 ```
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -465,13 +465,13 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 인스턴스 리부팅
+### 인스턴스 리부팅
 인스턴스를 리부팅합니다. 아래와 같은 리부팅 방식을 지정할 수 있습니다.
 
  - `SOFT`: Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
  - `HARD`: 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
 
-##### Request Body
+#### Request Body
 
 ```json
 {
@@ -486,7 +486,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Reboot Type | body | String | - | Reboot 타입. `HARD` or `SOFT` |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -497,9 +497,9 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 인스턴스 사양 변경
+### 인스턴스 사양 변경
 인스턴스의 사양을 변경합니다.
-##### Request Body
+#### Request Body
 ```json
 {
     "action": "resize",
@@ -513,7 +513,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 |  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID. |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -524,9 +524,9 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 이미지 생성
+### 이미지 생성
 지정한 인스턴스로 부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/ko/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
-##### Request Body
+#### Request Body
 ```json
 {
     "action" : "uploadImage",
@@ -540,7 +540,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | ImageName | body | String | - | 생성할 이미지 이름 |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -560,10 +560,10 @@ Content-Type: application/json;charset=UTF-8
 | Created Image ID | body | String | 생성된 이미지 ID |
 | Created Image Name | body | String | 생성된 이미지 이름 |
 
-#### 플로팅 IP 연결
+### 플로팅 IP 연결
 플로팅 IP를 인스턴스에 연결합니다.
 
-##### Request Body
+#### Request Body
 ```json
 {
     "action": "addFloatingIp",
@@ -579,7 +579,7 @@ Content-Type: application/json;charset=UTF-8
 | Floating IP Address | body | String | - | 인스턴스에 연결할 플로팅 IP 주소 |
 | IP Address of the instance | body | String | - | 플로팅 IP를 연결할 인스턴스의 IP 주소 |
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -591,10 +591,10 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 플로팅 IP 연결 해제
+### 플로팅 IP 연결 해제
 인스턴스에 연결되어 있는 플로팅 IP를 연결 해제합니다.
 
-##### Request Body
+#### Request Body
 
 ```json
 {
@@ -609,7 +609,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Floating IP Address | body | String | - | 연결을 해제할 플로팅 IP 주소 |
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -621,10 +621,10 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 보안 그룹 등록
+### 보안 그룹 등록
 인스턴스에 보안 그룹을 추가 등록합니다.
 
-##### Request Body
+#### Request Body
 ```json
 {
     "action": "addSecurityGroup",
@@ -638,7 +638,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Security Group Name | body | String | - | 인스턴스에 추가할 보안 그룹 이름 |
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -650,10 +650,10 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### 보안 그룹 제거
+### 보안 그룹 제거
 인스턴스에 등록되어 있는 보안 그룹을 제거합니다.
 
-##### Request Body
+#### Request Body
 ```json
 {
     "action": "removeSecurityGroup",
@@ -667,7 +667,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Security Group Name | body | String | - | 인스턴스에서 제거할 보안 그룹 이름 |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -678,11 +678,11 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 인스턴스 사양 API
-#### 인스턴스 사양 목록 조회
+## 인스턴스 사양 API
+### 인스턴스 사양 목록 조회
 인스턴스 사양의 목록 및 상세 정보를 조회합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/flavors
 X-Auth-Token: {tokenID}
@@ -692,10 +692,10 @@ X-Auth-Token: {tokenID}
 |--|--|--|--|--|
 | tokenId | Header | String| - | 토큰 ID |
 
-##### Request Body
+#### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -733,11 +733,11 @@ X-Auth-Token: {tokenID}
 | RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량. MB |
 | VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수 |
 
-### 키페어 API
+## 키페어 API
 인스턴스 접근에 필요한 키페어에 대한 생성, 삭제, 조회 기능을 제공합니다.
-#### 키페어 조회
+### 키페어 조회
 키페어를 조회합니다.
-##### Method, URL
+#### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/keypairs?name={keypairName}
 X-Auth-Token: {tokenId}
@@ -748,10 +748,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - |토큰 ID |
 | keypairName | Query | String | O | 조회할 키페어 이름. 기재하지 않을 경우 모든 키페어 정보를 조회합니다. |
 
-##### Request Body
+#### Request Body
 이 API는 request body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -774,14 +774,14 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Keypair Name | Body | String | 키페어 이름 |
-| Public Key Value | Body | String | 키페어의 공개키 값 |
+| Public Key Value | Body | String | 키페어의 공개 키 값 |
 | Fingerprint Value | Body | String | Fingerprint 값 |
 | Created At | Body | DateTime | 키페어 생성 시간. "Keypair Name"을 지정한 단건 조회 시에만 노출됩니다. |
 
-#### 키페어 생성과 업로드
+### 키페어 생성과 업로드
 키페어를 생성하거나 사용자가 생성한 키페어를 업로드 합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/keypairs
 X-Auth-Token: {tokenId}
@@ -792,7 +792,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
 
-##### Request Body
+#### Request Body
 
 ```json
 {
@@ -806,9 +806,9 @@ Content-Type: application/json;charset=UTF-8
 | Name | In | Type | Optional | Description |
 | --- | --- | --- | --- | --- |
 | Keypair Name | Body | String | - | 키페어 이름 |
-| Public Key Value | Body | String | O | 업로드할 공개키. 생략 시 새로운 키페어가 만들어지며, 만들어진 키페어의 개인키가 Response로 전달됩니다. |
+| Public Key Value | Body | String | O | 업로드할 공개 키. 생략 시 새로운 키페어가 만들어지며, 만들어진 키페어의 개인 키가 Response로 전달됩니다. |
 
-##### Response Body
+#### Response Body
 
 ```json
 {
@@ -829,13 +829,13 @@ Content-Type: application/json;charset=UTF-8
 | Name | In | Type | Description |
 | --- | --- | --- | --- |
 | Keypair Name | Body | String | 키페어 이름 |
-| Public Key Value | Body | String | 키페어의 공개키 |
-| Private Key Value | Body | String | 키페어의 개인키. 키페어 업로드인 경우 생략됩니다. |
+| Public Key Value | Body | String | 키페어의 공개 키 |
+| Private Key Value | Body | String | 키페어의 개인 키. 키페어 업로드인 경우 생략됩니다. |
 | Fingerprint value | Body | String | Fingerprint 값 |
 
-#### 키페어 삭제
+### 키페어 삭제
 지정한 키페어를 삭제합니다.
-##### Method, URL
+#### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/keypairs?name={keypairName}
 X-Auth-Token: {tokenId}
@@ -846,10 +846,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | keypairName | Query | String | - | 삭제할 키페어 이름 |
 
-##### Request Body
+#### Request Body
 이 API는 Request Body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
