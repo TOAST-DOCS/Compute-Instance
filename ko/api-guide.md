@@ -11,7 +11,7 @@ TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다
 
 ## 사전 준비
 
-인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/Infrastructure%20Common/ko/api-common/)를 참조합니다.
+인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비 가이드](/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
 
 ## 가용성 영역 API
 
