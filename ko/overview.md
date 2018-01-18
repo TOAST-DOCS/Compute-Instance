@@ -91,15 +91,15 @@ TOAST는 물리 하드웨어 문제로 생기는 장애를 대비하기 위해 �
 
 맥이나 리눅스에는 보통 ssh 클라이언트가 기본적으로 설치되어 있습니다. ssh 클라이언트에서 아래와 같이 키페어의 개인 키를 이용하여 접속합니다.
 
-**CentOS**의 경우, 기본 사용자 ID는 `root`이므로, 
+CentOS 인스턴스는
 
 	$ ssh -i my_private_key.pem root@<인스턴스의 IP>
 
-로 접속합니다. **Ubuntu**의 기본 사용자 ID는 `ubuntu`이며,
+Ubuntu 인스턴스는
 
 	$ ssh -i my_private_key.pem ubuntu@<인스턴스의 IP>
 
-로 접속합니다. **Debian**의 기본 사용자 ID는 `debian`이며,
+Debian 인스턴스는
 
 	$ ssh -i my_private_key.pem debian@<인스턴스의 IP>
 
