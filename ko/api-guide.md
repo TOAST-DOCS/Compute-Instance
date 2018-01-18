@@ -422,7 +422,7 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | Action Name | Body | String | - | 인스턴스에서 실행할 추가기능 |
-| parameters | Body | Object| O | 추가기능 수행에 필요한 파라미터. 추가기능에 따라 필요한 값을 기재합니다. 일부 action은 파라미터 없이 동작합니다. |
+| parameters | Body | Object| O | 추가기능 수행에 필요한 파라미터. 추가기능에 따라 필요한 값을 기재합니다. 일부 추가기능은 파라미터 없이 동작합니다. |
 
 ### 인스턴스 시작
 정지(STOP) 상태의 인스턴스를 시작합니다.
@@ -525,7 +525,7 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ### 이미지 생성
-지정한 인스턴스로 부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/ko/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
+지정한 인스턴스로 부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
 #### Request Body
 ```json
 {
