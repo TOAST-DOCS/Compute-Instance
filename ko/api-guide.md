@@ -2,16 +2,16 @@
 
 TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다. 
 
-* 가용성 영역 API
-* 인스턴스 API
-* 인스턴스 추가기능 API
-* 인스턴스 사양 API
-* 키페어 API
+* [가용성 영역 API](#api)
+* [인스턴스 API](#api_1)
+* [인스턴스 추가기능 API](#api_2)
+* [인스턴스 사양 API](#api_3)
+* [키페어 API](#api_4)
 
 
 ## 사전 준비
 
-인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/ko/Infrastructure%20Common/ko/api-common/)를 참조합니다.
+인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/Infrastructure%20Common/ko/api-common/)를 참조합니다.
 
 ## 가용성 영역 API
 
@@ -262,13 +262,13 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
-| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID. [이미지 API](/ko/Compute/Image/ko/api-guide/) 참조 |
+| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID. |
 | Flavor ID | Body | String | - | 인스턴스 사양 ID. |
 | Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID. |
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름. |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름. |
 | Count | Body | Integer | - | 동시 생성할 인스턴스의 개수, 최대 10개로 제한 |
-| Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](./console-guide)를 참조. |
+| Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
 #### Response Body
@@ -397,7 +397,7 @@ X-Auth-Token: {tokenId}
 - 보안 그룹 등록/해제
 
 ### 공통
-모든 인스턴스 Action API는 동일한 Method, URL로 호출하며, Request Body로 각 Action을 구분합니다.
+모든 인스턴스 추가기능 API는 동일한 Method, URL로 호출하며, Request Body로 각 추가기능을 구분합니다.
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/action
@@ -408,7 +408,7 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | Action을 수행할 인스턴스 ID |
+| instanceId | Path | String | - | 추가기능을 수행할 인스턴스 ID |
 
 #### Request Body Template
 ```json
@@ -421,8 +421,8 @@ Content-Type: application/json;charset=UTF-8
 ```
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Action Name | Body | String | - | 인스턴스에서 실행할 Action명 |
-| parameters | Body | Object| O | Action 수행에 필요한 파라미터. Action에 따라 필요한 값을 기재합니다. 일부 action은 파라미터 없이 동작합니다. |
+| Action Name | Body | String | - | 인스턴스에서 실행할 추가기능 |
+| parameters | Body | Object| O | 추가기능 수행에 필요한 파라미터. 추가기능에 따라 필요한 값을 기재합니다. 일부 action은 파라미터 없이 동작합니다. |
 
 ### 인스턴스 시작
 정지(STOP) 상태의 인스턴스를 시작합니다.
@@ -468,8 +468,8 @@ Content-Type: application/json;charset=UTF-8
 ### 인스턴스 리부팅
 인스턴스를 리부팅합니다. 아래와 같은 리부팅 방식을 지정할 수 있습니다.
 
- - `SOFT`: Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
- - `HARD`: 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
+- **SOFT**: Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
+- **HARD**: 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
 
 #### Request Body
 
@@ -484,7 +484,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Reboot Type | body | String | - | Reboot 타입. `HARD` or `SOFT` |
+| Reboot Type | body | String | - | 리부팅 방식. `HARD` 또는 `SOFT` |
 
 #### Response Body
 ```json
@@ -723,14 +723,14 @@ X-Auth-Token: {tokenID}
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부 |
-| Ephermeral | Body | Integer | 임시 디스크 사이즈, GB |
-| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값. "general, "compute", "memory" |
-| Min Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최소 디스크 크기. GB |
-| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기. GB |
+| Ephermeral | Body | Integer | 임시 디스크 사이즈 (GB) |
+| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값<br>"general, "compute", "memory" 중의 하나 |
+| Min Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최소 디스크 크기 (GB) |
+| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기 (GB) |
 | Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
 | Is Public | Body | Boolean | 공용 인스턴스 사양 여부 |
-| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량. MB |
+| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량 (MB) |
 | VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수 |
 
 ## 키페어 API
@@ -779,7 +779,7 @@ X-Auth-Token: {tokenId}
 | Created At | Body | DateTime | 키페어 생성 시간. "Keypair Name"을 지정한 단건 조회 시에만 노출됩니다. |
 
 ### 키페어 생성과 업로드
-키페어를 생성하거나 사용자가 생성한 키페어를 업로드 합니다.
+키페어를 생성하거나 사용자가 직접 생성한 키페어를 업로드 합니다.
 
 #### Method, URL
 ```
