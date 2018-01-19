@@ -2,33 +2,33 @@
 
 TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다. 
 
-* [가용성 영역 API](#api_1)
-* [인스턴스 API](#api_2)
-* [인스턴스 추가기능 API](#api_3)
-* [인스턴스 사양 API](#api_4)
-* [키페어 API](#api_5)
+* [가용성 영역 API](#api_2)
+* [인스턴스 API](#api_3)
+* [인스턴스 추가기능 API](#api_4)
+* [인스턴스 사양 API](#api_5)
+* [키페어 API](#api_6)
 
 
 ## 사전 준비
 
-인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다.
+인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
 
 ### API Endpoint URL
 
-모든 TOAST 인스턴스, 네트워크, 블록 스토리지 API는 다음 URL을 접두사로 사용하여야 합니다.
+모든 인스턴스, 이미지, 네트워크(VPC), 블록 스토리지 API는 다음 URL을 접두사로 사용하여야 합니다.
 
 	https://api-compute.cloud.toast.com/compute
 
-API 요청을 할 때에는 항상 앱키를 포함하여 요청하여야 합니다. 앱키는 아래와 같이 발급 받을 수 있습니다.
+API 요청을 할 때에는 항상 앱키를 포함하여 요청해야 합니다. 앱키는 아래와 같이 발급 받을 수 있습니다.
 
-* TOAST 콘솔 Compute 페이지의 상단 [URL & Appkey] 클릭
-* 대화창에 기재된 [Appkey] 값 복사 후 사용
+1. TOAST 콘솔 Compute 페이지의 상단 [URL & Appkey] 클릭
+2. 대화창에 기재된 [Appkey] 값 복사 후 사용
 
 예를 들어, 토큰 발급 URL은 다음과 같습니다.
 
 	POST https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/tokens
 
-인스턴스, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기 하기 위하여 API URL 접두사를 생략하였습니다.
+인스턴스, 이미지, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기 하기 위하여 API URL 접두사를 생략하였습니다.
 
 ### API Response
 
@@ -38,8 +38,7 @@ API 요청을 할 때에는 항상 앱키를 포함하여 요청하여야 합니
 
 #### Response Body
 
-Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이를 통해 자세한 응답 결과를 확인할 수 있습니다.
-API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
+Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이를 통해 자세한 응답 결과를 확인할 수 있습니다. API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
 
 ```json
 {
@@ -51,12 +50,11 @@ API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
 }
 ```
 
-API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 
-자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참조합니다.
+API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참조합니다.
 
 ### 토큰 API
 
-**토큰**은 API 사용을 위해 필수 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
+토큰은 API 사용을 위해 필수 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
 
 #### API 보안 설정
 
