@@ -21,7 +21,7 @@
 
 > [참고] VPC의 자원들은 모든 가용성 영역에서 사용할 수 있습니다.
 
-가용성 영역에 대한 자세한 설명은 [Instance 개요의 가용성 영역](/Compute/Instance/ko/overview/#_4)를 참조합니다.
+가용성 영역에 대한 자세한 설명은 [Instance 개요의 가용성 영역](/Compute/Instance/ko/overview/#_4)을 참조합니다.
 
 ### 사양
 
