@@ -435,13 +435,13 @@ Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니
 
 ### HCL 문법
 
-* **주석**
+* **주석**  
 `#`, `//`, `/* */`을 사용할 수 있습니다.
 
-* **값 할당**
+* **값 할당**  
 `key = value` 형태를 사용합니다. 값은 문자열, 숫자, 불리언, 리스트, 맵을 모두 사용할 수 있습니다.
 
-* **문자열**
+* **문자열**  
 큰따옴표를 사용합니다. 여러 줄의 문자열을 사용할 때는 [유닉스 셸의 Here document](https://en.wikipedia.org/wiki/Here_document) 형식으로 `<<EOF`, `EOF` 사이에 문자열을 넣어야 합니다.
 
 ```
@@ -452,7 +452,7 @@ description = <<EOF
 EOF
 ```
 
-* **자원**
+* **자원**  
 자원을 선언할 때는 `resource` 키워드를 사용하며 공급자에 따라 Terraform이 정의해 둔 자원 유형을 명시해야 합니다.
 
 ```
@@ -461,7 +461,7 @@ resource "openstack_compute_instance_v2" "web" {
 }
 ```
 
-* **공급자**
+* **공급자**  
 공급자를 선언할 때는 `provider` 키워드를 사용합니다. 자원을 선언할 때 명시한 자원 유형의 접두사가 공급자 유형입니다.
 
     * **openstack_compute_instance_v2**
@@ -480,7 +480,7 @@ resource "openstack_compute_instance_v2" "web" {
     }
     ```
 
-* **데이터 소스**
+* **데이터 소스**  
 공급자로부터 가져올 데이터를 데이터 소스라고 합니다. `data` 키워드를 사용하며, 유형(type)과 이름(name)으로 구성합니다.
 
 ```
@@ -489,7 +489,7 @@ data "type" "name" {
 }
 ```
 
-* **변수**
+* **변수**  
 변수를 선언할 때는 `variable` 키워드를 사용합니다. 형식을 추론하기 때문에 정의하지 않아도 무방합니다.
 
 ```
@@ -502,7 +502,7 @@ variable "name" {
 }
 ```
 
-* **모듈**
+* **모듈**  
 `module` 키워드를 사용하면 기존에 정의한 리소스 그룹을 모듈로 가져와 사용할 수 있습니다. GitHub, Bitbucket 등을 지원합니다.
 
 ```
