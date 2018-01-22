@@ -1,4 +1,4 @@
-## Compute > Instance > Terraform 사용 가이드
+## Compute > Instance > 서드파티 사용 가이드 > Terraform 사용 가이드
 
 이 문서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
 
@@ -517,4 +517,4 @@ module "name" {
 ```
 
 ## References
-Terraform Documentation - https://www.terraform.io/docs/providers/index.html
+Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
