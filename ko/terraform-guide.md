@@ -118,7 +118,7 @@ provider "openstack" {
 
 * **password**
     * password는 **API 보안 설정** 메뉴에서 설정할 수 있습니다.
-    * [API 준비 가이드의 토큰 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-common-guide/#api) 항목을 참조하십시오.
+    * API 준비 가이드의 [토큰 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-common-guide/#api) 항목을 참조하십시오.
 
 * **auth_url**
     * auth_url은 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
