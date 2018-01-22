@@ -38,7 +38,7 @@ Your version of Terraform is out of date! The latest version
 is 0.11.1. You can update by downloading from www.terraform.io
 ```
 
-> [참조]  
+> [참고]
 > 이 예시에서는 `export` 명령을 이용해 경로를 설정했기 때문에 터미널을 닫으면 설정한 경로가 사라집니다.
 > `.bashrc` 또는 `.bash_profile`과 같은 사용자 프로파일에서 경로를 설정하도록 하면 항구적으로 사용할 수 있습니다.
 
@@ -86,7 +86,7 @@ All other commands:
 
 TOAST 환경에서 TerraForm을 이용하여 인스턴스를 생성, 추가, 변경, 삭제하는 방법에 대해 예시와 함께 알아보겠습니다.
 
-> [참고]  
+> [참고]
 > 아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하시기 바랍니다.
 
 ### Terraform 초기화
@@ -124,7 +124,7 @@ provider "openstack" {
     * auth_url은 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 
 * **region**
-    * 보통은 **RegionOne**을 사용합니다. 그러나 정확한 내용은 다를 수 있으니 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
+    * 보통은 **RegionOne**을 사용합니다. 정확한 내용은 다를 수 있으니 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
@@ -212,15 +212,15 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * uuid
         * TOAST 콘솔의 **_Compute > Images_** 메뉴에서 사용할 이미지를 선택하면 하단 상세정보 화면에서 정보를 확인할 수 있습니다.
     * source_type
-        * 이미지를 이용해 인스턴스를 생성한다면 source_type은 `image`입니다.
+        * 이미지를 이용해 인스턴스를 생성한다면 source_type은 **image**입니다.
     * destination_type
-        * 블록 디바이스를 인스턴스의 디스크로 사용한다면 destination_type은 `volume`입니다.
+        * 블록 디바이스를 인스턴스의 디스크로 사용한다면 destination_type은 **volume**입니다.
     * boot_index
-        * 블록 디바이스를 인스턴스의 부트 디스크로 사용한다면 boot index는 `0`입니다.
+        * 블록 디바이스를 인스턴스의 부트 디스크로 사용한다면 boot index는 **0**입니다.
     * volume_size
         * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
         * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. [콘솔 사용 가이드의 인스턴스 생성 > 사양](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_4) 항목을 참조하십시오.
+        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 콘솔 사용 가이드의 [인스턴스 생성 > 사양](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_4) 항목을 참조하십시오.
     * delete_on_termination
         * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
 
@@ -437,7 +437,7 @@ Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니
 
 * **주석**
 
-**#**, **//**, **/* */**을 사용할 수 있습니다.
+**#**, **//**, **/\* \*/**을 사용할 수 있습니다.
 
 * **값 할당**
 
@@ -469,21 +469,17 @@ resource "openstack_compute_instance_v2" "web" {
 
 공급자를 선언할 때는 **provider** 키워드를 사용합니다. 자원을 선언할 때 명시한 자원 유형의 접두사가 공급자 유형입니다.
 
-    * **openstack_compute_instance_v2**  
+```
+# 자원 유형: openstack_compute_instance_v2
+provider "openstack" {
+    ...
+}
 
-    ```
-    provider "openstack" {
-        ...
-    }
-    ```
-
-    * **aws_instance**  
-
-    ```
-    provider "aws" {
-        ...
-    }
-    ```
+# 자원 유형: aws_instance
+provider "aws" {
+    ...
+}
+```
 
 * **데이터 소스**
 
