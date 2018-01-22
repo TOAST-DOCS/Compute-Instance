@@ -5,15 +5,15 @@
 ## Terraform
 Terraform은 인프라를 손쉽게 구축하고, 안전하게 변경하고, 효율적으로 인프라의 형상을 관리 할 수 있는 오픈 소스 도구입니다. 주요 특징은 다음과 같습니다.
 
-* Infrastructure as Code
+* **Infrastructure as Code**
     * 인프라를 코드로 정의하여 생산성과 투명성을 높일 수 있습니다.
     * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업을 진행할 수 있습니다.
-* Execution Plan
+* **Execution Plan**
     * 변경 계획과 변경 적용을 분리하여 변경 내용을 적용할 때 발생할 수 있는 실수를 줄일 수 있습니다.
-* Resource Graph
+* **Resource Graph**
     * 사소한 변경이 인프라 전체에 어떤 영향을 미칠지 미리 확인할 수 있습니다.
     * 종속성 그래프를 작성하여 이 그래프를 바탕으로 계획을 세우고, 이 계획을 적용했을 때 변경되는 인프라 상태를 확인할 수 있습니다.
-* Change Automation
+* **Change Automation**
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
     * 인프라를 구축하는데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
@@ -105,26 +105,26 @@ provider "openstack" {
 }
 ```
 
-* provider
+* **provider**
     * 공급자 이름을 명시해야 합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 `openstack`입니다.
+    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
 
-* user_name
+* **user_name**
     * TOAST 계정 ID입니다.
 
-* tenant_name
-    * tenant_name은 프로젝트 ID에 접두어 `c_`를 붙여 사용합니다.
+* **tenant_name**
+    * tenant_name은 프로젝트 ID에 접두어 **c_**를 붙여 사용합니다.
     * 프로젝트 ID는 TOAST 콘솔에서 프로젝트 설정 화면에서 확인할 수 있습니다.
 
-* password
-    * password는 `API 보안 설정` 메뉴에서 설정할 수 있습니다.
+* **password**
+    * password는 **API 보안 설정** 메뉴에서 설정할 수 있습니다.
     * [API 준비 가이드의 토큰 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-common-guide/#api) 항목을 참조하십시오.
 
-* auth_url
+* **auth_url**
     * auth_url은 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 
-* region
-    * 보통은 `RegionOne`을 사용합니다. 그러나 정확한 내용은 다를 수 있으니 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
+* **region**
+    * 보통은 **RegionOne**을 사용합니다. 그러나 정확한 내용은 다를 수 있으니 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
@@ -186,31 +186,31 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-* resource
+* **resource**
     * 리소스 유형과 리소스 이름으로 구성합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 `openstack_compute_instance_v2` 입니다.
+    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 **openstack_compute_instance_v2** 입니다.
     * 리소스 이름은 생성할 인스턴스의 이름입니다.
-* name
+* **name**
     * 생성할 인스턴스의 이름입니다.
-* region
+* **region**
     * 공급자 설정 파일에 기재한 내용과 같아야 합니다.
-* flavor_id
+* **flavor_id**
     * 생성할 인스턴스의 사양 ID 입니다.
     * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
-* key_pair
+* **key_pair**
     * 인스턴스 접속에 사용할 키페어 이름입니다.
-    * TOAST 콘솔의 **_Compute > Instance > Key Pair_** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. [콘솔 사용 가이드의 키페어](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_7) 항목을 참조하십시오.    
-* network
-    * 인스턴스에 연결할 VPC 이름과 UUID(범용 단일 식별자)를 입력합니다.
-    * TOAST 콘솔의 **_Network > VPC > Management_** 메뉴에서 연결할 VPC를 선택하면, 하단 상세정보 화면에서 이름과 UUID를 확인할 수 있습니다.
-* security_groups
+    * TOAST 콘솔의 **_Compute > Instance > Key Pair_** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 콘솔 사용 가이드의 [키페어](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_7) 항목을 참조하십시오.    
+* **network**
+    * 인스턴스에 연결할 VPC 이름과 uuid를 입력합니다.
+    * TOAST 콘솔의 **_Network > VPC > Management_** 메뉴에서 연결할 VPC를 선택하면, 하단 상세정보 화면에서 이름과 uuid를 확인할 수 있습니다.
+* **security_groups**
     * 인스턴스에서 사용할 보안 그룹의 이름입니다.
     * 콤마(,)로 구분하여 하나 이상의 보안 그룹을 지정할 수 있습니다.
-    * TOAST 콘솔의 **_Network > VPC > Security Groups_** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세정보 화면에서 이름을 확인할 수 있습니다.
-* block_device
+    * TOAST 콘솔의 **_Network > VPC > Security Groups_** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세정보 화면에서 정보를 확인할 수 있습니다.
+* **block_device**
     * 인스턴스에 사용할 이미지 또는 블록 스토리지 정보와 디스크 용량을 설정합니다.
     * uuid
-        * TOAST 콘솔의 **_Compute > Images_** 메뉴에서 사용할 이미지를 선택하면 하단 상세정보 화면에서 UUID를 확인할 수 있습니다.
+        * TOAST 콘솔의 **_Compute > Images_** 메뉴에서 사용할 이미지를 선택하면 하단 상세정보 화면에서 정보를 확인할 수 있습니다.
     * source_type
         * 이미지를 이용해 인스턴스를 생성한다면 source_type은 `image`입니다.
     * destination_type
@@ -225,7 +225,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
         * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
 
 
-.tf 파일들이 있는 경로에서 `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드합니다. 이때 Terraform은 플랜(plan) 설정이 올바른지 확인하고 자체 DB와 비교하여 추가, 변경 또는 삭제된 플랜들을 집계하여 보기 좋게 출력합니다.
+.tf 파일들이 있는 경로에서 `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
 
 ```
 ./terraform plan
@@ -287,7 +287,7 @@ can't guarantee that exactly these actions will be performed if
 ```
 
 
-`apply` 명령을 실행하면 플랜을 적용하여 인스턴스를 생성합니다. 그리고 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 생성됩니다.
+`apply` 명령을 실행하면 플랜을 적용하여 인스턴스를 생성합니다. 그리고 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)을 생성합니다.
 
 ```
 $ terraform apply
@@ -387,6 +387,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 플랜을 로딩하면 리소스 설정을 삭제했기 때문에 삭제된 플랜이 1건이 있음을 보여줍니다.
 
 ```
+$ rm tc-instance-01.tf
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -426,8 +427,10 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## HCL
 
-Terraform의 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`.tf.json`)을 사용합니다. 손으로 작성할 때는 Terraform 형식이 더 편리합니다.
+Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`.tf.json`)을 사용합니다. 손으로 작성할 때는 Terraform 형식이 더 편리합니다.
+
 지정한 폴더에 `.tf`, `.tf.json`을 넣어두면 TerraForm이 알파벳 순서로 로드합니다. 변수나 리소스의 정의 순서는 상관이 없습니다.
+
 그 외에 다른 설정을 덮어쓰기 위한 오버라이드 파일을 사용할 수 있습니다. 파일명을 `override` 또는 `_override`로 끝나도록 하면 됩니다. 오버라이드 파일은 다른 설정 파일들의 로딩이 다 끝나면 알파벳순으로 로드하여 설정들을 덮어씁니다.
 
 ### HCL 문법
@@ -441,73 +444,73 @@ Terraform의 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합
 3. 문자열  
 큰따옴표를 사용합니다. 여러 줄의 문자열을 사용할 때는 [유닉스 셸의 Here document](https://en.wikipedia.org/wiki/Here_document) 형식으로 `<<EOF`, `EOF` 사이에 문자열을 넣어야 합니다.
 
-	```
-	description = <<EOF
-	...문자열문자열문자열문자열...
-	...문자열문자열문자열문자열...
-	...문자열문자열문자열문자열...
-	EOF
-	```
+```
+description = <<EOF
+...문자열문자열문자열문자열...
+...문자열문자열문자열문자열...
+...문자열문자열문자열문자열...
+EOF
+```
 
 4. 자원  
 자원을 선언할 때는 `resource` 키워드를 사용하며 공급자에 따라 Terraform이 정의해 둔 자원 유형을 명시해야 합니다.
 
-	```
-	resource "openstack_compute_instance_v2" "web" {
-	    ...
-	}
-	```
+```
+resource "openstack_compute_instance_v2" "web" {
+    ...
+}
+```
 
 5. 공급자  
 자원을 선언할 때 명시한 자원 형식의 접두사가 공급자를 가리킵니다.
 
-	* `openstack_compute_instance_v2`
+* `openstack_compute_instance_v2`
 
-	```
-	provider "openstack" {
-	    ...
-	}
-	```
+```
+provider "openstack" {
+    ...
+}
+```
 
-	* `aws_instance`
+* `aws_instance`
 
-	```
-	provider "aws" {
-	    ...
-	}
-	```
+```
+provider "aws" {
+    ...
+}
+```
 
 6. 데이터 소스  
 공급자로부터 가져올 데이터를 데이터 소스라고 합니다. `data` 키워드를 사용하며, 유형(type)과 이름(name)으로 구성합니다.
 
-	```
-	data "type" "name" {
-	    ...
-	}
-	```
+```
+data "type" "name" {
+    ...
+}
+```
 
 7. 변수  
 변수를 선언할 때는 `variable` 키워드를 사용합니다. 형식을 추론하기 때문에 정의하지 않아도 무방합니다.
 
-	```
-	variable "name" {
-	    type = "type"
-	    default = {
-	        key = value
-	    }
-	    description = "description"
-	}
-	```
+```
+variable "name" {
+    type = "type"
+    default = {
+        key = value
+    }
+    description = "description"
+}
+```
 
 8. 모듈  
 `module` 키워드를 사용하면 기존에 정의한 리소스 그룹을 모듈로 가져와 사용할 수 있습니다. GitHub, Bitbucket 등을 지원합니다.
 
-	```
-	module "name" {
-	    source = "url"
-	    ...
-	}
-	```
+```
+module "name" {
+    source = "url"
+    ...
+}
+```
 
 ## References
 Terraform Documentation - https://www.terraform.io/docs/providers/index.html
