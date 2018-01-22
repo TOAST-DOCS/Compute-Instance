@@ -509,5 +509,5 @@ Terraform의 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합
 	}
 	```
 
-## 참조
-[Terraform](https://www.terraform.io)
+## References
+Terraform Documentation - https://www.terraform.io/docs/providers/index.html
