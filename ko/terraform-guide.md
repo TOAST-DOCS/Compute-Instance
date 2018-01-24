@@ -107,13 +107,13 @@ provider "openstack" {
 
 * **provider**
     * 공급자 이름을 명시해야 합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
+    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **_openstack_**입니다.
 
 * **user_name**
     * TOAST 계정 ID입니다.
 
 * **tenant_name**
-    * tenant_name은 프로젝트 ID에 접두어 **c_**를 붙여 사용합니다.
+    * tenant_name은 프로젝트 ID에 접두어 **_c\__**를 붙여 사용합니다.
     * 프로젝트 ID는 TOAST 콘솔에서 프로젝트 설정 화면에서 확인할 수 있습니다.
 
 * **password**
