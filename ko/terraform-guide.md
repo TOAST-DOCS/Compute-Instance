@@ -115,7 +115,7 @@ provider "openstack" {
     * 프로젝트 ID는 TOAST 콘솔에서 프로젝트 설정 화면에서 확인할 수 있습니다.
 * **password**
     * password는 **API 보안 설정** 메뉴에서 설정할 수 있습니다.
-    * API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#_3) 항목을 참조하십시오.
+    * API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참조하십시오.
 * **auth_url**
     * auth_url은 `` 입니다.
 * **region**
