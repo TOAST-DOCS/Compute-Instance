@@ -115,7 +115,7 @@ provider "openstack" {
 * **password**
     * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **Secret Access Key**를 사용합니다.
 * **auth_url**
-    * auth_url은 ` ` 입니다.
+    * auth_url은 `` 입니다.
 * **region**
     * 한국 리젼은 **RegionOne**을 사용합니다.
 
