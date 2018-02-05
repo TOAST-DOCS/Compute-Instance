@@ -109,13 +109,13 @@ provider "openstack" {
     * 공급자 이름을 명시해야 합니다.
     * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **_openstack_**입니다.
 * **user_name**
-    * User Access Key ID(또는 TOAST 계정 ID)를 사용합니다.
+    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
 * **tenant_id**
-    * 테넌트 ID는 TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 확인할 수 있습니다.
+    * TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
 * **password**
-    * 패스워드는 **API 보안 설정** 메뉴에서 발급 받을 수 있는 **Secret Access Key**를 사용합니다.
+    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **Secret Access Key**를 사용합니다.
 * **auth_url**
-    * auth_url은 `` 입니다.
+    * auth_url은 ` ` 입니다.
 * **region**
     * 한국 리젼은 **RegionOne**을 사용합니다.
 
