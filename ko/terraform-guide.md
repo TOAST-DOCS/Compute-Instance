@@ -98,7 +98,7 @@ $ vi provider.tf
 # Configure the OpenStack Provider
 provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
-  tenant_name = "c_J6x3Kg1q"
+  tenant_id   = "75a4c0a12fd84edeb68965d320d17129"
   password    = "4DLr-s229-u76u"
   auth_url    = "https://api-gw.cloud.toast.com/infrastructure/identity/v2.0"
   region      = "RegionOne"
@@ -109,10 +109,9 @@ provider "openstack" {
     * 공급자 이름을 명시해야 합니다.
     * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **_openstack_**입니다.
 * **user_name**
-    * TOAST 계정 ID입니다.
-* **tenant_name**
-    * tenant_name은 프로젝트 ID에 접두어 **_c\__**를 붙여 사용합니다.
-    * 프로젝트 ID는 TOAST 콘솔에서 프로젝트 설정 화면에서 확인할 수 있습니다.
+    * User Access Key ID 또는 TOAST 계정 ID입니다.
+* **tenant_id**
+    * 테넌트 ID는 TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 **_API Endpoint 설정_** 버튼을 클릭해 확인할 수 있습니다.
 * **password**
     * password는 **API 보안 설정** 메뉴에서 설정할 수 있습니다.
     * API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참조하십시오.
