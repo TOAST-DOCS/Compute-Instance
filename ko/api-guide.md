@@ -2,16 +2,174 @@
 
 TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다. 
 
-* [가용성 영역 API](#api)
-* [인스턴스 API](#api_1)
-* [인스턴스 추가기능 API](#api_2)
-* [인스턴스 사양 API](#api_3)
-* [키페어 API](#api_4)
+* [가용성 영역 API](#api_2)
+* [인스턴스 API](#api_3)
+* [인스턴스 추가기능 API](#api_4)
+* [인스턴스 사양 API](#api_5)
+* [키페어 API](#api_6)
 
 
 ## 사전 준비
 
-인스턴스 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비 가이드](/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
+인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
+
+### API Endpoint URL
+
+모든 인스턴스, 이미지, 네트워크(VPC), 블록 스토리지 API는 다음 URL을 접두사로 사용하여야 합니다.
+
+	https://api-compute.cloud.toast.com/compute
+
+API 요청을 할 때에는 항상 앱키를 포함하여 요청해야 합니다. 앱키는 아래와 같이 발급 받을 수 있습니다.
+
+1. TOAST 콘솔 Compute 페이지의 상단 [URL & Appkey] 클릭
+2. 대화창에 기재된 [Appkey] 값 복사 후 사용
+
+예를 들어, 토큰 발급 URL은 다음과 같습니다.
+
+	POST https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/tokens
+
+인스턴스, 이미지, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기 하기 위하여 API URL 접두사를 생략하였습니다.
+
+### API Response
+
+#### Response HTTP Status Code
+
+모든 API 요청에 대해 200 OK로 응답하며, JSON 형태의 Response Body를 포함합니다.
+
+#### Response Body
+
+Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이를 통해 자세한 응답 결과를 확인할 수 있습니다. API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
+
+```json
+{
+    "header" : {
+        "isSuccessful" : true,
+        "resultCode": 0,
+        "resultMessage" : "SUCCESS"
+    }
+}
+```
+
+API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참조합니다.
+
+### 토큰 API
+
+토큰은 API 사용을 위해 필수 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
+
+#### API 보안 설정
+
+인증 토큰을 발급받으려면 User Access Key ID와 Secret Access Key가 필요합니다.
+
+1. 웹 콘솔 상단 오른쪽의 계정명 클릭
+2. 드롭다운 메뉴에서 [API 보안 설정] 클릭
+3. API 보안 설정 메뉴에서 User Access Key ID 발급 버튼 클릭
+4. User Access Key ID와 Secret Access Key 발급
+
+#### Token 발급
+
+##### Method, URL
+```
+POST /v1.0/appkeys/{appkey}/tokens
+Content-Type: application/json;charset=UTF-8
+```
+
+
+##### Request Body
+```json
+{
+	"auth" : {
+    	"username" : "{User Access Key ID}",
+        "password" : "{Secret Access Key}"
+    }
+}
+```
+
+| Name | In | Type | Optional | Description |
+| -- | -- | -- | -- | -- |
+| User Access Key ID | Body | String | - | API 보안 설정에서 생성한 User Access Key ID |
+| Secret Access Key | Body | String | - | API 보안 설정에서 발급받은 Secret Access Key |
+
+##### Response Body
+```json
+{
+    "header" : {
+        "isSuccessful" :  true,
+        "resultCode" :  0,
+        "resultMessage" :  "SUCCESS"
+    },
+    "access" : {
+        "token" : {
+            "expires" :  "{Expires}",
+            "id" :  "{Token ID}",
+            "issued_at" :  "{Issued at}"
+        },
+        "user" : {
+            "id" :  "{User ID}",
+            "roles" : [
+                {
+                    "name" :  "{Role name}"
+                }
+            ]
+        }
+    }
+}
+```
+
+| Name | In | Type | Description |
+| -- | -- | -- | -- |
+| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token) 에 기재해야 하는 UUID |
+| Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
+| Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
+| User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
+| Role name | Body | String | 토큰을 발급받은 사용자에게 부여된 Role |
+
+#### Token 정보 조회
+##### Method, URL
+```
+GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
+```
+
+|  Name | In | Type | Optional |Description |
+|--|--|--|--|--|
+| tokenId | Query | String | - | 조회할 Token ID |
+
+##### Request Body
+이 API는 Request Body를 필요로 하지 않습니다.
+
+##### Response Body
+```json
+{
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
+    },
+    "access": {
+        "token": {
+            "expires": "{Expires}",
+            "id": "{Token ID}",
+            "issued_at": "{Issued at}"
+        },
+        "user": {
+            "id": "{User ID}",
+            "roles": [
+                {
+                    "name": "{Role name}"
+                }
+            ]
+        }
+    }
+}
+```
+
+| Name | In | Type | Description |
+| -- | -- | -- | -- |
+| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token) 에 기재해야 하는 토큰 UUID |
+| Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
+| Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
+| User ID | Body | String | 토큰을 발급받은 사용자의 UUID | 
+| Role name | Body | String | 토큰을 발급받은 사용자에게 부여된 Role |
+
 
 ## 가용성 영역 API
 

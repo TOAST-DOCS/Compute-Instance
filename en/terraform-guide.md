@@ -1,4 +1,4 @@
-## Compute > Instance > 서드파티 사용 가이드 > Terraform 사용 가이드
+## Compute > Instance > Third party Guide > Terraform Guide
 
 이 문서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
 
@@ -98,8 +98,8 @@ $ vi provider.tf
 # Configure the OpenStack Provider
 provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
-  tenant_id   = "75a4c0a12fd84edeb68965d320d17129"
-  password    = "kGzBDD9psmgeH4ji"
+  tenant_name = "c_J6x3Kg1q"
+  password    = "4DLr-s229-u76u"
   auth_url    = "https://api-gw.cloud.toast.com/infrastructure/identity/v2.0"
   region      = "RegionOne"
 }
@@ -109,18 +109,17 @@ provider "openstack" {
     * 공급자 이름을 명시해야 합니다.
     * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **_openstack_**입니다.
 * **user_name**
-    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
-* **tenant_id**
-    * TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
+    * TOAST 계정 ID입니다.
+* **tenant_name**
+    * tenant_name은 프로젝트 ID에 접두어 **_c\__**를 붙여 사용합니다.
+    * 프로젝트 ID는 TOAST 콘솔에서 프로젝트 설정 화면에서 확인할 수 있습니다.
 * **password**
-    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **Secret Access Key**를 사용합니다.
+    * password는 **API 보안 설정** 메뉴에서 설정할 수 있습니다.
+    * API 준비 가이드의 [토큰 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-common-guide/#api) 항목을 참조하십시오.
 * **auth_url**
-    * auth_url은 `` 입니다.
+    * auth_url은 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 * **region**
-    * 한국 리젼은 **RegionOne**을 사용합니다.
-
-> [참고]
-> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참조하십시오.
+    * 보통은 **RegionOne**을 사용합니다. 정확한 내용은 다를 수 있으니 [TOAST 고객 센터](http://devcenter.alpha-goorm.cloud.toast.com/support)에 문의하십시오.
 
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
@@ -192,10 +191,10 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * 공급자 설정 파일에 기재한 내용과 같아야 합니다.
 * **flavor_id**
     * 생성할 인스턴스의 사양 ID 입니다.
-    * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
+    * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
 * **key_pair**
     * 인스턴스 접속에 사용할 키페어 이름입니다.
-    * TOAST 콘솔의 **_Compute > Instance > Key Pair_** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 콘솔 사용 가이드의 [키페어](/Compute/Instance/ko/console-guide/#_7) 항목을 참조하십시오.    
+    * TOAST 콘솔의 **_Compute > Instance > Key Pair_** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 콘솔 사용 가이드의 [키페어](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_7) 항목을 참조하십시오.    
 * **network**
     * 인스턴스에 연결할 VPC 이름과 uuid를 입력합니다.
     * TOAST 콘솔의 **_Network > VPC > Management_** 메뉴에서 연결할 VPC를 선택하면, 하단 상세정보 화면에서 이름과 uuid를 확인할 수 있습니다.
@@ -216,7 +215,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * volume_size
         * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
         * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/ko/console-guide/#_4) 항목을 참조하십시오.
+        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 콘솔 사용 가이드의 [인스턴스 생성 > 사양](http://alpha-docs.cloud.toast.com/ko/Compute/Instance/ko/console-guide/#_4) 항목을 참조하십시오.
     * delete_on_termination
         * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
 
