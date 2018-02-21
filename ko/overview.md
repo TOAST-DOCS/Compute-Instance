@@ -22,9 +22,9 @@
 | 운영체제 | 버전 |
 |------- | ---- |
 | CentOS | 6.5<br>7.1|
-| Debian | 8.2.0<br>9.1.0 |
-| Ubuntu | 14.04<br>16.04.3 |
-| 윈도우 | 2008R2 standard<br>20012R2 standard<br>2016R2 standard |
+| Debian | 8.2.0|
+| Ubuntu | 14.04 |
+| 윈도우 | 20012R2 standard |
 
 모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정되어 있으며, TOAST의 보안 검증을 거쳤기 때문에 안전하게 사용 가능합니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/ko/overview/)를 참조합니다.
 
