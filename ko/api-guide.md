@@ -271,7 +271,7 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Instance ID | Body | String | 인스턴스 ID |
-| Instance Name | Body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
+| Instance Name | Body | String | 인스턴스 이름 |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
 ### 인스턴스 상세 조회
@@ -320,7 +320,7 @@ X-Auth-Token: {tokenId}
             "name": "{Instance Name}",
             "image": "{Image ID}",
             "metadata": {
-                "key": "value"
+                "{key}": "{value}"
             },
             "keyName": "{PEM Key Name}",
             "volumes": {
@@ -361,7 +361,7 @@ X-Auth-Token: {tokenId}
 | Flavor RAM | Body | Integer | RAM 크기 (MB) |
 | Status | Body | String | 인스턴스의 상태 |
 | Instance ID | Body | String | 인스턴스 ID |
-| Instance Name | Body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
+| Instance Name | Body | String | 인스턴스 이름 |
 | Image ID | Body | String | 인스턴스에 설치된 이미지 ID |
 | metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터, "key": "value" 형태로 저장 |
 | PEM Key Name | Body | String | 인스턴스에 등록할 키페어 이름 |
@@ -403,11 +403,9 @@ Content-Type: application/json;charset=UTF-8
         "availabilityZone": "{Availability Zone}",
         "keyName": "{Key Name}",
         "count": "{Count}",
-        "volumes": [
-        	{
-            	"size": "{Volume Size}"
-        	}
-        ],
+        "volume": {
+           "size": "{Volume Size}"
+        },
         "securityGroups": [
         	{
             	"name": "{Security Group Name}"
@@ -419,15 +417,23 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
+| Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, 윈도우의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
 | Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID. |
 | Flavor ID | Body | String | - | 인스턴스 사양 ID. |
 | Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID. |
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름. |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름. |
-| Count | Body | Integer | - | 동시 생성할 인스턴스의 개수, 최대 10개로 제한 |
-| Volume Size | Body | Integer | - | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조. |
+| Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1 ~ 10 범위. 생략 시 1대 생성  |
+| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
+
+* **"volumeSize" 파라미터 값을 갖는 사양(u2.\* / i2.\*) 로 인스턴스 생성 시**
+	* "instance.volume.size" 파라미터를 생략해야 합니다.
+	* 사양에 설정된 고정 볼륨 크기의 기본 디스크가 생성됩니다.
+* **"volumeSize" 파라미터 값을 갖지 않는 사양으로 인스턴스 생성 시**
+	* "instance.volume.size" 파라미터가 반드시 기재되어야 합니다.
+	* **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 하며, 설정된 크기의 기본 디스크가 생성됩니다.
+
 
 #### Response Body
 ```json
@@ -448,7 +454,7 @@ Content-Type: application/json;charset=UTF-8
 | Name | In | Type | Description |
 |--|--|--|--|
 | Instance ID | body | String |생성된 인스턴스 ID |
-| Instance Name | body | String | 인스턴스 이름 (리눅스의 경우 최대 255자, 윈도우의 경우 최대 12자) |
+| Instance Name | body | String | 인스턴스 이름 |
 | Instance Status | Body | String | 인스턴스의 상태 |
 
 ### 인스턴스 삭제
@@ -571,9 +577,9 @@ Content-Type: application/json;charset=UTF-8
 #### Request Body Template
 ```json
 {
-    "action": "Action Name",
+    "action": "{Action Name}",
     "parameters" : {
-    	"key": "value"
+         "{key}": "{value}"
     }
 }
 ```
@@ -684,6 +690,9 @@ Content-Type: application/json;charset=UTF-8
 
 ### 이미지 생성
 지정한 인스턴스로 부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
+
+이미지 생성 대상이 되는 인스턴스는 STOP 상태여야 합니다.
+
 #### Request Body
 ```json
 {
@@ -696,7 +705,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| ImageName | body | String | - | 생성할 이미지 이름 |
+| Image Name | body | String | - | 생성할 이미지 이름 |
 
 #### Response Body
 ```json
@@ -866,8 +875,7 @@ X-Auth-Token: {tokenID}
             "disabled": "{Disabled}",
             "ephemeral": "{Ephermeral}",
             "type": "{Type}",
-            "minVolumeSize": "{Min Volume Size}",
-            "maxVolumeSize": "{Max Volume Size}",
+            "volumeSize": "{Volume Size}",
             "id": "{Flavor ID}",
             "name": "{Flavor Name}",
             "isPublic": "{Is Public}",
@@ -883,7 +891,7 @@ X-Auth-Token: {tokenID}
 | Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부 |
 | Ephermeral | Body | Integer | 임시 디스크 사이즈 (GB) |
 | Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값<br>"general, "compute", "memory" 중의 하나 |
-| Min Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최소 디스크 크기 (GB) |
+| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기 (GB)<br>기본 디스크가 고정된 크기로 만들어지는 u2, i2 사양의 경우에만 이 값이 전달됩니다. |
 | Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기 (GB) |
 | Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
@@ -964,7 +972,7 @@ Content-Type: application/json;charset=UTF-8
 | Name | In | Type | Optional | Description |
 | --- | --- | --- | --- | --- |
 | Keypair Name | Body | String | - | 키페어 이름 |
-| Public Key Value | Body | String | O | 업로드할 공개 키. 생략 시 새로운 키페어가 만들어지며, 만들어진 키페어의 개인 키가 Response로 전달됩니다. |
+| Public Key Value | Body | String | O | 업로드할 공개 키. 생략 시 새로운 키페어가 만들어지며, 만들어진 키페어의 개인 키가 Response에 함께 전달됩니다. |
 
 #### Response Body
 
@@ -988,8 +996,10 @@ Content-Type: application/json;charset=UTF-8
 | --- | --- | --- | --- |
 | Keypair Name | Body | String | 키페어 이름 |
 | Public Key Value | Body | String | 키페어의 공개 키 |
-| Private Key Value | Body | String | 키페어의 개인 키. 키페어 업로드인 경우 생략됩니다. |
+| Private Key Value | Body | String | 키페어의 개인 키. 키페어 업로드(Request에 "publickey" 항목을 포함)인 경우 생략됩니다. |
 | Fingerprint value | Body | String | Fingerprint 값 |
+
+생성된 Private Key Value는 전문을 .pem 파일로 저장 후 해당 Keypair를 사용하도록 설정된 인스턴스에 접근 시 사용할 수 있습니다. **생성된 Private Key Value는 다시 조회할 수 없으므로** 분실 또는 삭제되지 않도록 잘 보관해야 하며, 유출 방지를 위해 가급적 보조 저장매체(USB메모리)에 관리하는 것이 좋습니다.
 
 ### 키페어 삭제
 지정한 키페어를 삭제합니다.

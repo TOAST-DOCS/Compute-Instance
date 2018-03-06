@@ -1,4 +1,4 @@
-## Compute > Instance > 특화된 인스턴스 사용 가이드 > MySQL Instance 가이드
+## Compute > Instance > Instance Guide > MySQL Instance Guide
 ## MySQL version
 
 ##### NHN ENT 토스트 클라우드 MySQL version 은 아래와 같이 2가지로 분류 되어 제공 됩니다.
