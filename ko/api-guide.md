@@ -1,6 +1,6 @@
 ## Compute > Instance > API 가이드
 
-TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다. 
+TOAST Compute Instance서비스에서는 다음 종류의 API를 제공합니다.
 
 * [가용성 영역 API](#api_2)
 * [인스턴스 API](#api_3)
@@ -58,12 +58,12 @@ API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가
 
 #### API 보안 설정
 
-인증 토큰을 발급받으려면 User Access Key ID와 Secret Access Key가 필요합니다.
+인증 토큰을 발급받으려면 Password 설정이 필요합니다.
 
-1. 웹 콘솔 상단 오른쪽의 계정명 클릭
-2. 드롭다운 메뉴에서 [API 보안 설정] 클릭
-3. API 보안 설정 메뉴에서 User Access Key ID 발급 버튼 클릭
-4. User Access Key ID와 Secret Access Key 발급
+1. Compute > Instance 서비스의 Management 탭으로 이동
+2. [API Endpoint 설정] 버튼 클릭
+3. API Endpoint 설정 > API 비밀번호 설정 항목에서 토큰 발급시 사용할 비밀번호 입력
+4. 비밀번호 입력 후 저장 버튼 클릭
 
 #### Token 발급
 
@@ -78,16 +78,16 @@ Content-Type: application/json;charset=UTF-8
 ```json
 {
 	"auth" : {
-    	"username" : "{User Access Key ID}",
-        "password" : "{Secret Access Key}"
+    	"username" : "{TOAST ID}",
+        "password" : "{API Password}"
     }
 }
 ```
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| User Access Key ID | Body | String | - | API 보안 설정에서 생성한 User Access Key ID |
-| Secret Access Key | Body | String | - | API 보안 설정에서 발급받은 Secret Access Key |
+| TOAST ID | Body | String | - | TOAST 계정 ID(Email) 입력 |
+| API Password | Body | String | - | API Endpoint 설정 대화창에서 저장한 비밀번호 |
 
 ##### Response Body
 ```json
@@ -167,7 +167,7 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 | Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token) 에 기재해야 하는 토큰 UUID |
 | Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
-| User ID | Body | String | 토큰을 발급받은 사용자의 UUID | 
+| User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
 | Role name | Body | String | 토큰을 발급받은 사용자에게 부여된 Role |
 
 
@@ -597,7 +597,7 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-#### Response Body 
+#### Response Body
 ```json
 {
     "header": {
