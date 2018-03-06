@@ -56,14 +56,13 @@ API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가
 
 토큰은 API 사용을 위해 필수 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
 
-#### API 보안 설정
+#### API Password 설정
 
-인증 토큰을 발급받으려면 Password 설정이 필요합니다.
+API의 비밀번호는 Compute > Instance 서비스 페이지의 `[API Endpoint 설정]` 버튼을 클릭한 다음 설정할 수 있습니다.
 
-1. Compute > Instance 서비스의 Management 탭으로 이동
-2. [API Endpoint 설정] 버튼 클릭
-3. API Endpoint 설정 > API 비밀번호 설정 항목에서 토큰 발급시 사용할 비밀번호 입력
-4. 비밀번호 입력 후 저장 버튼 클릭
+1. [API Endpoint 설정] 버튼 클릭
+2. API Endpoint 설정 > API 비밀번호 설정 항목에서 토큰 발급시 사용할 비밀번호 입력
+3. 비밀번호 입력 후 저장 버튼 클릭
 
 #### Token 발급
 
@@ -86,8 +85,8 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | TOAST 계정 ID(Email) 입력 |
-| API Password | Body | String | - | API Endpoint 설정 대화창에서 저장한 비밀번호 |
+| username | Body | String | - | TOAST 계정 ID(Email) 입력 |
+| password | Body | String | - | API Endpoint 설정 대화창에서 저장한 비밀번호 |
 
 ##### Response Body
 ```json
