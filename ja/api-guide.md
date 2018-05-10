@@ -426,7 +426,7 @@ Content-Type: application/json;charset=UTF-8
 | Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
-* **"volumeSize" 파라미터 값을 갖는 사양(u2.\* / i2.\*) 로 인스턴스 생성 시**
+* **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 으로 인스턴스 생성 시**
 	* "instance.volume.size" 파라미터를 생략해야 합니다.
 	* 사양에 설정된 고정 볼륨 크기의 기본 디스크가 생성됩니다.
 * **"volumeSize" 파라미터 값을 갖지 않는 사양으로 인스턴스 생성 시**
@@ -890,7 +890,7 @@ X-Auth-Token: {tokenID}
 | Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부 |
 | Ephermeral | Body | Integer | 임시 디스크 사이즈 (GB) |
 | Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값<br>"general, "compute", "memory" 중의 하나 |
-| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기 (GB)<br>기본 디스크가 고정된 크기로 만들어지는 u2, i2 사양의 경우에만 이 값이 전달됩니다. |
+| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기 (GB)<br>기본 디스크가 고정된 크기로 만들어지는 u2 사양의 경우에만 이 값이 전달됩니다. |
 | Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기 (GB) |
 | Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
