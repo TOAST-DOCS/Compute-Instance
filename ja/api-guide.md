@@ -4,37 +4,37 @@ TOAST Compute Instance 서비스는 다음 종류의 API를 제공합니다.
 
 * [가용성 영역 API](#api_2)
 * [인스턴스 API](#api_3)
-* [인스턴스 추가기능 API](#api_4)
+* [인스턴스 추가 기능 API](#api_4)
 * [인스턴스 사양 API](#api_5)
 * [키페어 API](#api_6)
 
 
 ## 사전 준비
 
-인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
+인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에, 토큰은 Request Body에 포함하여 사용합니다.
 
 ### API Endpoint URL
 
-모든 인스턴스, 이미지, 네트워크(VPC), 블록 스토리지 API는 다음 URL을 접두사로 사용하여야 합니다.
+모든 인스턴스, 이미지, 네트워크(VPC), 블록 스토리지 API는 다음 URL을 접두사로 사용해야 합니다.
 
 	https://api-compute.cloud.toast.com/compute
 
-API 요청을 할 때에는 항상 앱키를 포함하여 요청해야 합니다. 앱키는 아래와 같이 발급 받을 수 있습니다.
+API를 요청할 때는 항상 앱키를 포함해 요청해야 합니다. 앱키는 아래와 같이 발급받을 수 있습니다.
 
-1. TOAST 콘솔 Compute 페이지의 상단 [URL & Appkey] 클릭
-2. 대화창에 기재된 [Appkey] 값 복사 후 사용
+1. TOAST 콘솔 **Compute** 페이지 위쪽에서 **URL & Appkey**를 클릭합니다.
+2. **URL & Appkey** 대화 상자에서 **Appkey** 값을 복사해 사용합니다.
 
 예를 들어, 토큰 발급 URL은 다음과 같습니다.
 
 	POST https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/tokens
 
-인스턴스, 이미지, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기 하기 위하여 API URL 접두사를 생략하였습니다.
+인스턴스, 이미지, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기하기 위하여 API URL 접두사를 생략했습니다.
 
 ### API Response
 
 #### Response HTTP Status Code
 
-모든 API 요청에 대해 200 OK로 응답하며, JSON 형태의 Response Body를 포함합니다.
+모든 API 요청에 200 OK로 응답하며, JSON 형태의 Response Body를 포함합니다.
 
 #### Response Body
 
@@ -50,19 +50,19 @@ Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이�
 }
 ```
 
-API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참조합니다.
+API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참고합니다.
 
 ### 토큰 API
 
-토큰은 API 사용을 위해 필수 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
+토큰은 API 사용을 위해 필수로 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
 
 #### API 비밀번호 설정
 
-API 비밀번호는 Compute > Instance 서비스 페이지의 `[API Endpoint 설정]` 버튼을 클릭한 다음 설정할 수 있습니다.
+API 비밀번호는 **Compute > Instance** 서비스 페이지의 **API Endpoint 설정** 버튼을 클릭해 설정할 수 있습니다.
 
-1. [API Endpoint 설정] 버튼 클릭
-2. API Endpoint 설정 > API 비밀번호 설정 항목에 토큰 발급시 사용할 비밀번호 입력
-3. 비밀번호 입력 후 저장 버튼 클릭
+1. **API Endpoint 설정** 버튼을 클릭합니다.
+2. **API Endpoint 설정** 아래 **API 비밀번호 설정**에 토큰 발급 시 사용할 비밀번호를 입력합니다.
+3. 비밀번호를 입력한 후 **저장** 버튼을 클릭합니다.
 
 #### Token 발급
 
@@ -86,7 +86,7 @@ Content-Type: application/json;charset=UTF-8
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
 | TOAST ID | Body | String | - | TOAST 계정 ID(Email) 입력 |
-| API Password | Body | String | - | API Endpoint 설정 대화창에서 저장한 비밀번호 |
+| API Password | Body | String | - | **API Endpoint 설정**에서 저장한 비밀번호 |
 
 ##### Response Body
 ```json
@@ -116,7 +116,7 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Description |
 | -- | -- | -- | -- |
-| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token) 에 기재해야 하는 UUID |
+| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token)에 써야 할 UUID |
 | Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
 | User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
@@ -133,7 +133,7 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 | tokenId | Query | String | - | 조회할 Token ID |
 
 ##### Request Body
-이 API는 Request Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 ##### Response Body
 ```json
@@ -163,7 +163,7 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 
 | Name | In | Type | Description |
 | -- | -- | -- | -- |
-| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token) 에 기재해야 하는 토큰 UUID |
+| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token)에 써야 할 토큰 UUID |
 | Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
 | User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
@@ -173,7 +173,7 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 ## 가용성 영역 API
 
 ### 가용성 영역 조회
-인스턴스, 블록 스토리지를 생성할 수 있는 AZ 정보를 조회합니다.
+인스턴스, 블록 스토리지를 생성할 수 있는 가용성 영역 정보를 조회합니다.
 
 #### Method, URL
 ```
@@ -186,7 +186,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 
 #### Request Body
-이 API는 request body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
@@ -209,11 +209,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Zone Name | Body | String | AZ 이름 |
-| Available | Body | Boolean | AZ 가용 여부 |
+| Zone Name | Body | String | 가용성 영역 이름 |
+| Available | Body | Boolean | 가용성 영역 가용 여부 |
 
 ## 인스턴스 API
-인스턴스 생성, 삭제, 정보 조회 및 블록 스토리지 연결관리 기능을 제공합니다.
+인스턴스 생성, 삭제, 정보 조회 및 블록 스토리지 연결 관리 기능을 제공합니다.
 
 ### 인스턴스 상태
 인스턴스는 생성, 변경, 삭제, 운영 중 다음과 같은 상태를 갖습니다.
@@ -224,13 +224,13 @@ X-Auth-Token: {tokenId}
 | --- | --- |
 | BUILD | 인스턴스 생성 중 |
 | POWERING_ON | 인스턴스 부팅 중 |
+| STOP | 인스턴스 종료 상태 |
 | ACTIVE | 인스턴스 구동 중 |
 | POWERING_OFF | 인스턴스 종료 중 |
-| STOP | 인스턴스 종료 상태 |
 | REBOOTING | 인스턴스 리부팅 중 |
-| RESIZING | 인스턴스 사양 변경 작업 중 |
-| MIGRATING | 인스턴스 Migration 작업 중 |
 | DELETING | 인스턴스 삭제 중 |
+| RESIZING | 인스턴스 사양(flavor) 변경 작업 중 |
+| MIGRATING | 인스턴스 마이그레이션 작업 중 |
 | ERROR | 오류 상태 |
 
 ### 인스턴스 정보 간략 조회
@@ -247,7 +247,7 @@ X-Auth-Token: {tokenId}
 | instanceId | Query | String | O | 조회할 인스턴스 ID. 기재하지 않을 경우 모든 인스턴스들의 간략 정보를 조회합니다. |
 
 #### Request Body
-이 API는 Request Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
@@ -283,11 +283,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | O | 조회할 인스턴스의 ID. 생략 시 모든 인스턴스들의 상세 정보를 조회합니다. |
+| tokenId | Header | String | - | 토큰 ID. |
+| instanceId | Query | String | O | 조회할 인스턴스의 ID. 생략하면 모든 인스턴스들의 상세 정보를 조회합니다. |
 
 #### Request Body
-이 API는 Request Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
@@ -351,20 +351,20 @@ X-Auth-Token: {tokenId}
 |--|--|--|--|
 | MAC Address | Body | String | NIC의 MAC 주소 |
 | IP Address | Body | String | NIC의 IP 주소 |
-| version | Body | Integer | IP 버전. (IPv4만 지원) |
+| version | Body | Integer | IP 버전(IPv4만 지원) |
 | Floating IP Address | Body | String | NIC에 할당된 플로팅 IP 주소 |
 | Zone Name | Body | String | 가용성 영역 이름 |
 | Flavor ID | Body | String | 인스턴스 사양 ID |
 | Flavor Name | Body | String | 인스턴스 사양 이름 |
 | Flavor CPU | Body | Integer | CPU 개수 |
-| Flavor RAM | Body | Integer | RAM 크기 (MB) |
+| Flavor RAM | Body | Integer | RAM 크기(MB) |
 | Status | Body | String | 인스턴스의 상태 |
 | Instance ID | Body | String | 인스턴스 ID |
 | Instance Name | Body | String | 인스턴스 이름 |
 | Image ID | Body | String | 인스턴스에 설치된 이미지 ID |
-| metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터, "key": "value" 형태로 저장 |
+| metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터로, "key": "value" 형태로 저장 |
 | PEM Key Name | Body | String | 인스턴스에 등록할 키페어 이름 |
-| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기 (GB) |
+| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기(GB) |
 | Attached Volume ID | Body | String | 추가 블록 스토리지 ID |
 | Attached Volume Name | Body | String | 추가 블록 스토리지 이름 |
 | Attached Volume Size | Body | Integer | 추가 블록 스토리지 크기 (GB) |
@@ -416,17 +416,17 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, 윈도우의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
-| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID. |
-| Flavor ID | Body | String | - | 인스턴스 사양 ID. |
-| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID. |
-| Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름. |
-| Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름. |
-| Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1 ~ 10 범위. 생략 시 1대 생성  |
-| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조. |
+| Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, Windows의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
+| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID |
+| Flavor ID | Body | String | - | 인스턴스 사양 ID |
+| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID |
+| Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
+| Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
+| Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
+| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조 |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
-* **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 으로 인스턴스 생성 시**
+* **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 로 인스턴스 생성 시**
 	* "instance.volume.size" 파라미터를 생략해야 합니다.
 	* 사양에 설정된 고정 볼륨 크기의 기본 디스크가 생성됩니다.
 * **"volumeSize" 파라미터 값을 갖지 않는 사양으로 인스턴스 생성 시**
@@ -495,7 +495,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 ID. |
+| Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 ID |
 
 #### Response Body
 
@@ -516,9 +516,9 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Device ID | body | String | 인스턴스에 등록된 장치 이름, 예) "/dev/vdc" |
-| Attachement ID | body | String | Attachment ID |
-| Volume ID | body | String | 블록 스토리지 ID, 연결 해제 시 필요 |
+| Device ID | body | String | 인스턴스에 등록된 장치 이름. 예) "/dev/vdc" |
+| Attachement ID | body | String | 연결 ID.|
+| Volume ID | body | String | 블록 스토리지 ID. 연결 해제 시 필요. |
 
 ### 블록 스토리지 연결 해제
 인스턴스에 연결되어 있는 블록 스토리지 연결을 해제합니다.
@@ -536,7 +536,7 @@ X-Auth-Token: {tokenId}
 | volumeId | Path | String | - | 블록 스토리지 ID |
 
 #### Request body
-이 Request는 Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 
@@ -551,16 +551,16 @@ X-Auth-Token: {tokenId}
 ```
 
 ## 인스턴스 추가기능 API
-다음과 같은 인스턴스 제어 및 부가기능을 제공합니다.
+다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
 
-- 인스턴스 시작/정지/재시작
-- 인스턴스 사양 변경(Resize)
+- 인스턴스 시작, 정지, 재시작
+- 인스턴스 사양 변경(resize)
 - 인스턴스 이미지 생성
-- 플로팅 IP 연결/해제
-- 보안 그룹 등록/해제
+- 플로팅 IP 연결, 해제
+- 보안 그룹 등록, 해제
 
 ### 공통
-모든 인스턴스 추가기능 API는 동일한 Method, URL로 호출하며, Request Body로 각 추가기능을 구분합니다.
+모든 인스턴스 추가 기능 API는 동일한 Method, URL로 호출하며, Request Body로 각 추가 기능을 구분합니다.
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/action
@@ -571,7 +571,7 @@ Content-Type: application/json;charset=UTF-8
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | 추가기능을 수행할 인스턴스 ID |
+| instanceId | Path | String | - | 추가 기능을 수행할 인스턴스 ID |
 
 #### Request Body Template
 ```json
@@ -584,8 +584,8 @@ Content-Type: application/json;charset=UTF-8
 ```
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Action Name | Body | String | - | 인스턴스에서 실행할 추가기능 |
-| parameters | Body | Object| O | 추가기능 수행에 필요한 파라미터. 추가기능에 따라 필요한 값을 기재합니다. 일부 추가기능은 파라미터 없이 동작합니다. |
+| Action Name | Body | String | - | 인스턴스에서 실행할 추가 기능 |
+| parameters | Body | Object| O | 추가 기능 수행에 필요한 파라미터. 추가 기능에 따라 필요한 값을 기재합니다. 일부 추가 기능은 파라미터 없이 동작합니다. |
 
 ### 인스턴스 시작
 정지(STOP) 상태의 인스턴스를 시작합니다.
@@ -608,7 +608,7 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ### 인스턴스 정지
-동작중(ACTIVE) 또는 오류(ERROR) 상태의 인스턴스를 정지합니다.
+동작 중(ACTIVE) 또는 오류(ERROR) 상태의 인스턴스를 정지합니다.
 #### Request Body
 ```json
 {
@@ -631,8 +631,8 @@ Content-Type: application/json;charset=UTF-8
 ### 인스턴스 리부팅
 인스턴스를 리부팅합니다. 아래와 같은 리부팅 방식을 지정할 수 있습니다.
 
-- **SOFT**: Graceful Shutdown 수행 후 인스턴스를 재시작합니다.
-- **HARD**: 강제 Shutdown 수행 후 인스턴스를 재시작합니다.
+- **SOFT**: 정상 종료(graceful shutdown) 후 인스턴스를 재시작합니다.
+- **HARD**: 강제 종료(shutdown) 후 인스턴스를 재시작합니다.
 
 #### Request Body
 
@@ -647,7 +647,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Reboot Type | body | String | - | 리부팅 방식. `HARD` 또는 `SOFT` |
+| Reboot Type | body | String | - | 리부팅 방식. `HARD` 또는 `SOFT`. |
 
 #### Response Body
 ```json
@@ -674,7 +674,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID. |
+|  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID |
 
 #### Response Body
 ```json
@@ -688,7 +688,7 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ### 이미지 생성
-지정한 인스턴스로 부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
+지정한 인스턴스로부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
 
 이미지 생성 대상이 되는 인스턴스는 STOP 상태여야 합니다.
 
@@ -788,7 +788,7 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ### 보안 그룹 등록
-인스턴스에 보안 그룹을 추가 등록합니다.
+인스턴스에 보안 그룹을 추가합니다.
 
 #### Request Body
 ```json
@@ -859,7 +859,7 @@ X-Auth-Token: {tokenID}
 | tokenId | Header | String| - | 토큰 ID |
 
 #### Request Body
-이 API는 Request Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
@@ -887,19 +887,19 @@ X-Auth-Token: {tokenID}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부 |
-| Ephermeral | Body | Integer | 임시 디스크 사이즈 (GB) |
-| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값<br>"general, "compute", "memory" 중의 하나 |
-| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기 (GB)<br>기본 디스크가 고정된 크기로 만들어지는 u2 사양의 경우에만 이 값이 전달됩니다. |
-| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기 (GB) |
-| Flavor ID | Body | String | 인스턴스 사양 ID |
-| Flavor Name | Body | String | 인스턴스 사양 이름 |
-| Is Public | Body | Boolean | 공용 인스턴스 사양 여부 |
-| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량 (MB) |
-| VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수 |
+| Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부. |
+| Ephermeral | Body | Integer | 임시 디스크 크기(GB). |
+| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값.<br>"general, "compute", "memory" 중의 하나. |
+| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 사양의 경우에만 이 값이 전달됩니다. |
+| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기(GB). |
+| Flavor ID | Body | String | 인스턴스 사양 ID. |
+| Flavor Name | Body | String | 인스턴스 사양 이름. |
+| Is Public | Body | Boolean | 공용 인스턴스 사양 여부. |
+| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량(MB). |
+| VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수. |
 
 ## 키페어 API
-인스턴스 접근에 필요한 키페어에 대한 생성, 삭제, 조회 기능을 제공합니다.
+인스턴스 접근에 필요한 키페어를 생성, 삭제, 조회하는 기능을 제공합니다.
 ### 키페어 조회
 키페어를 조회합니다.
 #### Method, URL
@@ -910,11 +910,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - |토큰 ID |
-| keypairName | Query | String | O | 조회할 키페어 이름. 기재하지 않을 경우 모든 키페어 정보를 조회합니다. |
+| tokenId | Header | String | - |토큰 ID. |
+| keypairName | Query | String | O | 조회할 키페어 이름. 없으면 모든 키페어 정보를 조회합니다. |
 
 #### Request Body
-이 API는 request body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 
@@ -938,13 +938,13 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Keypair Name | Body | String | 키페어 이름 |
-| Public Key Value | Body | String | 키페어의 공개 키 값 |
-| Fingerprint Value | Body | String | Fingerprint 값 |
+| Keypair Name | Body | String | 키페어 이름. |
+| Public Key Value | Body | String | 키페어의 공개 키 값. |
+| Fingerprint Value | Body | String | 핑거프린트(fingerprint) 값. |
 | Created At | Body | DateTime | 키페어 생성 시간. "Keypair Name"을 지정한 단건 조회 시에만 노출됩니다. |
 
 ### 키페어 생성과 업로드
-키페어를 생성하거나 사용자가 직접 생성한 키페어를 업로드 합니다.
+키페어를 생성하거나 사용자가 직접 생성한 키페어를 업로드합니다.
 
 #### Method, URL
 ```
@@ -1014,7 +1014,7 @@ X-Auth-Token: {tokenId}
 | keypairName | Query | String | - | 삭제할 키페어 이름 |
 
 #### Request Body
-이 API는 Request Body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json

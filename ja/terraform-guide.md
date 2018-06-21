@@ -1,13 +1,13 @@
-## Compute > Instance > Third party Guide > Terraform Guide
+## Compute > Instance > 서드파티 사용 가이드 > Terraform 사용 가이드
 
-이 문서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
+이 문서에서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
 
 ## Terraform
-Terraform은 인프라를 손쉽게 구축하고, 안전하게 변경하고, 효율적으로 인프라의 형상을 관리 할 수 있는 오픈 소스 도구입니다. 주요 특징은 다음과 같습니다.
+Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효율적으로 인프라의 형상을 관리할 수 있는 오픈 소스 도구입니다. Terraform의 주요 특징은 다음과 같습니다.
 
 * **Infrastructure as Code**
     * 인프라를 코드로 정의하여 생산성과 투명성을 높일 수 있습니다.
-    * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업을 진행할 수 있습니다.
+    * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업할 수 있습니다.
 * **Execution Plan**
     * 변경 계획과 변경 적용을 분리하여 변경 내용을 적용할 때 발생할 수 있는 실수를 줄일 수 있습니다.
 * **Resource Graph**
@@ -15,7 +15,7 @@ Terraform은 인프라를 손쉽게 구축하고, 안전하게 변경하고, 효
     * 종속성 그래프를 작성하여 이 그래프를 바탕으로 계획을 세우고, 이 계획을 적용했을 때 변경되는 인프라 상태를 확인할 수 있습니다.
 * **Change Automation**
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
-    * 인프라를 구축하는데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
+    * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
 Terraform은 주요 공급자들의 거의 모든 솔루션을 지원합니다.
 
@@ -23,7 +23,7 @@ Terraform은 주요 공급자들의 거의 모든 솔루션을 지원합니다.
 
 
 ## Terraform 설치
-[Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 OS에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
+[Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
 
 다음은 설치 예시입니다.
 
@@ -40,9 +40,9 @@ is 0.11.1. You can update by downloading from www.terraform.io
 
 > [참고]
 > 이 예시에서는 `export` 명령을 이용해 경로를 설정했기 때문에 터미널을 닫으면 설정한 경로가 사라집니다.
-> `.bashrc` 또는 `.bash_profile`과 같은 사용자 프로파일에서 경로를 설정하도록 하면 항구적으로 사용할 수 있습니다.
+> `.bashrc` 또는 `.bash_profile`과 같은 사용자 프로파일에서 경로를 설정하도록 하면 계속 사용할 수 있습니다.
 
-아무런 파라미터 없이 Terraform을 실행하면 간단한 사용 방법을 볼 수 있습니다.
+아무런 파라미터 없이 Terraform을 실행하면 간단한 사용법을 볼 수 있습니다.
 
 ```
 $ terraform
@@ -84,7 +84,7 @@ All other commands:
 
 ## TOAST 환경에서 사용
 
-TOAST 환경에서 TerraForm을 이용하여 인스턴스를 생성, 추가, 변경, 삭제하는 방법에 대해 예시와 함께 알아보겠습니다.
+TOAST 환경에서 TerraForm을 이용하여 인스턴스를 생성, 추가, 변경, 삭제하는 방법을 예시와 함께 알아보겠습니다.
 
 > [참고]
 > 아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하시기 바랍니다.
@@ -107,20 +107,20 @@ provider "openstack" {
 
 * **provider**
     * 공급자 이름을 명시해야 합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **_openstack_**입니다.
+    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
 * **user_name**
-    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
+    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
 * **tenant_id**
-    * TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
+    * TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
 * **password**
-    * **API 보안 설정** 메뉴에서 발급 받을 수 있는 **Secret Access Key**를 사용합니다.
+    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **Secret Access Key**를 사용합니다.
 * **auth_url**
     * auth_url은 `` 입니다.
 * **region**
-    * 한국 리젼은 **RegionOne**을 사용합니다.
+    * 한국 리전은 **RegionOne**을 사용합니다.
 
 > [참고]
-> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참조하십시오.
+> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
 
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
@@ -156,7 +156,7 @@ commands will detect it and remind you to do so if necessary.
 
 ### 인스턴스 생성
 
-인스턴스를 생성하려면 다음과 같이 .tf 파일에 생성할 인스턴스에 대한 정보를 입력해야 합니다.
+인스턴스를 생성하려면 다음과 같이 .tf 파일에 생성할 인스턴스 정보를 입력해야 합니다.
 
 ```
 $ vi terraform-instance-01.tf
@@ -184,29 +184,29 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 
 * **resource**
     * 리소스 유형과 리소스 이름으로 구성합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 **openstack_compute_instance_v2** 입니다.
+    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 **openstack_compute_instance_v2**입니다.
     * 리소스 이름은 생성할 인스턴스의 이름입니다.
 * **name**
     * 생성할 인스턴스의 이름입니다.
 * **region**
-    * 공급자 설정 파일에 기재한 내용과 같아야 합니다.
+    * 공급자 설정 파일에 적은 내용과 같아야 합니다.
 * **flavor_id**
-    * 생성할 인스턴스의 사양 ID 입니다.
+    * 생성할 인스턴스의 사양 ID입니다.
     * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
 * **key_pair**
     * 인스턴스 접속에 사용할 키페어 이름입니다.
-    * TOAST 콘솔의 **_Compute > Instance > Key Pair_** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 콘솔 사용 가이드의 [키페어](/Compute/Instance/ko/console-guide/#_7) 항목을 참조하십시오.    
+    * TOAST 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 자세한 설명은 콘솔 사용 가이드의 [키페어](/Compute/Instance/ko/console-guide/#_7) 항목을 참고합니다.    
 * **network**
     * 인스턴스에 연결할 VPC 이름과 uuid를 입력합니다.
-    * TOAST 콘솔의 **_Network > VPC > Management_** 메뉴에서 연결할 VPC를 선택하면, 하단 상세정보 화면에서 이름과 uuid를 확인할 수 있습니다.
+    * TOAST 콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면, 하단 상세 정보 화면에서 이름과 uuid를 확인할 수 있습니다.
 * **security_groups**
     * 인스턴스에서 사용할 보안 그룹의 이름입니다.
-    * 콤마(,)로 구분하여 하나 이상의 보안 그룹을 지정할 수 있습니다.
-    * TOAST 콘솔의 **_Network > VPC > Security Groups_** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세정보 화면에서 정보를 확인할 수 있습니다.
+    * 쉼표(,)로 구분하여 하나 이상의 보안 그룹을 지정할 수 있습니다.
+    * TOAST 콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
 * **block_device**
     * 인스턴스에 사용할 이미지 또는 블록 스토리지 정보와 디스크 용량을 설정합니다.
     * uuid
-        * TOAST 콘솔의 **_Compute > Images_** 메뉴에서 사용할 이미지를 선택하면 하단 상세정보 화면에서 정보를 확인할 수 있습니다.
+        * TOAST 콘솔의 **Compute > Images** 메뉴에서 사용할 이미지를 선택하면 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
     * source_type
         * 이미지를 이용해 인스턴스를 생성한다면 source_type은 **image**입니다.
     * destination_type
@@ -216,7 +216,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * volume_size
         * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
         * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/ko/console-guide/#_4) 항목을 참조하십시오.
+        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 자세한 설명은 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/ko/console-guide/#_4) 항목을 참고합니다.
     * delete_on_termination
         * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
 
@@ -306,7 +306,7 @@ $ ls
 provider.tf               tc-instance-01.tf         terraform.tfstate         terraform.tfstate.backup
 ```
 
-생성한 인스턴스는 TOAST 콘솔의 **_Compute > Instance > Management_** 메뉴에서 확인할 수 있습니다.
+생성한 인스턴스는 TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 확인할 수 있습니다.
 
 ### 인스턴스 추가 생성
 
@@ -316,9 +316,9 @@ provider.tf               tc-instance-01.tf         terraform.tfstate         te
 
 인스턴스를 변경할 .tf 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다.
 
-변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 사양은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
+변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안 그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 사양은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
 
-아래 예시는 보안 그룹을 하나 더 추가한 내용입니다.
+아래 예시는 보안 그룹을 하나 더 추가한 것입니다.
 
 ```
 $ vi terraform-instance-01.tf
@@ -329,7 +329,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-플랜을 로딩하면 변경된 보안 그룹 정보를 정리하여 출력해 줍니다.
+플랜을 로딩하면 변경된 보안 그룹 정보를 정리하여 출력합니다.
 
 ```
 $ terraform plan
@@ -423,9 +423,9 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## HCL
 
-Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`.tf.json`)을 사용합니다. 손으로 작성할 때는 Terraform 형식이 더 편리합니다.
+Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`tf.json`)을 사용합니다.
 
-지정한 폴더에 `.tf`, `.tf.json`을 넣어두면 TerraForm이 알파벳 순서로 로드합니다. 변수나 리소스의 정의 순서는 상관이 없습니다.
+지정한 폴더에 `.tf`, `.tf.json`을 저장하면 TerraForm이 알파벳 순서로 로드합니다. 변수나 리소스의 정의 순서는 상관이 없습니다.
 
 그 외에 다른 설정을 덮어쓰기 위한 오버라이드 파일을 사용할 수 있습니다. 파일명을 `override` 또는 `_override`로 끝나도록 하면 됩니다. 오버라이드 파일은 다른 설정 파일들의 로딩이 다 끝나면 알파벳순으로 로드하여 설정들을 덮어씁니다.
 
@@ -512,5 +512,5 @@ module "name" {
 }
 ```
 
-## References
+## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
