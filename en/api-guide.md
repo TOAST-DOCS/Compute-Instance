@@ -50,7 +50,7 @@ Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이�
 }
 ```
 
-API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/ko/error-code/)를 참고합니다.
+API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/en/error-code/)를 참고합니다.
 
 ### 토큰 API
 
@@ -423,7 +423,7 @@ Content-Type: application/json;charset=UTF-8
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
 | Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
-| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조 |
+| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/en/console-guide/#_5)를 참조 |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
 * **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 로 인스턴스 생성 시**
@@ -688,7 +688,7 @@ Content-Type: application/json;charset=UTF-8
 ```
 
 ### 이미지 생성
-지정한 인스턴스로부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/ko/api-guide/)로 조회할 수 있습니다.
+지정한 인스턴스로부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/en/api-guide/)로 조회할 수 있습니다.
 
 이미지 생성 대상이 되는 인스턴스는 STOP 상태여야 합니다.
 
