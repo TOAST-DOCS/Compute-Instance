@@ -17,14 +17,7 @@
 
 ### 이미지
 
-이미지는 운영체제를 담고 있는 가상 디스크입니다. TOAST는 현재 다음 운영체제를 지원하고 있습니다.
-
-| 운영체제 | 버전 |
-|------- | ---- |
-| CentOS | 6.5<br>7.1|
-| Debian | 8.2.0|
-| Ubuntu | 14.04 |
-| Windows | 2012 R2 Standard  |
+이미지는 운영체제를 담고 있는 가상 디스크입니다. TOAST는 현재 CentOS, Debian, Ubuntu와 Windows를 지원하고 있습니다. 자세한 지원 운영체제 버전은 [토스트(TOAST) 서비스](https://toast.com/service/compute/instance)를 참고합니다.
 
 모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정돼 있으며, TOAST의 보안 검증을 거쳤기 때문에 안전하게 사용할 수 있습니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/ko/overview/)를 참고합니다.
 
