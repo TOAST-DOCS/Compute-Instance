@@ -20,7 +20,7 @@ Unless specified, the availability zone shall be set randomly. Depending on the 
 
 > [Note] VPC resources are available in all availability zones.
 
-For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](/Compute/Instance/ko/overview/#_4).
+For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](/Compute/Instance/en/overview/#_4).
 
 ### Flavors 
 
@@ -70,13 +70,13 @@ Specify a security group where an instance is to be included. One instance can b
 - Can communicate via network with all instances included to each security group. Take cautious approach when specifying a security group for an instance with sensitive data from which unintentional access from other instances should be prevented. 
 - Rules of each security group are combined and applied for the instance's external communication. 
 
-For more details, refer to [Overview of VPC](/Network/VPC/ko/overview/)
+For more details, refer to [Overview of VPC](/Network/VPC/en/overview/)
 
 ### Network 
 
 Select a subnet to be connected to an instance, among those defined in VPC. Every time a subnet is selected, a network interface is created to be connected to the subnet. The order of selected subnets may be changed to alter network interfaces, in which case, the first network interface  (`eth0`) shall be set as the default gateway. 
 
-For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/ko/overview/).
+For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/en/overview/).
 
 ## Further Functions of Instances 
 
@@ -92,13 +92,13 @@ Image, once created, is registered as Private Image at Compute > Image. The imag
 
 Floating IP can be associated or disassociated, regardless of the instance status. When there is no available floating IP, create one by clicking **Create**. Or go to **Network > VPC > Floating IP** to create a floating IP.  
 
-For more details, refer to [Overview of VPC](/Network/VPC/ko/overview/). 
+For more details, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
 ### Modify Security Group
 
 Security groups of an instance can be modified, regardless of instance status: modified security groups are immediately applied. 
 
-For more details, refer to [Security Group](./console-guide/#_8) and [Overview of VPC](/Network/VPC/ko/overview/). 
+For more details, refer to [Security Group](./console-guide/#_8) and [Overview of VPC](/Network/VPC/en/overview/). 
 
 ### Modify Network Interface 
 
@@ -116,7 +116,7 @@ Instance flavors are allowed to change, depending on the current flavors.
 
 If an instance changes its flavors, Change and Confirm Change are followed. When all tasks are completed, the VM status changes into **Shutoff**, and you can start an instance by clicking **Start Instance** in **Further Functions**. 
 
-> [Note] Default disk size of an instance cannot be changed. If an instance has no sufficient disk space, add a block storage: for detailed method, refer to [Overview of Block Storage](/Storage/Block%20Storage/ko/overview/). 
+> [Note] Default disk size of an instance cannot be changed. If an instance has no sufficient disk space, add a block storage: for detailed method, refer to [Overview of Block Storage](/Storage/Block%20Storage/en/overview/). 
 
 Instances shall be charged by changed flavors, as of the time of change. 
 
