@@ -1,31 +1,31 @@
-## Compute > Instance > 서드파티 사용 가이드 > Terraform 사용 가이드
+## Compute > Instance > Third party Guide > Terraform Guide
 
-이 문서에서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
+This document describes how to manage instances for TOAST services by using Terraform .
 
 ## Terraform
-Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효율적으로 인프라의 형상을 관리할 수 있는 오픈 소스 도구입니다. Terraform의 주요 특징은 다음과 같습니다.
+Terraform is an open-source tool which can easily build, safely change, and efficiently manage configuration of infrastructure. Main features are as below: 
 
 * **Infrastructure as Code**
-    * 인프라를 코드로 정의하여 생산성과 투명성을 높일 수 있습니다.
-    * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업할 수 있습니다.
+    * Elevate productivity and transparency by defining infrastructure in codes. 
+    * Easily share defined codes so as to collaborate more efficiently. 
 * **Execution Plan**
-    * 변경 계획과 변경 적용을 분리하여 변경 내용을 적용할 때 발생할 수 있는 실수를 줄일 수 있습니다.
+    * Separate change plan from application and minimize mistakes that may occur when change is applied. 
 * **Resource Graph**
-    * 사소한 변경이 인프라 전체에 어떤 영향을 미칠지 미리 확인할 수 있습니다.
-    * 종속성 그래프를 작성하여 이 그래프를 바탕으로 계획을 세우고, 이 계획을 적용했을 때 변경되는 인프라 상태를 확인할 수 있습니다.
+    * Predict how a minor change affects the whole infrastructure in advance. 
+    * Create a dependency graph to plan and check status of infrastructure changes when this plan applies. 
 * **Change Automation**
-    * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
-    * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
+    * Automation is available to build and change infrastructure of same configuration in many locations. 
+    * Save time to build infrastructure, while minimizing mistakes.  
 
-Terraform은 주요 공급자들의 거의 모든 솔루션을 지원합니다.
+Terraform supports almost all solutions of major providers: 
 
-* AWS, BareMetal, Bitbucket, Chef, Cloudflare, Docker, GitHub, Google Cloud, Grafana, InfluxDB, Heroku, Microsoft Azure, MySQL, OpenStack, PostgreSQL 등
+* AWS, BareMetal, Bitbucket, Chef, Cloudflare, Docker, GitHub, Google Cloud, Grafana, InfluxDB, Heroku, Microsoft Azure, MySQL, OpenStack, PostgreSQL, and more
 
 
-## Terraform 설치
-[Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
+## Install Terraform 
+Download files for the operating system on your local PC from [Download Terraform](https://www.terraform.io/downloads.html). Decompress and put them in the route you choose and add the route to the environment setting, and it is done. 
 
-다음은 설치 예시입니다.
+Here is an example for installation: 
 
 ```
 $ wget https://releases.hashicorp.com/terraform/0.11.1/terraform_0.11.1_linux_amd64.zip
@@ -38,11 +38,11 @@ Your version of Terraform is out of date! The latest version
 is 0.11.1. You can update by downloading from www.terraform.io
 ```
 
-> [참고]
-> 이 예시에서는 `export` 명령을 이용해 경로를 설정했기 때문에 터미널을 닫으면 설정한 경로가 사라집니다.
-> `.bashrc` 또는 `.bash_profile`과 같은 사용자 프로파일에서 경로를 설정하도록 하면 계속 사용할 수 있습니다.
+> [Note]
+> The route for this example has been set with `export`  command, and the route is gone if the terminal is closed. 
+> If routes are set by user profiles, such as `.bashrc` or `.bash_profile`, usage becomes eternal. 
 
-아무런 파라미터 없이 Terraform을 실행하면 간단한 사용법을 볼 수 있습니다.
+By executing Terraform without any parameters, simple usage is available. 
 
 ```
 $ terraform
@@ -82,16 +82,16 @@ All other commands:
     state              Advanced state management
 ```
 
-## TOAST 환경에서 사용
+## Usage for TOAST Environment  
 
-TOAST 환경에서 TerraForm을 이용하여 인스턴스를 생성, 추가, 변경, 삭제하는 방법을 예시와 함께 알아보겠습니다.
+Here's how to create, add, and remove instances by using Terraform in the TOAST environment with examples. 
 
-> [참고]
-> 아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하시기 바랍니다.
+> [Note]
+> All data of below examples are not real: replace them with correct data for your own usage. 
 
-### Terraform 초기화
+### Initialize Terraform  
 
-Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 구성해야 합니다.
+Before using Terraform, provider files must be configured as below: 
 
 ```
 $ vi provider.tf
@@ -106,24 +106,24 @@ provider "openstack" {
 ```
 
 * **provider**
-    * 공급자 이름을 명시해야 합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
+    * Specify the provider's name. 
+    * The provider of TOAST is named **_openstack_** as it is built on OpenStack. 
 * **user_name**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
+    * Use  **User Access Key ID**(or TOAST account ID) which can be issued from **API Security Setting**.
 * **tenant_id**
-    * TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
+    * Click **API Endpoint Setting** from **_Compute > Instance > Management_** in the TOAST console to check tenant ID. 
 * **password**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **Secret Access Key**를 사용합니다.
+    * Use **Secret Access Key** which can be issued from **API Security Setting** 
 * **auth_url**
-    * auth_url은 `` 입니다.
+    * The auth_url is ``.
 * **region**
-    * 한국 리전은 **RegionOne**을 사용합니다.
+    * Korea uses **RegionOne**.
 
-> [참고]
-> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/en/api-guide/#api) 항목을 참고합니다.
+> [Note]
+> To issue User Access Key ID and Secret Access Key, refer to [Token API](/Compute/Instance/ko/api-guide/#api) in the API preparation guide. 
 
 
-구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
+Command `init`  to initialize Terraform from the route that has configured supplier setting file.  
 
 ```
 $ terraform init
@@ -154,9 +154,9 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-### 인스턴스 생성
+### Create Instances 
 
-인스턴스를 생성하려면 다음과 같이 .tf 파일에 생성할 인스턴스 정보를 입력해야 합니다.
+To create an instance, data input is required to the instance to be created in the .tf file. 
 
 ```
 $ vi terraform-instance-01.tf
@@ -183,45 +183,45 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 ```
 
 * **resource**
-    * 리소스 유형과 리소스 이름으로 구성합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 **openstack_compute_instance_v2**입니다.
-    * 리소스 이름은 생성할 인스턴스의 이름입니다.
+    * Configure the type and name of a resource.
+    * As TOAST is built on OpenStack, the resource type is  **openstack_compute_instance_v2**. 
+    * The resource name is the name of the instance to create. 
 * **name**
-    * 생성할 인스턴스의 이름입니다.
+    * Name of an instance to create. 
 * **region**
-    * 공급자 설정 파일에 적은 내용과 같아야 합니다.
+    * Must coincide with what is described in provider setting file 
 * **flavor_id**
-    * 생성할 인스턴스의 사양 ID입니다.
-    * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](/Compute/Instance/en/api-guide/#_18)를 통해 조회할 수 있습니다.
+    * Flavors ID of an instance to create.
+    * Can be retrieved through [Retrieve List of Instance Flavors API](/Compute/Instance/ko/api-guide/#_18) among open APIs provided by TOAST
 * **key_pair**
-    * 인스턴스 접속에 사용할 키페어 이름입니다.
-    * TOAST 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 자세한 설명은 콘솔 사용 가이드의 [키페어](/Compute/Instance/en/console-guide/#_7) 항목을 참고합니다.    
+    * Name of a key pair applied to access instance. 
+    * You can newly create or register your own key pairs in  **_Compute > Instance > Key Pair_** in the TOAST console. Refer to  [Key Pair](/Compute/Instance/ko/console-guide/#_7) in the console user guide. 
 * **network**
-    * 인스턴스에 연결할 VPC 이름과 uuid를 입력합니다.
-    * TOAST 콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면, 하단 상세 정보 화면에서 이름과 uuid를 확인할 수 있습니다.
+    * Enter VPC name and uuid to be connected to an instance. 
+    * Select VPC to connect in **_Network > VPC > Management_**, and check the name and uuid at the bottom of details. 
 * **security_groups**
-    * 인스턴스에서 사용할 보안 그룹의 이름입니다.
-    * 쉼표(,)로 구분하여 하나 이상의 보안 그룹을 지정할 수 있습니다.
-    * TOAST 콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
+    * Name of a security group to be applied for an instance. 
+    * Specify more than one security groups delimited by comma (,). 
+    * Select a security group to use in **_Network > VPC > Security Groups_**, and check information at the bottom of details. 
 * **block_device**
-    * 인스턴스에 사용할 이미지 또는 블록 스토리지 정보와 디스크 용량을 설정합니다.
-    * uuid
-        * TOAST 콘솔의 **Compute > Images** 메뉴에서 사용할 이미지를 선택하면 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
-    * source_type
-        * 이미지를 이용해 인스턴스를 생성한다면 source_type은 **image**입니다.
-    * destination_type
-        * 블록 디바이스를 인스턴스의 디스크로 사용한다면 destination_type은 **volume**입니다.
-    * boot_index
-        * 블록 디바이스를 인스턴스의 부트 디스크로 사용한다면 boot index는 **0**입니다.
-    * volume_size
-        * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
-        * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 자세한 설명은 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/en/console-guide/#_4) 항목을 참고합니다.
-    * delete_on_termination
-        * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
+    *  Set image or block storage information and disk volume to be applied for an instance. 
+    *  uuid
+        * Select an image to use in **_Compute > Images_** and check information at the bottom of details. 
+    *  source_type
+        * If an instance is created with image, the source_type is **image**.
+    *  destination_type
+        * If block device is used as an instance disk, the destination_type is **volume**.
+    *  boot_index
+        * If block device is used as an instance boot disk, the boot index is **0**. 
+    *  volume_size
+        * Set disk volume to use for an instance to be created. 
+        * Setting is available between 20GB and 1,000GB. 
+        * Volume setting depends on instance flavors: refer to [Create Instances > Flavors](/Compute/Instance/ko/console-guide/#_4) in the console user guide.  
+    *  delete_on_termination
+        * If this option is set true, block device shall be deleted along with an instance destruction. 
 
 
-.tf 파일들이 있는 경로에서 `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
+Terraform, when `plan` is run on the route containing .tf files, loads the .tf files to see if setting is right and creates a plan in comparison of its own DB. The plan, when completed, is sorted out by type and printed in good display.   
 
 ```
 ./terraform plan
@@ -283,7 +283,7 @@ can't guarantee that exactly these actions will be performed if
 ```
 
 
-`apply` 명령을 실행하면 플랜을 적용하여 인스턴스를 생성합니다. 그리고 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)을 생성합니다.
+When `apply` is executed, apply the plan to create an instance. And, its own Db file (terraform.tfstate) to record history of plan changes is to be created. 
 
 ```
 $ terraform apply
@@ -306,19 +306,19 @@ $ ls
 provider.tf               tc-instance-01.tf         terraform.tfstate         terraform.tfstate.backup
 ```
 
-생성한 인스턴스는 TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 확인할 수 있습니다.
+To check created instances, go to **_Compute > Instance > Management_** in the TOAST console. 
 
-### 인스턴스 추가 생성
+### Create More Instances 
 
-인스턴스 추가는 생성과 같은 방법으로 .tf 파일을 만들고 플랜을 적용합니다. 여러 개의 .tf 파일을 만들고 한꺼번에 적용해도 됩니다.
+Creating more instances follows the same method of instance creation, like creating .tf files and applying the plan. Many .tf files can be created and applied all at once. 
 
-### 인스턴스 변경
+### Change Instances
 
-인스턴스를 변경할 .tf 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다.
+Open the .tf files of which instances need to change, and modify information and apply the plan. 
 
-변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안 그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 사양은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
+Change of flavors is limited: add new disks, remove or replace security groups and VPCs connected to an instance. By changing volume of a boot disk, a new instance is created in place of an existing instance. 
 
-아래 예시는 보안 그룹을 하나 더 추가한 것입니다.
+Example as below describes adding one more security group. 
 
 ```
 $ vi terraform-instance-01.tf
@@ -329,7 +329,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-플랜을 로딩하면 변경된 보안 그룹 정보를 정리하여 출력합니다.
+Load the plan, and information of changed security group is organized and printed. 
 
 ```
 $ terraform plan
@@ -362,7 +362,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-플랜을 적용하면 인스턴스에 새로운 보안 그룹이 추가됩니다.
+Apply the plan, and a new security group is added to the instance. 
 
 ```
 $ terraform apply
@@ -376,11 +376,11 @@ openstack_compute_instance_v2.terraform-instance-01: Modifications complete afte
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
-### 인스턴스 삭제
+### Destroy Instances 
 
-인스턴스 생성에서 사용했던 .tf 파일을 삭제하고 플랜을 적용하면 인스턴스가 삭제됩니다.
+Delete the .tf files used to create instances and apply plan, and the instance is destroyed. 
 
-플랜을 로딩하면 리소스 설정을 삭제했기 때문에 삭제된 플랜이 1건이 있음을 보여줍니다.
+Load the plan and it shows one plan is destroyed as resource setting has been destroyed. 
 
 ```
 $ rm tc-instance-01.tf
@@ -411,7 +411,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-플랜을 적용하면 인스턴스가 삭제됩니다.
+Apply the plan and instance is destroyed. 
 
 ```
 $ terraform apply
@@ -423,37 +423,38 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## HCL
 
-Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`tf.json`)을 사용합니다.
+For Terraform configuration, use HashiCorp Configuration Language, or HCL, which uses Terraform format (`.tf`) and JSON format (`.tf.json`).
 
-지정한 폴더에 `.tf`, `.tf.json`을 저장하면 TerraForm이 알파벳 순서로 로드합니다. 변수나 리소스의 정의 순서는 상관이 없습니다.
+Put  `.tf`, `.tf.json` to a specified folder, and TerraForm loads files in the alphabetical order: definition order of variables or resources does not count. 
 
-그 외에 다른 설정을 덮어쓰기 위한 오버라이드 파일을 사용할 수 있습니다. 파일명을 `override` 또는 `_override`로 끝나도록 하면 됩니다. 오버라이드 파일은 다른 설정 파일들의 로딩이 다 끝나면 알파벳순으로 로드하여 설정들을 덮어씁니다.
+You can also use Overrides, which is to override other settings: name a file ending with   `override` or `_override`. Override files are loaded last in the alphabetical order after other files are loaded, to override settings.  
 
-### HCL 문법
+### HCL Grammar 
 
-* **주석**
+* **Footnotes**  
 
-**#**, **//**, **/\* \*/**을 사용할 수 있습니다.
+**#**, **//, and** **/\* \*/** are available.
 
-* **값 할당**
+* **Value Allocation**  
 
-**key = value** 형태를 사용합니다. 값은 문자열, 숫자, 불리언, 리스트, 맵을 모두 사용할 수 있습니다.
+The **key = value** format is applied. 
+Character strings, numbers, boolean, lists, and maps are all available. 
 
-* **문자열**
+* **Character String** 
 
-큰따옴표를 사용합니다. 여러 줄의 문자열을 사용할 때는 [유닉스 셸의 Here document](https://en.wikipedia.org/wiki/Here_document) 형식으로 `<<EOF`, `EOF` 사이에 문자열을 넣어야 합니다.
+Use double quotes. To use many lines of character strings, put a string between  `<<EOF`and `EOF` , in the format of [Here document of Unix Shell](https://en.wikipedia.org/wiki/Here_document). 
 
 ```
 description = <<EOF
-...문자열문자열문자열문자열...
-...문자열문자열문자열문자열...
-...문자열문자열문자열문자열...
+...CharacterStringCharacterStringCharacterString...
+...CharacterStringCharacterStringCharacterString...
+...CharacterStringCharacterStringCharacterString...
 EOF
 ```
 
-* **자원**
+* **Resource** 
 
-자원을 선언할 때는 **resource** 키워드를 사용하며 공급자에 따라 Terraform이 정의해 둔 자원 유형을 명시해야 합니다.
+To declare resources, use **resource**: the format, defined by Terraform, needs to be specified depending on the provider. 
 
 ```
 resource "openstack_compute_instance_v2" "web" {
@@ -461,25 +462,25 @@ resource "openstack_compute_instance_v2" "web" {
 }
 ```
 
-* **공급자**
+* **Provider**
 
-공급자를 선언할 때는 **provider** 키워드를 사용합니다. 자원을 선언할 때 명시한 자원 유형의 접두사가 공급자 유형입니다.
+To declare providers, use **provider**: the prefix of resource format that is specified in resource declaration refers to the provider format.  
 
 ```
-# 자원 유형: openstack_compute_instance_v2
+# Resource Format: openstack_compute_instance_v2
 provider "openstack" {
     ...
 }
 
-# 자원 유형: aws_instance
+# Resource Format: aws_instance
 provider "aws" {
     ...
 }
 ```
 
-* **데이터 소스**
+* **Data Source**
 
-공급자로부터 가져올 데이터를 데이터 소스라고 합니다. **data** 키워드를 사용하며, 유형(type)과 이름(name)으로 구성합니다.
+Data Source refers to such data that is to be imported from provider: comprised of type and name, and the keyword is **data**.
 
 ```
 data "type" "name" {
@@ -487,9 +488,9 @@ data "type" "name" {
 }
 ```
 
-* **변수**
+* **Variable**
 
-변수를 선언할 때는 **variable** 키워드를 사용합니다. 형식을 추론하기 때문에 정의하지 않아도 무방합니다.
+To declare variables, use **variable** as the keyword: definition is not required as the format can be inferred. 
 
 ```
 variable "name" {
@@ -501,9 +502,9 @@ variable "name" {
 }
 ```
 
-* **모듈**
+* **Module**
 
-**module** 키워드를 사용하면 기존에 정의한 리소스 그룹을 모듈로 가져와 사용할 수 있습니다. GitHub, Bitbucket 등을 지원합니다.
+With **module**, resource groups that were defined previously can be imported to module: supports GitHub and Bitbucket. 
 
 ```
 module "name" {
@@ -512,5 +513,5 @@ module "name" {
 }
 ```
 
-## 참고 사이트
+## References
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
