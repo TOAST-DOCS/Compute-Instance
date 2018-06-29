@@ -120,7 +120,7 @@ provider "openstack" {
     * Korea uses **RegionOne**.
 
 > [Note]
-> To issue User Access Key ID and Secret Access Key, refer to [Token API](/Compute/Instance/ko/api-guide/#api) in the API preparation guide. 
+> To issue User Access Key ID and Secret Access Key, refer to [Token API](/Compute/Instance/en/api-guide/#api) in the API preparation guide. 
 
 
 Command `init`  to initialize Terraform from the route that has configured supplier setting file.  
@@ -192,10 +192,10 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * Must coincide with what is described in provider setting file 
 * **flavor_id**
     * Flavors ID of an instance to create.
-    * Can be retrieved through [Retrieve List of Instance Flavors API](/Compute/Instance/ko/api-guide/#_18) among open APIs provided by TOAST
+    * Can be retrieved through [Retrieve List of Instance Flavors API](/Compute/Instance/en/api-guide/#_18) among open APIs provided by TOAST
 * **key_pair**
     * Name of a key pair applied to access instance. 
-    * You can newly create or register your own key pairs in  **_Compute > Instance > Key Pair_** in the TOAST console. Refer to  [Key Pair](/Compute/Instance/ko/console-guide/#_7) in the console user guide. 
+    * You can newly create or register your own key pairs in  **_Compute > Instance > Key Pair_** in the TOAST console. Refer to  [Key Pair](/Compute/Instance/en/console-guide/#_7) in the console user guide. 
 * **network**
     * Enter VPC name and uuid to be connected to an instance. 
     * Select VPC to connect in **_Network > VPC > Management_**, and check the name and uuid at the bottom of details. 
@@ -216,7 +216,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     *  volume_size
         * Set disk volume to use for an instance to be created. 
         * Setting is available between 20GB and 1,000GB. 
-        * Volume setting depends on instance flavors: refer to [Create Instances > Flavors](/Compute/Instance/ko/console-guide/#_4) in the console user guide.  
+        * Volume setting depends on instance flavors: refer to [Create Instances > Flavors](/Compute/Instance/en/console-guide/#_4) in the console user guide.  
     *  delete_on_termination
         * If this option is set true, block device shall be deleted along with an instance destruction. 
 

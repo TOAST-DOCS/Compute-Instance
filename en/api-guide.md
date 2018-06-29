@@ -50,7 +50,7 @@ The response body includes the "header" information by default, from which detai
 }
 ```
 
-When an API call is failed, 'isSuccessful' becomes 'false', and the error code will be displayed on the 'resultCode'. For more details, refer to [Error Code](/Compute/Instance/ko/error-code/).
+When an API call is failed, 'isSuccessful' becomes 'false', and the error code will be displayed on the 'resultCode'. For more details, refer to [Error Code](/Compute/Instance/en/error-code/).
 
 ### Token API
 
@@ -423,7 +423,7 @@ Content-Type: application/json;charset=UTF-8
 | Availability Zone   | Body | String  | -        | Name of availability zone to which an instance is to be created. |
 | Key Name            | Body | String  | -        | Name of a key pair to be registered at a instance. |
 | Count               | Body | Integer | 0        | Number of instances to be concurrently created: between 1 and 10, and no more than 10. |
-| Volume Size         | Body | Integer | 0        | Default disk size of an instance. Refer to the [Console Guide ](/Compute/Instance/ko/console-guide/#_5) for the available size to create. |
+| Volume Size         | Body | Integer | 0        | Default disk size of an instance. Refer to the [Console Guide ](/Compute/Instance/en/console-guide/#_5) for the available size to create. |
 | Security Group Name | Body | String  | -        | Name of a security group to be registered at an instance |
 
 * When creating an instance with the **"volumeSize" parameter (u2.\*)** 
@@ -688,7 +688,7 @@ Change flavors of an instance.
 ```
 
 ### Create Images 
-Create an image from a specified instance. To retrieve the image, go to [Image API](/Compute/Image/ko/api-guide/). 
+Create an image from a specified instance. To retrieve the image, go to [Image API](/Compute/Image/en/api-guide/). 
 
 Instances that are stopped can be the subject for image creation. 
 

@@ -19,7 +19,7 @@ Flavors and method of use change depending on the above information. Settings, e
 
 Image is a virtual disk that has an operating system. TOAST currently supports CentOS, Debian, Ubuntu, and Windows. For more information about the versions we support, refer to [TOAST Service](https://toast.com/service/compute/instance).
 
-All images are configured for optimal execution under virtual hardware of an instance and are safe to use as they have been authenticated by TOAST security. For more details, refer to [Overview of Image](/Compute/Image/ko/overview/).
+All images are configured for optimal execution under virtual hardware of an instance and are safe to use as they have been authenticated by TOAST security. For more details, refer to [Overview of Image](/Compute/Image/en/overview/).
 
 ### Flavors 
 
@@ -55,14 +55,14 @@ Key pairs can be newly created in the TOAST console when an instance is created,
 
 ### Security Group 
 
-Security Group is a virtual firewall that determines network traffic delivered to an instance. For more details on Security Group, refer to [Overview of VPC](/Network/VPC/ko/overview/). 
+Security Group is a virtual firewall that determines network traffic delivered to an instance. For more details on Security Group, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
 > [Note]
 > Security groups are designed to ignore all inbound network traffic. Before accessing instance with SSH, configure to open SSH port to the security group that has the instance.  
 
 ### Network 
 
-For external communication, an instance must be connected to at least one network defined in VPC. Cannot access an instance which is not connected to a network. To create or change a network, refer to [Overview of VPC](/Network/VPC/ko/overview/). 
+For external communication, an instance must be connected to at least one network defined in VPC. Cannot access an instance which is not connected to a network. To create or change a network, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
 ## Charge 
 
@@ -77,7 +77,7 @@ Instance shall be charged as follows:
 
 ### How to Access Linux Instances 
 
-Use ssh client to access Linux instances. Access is not available if ssh access port (default 22) is not open to an instance security group. Refer to [Overview of VPC](/Network/VPC/ko/overview/) on how to allow ssh access. If a floating IP is not assigned to an instance, access from outside of TOAST is unavailable. Refer to [Overview of VPC](/Network/VPC/ko/overview/) on how to assign a floating IP.  
+Use ssh client to access Linux instances. Access is not available if ssh access port (default 22) is not open to an instance security group. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to allow ssh access. If a floating IP is not assigned to an instance, access from outside of TOAST is unavailable. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to assign a floating IP.  
 
 #### How to Access Linux Instances with ssh Client for Mac or Linux 
 
