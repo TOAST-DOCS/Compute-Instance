@@ -440,7 +440,7 @@ Content-Type: application/json;charset=UTF-8
   * Must set **by 10, between a "minDisk" value and 1000 of the image**, and a default disk with a specified size will be  created.
 
 > [Caution]
-> * `Volume Size` and `Volume Type` parameters works only when the flavor is c2, m2, r2, or t2 series.
+> * `Volume Size` and `Volume Type` parameters work only when the flavor is c2, m2, r2, or t2 series.
 > 	* These parameters are not available for 'u2' series flavors using local storage.
 > * `Volume Size` must be set to 10 units within a value beteen "minDisk" of selected Image and 1000 GB.
 > * `Volume Type` can be `null`, and it be regarded as "General HDD".
