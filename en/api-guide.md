@@ -432,13 +432,6 @@ Content-Type: application/json;charset=UTF-8
 | Volume Type         | Body | String | 0        | Type of Instance root block storage, Select "General HDD" or "General SSD" |
 | Security Group Name | Body | String  | -        | Name of a security group to be registered at an instance |
 
-* When creating an instance with the **"volumeSize" parameter (u2.\*)**
-  * Skip the "instance.volume.size" parameter.
-  * A default disk with a fixed volume as specified is created.
-* When creating an instance without the **"volumeSize" parameter **
-  * Must include the "instance.volume.size" parameter.
-  * Must set **by 10, between a "minDisk" value and 1000 of the image**, and a default disk with a specified size will be  created.
-
 > [Caution]
 > * `Volume Size` and `Volume Type` parameters work only when the flavor is c2, m2, r2, or t2 series.
 > 	* These parameters are not available for 'u2' series flavors using local storage.
