@@ -433,8 +433,8 @@ Content-Type: application/json;charset=UTF-8
 | Security Group Name | Body | String  | -        | Name of a security group to be registered at an instance |
 
 > [Caution]
-> * `Volume Size` and `Volume Type` parameters work only when the flavor is c2, m2, r2, or t2 series.
-> 	* These parameters are not available for 'u2' series flavors using local storage.
+> * `Volume Size` and `Volume Type` parameters are valid only for c2, m2, r2, or t2 flavors.
+> 	* These parameters are not applicable for 'u2' series flavors which use local storage.
 > * `Volume Size` must be set to 10 units within a value beteen "minDisk" of selected Image and 1000 GB.
 > * `Volume Type` can be `null`, and it be regarded as "General HDD".
 
