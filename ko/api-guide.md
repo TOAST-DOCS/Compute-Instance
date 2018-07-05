@@ -325,14 +325,14 @@ X-Auth-Token: {tokenId}
             "volumes": {
                 "root" : {
                     "size": "{Root Volume Size}",
-										"type": "{Root Volume Type}"
+                    "type": "{Root Volume Type}"
                 },
                 "attachments" : [
                     {
                         "id" : "{Attached Volume ID}",
                         "name": "{Attached Volume Name}",
                         "size": "{Attached Volume Size}",
-												"type": "{Attached Volume Type}"
+                        "type": "{Attached Volume Type}"
                     }
                 ]
             },
@@ -408,7 +408,7 @@ Content-Type: application/json;charset=UTF-8
         "count": "{Count}",
         "volume": {
            "size": "{Volume Size}",
-					 "type": "{Volume Type}",
+           "type": "{Volume Type}",
         },
         "securityGroups": [
         	{
