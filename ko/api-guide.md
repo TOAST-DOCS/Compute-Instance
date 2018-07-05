@@ -433,11 +433,10 @@ Content-Type: application/json;charset=UTF-8
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
 > [주의]
-> * `Volume Size`, `Volume Type` 파라미터는 범용 블록 스토리지를 사용할 경우만 적용됩니다.
-> 	* 범용 블록 스토리지가 아닌 로컬 디스크를 사용하는 u2 계열 사양에서는 해당 파라미터가 무시됩니다.
-> 	* u2 계열 이외의 사양에서는 반드시 `Volume Size`를 지정해야 합니다.
+> * `Volume Size`, `Volume Type` 파라미터는 c2, m2, r2, t2 사양에서만 적용됩니다.
+> 	* 이 파라미터는 범용 블록 스토리지가 아닌 로컬 디스크를 사용하는 u2 계열 사양에서는 사용할 수 없습니다.
 > * `Volume Size`는 **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 합니다.
-> * `Volume Type`을 지정하지 않는 경우 기본적으로 범용 HDD 스토리지가 선택됩니다.
+> * `Volume Type`은 `null`로 지정할 수 있으며, 이 경우 "General HDD"로 지정됩니다.
 
 
 #### Response Body
