@@ -1,44 +1,44 @@
-## Compute > Instance > API 가이드
+## Compute > Instance > API向导
 
-TOAST Compute Instance 서비스는 다음 종류의 API를 제공합니다.
+TOAST Compute Instance服务提供以下类型的API。
 
-* [가용성 영역 API](#api_2)
-* [인스턴스 API](#api_3)
-* [인스턴스 추가 기능 API](#api_4)
-* [인스턴스 사양 API](#api_5)
-* [키페어 API](#api_6)
+* [可用区API](#api_2)
+* [实例API](#api_3)
+* [实例附加功能API](#api_4)
+* [实例规格API](#api_5)
+* [密钥对API](#api_6)
 
 
-## 사전 준비
+## 事前准备
 
-인스턴스 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](#api-endpoint-url)과 [토큰 API](#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에, 토큰은 Request Body에 포함하여 사용합니다.
+如果要使用实例 API，您需要一个appkey和一个令牌。通过[API Endpoint URL](#api-endpoint-url)和[令牌API](#api)准备appkey和令牌。Appkey包含在API Endpoint URL中，令牌包含在Request Body中。
 
 ### API Endpoint URL
 
-모든 인스턴스, 이미지, 네트워크(VPC), 블록 스토리지 API는 다음 URL을 접두사로 사용해야 합니다.
+所有实例，镜像，网络（VPC）和块存储API都应使用以下URL作为前缀。
 
 	https://api-compute.cloud.toast.com/compute
 
-API를 요청할 때는 항상 앱키를 포함해 요청해야 합니다. 앱키는 아래와 같이 발급받을 수 있습니다.
+请求API时，必须将appkey包含在您的请求中。您可以获得一个APK密钥，如下所示。
 
-1. TOAST 콘솔 **Compute** 페이지 위쪽에서 **URL & Appkey**를 클릭합니다.
-2. **URL & Appkey** 대화 상자에서 **Appkey** 값을 복사해 사용합니다.
+1. 在TOAST控制台**计算**页面上方单击**URL & Appkey**。
+2. 在**URL & Appkey**对话框中复制并使用**Appkey**值。
 
-예를 들어, 토큰 발급 URL은 다음과 같습니다.
+例如，令牌发布URL如下。
 
 	POST https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/tokens
 
-인스턴스, 이미지, 네트워크, 블록 스토리지 API 문서에서는 간결하고 보기 쉽게 표기하기 위하여 API URL 접두사를 생략했습니다.
+在实例，镜像，网络和块存储API文档中，我们省略了API URL前缀，以呈现简洁，易于直观的效果。
 
 ### API Response
 
 #### Response HTTP Status Code
 
-모든 API 요청에 200 OK로 응답하며, JSON 형태의 Response Body를 포함합니다.
+针对所有API请求，都均以200 OK应答，并包含JSON格式的Response Body。
 
 #### Response Body
 
-Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이를 통해 자세한 응답 결과를 확인할 수 있습니다. API에 따라 "header" 외 추가적인 정보가 포함될 수 있습니다.
+Response Body默认包含"header"信息，因此，您可以看到详细的响应结果。不同API，可以包含"header"以外的其它信息。
 
 ```json
 {
@@ -50,21 +50,21 @@ Response Body에는 "header" 정보가 기본으로 포함되어 있으며, 이�
 }
 ```
 
-API 호출이 실패하면 `isSuccessful`이 `false`가 되며, 오류 코드가 `resultCode`에 표시됩니다. 자세한 오류 코드는 [오류 코드](/Compute/Instance/zh/error-code/)를 참고합니다.
+如果API调用失败，`isSuccessful`变为`false`，错误代码将显示在`resultCode`中。详细的错误代码请参考[错误代码](/Compute/Instance/zh/error-code/)。
 
-### 토큰 API
+### 令牌API
 
-토큰은 API 사용을 위해 필수로 발급받아야 하는 인증키이며, 모든 API는 Request에 **X-Auth-Token** Header를 추가하여 요청해야 합니다.
+如果要使用API，就必须获取令牌，进行身份认证。所有API都必须要在请求中添加**X-Auth-Token** Header进行请求。
 
-#### API 비밀번호 설정
+#### API密码设置
 
-API 비밀번호는 **Compute > Instance** 서비스 페이지의 **API Endpoint 설정** 버튼을 클릭해 설정할 수 있습니다.
+在**Compute > Instance**服务页面单击**API Endpoint设置**按钮设置API密码。
 
-1. **API Endpoint 설정** 버튼을 클릭합니다.
-2. **API Endpoint 설정** 아래 **API 비밀번호 설정**에 토큰 발급 시 사용할 비밀번호를 입력합니다.
-3. 비밀번호를 입력한 후 **저장** 버튼을 클릭합니다.
+1. 单击**API Endpoint设置**按钮。
+2. 在**API Endpoint设置**下方的**API密码设置**中输入用于获取令牌的密码。
+3. 输入密码后单击**保存**按钮。
 
-#### Token 발급
+#### 发布令牌
 
 ##### Method, URL
 ```
@@ -85,8 +85,8 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | TOAST 계정 ID(Email) 입력 |
-| API Password | Body | String | - | **API Endpoint 설정**에서 저장한 비밀번호 |
+| TOAST ID | Body | String | - | 输入TOAST账号ID(Email) |
+| API Password | Body | String | - | 在**API Endpoint设置**保存的密码 |
 
 ##### Response Body
 ```json
@@ -116,13 +116,13 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Description |
 | -- | -- | -- | -- |
-| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token)에 써야 할 UUID |
-| Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
-| Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
-| User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
-| Role name | Body | String | 토큰을 발급받은 사용자에게 부여된 Role |
+| Token ID | Body | String | 在发出API请求时，需要写入HTTP Header(X-Auth-Token)的UUID |
+| Issued at | Body | String | 令牌发布时间。yyyy-mm-ddTHH:MM:ssZ格式。 例如) 2017-05-16T02:17:50.166563 |
+| Expires | Body | String | 所发布令牌的到期时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T03:17:50Z |
+| User ID | Body | String | 获取令牌的用户的UUID |
+| Role name | Body | String | 获取令牌的用户被赋予的角色 |
 
-#### Token 정보 조회
+#### 令牌信息查询
 ##### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
@@ -130,10 +130,10 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
-| tokenId | Query | String | - | 조회할 Token ID |
+| tokenId | Query | String | - | 要查询的令牌ID |
 
 ##### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 ##### Response Body
 ```json
@@ -163,17 +163,17 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 
 | Name | In | Type | Description |
 | -- | -- | -- | -- |
-| Token ID | Body | String | API 요청 시 HTTP 헤더(X-Auth-Token)에 써야 할 토큰 UUID |
-| Issued at | Body | String | 토큰 발급 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
-| Expires | Body | String | 발급한 Token의 만료 시간. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T03:17:50Z |
-| User ID | Body | String | 토큰을 발급받은 사용자의 UUID |
-| Role name | Body | String | 토큰을 발급받은 사용자에게 부여된 Role |
+| Token ID | Body | String | 发出API请求时，用于HTTP Header(X-Auth-Token)的令牌UUID |
+| Issued at | Body | String | 令牌发布时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T02:17:50.166563 |
+| Expires | Body | String | 所发布的令牌到期时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T03:17:50Z |
+| User ID | Body | String | 获取令牌的用户的UUID |
+| Role name | Body | String | 获取令牌的用户被赋予的角色 |
 
 
-## 가용성 영역 API
+## 可用区API
 
-### 가용성 영역 조회
-인스턴스, 블록 스토리지를 생성할 수 있는 가용성 영역 정보를 조회합니다.
+### 可用区查询
+查询可以创建实例、块存储的可用区信息。
 
 #### Method, URL
 ```
@@ -183,10 +183,10 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
+| tokenId | Header | String | - | 令牌ID |
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需请求Request Body。
 
 #### Response Body
 ```json
@@ -209,32 +209,32 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Zone Name | Body | String | 가용성 영역 이름 |
-| Available | Body | Boolean | 가용성 영역 가용 여부 |
+| Zone Name | Body | String | 可用区名称 |
+| Available | Body | Boolean | 可用区是否可用|
 
-## 인스턴스 API
-인스턴스 생성, 삭제, 정보 조회 및 블록 스토리지 연결 관리 기능을 제공합니다.
+## 实例API
+提供实例创建、删除、信息查询及块存储连接管理功能。
 
-### 인스턴스 상태
-인스턴스는 생성, 변경, 삭제, 운영 중 다음과 같은 상태를 갖습니다.
-![[그림 1] 인스턴스 Status Diagram](http://static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
+### 实例状态
+实例在创建、修改、删除、运营期间具有以下状态。
+![[图1] 实例状态 Diagram](http://static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
 
 
-| 상태 | 설명 |
+| 状态 | 描述 |
 | --- | --- |
-| BUILD | 인스턴스 생성 중 |
-| POWERING_ON | 인스턴스 부팅 중 |
-| STOP | 인스턴스 종료 상태 |
-| ACTIVE | 인스턴스 구동 중 |
-| POWERING_OFF | 인스턴스 종료 중 |
-| REBOOTING | 인스턴스 리부팅 중 |
-| DELETING | 인스턴스 삭제 중 |
-| RESIZING | 인스턴스 사양(flavor) 변경 작업 중 |
-| MIGRATING | 인스턴스 마이그레이션 작업 중 |
-| ERROR | 오류 상태 |
+| BUILD | 实例创建中 |
+| POWERING_ON | 实例启动中 |
+| STOP | 实例已关闭 |
+| ACTIVE | 实例运行中 |
+| POWERING_OFF | 实例停止中 |
+| REBOOTING | 实例重启中 |
+| DELETING | 实例删除中 |
+| RESIZING | 更改实例规格(flavor)中 |
+| MIGRATING | 实例迁移中 |
+| ERROR | 错误状态 |
 
-### 인스턴스 정보 간략 조회
-생성되어 있는 인스턴스의 간략한 정보를 조회합니다.
+### 实例摘要查询
+查看已创建实例的摘要信息。
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/instances?id={instanceId}
@@ -243,11 +243,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | O | 조회할 인스턴스 ID. 기재하지 않을 경우 모든 인스턴스들의 간략 정보를 조회합니다. |
+| tokenId | Header | String | - | 令牌ID |
+| instanceId | Query | String | O | 要查询的实例ID。如果未指定，则显示所有实例的摘要信息。 |
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 ```json
@@ -269,12 +269,12 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Instance ID | Body | String | 인스턴스 ID |
-| Instance Name | Body | String | 인스턴스 이름 |
-| Instance Status | Body | String | 인스턴스의 상태 |
+| Instance ID | Body | String | 实例ID |
+| Instance Name | Body | String | 实例名称 |
+| Instance Status | Body | String | 实例状态 |
 
-### 인스턴스 상세 조회
-인스턴스의 상세한 정보를 조회합니다.
+### 实例详细查询
+查询实例的详细信息。
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/instances-detail?id={instanceId}
@@ -283,11 +283,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional |Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID. |
-| instanceId | Query | String | O | 조회할 인스턴스의 ID. 생략하면 모든 인스턴스들의 상세 정보를 조회합니다. |
+| tokenId | Header | String | - | 令牌ID. |
+| instanceId | Query | String | O | 要查询的实例ID。如果省略，则查询所有实例的详细信息。|
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 ```json
@@ -349,32 +349,32 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| MAC Address | Body | String | NIC의 MAC 주소 |
-| IP Address | Body | String | NIC의 IP 주소 |
-| version | Body | Integer | IP 버전(IPv4만 지원) |
-| Floating IP Address | Body | String | NIC에 할당된 플로팅 IP 주소 |
-| Zone Name | Body | String | 가용성 영역 이름 |
-| Flavor ID | Body | String | 인스턴스 사양 ID |
-| Flavor Name | Body | String | 인스턴스 사양 이름 |
-| Flavor CPU | Body | Integer | CPU 개수 |
-| Flavor RAM | Body | Integer | RAM 크기(MB) |
-| Status | Body | String | 인스턴스의 상태 |
-| Instance ID | Body | String | 인스턴스 ID |
-| Instance Name | Body | String | 인스턴스 이름 |
-| Image ID | Body | String | 인스턴스에 설치된 이미지 ID |
-| metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터로, "key": "value" 형태로 저장 |
-| PEM Key Name | Body | String | 인스턴스에 등록할 키페어 이름 |
-| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기(GB) |
-| Attached Volume ID | Body | String | 추가 블록 스토리지 ID |
-| Attached Volume Name | Body | String | 추가 블록 스토리지 이름 |
-| Attached Volume Size | Body | Integer | 추가 블록 스토리지 크기 (GB) |
-| Security Group Name | Body | String | 인스턴스에 등록된 보안 그룹의 이름 |
-| Launched Time | Body | String | 인스턴스 최근 부팅 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
-| Created Time | Body | String | 인스턴스 생성 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
-| Updated Time | Body | String | 인스턴스 수정 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
+| MAC Address | Body | String | NIC的MAC地址 |
+| IP Address | Body | String | NIC的IP地址 |
+| version | Body | Integer | IP版本(仅支持IPv4) |
+| Floating IP Address | Body | String | 分配至NIC的弹性IP地址 |
+| Zone Name | Body | String | 可用区名称 |
+| Flavor ID | Body | String | 实例配置ID |
+| Flavor Name | Body | String | 实例配置名称 |
+| Flavor CPU | Body | Integer | CPU个数 |
+| Flavor RAM | Body | Integer | RAM大小(MB) |
+| Status | Body | String | 实例状态 |
+| Instance ID | Body | String | 实例ID |
+| Instance Name | Body | String | 实例名称 |
+| Image ID | Body | String | 实例使用的镜像ID |
+| metadata | Body | Object | 保存为"key": "value"格式，用作实例中要设置的用户元数据 |
+| PEM Key Name | Body | String | 要在实例上注册的密钥对的名称 |
+| Root Volume Size | Body | Integer | 实例默认系统盘大小(GB) |
+| Attached Volume ID | Body | String | 附加块存储 ID |
+| Attached Volume Name | Body | String | 附加块存储名称 |
+| Attached Volume Size | Body | Integer | 附加块存储大小(GB) |
+| Security Group Name | Body | String | 在实例中注册的安全组名称 |
+| Launched Time | Body | String | 实例最近启动时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T02:17:50.166563 |
+| Created Time | Body | String | 实例创建时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T02:17:50.166563 |
+| Updated Time | Body | String | 实例修改时间。yyyy-mm-ddTHH:MM:ssZ格式。例如) 2017-05-16T02:17:50.166563 |
 
-### 인스턴스 생성
-새로운 인스턴스를 생성합니다.
+### 创建实例
+新建一个实例。
 
 #### Method, URL
 ```
@@ -385,7 +385,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
+| tokenId | Header | String | - | 令牌ID |
 
 #### Request Body
 ```json
@@ -416,22 +416,22 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, Windows의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
-| Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID |
-| Flavor ID | Body | String | - | 인스턴스 사양 ID |
-| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID |
-| Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
-| Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
-| Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
-| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/zh/console-guide/#_5)를 참조 |
-| Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
+| Instance Name | Body | String | - | 实例名称(Linux最多20个字符，Windows最多12字符，只能为英文字母和数字，'-'，'.') |
+| Image ID | Body | String | - | 实例使用的镜像ID |
+| Flavor ID | Body | String | - | 实例配置ID |
+| Network ID | Body | String | - | 实例要连接的网络ID |
+| Availability Zone | Body | String | - | 要创建实例的可用区名称 |
+| Key Name | Body | String | - | 要在实例中注册的密钥对名称 |
+| Count | Body | Integer | 0 | 可同时创建的实例个数，最多可创建10个，1~10范围。省略时生成1个 |
+| Volume Size | Body | Integer | 0 | 实例默认系统盘大小，大小请参考[控制台向导](/Compute/Instance/zh/console-guide/#_5) |
+| Security Group Name | Body | String | - | 要在实例中注册的安全组的名称 |
 
-* **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 로 인스턴스 생성 시**
-	* "instance.volume.size" 파라미터를 생략해야 합니다.
-	* 사양에 설정된 고정 볼륨 크기의 기본 디스크가 생성됩니다.
-* **"volumeSize" 파라미터 값을 갖지 않는 사양으로 인스턴스 생성 시**
-	* "instance.volume.size" 파라미터가 반드시 기재되어야 합니다.
-	* **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 하며, 설정된 크기의 기본 디스크가 생성됩니다.
+* **使用带有"volumeSize"参数值的规格(u2.\* / i2.\*)创建实例时**
+	* 应省略"instance.volume.size"参数。
+	* 生成规格中定义的卷大小固定的默认系统盘。
+* **使用不带有"volumeSize"参数值的规格创建实例时**
+	* 必须记载"instance.volume.size"参数。
+	* **在目标镜像"minDisk"值 ~ 1000范围内以10为单位**设置，则会按照所设置的大小生成默认系统盘。
 
 
 #### Response Body
@@ -452,12 +452,12 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Description |
 |--|--|--|--|
-| Instance ID | body | String |생성된 인스턴스 ID |
-| Instance Name | body | String | 인스턴스 이름 |
-| Instance Status | Body | String | 인스턴스의 상태 |
+| Instance ID | body | String |已创建的实例的ID |
+| Instance Name | body | String | 实例名称 |
+| Instance Status | Body | String | 实例状态 |
 
-### 인스턴스 삭제
-특정 인스턴스를 삭제합니다.
+### 删除实例
+删除指定的实例。
 #### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/instances?id={instanceId}
@@ -466,11 +466,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
-| instanceId | Query | String | - | 삭제할 인스턴스 ID |
+| tokenId | Header | String | - | 令牌ID |
+| instanceId | Query | String | - | 要删除的实例ID |
 
-### 블록 스토리지 연결
-인스턴스에 블록 스토리지를 연결합니다.
+### 连接块存储
+将块存储连接到实例。
 
 #### Method, URL
 ```
@@ -481,8 +481,8 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
-| instanceId | Path | String | - | 블록 스토리지를 연결할 인스턴스 ID |
+| tokenId | Header | String | - | 令牌ID |
+| instanceId | Path | String | - | 用于连接块存储的实例ID |
 
 #### Request Body
 ```json
@@ -495,7 +495,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Volume ID | body | String | - | 인스턴스에 연결할 블록 스토리지 ID |
+| Volume ID | body | String | - | 用于连接实例的块存储ID |
 
 #### Response Body
 
@@ -516,12 +516,12 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Device ID | body | String | 인스턴스에 등록된 장치 이름. 예) "/dev/vdc" |
-| Attachement ID | body | String | 연결 ID.|
-| Volume ID | body | String | 블록 스토리지 ID. 연결 해제 시 필요. |
+| Device ID | body | String | 在实例上注册的设备名称。例如) "/dev/vdc" |
+| Attachement ID | body | String | 连接ID。|
+| Volume ID | body | String | 块存储ID。卸载时需要。|
 
-### 블록 스토리지 연결 해제
-인스턴스에 연결되어 있는 블록 스토리지 연결을 해제합니다.
+### 卸载块存储
+对挂载在实例上的块存储进行卸载。
 
 #### Method, URL
 ```
@@ -531,12 +531,12 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | 인스턴스 ID |
-| volumeId | Path | String | - | 블록 스토리지 ID |
+| tokenId | Header | String| - | 令牌ID |
+| instanceId | Path | String | - | 实例ID |
+| volumeId | Path | String | - | 块存储ID |
 
 #### Request body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 
@@ -550,17 +550,17 @@ X-Auth-Token: {tokenId}
 }
 ```
 
-## 인스턴스 추가기능 API
-다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
+## 实例附加功能API
+提供以下实例控件及附加功能。
 
-- 인스턴스 시작, 정지, 재시작
-- 인스턴스 사양 변경(resize)
-- 인스턴스 이미지 생성
-- 플로팅 IP 연결, 해제
-- 보안 그룹 등록, 해제
+- 启动，停止和重启实例
+- 更改实例规格(resize)
+- 创建实例镜像
+- 绑定，解绑弹性IP
+- 添加，移出安全组
 
-### 공통
-모든 인스턴스 추가 기능 API는 동일한 Method, URL로 호출하며, Request Body로 각 추가 기능을 구분합니다.
+### 共通
+所有实例的附加功能API都调用相同的方法，URL，并将每个附加功能与Request Body区分开来。
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/action
@@ -570,8 +570,8 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String| - | 토큰 ID |
-| instanceId | Path | String | - | 추가 기능을 수행할 인스턴스 ID |
+| tokenId | Header | String| - | 令牌ID |
+| instanceId | Path | String | - | 用于执行附加功能的实例ID |
 
 #### Request Body Template
 ```json
@@ -584,11 +584,11 @@ Content-Type: application/json;charset=UTF-8
 ```
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Action Name | Body | String | - | 인스턴스에서 실행할 추가 기능 |
-| parameters | Body | Object| O | 추가 기능 수행에 필요한 파라미터. 추가 기능에 따라 필요한 값을 기재합니다. 일부 추가 기능은 파라미터 없이 동작합니다. |
+| Action Name | Body | String | - | 要在实例上运行的附加功能 |
+| parameters | Body | Object| O | 执行附加功能所需的参数。根据附加功能填写所需的值。一些附加功能可以在无参数的情况下运行。|
 
-### 인스턴스 시작
-정지(STOP) 상태의 인스턴스를 시작합니다.
+### 启动实例
+启动处于停止(STOP)状态的实例。
 #### Request Body
 ```json
 {
@@ -607,8 +607,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 인스턴스 정지
-동작 중(ACTIVE) 또는 오류(ERROR) 상태의 인스턴스를 정지합니다.
+### 停止实例
+停止处于运行中(ACTIVE)或故障中(ERROR)的实例。
 #### Request Body
 ```json
 {
@@ -628,11 +628,11 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 인스턴스 리부팅
-인스턴스를 리부팅합니다. 아래와 같은 리부팅 방식을 지정할 수 있습니다.
+### 重启实例
+重启实例。您可以指定以下重启方式。
 
-- **SOFT**: 정상 종료(graceful shutdown) 후 인스턴스를 재시작합니다.
-- **HARD**: 강제 종료(shutdown) 후 인스턴스를 재시작합니다.
+- **SOFT**: 正常关闭(graceful shutdown)后，重启实例。
+- **HARD**: 强制关闭(shutdown)后，重启实例。
 
 #### Request Body
 
@@ -647,7 +647,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Reboot Type | body | String | - | 리부팅 방식. `HARD` 또는 `SOFT`. |
+| Reboot Type | body | String | - | 重启方法。`HARD` 或 `SOFT`. |
 
 #### Response Body
 ```json
@@ -660,8 +660,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 인스턴스 사양 변경
-인스턴스의 사양을 변경합니다.
+### 更改实例配置
+更改实例的配置。
 #### Request Body
 ```json
 {
@@ -674,7 +674,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID |
+|  Flavor ID | body | String | - | 要更改配置的实例ID |
 
 #### Response Body
 ```json
@@ -687,10 +687,10 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 이미지 생성
-지정한 인스턴스로부터 이미지를 생성합니다. 생성된 이미지는 [이미지 API](/Compute/Image/zh/api-guide/)로 조회할 수 있습니다.
+### 创建镜像
+使用指定的实例创建镜像。创建的镜像可以通过[镜像API](/Compute/Image/zh/api-guide/)查询。
 
-이미지 생성 대상이 되는 인스턴스는 STOP 상태여야 합니다.
+若要使用实例创建自定义镜像，则该实例必须处于STOP状态。
 
 #### Request Body
 ```json
@@ -704,7 +704,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Image Name | body | String | - | 생성할 이미지 이름 |
+| Image Name | body | String | - | 要创建的镜像名称 |
 
 #### Response Body
 ```json
@@ -723,11 +723,11 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Created Image ID | body | String | 생성된 이미지 ID |
-| Created Image Name | body | String | 생성된 이미지 이름 |
+| Created Image ID | body | String | 创建的镜像ID |
+| Created Image Name | body | String | 创建的镜像名称 |
 
-### 플로팅 IP 연결
-플로팅 IP를 인스턴스에 연결합니다.
+### 连接弹性IP
+将弹性IP绑定到实例。
 
 #### Request Body
 ```json
@@ -742,8 +742,8 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Floating IP Address | body | String | - | 인스턴스에 연결할 플로팅 IP 주소 |
-| IP Address of the instance | body | String | - | 플로팅 IP를 연결할 인스턴스의 IP 주소 |
+| Floating IP Address | body | String | - | 要绑定到实例的弹性IP地址 |
+| IP Address of the instance | body | String | - | 要绑定弹性IP的实例的IP地址 |
 
 #### Response Body
 
@@ -757,8 +757,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 플로팅 IP 연결 해제
-인스턴스에 연결되어 있는 플로팅 IP를 연결 해제합니다.
+### 解绑弹性IP
+实例解绑弹性IP。
 
 #### Request Body
 
@@ -773,7 +773,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Floating IP Address | body | String | - | 연결을 해제할 플로팅 IP 주소 |
+| Floating IP Address | body | String | - | 要解绑的弹性IP地址 |
 
 #### Response Body
 
@@ -787,8 +787,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 보안 그룹 등록
-인스턴스에 보안 그룹을 추가합니다.
+### 注册安全组
+将实例添加到安全组。
 
 #### Request Body
 ```json
@@ -802,7 +802,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Security Group Name | body | String | - | 인스턴스에 추가할 보안 그룹 이름 |
+| Security Group Name | body | String | - | 要添加实例的安全组的名称 |
 
 #### Response Body
 
@@ -816,8 +816,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 보안 그룹 제거
-인스턴스에 등록되어 있는 보안 그룹을 제거합니다.
+### 删除安全组
+删除已添加的安全组。
 
 #### Request Body
 ```json
@@ -831,7 +831,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| Security Group Name | body | String | - | 인스턴스에서 제거할 보안 그룹 이름 |
+| Security Group Name | body | String | - | 实例中作为删除对象的安全组的名称(要删除的安全组名称)|
 
 #### Response Body
 ```json
@@ -844,9 +844,9 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-## 인스턴스 사양 API
-### 인스턴스 사양 목록 조회
-인스턴스 사양의 목록 및 상세 정보를 조회합니다.
+## 实例规格API
+### 查看实例规格列表
+查看实例配置列表及详细信息。
 
 #### Method, URL
 ```
@@ -856,10 +856,10 @@ X-Auth-Token: {tokenID}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String| - | 토큰 ID |
+| tokenId | Header | String| - | 令牌ID |
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 ```json
@@ -887,21 +887,21 @@ X-Auth-Token: {tokenID}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부. |
-| Ephermeral | Body | Integer | 임시 디스크 크기(GB). |
-| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값.<br>"general, "compute", "memory" 중의 하나. |
-| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 사양의 경우에만 이 값이 전달됩니다. |
-| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기(GB). |
-| Flavor ID | Body | String | 인스턴스 사양 ID. |
-| Flavor Name | Body | String | 인스턴스 사양 이름. |
-| Is Public | Body | Boolean | 공용 인스턴스 사양 여부. |
-| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량(MB). |
-| VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수. |
+| Disabled | Body | Boolean | 是否禁用实例规格。|
+| Ephermeral | Body | Integer | 临时磁盘容量(GB). |
+| Type | Body | String | 根据实例规格特性区分的Type值。<br>"general, "compute", "memory"中之一。|
+| Volume Size | Body | Integer | 在实例创建期间作为默认系统盘创建的磁盘容量(GB)。<br>仅在固定大小的u2,i2配置下传递该值。|
+| Max Volume Size | Body | Integer | 可作为默认系统盘的最大磁盘容量(GB)。|
+| Flavor ID | Body | String | 实例配置ID。|
+| Flavor Name | Body | String | 实例配置名称。|
+| Is Public | Body | Boolean | 是否为共用实例配置。|
+| RAM | Body | Integer | 实例配置中RAM总容量(MB)。 |
+| VCPUs | Body | Integer | 分配给实例的虚拟CPU核心数。|
 
-## 키페어 API
-인스턴스 접근에 필요한 키페어를 생성, 삭제, 조회하는 기능을 제공합니다.
-### 키페어 조회
-키페어를 조회합니다.
+## 密钥对API
+为访问实例提供创建、删除、查询密钥对的功能。
+### 查看密钥对
+查看密钥对。
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/keypairs?name={keypairName}
@@ -910,11 +910,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - |토큰 ID. |
-| keypairName | Query | String | O | 조회할 키페어 이름. 없으면 모든 키페어 정보를 조회합니다. |
+| tokenId | Header | String | - |令牌ID |
+| keypairName | Query | String | O | 要查询的密钥对名称。如果没有，则查询所有密钥对信息。|
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 
@@ -938,13 +938,13 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Keypair Name | Body | String | 키페어 이름. |
-| Public Key Value | Body | String | 키페어의 공개 키 값. |
-| Fingerprint Value | Body | String | 핑거프린트(fingerprint) 값. |
-| Created At | Body | DateTime | 키페어 생성 시간. "Keypair Name"을 지정한 단건 조회 시에만 노출됩니다. |
+| Keypair Name | Body | String | 密钥对名称 |
+| Public Key Value | Body | String | 密钥对的公钥值 |
+| Fingerprint Value | Body | String | 指纹(fingerprint)值 |
+| Created At | Body | DateTime | 密钥对创建时间。 "Keypair Name"只有在查看指定的单个项目时才会显示"Keypair Name"。|
 
-### 키페어 생성과 업로드
-키페어를 생성하거나 사용자가 직접 생성한 키페어를 업로드합니다.
+### 创建和上传密钥对
+创建密钥对或上传用户自定义的密钥对。
 
 #### Method, URL
 ```
@@ -955,7 +955,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
+| tokenId | Header | String | - | 令牌ID |
 
 #### Request Body
 
@@ -970,8 +970,8 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | --- | --- | --- | --- | --- |
-| Keypair Name | Body | String | - | 키페어 이름 |
-| Public Key Value | Body | String | O | 업로드할 공개 키. 생략 시 새로운 키페어가 만들어지며, 만들어진 키페어의 개인 키가 Response에 함께 전달됩니다. |
+| Keypair Name | Body | String | - | 密钥对名称 |
+| Public Key Value | Body | String | O | 要上传的公钥。 如果省略，则会创建新密钥对，并将新密钥对的私钥一起发送至Response。|
 
 #### Response Body
 
@@ -993,15 +993,15 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Description |
 | --- | --- | --- | --- |
-| Keypair Name | Body | String | 키페어 이름 |
-| Public Key Value | Body | String | 키페어의 공개 키 |
-| Private Key Value | Body | String | 키페어의 개인 키. 키페어 업로드(Request에 "publickey" 항목을 포함)인 경우 생략됩니다. |
-| Fingerprint value | Body | String | Fingerprint 값 |
+| Keypair Name | Body | String | 密钥对名称 |
+| Public Key Value | Body | String | 密钥对的公钥 |
+| Private Key Value | Body | String | 密钥对的私钥。密钥对上传(在Request中包含"publickey")，省略此操作。|
+| Fingerprint value | Body | String | Fingerprint值 |
 
-생성된 Private Key Value는 전문을 .pem 파일로 저장 후 해당 Keypair를 사용하도록 설정된 인스턴스에 접근 시 사용할 수 있습니다. **생성된 Private Key Value는 다시 조회할 수 없으므로** 분실 또는 삭제되지 않도록 잘 보관해야 하며, 유출 방지를 위해 가급적 보조 저장매체(USB메모리)에 관리하는 것이 좋습니다.
+在将文本另存为.pem文件后，生成的Private Key Value可用于访问已设置为使用密钥对的实例。因**无法再次查询生成的Private Key Value**， 应妥善保存，以免丢失或被删除。建议尽可能在辅助存储介质(USB存储器)中对其进行管理，以防止泄露。
 
-### 키페어 삭제
-지정한 키페어를 삭제합니다.
+### 删除密钥对
+删除指定的密钥对
 #### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/keypairs?name={keypairName}
@@ -1010,11 +1010,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 토큰 ID |
-| keypairName | Query | String | - | 삭제할 키페어 이름 |
+| tokenId | Header | String | - | 令牌ID |
+| keypairName | Query | String | - | 要删除的密钥对的名称 |
 
 #### Request Body
-이 API는 Request Body가 필요 없습니다.
+此API无需Request Body。
 
 #### Response Body
 ```json
