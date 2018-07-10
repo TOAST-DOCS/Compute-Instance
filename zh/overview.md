@@ -118,11 +118,11 @@ PuTTY PuTTY是Windows上使用较普遍的SSH客户端程序。安装[PuTTY](htt
 
 在PuTTY中，需要将密钥对私钥替换为PuTTY的私钥使用。密钥转换使用同PuTTY一同安装的puttygen。
 
-![图片1](http://static.toastoven.net/prod_instance/putty001.png)
+![图片1](http://static.toastoven.net/prod_instance/putty001-ssh-001-en.png)
 
 在**PuTTY Key生成器**对话框底部的**每项参数**中将**要生成的密钥类型**选择为 **RSA**，**要创建的密钥位**输入默认的'2048'位。单击**任务**下方**检索私钥文件**旁边的**检索**按钮，调用密钥对的私钥文件。
 
-![图片2](http://static.toastoven.net/prod_instance/putty002.png)
+![图片2](http://static.toastoven.net/prod_instance/putty002-en.png)
 
 单击**任务**下方**保存已创建的密钥**旁边的**保存私钥**按钮，以保存转换为PuTTY类型的密钥对私钥。如果您将**密钥密码短语**留空，保存私钥，则会弹出**是否不使用密钥密码短语，继续保存私钥？**消息。如果要安全保存私钥，请设置密码短语并保存。
 
@@ -141,7 +141,7 @@ PuTTY的私钥可以通过2种方式进行注册并使用。
 
 运行PuTTY，并在左侧**类别**中选择**连接> SSH > Auth**。在右侧**认证参数**下方的**认证私钥文件**中注册PuTTY私钥。
 
-![图片3](http://static.toastoven.net/prod_instance/putty005.png)
+![图片3](http://static.toastoven.net/prod_instance/putty005-en.png)
 
 注册私钥后，保存注册信息，则无需每次重复注册私钥文件。有关如何保存访问信息，请参考以下方法。
 
@@ -151,11 +151,11 @@ PuTTY的私钥可以通过2种方式进行注册并使用。
 
 当您运行使用PuTTY安装的pageant时，Windows系统托盘中会出现如下图标。右键单击pageant图标并单击**添加密钥 **菜单，为PuTTY添加私钥。
 
-![图片4](http://static.toastoven.net/prod_instance/putty006.png)
+![图片4](http://static.toastoven.net/prod_instance/putty006-en.png)
 
 如果要确认私钥是否已添加，请单击**查看密钥**确认。如果密钥添加成功，您可以看到所添加的密钥，如下图所示。
 
-![图片5](http://static.toastoven.net/prod_instance/putty008.png)
+![图片5](http://static.toastoven.net/prod_instance/putty008-en.png)
 
 Pageant一旦开始运行，会一直在Windows系统托盘中运行，因此，无需每次访问实例时都要重新运行它。但是，如果重启Windows，则需要重新运行。
 
@@ -163,7 +163,7 @@ Pageant一旦开始运行，会一直在Windows系统托盘中运行，因此，
 
 如果PuTTY私钥已注册成功，请运行PuTTY。
 
-![图片6](http://static.toastoven.net/prod_instance/putty009.png)
+![图片6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
 默认访问信息的**主机名**使用如下。
 
@@ -190,7 +190,7 @@ Debian
 
 如果要连接到Windows服务器，请从TOAST控制台中选择要连接的Windows实例。在如下详细页面的**实例连接**(实例连接)标签中，单击**确认密码**按钮，以确认在Windows服务器上设置的密码。
 
-![访问Windows实例](http://static.toastoven.net/prod_instance/windows-login.png)
+![访问Windows实例](http://static.toastoven.net/prod_instance/windows-login-en.png)
 
 在**确认密码**中输入的密钥对私钥不会发送至服务器，仅用于解密浏览器中的密码。
 
