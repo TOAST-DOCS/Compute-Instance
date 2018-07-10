@@ -234,7 +234,7 @@ An instance has following status while it is created, changed, deleted, or opera
 | ERROR        | In error                         |
 
 ### Retrieve Brief Instance Information
-Retrieve brief information of a created instance. 
+Retrieve brief information of a created instance.
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/instances?id={instanceId}
@@ -324,13 +324,15 @@ This API does not require a request body.
             "keyName": "{PEM Key Name}",
             "volumes": {
                 "root" : {
-                    "size" : "{Root Volume Size}"
+                    "size": "{Root Volume Size}",
+                    "type": "{Root Volume Type}"
                 },
                 "attachments" : [
                     {
                         "id" : "{Attached Volume ID}",
                         "name": "{Attached Volume Name}",
-                        "size": "{Attached Volume Size}"
+                        "size": "{Attached Volume Size}",
+                        "type": "{Attached Volume Type}"
                     }
                 ]
             },
@@ -364,10 +366,12 @@ This API does not require a request body.
 | Image ID             | Body | String  | ID of image installed at an instance     |
 | metadata             | Body | Object  | User meta data to be installed at an instance: save in the format of "key":"value" |
 | PEM Key Name         | Body | String  | Key pair name to be registered at an instance |
-| Root Volume Size     | Body | Integer | Volume of a basic disk size of an instance (GB) |
+| Root Volume Size     | Body | Integer | Size of Instance root block storage (GB) |
+| Root Volume Type     | Body | String | Type of Instance root block storage, Select "General HDD" or "General SSD" |
 | Attached Volume ID   | Body | String  | ID of attached block storage             |
 | Attached Volume Name | Body | String  | Name of attached block storage           |
 | Attached Volume Size | Body | Integer | Size of attached block storage (GB)      |
+| Attached Volume Type | Body | String | Type of attached block storage, Select "General HDD" or "General SSD" |
 | Security Group Name  | Body | String  | Name of a security group registered at an instance |
 | Launched Time        | Body | String  | Recent start time of an instance in the format of yyyy-mm-ddTHH:MM:ssZ. e.g) 2017-05-16T02:17:50.166563 |
 | Created Time         | Body | String  | Time of instance creation in the format of yyyy-mm-ddTHH:MM:ssZ. e.g) 2017-05-16T02:17:50.166563 |
@@ -403,7 +407,8 @@ Content-Type: application/json;charset=UTF-8
         "keyName": "{Key Name}",
         "count": "{Count}",
         "volume": {
-           "size": "{Volume Size}"
+           "size": "{Volume Size}",
+           "type": "{Volume Type}"
         },
         "securityGroups": [
         	{
@@ -423,15 +428,15 @@ Content-Type: application/json;charset=UTF-8
 | Availability Zone   | Body | String  | -        | Name of availability zone to which an instance is to be created. |
 | Key Name            | Body | String  | -        | Name of a key pair to be registered at a instance. |
 | Count               | Body | Integer | 0        | Number of instances to be concurrently created: between 1 and 10, and no more than 10. |
-| Volume Size         | Body | Integer | 0        | Default disk size of an instance. Refer to the [Console Guide ](/Compute/Instance/en/console-guide/#_5) for the available size to create. |
+| Volume Size         | Body | Integer | -        | Size of Instance root block storage (GB), Refer to the [Console Guide ](/Compute/Instance/en/console-guide/#_5) for the available size to create. |
+| Volume Type         | Body | String | 0        | Type of Instance root block storage, Select "General HDD" or "General SSD" |
 | Security Group Name | Body | String  | -        | Name of a security group to be registered at an instance |
 
-* When creating an instance with the **"volumeSize" parameter (u2.\*)** 
-  * Skip the "instance.volume.size" parameter. 
-  * A default disk with a fixed volume as specified is created.
-* When creating an instance without the **"volumeSize" parameter **
-  * Must include the "instance.volume.size" parameter.
-  * Must set **by 10, between a "minDisk" value and 1000 of the image**, and a default disk with a specified size will be  created.
+> [Caution]
+> * `Volume Size` and `Volume Type` parameters are valid only for c2, m2, r2, or t2 flavors.
+> 	* These parameters are not applicable for 'u2' series flavors which use local storage.
+> * `Volume Size` must be set to 10 units within a value beteen "minDisk" of selected Image and 1000 GB.
+> * `Volume Type` can be `null`, and it be regarded as "General HDD".
 
 
 #### Response Body
@@ -520,7 +525,7 @@ Content-Type: application/json;charset=UTF-8
 | Attachement ID | body | String | Attachment ID                            |
 | Volume ID      | body | String | Block storage ID: required to detach     |
 
-### Detach Block Storages 
+### Detach Block Storages
 Detach a block storage which is attached to an instance.
 
 #### Method, URL
@@ -536,7 +541,7 @@ X-Auth-Token: {tokenId}
 | volumeId   | Path   | String | -        | Block Storage ID |
 
 #### Request body
-This request does not require a body. 
+This request does not require a body.
 
 #### Response Body
 
@@ -551,16 +556,16 @@ This request does not require a body.
 ```
 
 ## Add Instances API
-Instance control and additional functions are provided as follows: 
+Instance control and additional functions are provided as follows:
 
-- Start/stop/restart instances 
-- Resize instances 
-- Create images 
+- Start/stop/restart instances
+- Resize instances
+- Create images
 - Associate/disassociate floating IPs
-- Register/remove security groups 
+- Register/remove security groups
 
-### Common 
-All Add Instance APIs are called with a same method and URL, and can be divided by additional functions at the request body. 
+### Common
+All Add Instance APIs are called with a same method and URL, and can be divided by additional functions at the request body.
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/instances/{instanceId}/action
@@ -587,7 +592,7 @@ Content-Type: application/json;charset=UTF-8
 | Action Name | Body | String | -        | Additional functions to be executed at an instance |
 | parameters  | Body | Object | O        | Parameters required to execute additional functions: fill in required values depending on the additional functions. Some functions operate without parameters. |
 
-### Start Instances 
+### Start Instances
 Start an instance which has been stopped.
 #### Request Body
 ```json
@@ -607,7 +612,7 @@ Start an instance which has been stopped.
 }
 ```
 
-### Stop Instances 
+### Stop Instances
 Stop an instance which is active or has an error.
 #### Request Body
 ```json
@@ -628,8 +633,8 @@ Stop an instance which is active or has an error.
 }
 ```
 
-### Restart Instances 
-Restart an instance, and the method can be specified as below: 
+### Restart Instances
+Restart an instance, and the method can be specified as below:
 
 - **SOFT**: Execute a graceful shutdown and restart an instance .
 - **HARD**: Execute a shutdown, and restart an instance.
@@ -660,7 +665,7 @@ Restart an instance, and the method can be specified as below:
 }
 ```
 
-### Change Flavors 
+### Change Flavors
 Change flavors of an instance.
 #### Request Body
 ```json
@@ -687,10 +692,10 @@ Change flavors of an instance.
 }
 ```
 
-### Create Images 
-Create an image from a specified instance. To retrieve the image, go to [Image API](/Compute/Image/en/api-guide/). 
+### Create Images
+Create an image from a specified instance. To retrieve the image, go to [Image API](/Compute/Image/en/api-guide/).
 
-Instances that are stopped can be the subject for image creation. 
+Instances that are stopped can be the subject for image creation.
 
 #### Request Body
 ```json
@@ -787,8 +792,8 @@ Disassociate a floating IP which is associated with an instance.
 }
 ```
 
-### Register Security Groups 
-Additionally register a security group at an instance. 
+### Register Security Groups
+Additionally register a security group at an instance.
 
 #### Request Body
 ```json
@@ -816,7 +821,7 @@ Additionally register a security group at an instance.
 }
 ```
 
-### Remove Security Groups 
+### Remove Security Groups
 Remove a security group which is registered at an instance.
 
 #### Request Body
@@ -844,9 +849,9 @@ Remove a security group which is registered at an instance.
 }
 ```
 
-## Instance Flavors API 
-### List Instance Flavors 
-List instance flavors with detail information. 
+## Instance Flavors API
+### List Instance Flavors
+List instance flavors with detail information.
 
 #### Method, URL
 ```
@@ -859,7 +864,7 @@ X-Auth-Token: {tokenID}
 | tokenId | Header | String | -        | Token ID    |
 
 #### Request Body
-This API does not require a request body. 
+This API does not require a request body.
 
 #### Response Body
 ```json
@@ -899,9 +904,9 @@ This API does not require a request body.
 | VCPUs           | Body | Integer | Number of virtual CPU cores assigned to an instance |
 
 ## Key Pair API
-Create, delete, and retrieve key pairs required to access an instance. 
-### Retrieve Key Pairs 
-Retrieve key pairs. 
+Create, delete, and retrieve key pairs required to access an instance.
+### Retrieve Key Pairs
+Retrieve key pairs.
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/keypairs?name={keypairName}
@@ -914,7 +919,7 @@ X-Auth-Token: {tokenId}
 | keypairName | Query  | String | O        | Key pair name to retrieve: if left empty, retrieve all key pair information. |
 
 #### Request Body
-This API does not require a request body. 
+This API does not require a request body.
 
 #### Response Body
 
@@ -943,7 +948,7 @@ This API does not require a request body.
 | Fingerprint Value | Body | String   | Value of a fingerprint                   |
 | Created At        | Body | DateTime | Time of key pair creation: to show only when getting "Keypair Name" specifically. |
 
-### Create and Upload Key Pairs 
+### Create and Upload Key Pairs
 Create a key pair or upload a key pair created by user.
 
 #### Method, URL
@@ -1000,7 +1005,7 @@ Content-Type: application/json;charset=UTF-8
 
 The key pair can be used, by saving the whole private key value in the .pem file and accessing the instance which is configured to use the key pair. Take cautions not to lose or delete the **created key value as it cannot be retrieved again**, and it is recommended to save it in a supplementary saving device (like USB memory) to prevent leakage.  
 
-### Delete Key Pairs 
+### Delete Key Pairs
 Delete a specified key pair.
 #### Method, URL
 ```
