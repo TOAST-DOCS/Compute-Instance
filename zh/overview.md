@@ -118,7 +118,7 @@ PuTTY PuTTY是Windows上使用较普遍的SSH客户端程序。安装[PuTTY](htt
 
 在PuTTY中，需要将密钥对私钥替换为PuTTY的私钥使用。密钥转换使用同PuTTY一同安装的puttygen。
 
-![图片1](http://static.toastoven.net/prod_instance/putty001-ssh-001-en.png)
+![图片1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
 在**PuTTY Key生成器**对话框底部的**每项参数**中将**要生成的密钥类型**选择为 **RSA**，**要创建的密钥位**输入默认的'2048'位。单击**任务**下方**检索私钥文件**旁边的**检索**按钮，调用密钥对的私钥文件。
 
@@ -190,7 +190,7 @@ Debian
 
 如果要连接到Windows服务器，请从TOAST控制台中选择要连接的Windows实例。在如下详细页面的**实例连接**(实例连接)标签中，单击**确认密码**按钮，以确认在Windows服务器上设置的密码。
 
-![访问Windows实例](http://static.toastoven.net/prod_instance/windows-login-en.png)
+![访问Windows实例](http://static.toastoven.net/prod_instance/windows-login-zh.png)
 
 在**确认密码**中输入的密钥对私钥不会发送至服务器，仅用于解密浏览器中的密码。
 
