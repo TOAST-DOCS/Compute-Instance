@@ -426,7 +426,7 @@ Content-Type: application/json;charset=UTF-8
 | Volume Size | Body | Integer | 0 | 实例默认系统盘大小，大小请参考[控制台向导](/Compute/Instance/zh/console-guide/#_5) |
 | Security Group Name | Body | String | - | 要在实例中注册的安全组的名称 |
 
-* **使用带有"volumeSize"参数值的规格(u2.\* / i2.\*)创建实例时**
+* **使用带有"volumeSize"参数值的规格(u2.\*)创建实例时**
 	* 应省略"instance.volume.size"参数。
 	* 生成规格中定义的卷大小固定的默认系统盘。
 * **使用不带有"volumeSize"参数值的规格创建实例时**
@@ -890,7 +890,7 @@ X-Auth-Token: {tokenID}
 | Disabled | Body | Boolean | 是否禁用实例规格。|
 | Ephermeral | Body | Integer | 临时磁盘容量(GB). |
 | Type | Body | String | 根据实例规格特性区分的Type值。<br>"general, "compute", "memory"中之一。|
-| Volume Size | Body | Integer | 在实例创建期间作为默认系统盘创建的磁盘容量(GB)。<br>仅在固定大小的u2,i2配置下传递该值。|
+| Volume Size | Body | Integer | 在实例创建期间作为默认系统盘创建的磁盘容量(GB)。<br>仅在固定大小的u2配置下传递该值。|
 | Max Volume Size | Body | Integer | 可作为默认系统盘的最大磁盘容量(GB)。|
 | Flavor ID | Body | String | 实例配置ID。|
 | Flavor Name | Body | String | 实例配置名称。|
