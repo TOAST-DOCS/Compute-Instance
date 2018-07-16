@@ -1,111 +1,112 @@
-## Compute > Instance > 특화된 인스턴스 사용 가이드 > MySQL Instance 가이드
+## Compute > Instance > Instance Guide > MySQL Instance Guide
 ## MySQL version
 
-MySQL version은 다음과 같이 2가지 종류가 제공됩니다.
+##### MySQL of TOAST Cloud is classified into the following two versions: 
 
 * MySQL Community Server 5.6.38
     * mysql-community-server-5.6.38-2.el6.x86_64
 * MySQL Community Server 5.7.20
     * mysql-community-server-5.7.20-1.el6.x86_64
 
-## MySQL 시작/정지 방법
+## How to Start/Stop MySQL 
 
 ```
-#mysql 서비스 시작
+#Start mysql Service 
 shell> service mysqld start
 
-#mysql 서비스 중지
+#Stop mysql Service 
 shell> service mysqld stop
 
-#mysql 서비스 재시작
+#Restart mysql Service 
 shell> service mysqld restart
 ```
 
-## MySQL 접속
+## Access MySQL 
 
-이미지 생성 후 초기에는 아래와 같이 접속합니다.
+Access as below initially after image is created.
 
 ```
 shell> mysql -uroot
 ```
 
-## MySQL 이미지 생성 후 초기 설정
+## Initial Setting after MySQL Image Created 
 
-### 1\. 비밀번호 변경
+### 1\. Change Passwords 
 
-초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번를 변경해야 합니다.
+Passwords for MySQL Root account is not specified after initial installation. Therefore, password change is required after installation.  
 
-* MySQL 5.6 버전 비밀번호 변경
+* Change Passwords for MySQL 5.6 Version  
 
 ```
 SET PASSWORD [FOR user] = password_option
 
-mysql> set password=password('비밀번호');
+mysql> set password=password('password');
 ```
 
-* MySQL 5.7 버전 비밀번호 변경
+* Change Passwords for MySQL 5.7  
 
 ```
 ALTER USER USER() IDENTIFIED BY 'auth_string';
 
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '새로운 비밀번호';
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'New Password';
 ```
 
-MySQL 기본 validate\_password\_policy는 아래와 같습니다\.
+### Default MySQL validate_password_policy is as below:
 
 * validate\_password\_policy=MEDIUM
-* 기**본 8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
+* Must be more than 8 characters, including numbers, lower/upper cases, and special characters.
 
-### 2\. 포트(port) 변경
+### 2\. Change Ports
 
-제공되는 이미지 포트는 MySQL 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
+#### The default image port is 3306. It is recommended to change port for security reasons. 
 
 ```
 shell> vi /etc/my.cnf
 
 
-#my.cnf 파일에 사용하고자 하는 포트를 명시해 줍니다.
+# Specify a port to use in the my.cnf file. 
 
-port =사용하고자 하는 포트명
-
-
-#vi 편집기 저장
+port = Port name to use 
 
 
-#mysql 서비스 재시작
+# Save vi editor Save editor 
+
+
+# Restart mysql service  
 
 
 shell> service mysqld restart
 
 
-#변경된 포트로 아래와 같이 접속
+#Access as below  with changed port
 
 
-shell> mysql -uroot -P[변경된 포트 번호]
+shell> mysql -uroot -P[changed port number]
 ```
 
-## my.cnf 설명
+## Description of my.cnf 
 
-my.cnf 의 기본 경로는 /etc/my.cnf 이고 TOAST 권장 변수(variable)가 설정되어 있으며, 내용은 아래와 같습니다.
+The default route of my.cnf is /etc/my.cnf, where variables are set as recommended by ToastCloud, like below: 
 
-| 이름 | 설명 |
+| Name | Description |
 | --- | --- |
-| default\_storage\_engine | 기본 스토리지 엔진(stroage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
-| expire\_logs\_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
-| innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
-| innodb\_file\_per\_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
-| innodb\_log\_files\_in\_group | innodb\_log\_file 파일의 개수를 설정하며 순환적\(circular\)으로 사용됩니다\. 최소 2개 이상으로 구성됩니다\. |
-| log_timestamps | MySQL 5.7의 기본 log 시간은 UTC로 표시됩니다. 그러므로 로그 시간을 SYSTEM 로컬 시간으로 변경합니다. |
-| slow\_query\_log | slow\_query log 옵션을 사용합니다\. long\_query\_time에 따른 기본 10초 이상의 쿼리는 slow\_query\_log에 기록됩니다\. |
-| sysdate-is-now | sysdate의 경우 replication에서 sysdate() 사용된 SQL문은 복제 시 마스터와 슬레이브 간의 시간이 달라지는 문제가 있어 sysdate()와 now()의 함수를 동일하게 적용합니다. |
+| default\_storage\_engine | Specify a default storage engine: specified in InnoDB and transaction with online DDL is available. |
+| expire\_logs\_days | Set log saving dates accumulated with binlog setting. Default is three days. |
+| innodb\_log\_file\_size | Specify the size of log files which save redo logs of transaction. <br>Recommended for 256MB or higher in actual environment, while it is currently set at 512MB. When setting changes, DB restart is required. |
+| innodb\_file\_per\_table | When a table is deleted or truncated, the table space is immediately returned to OS. |
+| innodb\_log\_files\_in\_group | Set the number of innodb\_log\_file files and use them for circular purpose: composed with at least two. |
+| log_timestamps | Default log time of MySQL 5.7 is displayed as UTC; therefore, change log time to system local time. |
+| slow\_query\_log | Enable the slow\_query log option. Queries of more than 10 seconds in accordance with long_query_time remains in the slow_query_log. |
+| sysdate-is-now | For sysdate, SQL with sysdate() used for replication results in different time between Master and Slave, and functions for sysdate() and now() shall be applied the same. |
 
-## MySQL 디렉터리 설명
+## Description of MySQL Directory 
 
-MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
+Directory and file description of MySQL are as below: 
 
-| 이름 | 설명 |
+| Name | Description |
 | --- | --- |
 | my.cnf | /etc/my.cnf |
-| DATADIR | MySQL 데이터 파일 경로  - /var/lib/mysql/ |
-| ERROR_LOG | MySQL error_log 파일 경로  - /var/log/mysqld.log |
-| SLOW_LOG | MySQL Slow Query 파일 경로 -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+| DATADIR | Route for MySQL Data File  - /var/lib/mysql/ |
+| ERROR_LOG | Route for MySQL error_log File  - /var/log/mysqld.log |
+| SLOW_LOG | Route for MySQL Slow Query File -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+

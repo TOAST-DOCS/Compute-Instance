@@ -1,196 +1,186 @@
-## Compute > Instance > 개요
+## Compute > Instance > Overview 
 
-인스턴스는 가상의 CPU, 메모리, 기본 디스크로 구성된 가상 서버입니다. 이 서버에 고객의 서비스나 애플리케이션을 설치하고 TOAST가 제공하는 다양한 서비스를 조합하여 사용합니다.
+An instance refers a virtual server composed of a virtual CPU, memory, and a default disk: with customer's services or applications installed to it, various TOAST service combinations are applied.  
 
-## 인스턴스 구성 요소
+## Components  
 
-인스턴스를 구성하는 요소는 다음과 같습니다.
+An instance is composed of the following: 
 
-- **이미지**: 인스턴스의 운영체제를 담고 있는 가상 디스크
-- **사양**(flavor): 인스턴스의 가상 하드웨어 성능
-- **가용성 영역**(AZ, availability zone): 인스턴스가 만들어질 물리적인 위치
-- **키페어**(key-pair): 인스턴스 접속 수단으로 사용되는 키
-- **보안 그룹**(security group): 인스턴스 네트워크 보안 설정
-- **네트워크**: 인스턴스가 연결될 가상 네트워크
+- **Image**: Virtual disk that has an operating system
+- **Flavors**: Virtual hardware performance of an instance  
+- **Availability Zone** (AZ): Physical location where an instance is to be made 
+- **Key Pair**: Key used to access an instance
+- **Security Group**: Security setting for an instance network 
+- **Network**: Virtual network where an instance is to be connected
 
-이 정보에 따라 인스턴스의 속성과 사용 방식이 바뀝니다. 이 정보 중, 이미지와 가용성 영역을 제외한 설정은 인스턴스 생성 이후에도 변경할 수 있으나, 일부 인스턴스 사양(flavor)은 인스턴스 생성 이후에 변경할 수 없습니다. 인스턴스 사양 변경에 대한 자세한 설명은 [콘솔 사용 가이드의 인스턴스 사양 변경](./console-guide/#_14)을 참고합니다.
+Flavors and method of use change depending on the above information. Settings, except image and availability area, may change after an instance is created. Some flavors cannot be changed once an instance is created. For more details on change of instance flavors, refer to [Change of Instance Flavors of User Guide on Console](./console-guide/#_14).
 
-### 이미지
+### Image 
 
-이미지는 운영체제를 담고 있는 가상 디스크입니다. TOAST는 현재 다음 운영체제를 지원하고 있습니다.
+Image is a virtual disk that has an operating system. TOAST currently supports CentOS, Debian, Ubuntu, and Windows. For more information about the versions we support, refer to [TOAST Service](https://toast.com/service/compute/instance).
 
-| 운영체제 | 버전 |
-|------- | ---- |
-| CentOS | 6.5<br>7.1|
-| Debian | 8.2.0|
-| Ubuntu | 14.04 |
-| Windows | 2012 R2 Standard  |
+All images are configured for optimal execution under virtual hardware of an instance and are safe to use as they have been authenticated by TOAST security. For more details, refer to [Overview of Image](/Compute/Image/en/overview/).
 
-모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정돼 있으며, TOAST의 보안 검증을 거쳤기 때문에 안전하게 사용할 수 있습니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/en/overview/)를 참고합니다.
+### Flavors 
 
-### 인스턴스 사양(Instance flavor)
+TOAST provides instance flavors in various types to suit for customer's needs. Depending on the service to run or feature of an application, instances with appropriate flavors can be created.  Flavors can be easily modified on a web console .
 
-TOAST는 고객의 사용 용도에 맞는 다양한 타입의 인스턴스 사양을 제공합니다. 운용할 서비스 또는 애플리케이션의 특성에 따라 적절한 사양의 인스턴스를 생성할 수 있습니다. 이미 생성된 인스턴스의 사양도 웹 콘솔에서 쉽게 변경할 수 있습니다.
+| Type   | Description                              |
+| ------ | ---------------------------------------- |
+| M Type | A balanced flavors between CPU and memory. <br />Recommended when performance requirements of a service or an application are not clear. |
+| C Type | CPU performance is set highly: applied for an web application server or an analysis system requiring high-performance calculation. |
+| R Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
+| T Type | Low-cost instance. Recommended for the servers with low workloads. |
+| U Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
 
-| 타입    | 설명 |
-| ------- | -------------------------------------------------|
-| M | CPU와 메모리를 균형 있게 설정한 사양입니다. 서비스나 애플리케이션의 성능 요구 사항이 명확하지 않을 때 사용합니다. |
-| C | CPU의 성능을 높게 설정한 인스턴스 사양입니다. 고성능 연산 성능이 필요한 웹 애플리케이션 서버나 분석 시스템에 사용합니다. |
-| R | 다른 자원에 비해 메모리의 사용량이 많은 경우 사용할 수 있습니다. 보통 메모리 데이터베이스나 캐시 서버에 사용합니다. |
-| T | 비용이 저렴한 인스턴스입니다. 워크로드가 높지 않은 서버에 사용합니다. |
-| U | 가장 저렴한 인스턴스입니다. 워크로드가 높지 않은 서버에서 사용합니다.<br>로컬 디스크를 사용하기 때문에 상대적으로 다른 인스턴스보다 안정성이 떨어지지만 저렴한 가격에 이용할 수 있습니다.<br>이 타입의 인스턴스는 I/O 성능을 보장하지 않습니다. |
+### Availability Zone 
 
-### 가용성 영역(Availability zone)
+TOAST divides the whole system into many availability zones to prepare against potential failure owing to physical hardware issues.  Each availability zone has its own storage system, network switch, raised floor, and power devices. Failure occurred within an availability zone does not affect other zones, so as to raise availability of a whole service. If an instance is built throughout many availability zones, then service availability should raise even more.   
 
-TOAST는 물리 하드웨어 문제로 생기는 장애에 대비하기 위해 전체 시스템을 여러 개의 가용성 영역으로 나누어 두었습니다. 이 가용성 영역별로 저장 시스템, 네트워크 스위치, 상면, 전원 장치가 모두 별도로 구성돼 있습니다. 한 가용성 영역 내에서 생기는 장애는 다른 가용성 영역에 영향을 주지 않으므로 서비스 전체의 가용성이 높아집니다. 인스턴스를 여러 가용성 영역에 나눠 구축한다면 서비스의 가용성을 더욱 높일 수 있습니다.
+Following features exist between different availability zones.
 
-서로 다른 가용성 영역 사이에는 다음과 같은 특성이 있습니다.
+- Network communication is available between instances that are dispersed and created in many availability zones, and costs for network usage are not charged. 
+- Block storage can be shared between instances created in a same availability zone, but not between different availability zones. 
+- Floating IP can be shared between different availability zones. If one zone has a failure, the floating IP can be relocated to another zone, so as to minimize failure duration. 
 
-- 여러 가용성 영역에 흩어져서 생성된 인스턴스끼리 네트워크 통신이 가능하며 이때 발생하는 네트워크 사용 비용은 부과되지 않습니다.
-- 같은 가용성 영역에 만들어진 인스턴스 사이에서는 블록 스토리지를 공유할 수 있으나, 서로 다른 가용성 영역 간에는 블록 스토리지를 공유할 수 없습니다.
-- 서로 다른 가용성 영역에서 플로팅 IP를 공유할 수 있습니다. 만약 한 가용성 영역에 장애가 생겼을 때에도 빠르게 다른 가용성 영역으로 플로팅 IP를 이동하여 장애 시간을 최소화할 수 있습니다.
 
+### Key Pair 
 
-### 키페어(Key-pair)
+Key pair is a pair of a [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based open SSH key and a private key. To access an instance created in TOAST, key pair is required, instead of ID/PW authentication based on keyboard strokes which is vulnerable to security attacks. Using the private key of a key pair, user encodes and sends login information to an instance to get access authentication, and then safely access the instance. On how to access instances using key pair, refer to [How to Access Instances](#_9). 
 
-키페어는 공개 키 기반 구조([PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure), public key infrastructure)를 바탕으로 한 SSH 공개 키, 개인 키 쌍입니다. TOAST에서 생성한 인스턴스에 접속하려면 보안에 취약한 키보드 입력 방식의 아이디/비밀번호 인증 대신 키페어를 이용해야 합니다. 사용자는 키페어의 개인 키를 이용해 로그인 정보를 인코딩하여 인스턴스로 전송해 접속 인증을 받은 후, 안전하게 인스턴스에 접속할 수 있습니다. 키페어를 이용한 인스턴스 접속 방법은 [인스턴스 접속 방법](#_9)을 참고합니다.
+Key pairs can be newly created in the TOAST console when an instance is created, or may be registered as made by customer. For how to register key pairs, refer to [Getting Key Pair from Console Guide](./console-guide/#_15). 
 
-키페어는 인스턴스를 생성할 때 TOAST 콘솔에서 새로 만들 수도 있고, 고객이 직접 만든 키페어를 등록하여 사용할 수도 있습니다. 키페어 등록 방법은 [콘솔 가이드의 키페어 가져오기](./console-guide/#_15)를 참고합니다.
+> [Caution]
+> When a key pair is newly created, its private key is downloaded. As a private key is not issued no more than once, be sure to store downloaded private keys in a safe disk or USB drive. When a private key is exposed, anyone can access instances, so a cautious approach is required.  
 
-> [주의]
-> 키페어를 새로 생성하면 키페어의 개인 키를 다운로드하게 됩니다. 개인 키는 두 번 발급되지 않으니, 다운로드한 개인 키는 안전한 디스크나 USB 드라이브 등에 잘 보관하시기 바랍니다. 개인 키가 외부에 유출되면 누구나 유출된 개인 키로 해당 인스턴스에 접근할 수 있으므로 신중하게 관리해야 합니다.
+### Security Group 
 
-### 보안 그룹(Security group)
+Security Group is a virtual firewall that determines network traffic delivered to an instance. For more details on Security Group, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
-보안 그룹은 인스턴스에 전달되는 네트워크 트래픽을 결정하는 가상의 방화벽입니다. 보안 그룹에 대한 자세한 설명은 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+> [Note]
+> Security groups are designed to ignore all inbound network traffic. Before accessing instance with SSH, configure to open SSH port to the security group that has the instance.  
 
-> [참고]
-> 기본 보안 그룹은 외부에서 들어오는 인바운드(in-bound) 네트워크 트래픽을 모두 무시하도록 되어 있습니다. SSH로 인스턴스에 접속할 때 인스턴스가 속한 보안 그룹에 SSH 포트를 열도록 설정한 뒤에 인스턴스에 접속합니다.
+### Network 
 
-### 네트워크
+For external communication, an instance must be connected to at least one network defined in VPC. Cannot access an instance which is not connected to a network. To create or change a network, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
-인스턴스가 외부와 통신하려면 VPC에서 정의된 네트워크 중 적어도 하나 이상에 연결되어 있어야 합니다. 네트워크에 연결되어 있지 않은 인스턴스에는 접근할 수 없습니다. 네트워크를 새로 생성하거나 변경하려면 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+## Charge 
 
-## 과금
+Instance shall be charged as follows: 
 
-인스턴스 과금 방식은 다음과 같습니다.
+* Charging instances begin from the moment they are created.
+* Default instance disk is charged by the block storage charging criteria,
+* Closed instances are charged by default instance disk and block storage.
 
-* 인스턴스는 생성하는 순간부터 과금됩니다.
-* 인스턴스 기본 디스크는 인스턴스와 별도로 블록 스토리지 과금 기준으로 과금됩니다.
-* 종료된 인스턴스에 대해서는 인스턴스의 기본 디스크와 블록 스토리지만 과금됩니다.
 
+## How to Access Instances 
 
-## 인스턴스 접속 방법
+### How to Access Linux Instances 
 
-### Linux 인스턴스 접속 방법
+Use ssh client to access Linux instances. Access is not available if ssh access port (default 22) is not open to an instance security group. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to allow ssh access. If a floating IP is not assigned to an instance, access from outside of TOAST is unavailable. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to assign a floating IP.  
 
-Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 TOAST 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+#### How to Access Linux Instances with ssh Client for Mac or Linux 
 
-#### Mac 또는 Linux의 SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
+Generally, Mac or Linux has ssh client by default. Use a private key of key pair as below to access from ssh client: 
 
-Mac이나 Linux에는 보통 SSH 클라이언트가 기본적으로 설치되어 있습니다. SSH 클라이언트에서 아래와 같이 키페어의 개인 키를 이용하여 접속합니다.
+Access for CentOS instances: 
 
-CentOS 인스턴스
+	$ ssh -i my_private_key.pem root@<instance IP>
 
-	$ ssh -i my_private_key.pem root@<인스턴스의 IP>
+For Ubuntu instances: 
 
-Ubuntu 인스턴스
+	$ ssh -i my_private_key.pem ubuntu@<instance IP>
 
-	$ ssh -i my_private_key.pem ubuntu@<인스턴스의 IP>
+And for Debian instances:  
 
-Debian 인스턴스
+	$ ssh -i my_private_key.pem debian@<instance IP>
 
-	$ ssh -i my_private_key.pem debian@<인스턴스의 IP>
+#### How to Access Linux Instances with PuTTY ssh Client for Windows 
 
-#### Windows에서 PuTTY SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
+PuTTY ssh client is a widely used ssh client program for Windows.  Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 
-PuTTY SSH 클라이언트는 Windows에서 많이 사용되는 SSH 클라이언트 프로그램입니다. [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 또는 한글 패치가 적용된 [iPuTTY](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)를 설치합니다.
+Access from Windows to Linux instances via PuTTY ssh client requires three stages: 
 
-Windows에서 PuTTY SSH 클라이언트로 Linux 인스턴스에 접속하려면 세 단계를 거쳐야 합니다.
+* Change private key of key pair to that of PuTTY 
+* Register private key for PuTTY
+* Access instances with PuTTY 
 
-* 키페어의 개인 키를 PuTTY용 개인 키로 변경
-* PuTTY용 개인 키를 PuTTY에 등록
-* PuTTY로 인스턴스에 접속
 
+##### 1. Change Private Key of Key Pair to That of PuTTY
 
-##### 1. 키페어의 개인 키를 PuTTY용 개인 키로 변경
+In PuTTY, private key of key pair should be changed into the private key format of PuTTY. To convert keys, use puttygen which is installed along with PuTTY.  
 
-PuTTY에서는 키페어 개인 키를 PuTTY의 개인 키 형식으로 바꿔서 사용해야 합니다. 키 변환은 PuTTY와 함께 설치되는 puttygen을 이용합니다.
+![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
-![이미지1](http://static.toastoven.net/prod_instance/putty001.png)
+Set RSA for the key format at Parameters at the bottom, and enter 2048 bits, which is default, for the Key Bits to Create. Click **Load** next to **Load an existing private key file** to import the key file of a key pair.  
 
-**PuTTY Key 생성기** 대화 상자 제일 아래 **매개변수**에서 **생성할 키 형식**을 **RSA**로 선택하고, **생성할 키 비트**는 기본값인 '2048' 비트로 입력합니다. **작업** 아래 **개인키 파일 불러오기** 옆의 **불러오기** 버튼을 클릭하고 키페어의 개인 키 파일을 불러옵니다.
+![이미지2](http://static.toastoven.net/prod_instance/putty002-en.png)
 
-![이미지2](http://static.toastoven.net/prod_instance/putty002.png)
+Click **Save private key** next to **Save the generated key** and save the changed private key of a key pair, for PuTTY.  Try saving private key with Encrypted Phrases empty, and a message will show, "*Are you sure you want to save this key without a passphrase to protect it?*". To save more safely, set an encrypted phrase before saving.  
 
-**작업** 아래 **생성된 키 저장** 옆의 **개인키 저장** 버튼을 클릭하여 PuTTY용으로 변환된 키페어 개인 키를 저장합니다. **키 암호어구**를 빈 칸으로 두고 개인 키를 저장하면, **암호어구로 보호하지 않은 채 이 키를 저장하겠습니까?**라는 메시지가 나타납니다. 변환된 개인 키를 좀 더 안전하게 저장하려면 암호어구를 설정하여 저장합니다.
+> [Caution]
+> To set automatic login to an instance, encrypted phrases should not be used. When encrypted phrases are in use, directly enter password to a private key to login. 
 
-> [주의]
-인스턴스에 자동으로 로그인하도록 설정하려면 암호어구를 사용하지 않아야 합니다. 암호어구를 사용하면 로그인할 때 개인 키에 대한 비밀번호를 직접 입력해야 합니다.
+##### 2. Register Private Key for PuTTY to PuTTY
 
-##### 2. PuTTY용 개인 키를 PuTTY에 등록
+Private keys for PuTTY can be registered in the next two methods: 
 
-이렇게 만들어진 PuTTY용 개인 키는 2가지 방법으로 등록하여 사용할 수 있습니다.
+* By registering an authenticated private key file in PuTTY
+* By registering an authenticated private key file at pageant (PuTTY's authentication agent)
 
-* PuTTY에서 인증 개인 키 파일을 등록하여 사용하는 방법
-* pageant(PuTTY 인증 에이전트)에 인증 개인 키 파일을 등록하여 사용하는 방법
+**A. Registering Authenticated Private Key File in PuTTY**
 
-**A. PuTTY에서 인증 개인 키 파일을 등록하여 사용하는 방법**
 
+Execute PuTTY and select  **Connection > SSH > Auth** from the category on the left. Register a private key for PuTTY in the **Private key file for authentication** on **Authenticated parameters** on the right.  (in reference of the screen shot below )
 
-PuTTY를 실행하고, 왼쪽 **카테고리**에서 **연결 > SSH > Auth**를 선택합니다. 오른쪽 **인증 매개 변수** 아래 **인증 개인키 파일**에 PuTTY용 개인 키를 등록합니다.
+![이미지3](http://static.toastoven.net/prod_instance/putty005-en.png)
 
-![이미지3](http://static.toastoven.net/prod_instance/putty005.png)
+If you save access information after private key is registered, there is no need to re-register private key files every time: the method is described as below. 
 
-개인 키를 등록한 뒤, 접속 정보를 저장해두면 매번 개인 키 파일을 다시 등록할 필요가 없습니다. 접속 정보를 저장하는 방법은 아래 접속 방법을 참고합니다.
+**B. Registering authenticated private key files in pageant (PuTTY authentication agent)**
 
 
-**B. pageant(PuTTY 인증 에이전트)에 인증 개인 키 파일을 등록하여 사용하는 방법**
-
-
-PuTTY와 함께 설치되는 pageant를 실행하면, 아래 그림과 같이 Windows 트레이에 아이콘이 나타납니다. pageant 아이콘을 마우스 오른쪽 버튼으로 클릭한 후 **키 추가** 메뉴를 클릭해 PuTTY용 개인 키를 추가합니다.
+Run pageant, which is installed along with puTTY, and icons as below are created in the Windows tray. Right-click to select **Add Key** and add a private key for PuTTY. 
 
 ![이미지4](http://static.toastoven.net/prod_instance/putty006.png)
 
-개인 키가 추가된 것을 확인하려면 **키 보기**를 선택합니다. 키가 잘 추가되었다면, 아래 그림과 같이 추가된 키가 보입니다.
+To confirm the key added, select **View Keys**. If successful, the added key is displayed as below. 
 
-![이미지5](http://static.toastoven.net/prod_instance/putty008.png)
+![이미지5](http://static.toastoven.net/prod_instance/putty008-en.png)
 
-pageant는 한 번 실행되면, Windows 트레이에 계속 남아서 실행되므로 인스턴스에 접속할 때마다 다시 실행할 필요가 없습니다. 다만 Windows를 새로 시작한 경우에는 다시 실행해야 합니다.
+Pageant, once executed, remains in the Windows tray and runs, and there is no need to execute it at every access to an instance: unless, however, your Windows starts anew. 
 
-##### 3. PuTTY로 인스턴스에 접속
+##### 3. Access
 
-PuTTY용으로 변환된 개인 키가 잘 등록되었다면 PuTTY를 실행합니다.
+Now that the PuTTY private key is registered well, execute Putty. 
 
-![이미지6](http://static.toastoven.net/prod_instance/putty009.png)
+![이미지6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
-기본 접속 정보의 **호스트 이름**은 다음과 같이 사용합니다.
+**Host Name** of default access information for CentOS is: 
 
-CentOS
+	root@<Instance IP>
 
-	root@<인스턴스의 IP>
+For Ubuntu,
 
-Ubuntu
+	ubuntu@<Instance IP>
 
-	ubuntu@<인스턴스의 IP>
+And for Debian,
 
-Debian
+	debian@<Instance IP>
 
-	debian@<인스턴스의 IP>
+Specify 22 for the port, and SSH for the format of connection. 
 
-**포트**는 SSH 기본 포트인 22, **연결 형식**은 **SSH**로 지정합니다.
+If all information is right, save the session. Enter the session name to save in lower fields of **Load, save, or delete stored session** and click **Save**. Otherwise, private key setting registered in 2-A cannot be maintained.  
 
-모든 정보가 정확하다면 세션을 저장합니다. **불러오기, 저장, 저장된 세션 삭제**에서 저장된 섹션 아래 필드에 저장할 세션 이름을 쓰고, **저장** 버튼을 클릭하여 세션을 저장합니다. 세션을 저장하지 않으면 2-A에서 등록한 개인 키 설정 역시 유지되지 않습니다.
-
-이제 **열기**를 클릭하면 인스턴스에 접속합니다.
+Now click **Open** to access to instance. 
 
 
-### Windows 인스턴스 접속 방법
+### How to Access Windows Instances 
 
-Windows 서버에 접속하려면, TOAST 콘솔에서 접속하려는 Windows 인스턴스를 선택합니다. 아래 상세 화면의 **인스턴스 접속**(Instance 접속) 탭에서 **비밀번호 확인** 버튼을 클릭하여 Windows 서버에 설정된 비밀번호를 확인합니다.
+To access a Windows server, select a Windows instance to access from TOAST console. Click **Check Password** in the **Instance Access** tab from screen details at the bottom to check password set in the Windows server. 
 
-![Windows 인스턴스 접속](http://static.toastoven.net/prod_instance/windows-login.png)
+![윈도우 인스턴스 접속](http://static.toastoven.net/prod_instance/windows-login-en.png)
 
-**비밀번호 확인**에서 입력하는 키페어의 개인 키는 서버로 전송되지 않고, 브라우저에서 비밀번호를 복호화하는 작업에만 사용됩니다.
+Private key of key pair required to check password is not transmitted to the server but used only to decrypt password at the browser. 
 
-**비밀번호 확인** 옆의 **연결** 버튼을 클릭해 원격 데스크톱 접속 설정이 저장된 .rdp 파일을 받아서 실행하면 Windows 서버에 접속합니다. Windows 서버의 ID는 `Administrator`이며, 비밀번호는 TOAST 콘솔에서 확인한 비밀번호를 이용합니다.
+Click **Connect** next to **Check Password**, receive the rdp file containing setting for remote desktop access, and execute, to get access to Windows server.  `Administrator` is the ID for the Windows server and use the password confirmed in the TOAST console. 

@@ -1,167 +1,163 @@
-## Compute > Instance > 콘솔 사용 가이드
+## Compute > Instance > Console Guide
 
-## 인스턴스 생성
+## Create Instances
 
-### 이미지
+### Image
 
-원하는 운영체제가 설치된 이미지를 선택합니다. 이미지는 TOAST에서 제공하는 퍼블릭 이미지, 기존에 만들어둔 사용자 이미지, 공유 이미지에서 선택할 수 있습니다.
+Select an image with the operating system you need: select either from public images of TOAST, user images, or shared images.  
 
-사용할 이미지에 따라 인스턴스 사양(flavor)이 달라지므로 인스턴스 생성 시에는 가장 먼저 이미지를 선택하고 진행하도록 합니다.
+Instance flavors vary depending on the image you choose, so it is recommended to choose an image first before creating an instance. 
 
-| 운영체제                         | 디스크     | 메모리   |
-| -------------------------------- | ---------- | -------- |
-| Linux<br>CentOS, Ubuntu, Debian | 20GB 이상  | 1GB 이상 |
-| Windows                           | 50GB 이상  | 2GB 이상 |
+| OS                               | Disk      | Memory   |
+| -------------------------------- | --------- | -------- |
+| Linux <br>CentOS, Ubuntu, Debian | Over 20GB | Over 1GB |
+| Windows                          | Over 50GB | Over 2GB |
+ 
 
+### Availability Zone 
 
-### 가용성 영역(availability zone)
+Unless specified, the availability zone shall be set randomly. Depending on the availability zone, the block storage is determined that the instance can use. If the block storage exists in a particular availability zone, then choose the zone.  
 
-가용성 영역을 명시적으로 설정하지 않는 경우, 임의의 영역으로 설정됩니다. 가용성 영역에 따라 이 인스턴스가 사용할 수 있는 블록 스토리지가 결정됩니다. 사용하려는 블록 스토리지가 특정 가용성 영역에 존재한다면 해당 가용성 영역으로 설정하여 사용합니다.
+> [Note] VPC resources are available in all availability zones.
 
-> [참고] VPC의 자원들은 모든 가용성 영역에서 사용할 수 있습니다.
+For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](/Compute/Instance/en/overview/#_4).
 
-가용성 영역에 대한 자세한 설명은 [인스턴스 개요의 가용성 영역](/Compute/Instance/en/overview/#_4)을 참고합니다.
+### Flavors 
 
-### 사양(flavor)
+Flavors can be selected depending on virtual hardware performance. Nevertheless, such selection may be limited depending on the performance that image requires. For more details, refer to [Overview of Instances](./overview). 
 
-가상 하드웨어의 성능에 따라 다양한 사양을 선택할 수 있습니다. 다만, 이미지에서 요구하는 가상 하드웨어의 성능에 따라 선택할 수 있는 사양이 제한될 수 있습니다. 보다 자세한 설명은 [인스턴스 개요](./overview)를 참고합니다.
+Instance flavors may be changed in the TOAST console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#_14)
 
-인스턴스의 사양은 생성 이후에도 TOAST 콘솔에서 변경할 수 있습니다. 높은 사양에서 낮은 사양으로 변경할 수 있고, 낮은 사양에서 높은 사양으로도 변경할 수 있습니다. 일부 사양은 변경할 수 없는 경우도 있으니, 자세한 것은 [인스턴스 사양 변경](./console-guide/#_14)을 참고합니다.
+> [Caution] Default instance disk cannot be changed with Change of Instance Flavors. 
 
-> [주의] 인스턴스의 기본 디스크는 사양 변경으로 바꿀 수 없습니다.
+### Device Size 
 
-### 장치 크기
+Determines default disk size of an instance. 
 
-인스턴스의 기본 디스크 크기를 결정합니다.
+- Size of a default disk cannot change once an instance is created. When there's a shortage of volume, add block storages for further usage. 
+- Device size must be larger than the minimum requirement of an image. 
 
-- 인스턴스가 한번 생성되면 기본 디스크의 크기는 변경할 수 없습니다. 인스턴스의 디스크 용량이 부족하다면 블록 스토리지를 추가하여 사용해야 합니다.
-- 장치의 크기는 이미지가 요구하는 최소 크기 이상으로 만들어야 합니다.
+Default disk size depends on the instance flavors. 
 
-인스턴스의 기본 디스크 크기는 인스턴스 사양에 따라 달라집니다.
-
-| 사양            | 지원하는 장치 크기         |
+| Flavors | Supportive Device Size |
 | ----------------| -------------------------- |
-| U 타입          | 20 ~ 100 GB (사양별로 고정) |
-| T, M, C, R 타입 | 20~1000GB               |
+| Type U | Fixed at 20 ~ 100GB: vary by flavors    |
+| Types T, M, C and R | 20 ~ 1000 GB               |
 
->[참고] 장치 크기에 따라 과금되므로 기본 디스크의 크기를 무조건 크게 만드는 것은 비효율적입니다. 필요에 따라 블록 스토리지를 추가하여 사용하는 것이 좋습니다.
+>[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
 
-### 볼륨 타입
 
-인스턴스의 기본 디스크 타입을 결정합니다.
+### Volume Type
+Determines default disk type of an instance.
 
-- **범용 HDD** 또는 **범용 SSD** 중 하나를 선택합니다. 타입에 따라 요금과 성능이 달라집니다.
-- 한번 선택한 디스크 타입은 변경할 수 없습니다. 
+- Chooose one of **General HDD** or **General SSD** based on your performance requirement. This changes the price of the instance.
+- Can not change the volume type of the instance once created.
 
-### 인스턴스 수
+### Number of Instances 
 
-이미지, 가용성 영역, 사양, 장치 크기, 키페어, 네트워크 설정이 모두 동일한 인스턴스를 여러 개 생성할 경우에 사용합니다. 인스턴스의 이름은 설정한 이름 뒤에 `-1`, `-2`와 같이 번호가 붙어 생성됩니다. 예를 들어, 인스턴스 이름을 `my-instance`로 인스턴스를 2개 만들면, `my-instance-1`, `my-instance-2`가 생성됩니다. 한 번에 생성할 수 있는 최대 인스턴스의 개수는 10개입니다.
+This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instanc `shall result in  `my-instance-1 `and `my-instance-2`. 
 
-임의의 가용성 영역에 인스턴스를 여러 개 생성한 경우, 각각 인스턴스는 임의의 가용성 영역에 만들어집니다. 예를 들어, 2개의 인스턴스를 임의의 가용성 영역으로 생성한 경우, 2개가 같은 가용성 영역에 만들어질 수도 있고 다른 가용성 영역에 만들어질 수도 있습니다. 모든 인스턴스가 같은 가용성 영역에 생성되어야 한다면, 특정 가용성 영역을 선택하여 생성합니다.
+When many instances are created for a random availability zone, each instance shall be created in a random availability zone. For instance, if two instances are created with a random availability zone, two may be created in the same zone, or in different zones. In case all instances need to be created in a same zone, select a particular zone before creation. 
 
-### 키페어
+### Key Pair
 
-기존 키페어를 사용하거나, 새로 키페어를 생성하여 사용합니다. 기존 키페어 등록은 Windows 사용자의 경우 [키페어 가져오기(Windows 사용자)](./console-guide/#_16), Mac과 Linux 사용자의 경우 [키페어 가져오기(Mac, Linux 사용자)](./console-guide/#_17)를 참고합니다.
+Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#_16) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#_17) for Mac and Linux users. 
 
-### 보안 그룹
+### Security Group
 
-인스턴스가 속할 보안 그룹을 지정합니다. 인스턴스 하나는 여러 보안 그룹에 속할 수 있습니다. 인스턴스가 여러 보안 그룹에 속한 경우에는 다음을 참고합니다.
+Specify a security group where an instance is to be included. One instance can be included to many security groups, and in such case: 
 
-- 각 보안 그룹에 속한 모든 인스턴스와 네트워크 통신이 가능합니다. 다른 인스턴스의 의도하지 않은 접근을 막아야할 민감한 데이터를 가진 인스턴스의 경우에는 신중하게 보안 그룹을 지정해야 합니다.
-- 각 보안 그룹의 모든 룰이 합쳐져서 해당 인스턴스의 외부 통신에 적용됩니다.
+- Can communicate via network with all instances included to each security group. Take cautious approach when specifying a security group for an instance with sensitive data from which unintentional access from other instances should be prevented. 
+- Rules of each security group are combined and applied for the instance's external communication. 
 
-보안 그룹에 대한 보다 자세한 설명은 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+For more details, refer to [Overview of VPC](/Network/VPC/en/overview/)
 
-### 네트워크
+### Network 
 
-VPC에서 정의된 서브넷 중에서 인스턴스에 연결할 서브넷을 선택합니다. 서브넷을 하나 선택할 때마다 인스턴스에 해당 서브넷에 연결될 네트워크 인터페이스가 만들어집니다. 선택된 서브넷의 순서를 바꾸어서 네트워크 인터페이스를 변경할 수도 있습니다. 이 경우, 첫번째 네트워크 인터페이스(`eth0`)가 기본 게이트웨이로 설정됩니다.
+Select a subnet to be connected to an instance, among those defined in VPC. Every time a subnet is selected, a network interface is created to be connected to the subnet. The order of selected subnets may be changed to alter network interfaces, in which case, the first network interface  (`eth0`) shall be set as the default gateway. 
 
-네트워크 생성과 관리에 대한 자세한 설명은 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/en/overview/).
 
-## 인스턴스 추가 기능
+## Further Functions of Instances 
 
-### 이미지 생성
+### Create Image 
 
-인스턴스의 기본 디스크로부터 이미지를 생성합니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서만 진행할 수 있습니다. 이미지 생성 명령이 비활성화되어 있다면 먼저 인스턴스를 종료해야 합니다.
+Image is created from a default instance disk. Creating an image is available only after an instance is closed to ensure data integrity. If Create Image is disabled, close instances first. 
 
-인스턴스의 기본 디스크의 여유 공간이 전혀 없는 상태에서 이미지 생성은 가능하나, 이미지를 다른 인스턴스에서 사용하기 위한 초기화 작업을 할 수 없어서 정상 사용이 불가능합니다. 이미지를 생성하기 전에 인스턴스에서 최소 100KB의 여유 공간을 확보합니다.
+Even when a default disk has no additional space, image can be created but normal usage is impossible as initialization to use the image in other instances is unavailable. Before creating an image, empty at least 100KB of space.   
 
-생성된 이미지는 **Compute > Image**에 Private 이미지로 등록됩니다. 등록된 이미지를 이용하여 원본 인스턴스와 동일한 디스크를 가진 인스턴스를 생성할 수 있습니다.
+Image, once created, is registered as Private Image at Compute > Image. The image can be used to create an instance which has the same disk as the original instance. 
 
-### 플로팅 IP 연결과 해제
+### Associate/Disassociate Floating IP
 
-인스턴스의 상태에 관계없이 플로팅 IP를 연결하고 해제할 수 있습니다. 사용 가능한 플로팅 IP가 없거나 원하는 플로팅 IP가 없는 경우, **생성** 버튼을 클릭해 플로팅 IP를 생성하여 연결할 수 있습니다. 또는 **Network > VPC > Floating IP**에서 플로팅 IP를 생성하여 사용해도 됩니다.
+Floating IP can be associated or disassociated, regardless of the instance status. When there is no available floating IP, create one by clicking **Create**. Or go to **Network > VPC > Floating IP** to create a floating IP.  
 
-플로팅 IP에 대한 자세한 설명은 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+For more details, refer to [Overview of VPC](/Network/VPC/en/overview/). 
 
-### 보안 그룹 수정
+### Modify Security Group
 
-인스턴스의 상태에 관계없이 인스턴스의 보안 그룹을 수정할 수 있습니다. 수정된 보안 그룹은 바로 적용됩니다.
+Security groups of an instance can be modified, regardless of instance status: modified security groups are immediately applied. 
 
-보안 그룹에 대한 자세한 설명은 [보안 그룹](./console-guide/#_8)과 [VPC 개요](/Network/VPC/en/overview/)를 참고합니다.
+For more details, refer to [Security Group](./console-guide/#_8) and [Overview of VPC](/Network/VPC/en/overview/). 
 
-### 네트워크 인터페이스 수정
+### Modify Network Interface 
 
-인스턴스의 상태에 관계없이 인스턴스의 네트워크 인터페이스를 추가하거나 삭제할 수 있습니다. 네트워크 인터페이스를 삭제할 때, 인터페이스에 플로팅 IP가 연결되어 있다면 플로팅 IP도 같이 연결이 해제됩니다. 한번 연결 해제된 플로팅 IP는 같은 네트워크 인터페이스를 다시 추가하더라도 자동으로 연결되지 않습니다. 네트워크 인터페이스 추가 후에 다시 원하는 플로팅 IP를 연결해야 합니다.
+Network interfaces may be added or deleted, regardless of instance status. When a network interface is associated with a floating IP, the floating IP is disassociated along with interface deleted. Once disassociated, a floating IP cannot be automatically associated even by adding the same network interface again: add network interface first and associate the the floating IP again.  
 
-### 인스턴스 사양 변경
+### Change Instance Flavors 
 
-인스턴스 사양은 인스턴스를 종료한 후 변경할 수 있습니다. 인스턴스가 실행 중이면 **추가 기능**의 **인스턴스 종료**를 클릭하여 인스턴스를 종료합니다.
+Change of instance flavors is enabled when an instance is closed. If an instance is currently executed, click **Close Instances** in **Further Functions** and close the instance.   
 
-현재 사양에 따라 변경할 수 있는 인스턴스 사양이 다릅니다.
+Instance flavors are allowed to change, depending on the current flavors.  
 
-* M, C, R, T 타입의 인스턴스는 M, C, R, T 타입의 인스턴스 사양으로 변경할 수 있습니다.
-* M, C, R, T 타입의 인스턴스는 U 타입의 인스턴스 사양으로 변경할 수 없습니다.
-* U 타입은 생성 이후에 사양을 변경할 수 없습니다. 같은 U 타입의 인스턴스 사양으로도 변경할 수 없습니다.
+* Instances with types M, C, R, and T can be changed to have flavors of types M, C, R, and T. 
+* Instances with types M, C, R, and T cannot be changed to have flavors of type U. 
+* Type U cannot change flavors after created: not even to those of the same U type. 
 
-인스턴스 사양을 변경하면, 변경 작업과 변경 확인 작업이 진행됩니다. 모든 작업이 완료되면 VM 상태가 **Shutoff** 상태가 되며, **추가 기능**의 **Start instance**를 클릭하여 인스턴스를 시작할 수 있습니다.
+If an instance changes its flavors, Change and Confirm Change are followed. When all tasks are completed, the VM status changes into **Shutoff**, and you can start an instance by clicking **Start Instance** in **Further Functions**. 
 
-> [참고] 인스턴스의 기본 디스크 크기는 변경할 수 없습니다. 인스턴스의 디스크 공간이 부족하다면 블록 스토리지를 추가하여 사용합니다. 자세한 블록 스토리지 추가 방법은 [블록 스토리지 개요](/Storage/Block%20Storage/en/overview/)를 참고합니다.
+> [Note] Default disk size of an instance cannot be changed. If an instance has no sufficient disk space, add a block storage: for detailed method, refer to [Overview of Block Storage](/Storage/Block%20Storage/en/overview/). 
 
-인스턴스는 변경 시점을 기준으로 변경된 사양으로 과금됩니다.
+Instances shall be charged by changed flavors, as of the time of change. 
 
-## 키페어
+## Key Pair
 
-### 키페어 가져오기(Windows 사용자)
+### Import Key Pairs (Windows)
 
-PuTTY SSH 클라이언트를 설치하면 함께 설치되는 puttygen 프로그램으로 키페어를 생성하고 TOAST에 등록하여 사용할 수 있습니다.
+To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to TOAST. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 
-[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 또는 한글패치가 적용된 [iPuTTY](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)를 설치합니다.
+Run puttygen. 
+![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+Select RSA (or SSH-2 RSA in the older version of puttygen) in **Parameters**. Press **Generate**, in **Actions**. To create a key, continue to move the mouse in an empty space.  
 
-puttygen을 실행합니다.
+When a key is created, public key file shows as below. Copy and paste the whole content of public key to **Public Key of Import Key Pairs:** register key pair. 
+![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-002-en.png)
+Click **Save private key** of **Actions** and save the private key. Try saving private key with Encrypted Phrases empty, and a message will show, "*Want to save this key without protected by encrypted phrases?"*. To save more safely, set an encrypted phrase before saving.
 
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001.png)
+> [Caution]
+To set automatic login to an instance, encrypted phrases should not be used. When encrypted phrases are in use, directly enter password to a private key to login. 
 
-**매개변수**에서 **RSA**(또는 구 버전의 puttygen에서는 SSH-2 RSA)를 선택합니다. **작업**에 있는 **생성** 버튼을 클릭합니다. 키를 생성하기 위해서 빈 공간 안에서 마우스를 계속 움직입니다.
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#_9). 
 
-키가 생성되면 아래 그림처럼 공개 키 파일 내용이 보입니다. 공개 키 내용 전체를 **키페어 가져오기**의 **공개 Key:** 입력란에 붙여 넣어서 키페어를 등록합니다.
-
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-002.png)
-
-**작업**의 **개인 키 저장** 버튼을 클릭해 개인 키를 저장합니다. 키 암호어구를 빈 칸으로 두고 개인 키를 저장하면, **암호어구로 보호하지 않은 채 이 키를 저장하겠습니까?** 메시지가 나타납니다. 변환된 개인 키를 좀 더 안전하게 사용하려면 암호어구를 설정하여 저장합니다.
-
-> [주의]
-인스턴스에 자동으로 로그인하려면 암호어구를 사용하지 않아야 합니다. 암호어구를 사용하면 로그인할 때 개인 키에 대한 비밀번호를 직접 입력해야 합니다.
-
-등록한 키페어는 인스턴스를 생성할 때 사용할 수 있고, 인스턴스 접속 시에는 이 키페어의 개인 키로 접속하여야 합니다. 인스턴스 접속 방법은 [인스턴스 개요](./overview/#_9)를 참고합니다.
-
-TOAST에서 생성한 키페어와 마찬가지로 이렇게 만든 키페어의 개인 키도 외부 유출 시에 누구나 유출된 개인 키로 해당 인스턴스에 접근할 수 있게 되므로 신중하게 관리해야 합니다.
+Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
 
 
-### 키페어 가져오기(Mac, Linux 사용자)
+### Import Key Pairs (Mac and Linux)
 
-Mac이나 Linux의 `ssh-kegen`으로 만든 키페어를 TOAST에 등록하여 사용할 수 있습니다. 키페어는 다음 명령으로 생성합니다.
+Key pairs created by `ssh-kegen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
 
 	$ ssh-keygen -t rsa -f my_key.key
 
-키페어의 비밀번호는 설정해도 되지만 설정하지 않아도 사용하는 데에 문제는 없습니다. 보안 수준을 높이려면 비밀번호 설정을 추천합니다. 입력한 키페어의 이름에 `.pub` 확장자가 추가된 파일 안에 키페어 공개 키가 들어 있습니다.
+Passwords for key pair may or may not be set, although it is recommended to set passwords for high-level of security. Inside the file with  `.pub` added in the key pair name, lies a key pair public key. 
 
 	$ cat my_key.key.pub
 	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnnUAe36txQqk8J7VzbNuYKVQQ3gbNoClndHMX49OD+1Rw5xrDFLUKQqxbBDtlNMoA9tKBZNrQBpKr1kFEtvMIj1HPkH9ocb4MbuoVVjpkIhixbKMMJPDQ4JQJxaifsjR59YsZyDAp0aXZp+o+OB97P3S4AKPY2kQR0JdSr30+6Av6smf+3mZceAE4abzklfbyWT5slP1im/wfYEPO3QBEDl/0JbmTjKWPYI6QnbwnPRHS63SJ+Kd2QeYQYJCadv7X4mXnw81qEIWq/dx1SQkGDTNgR7lnN2ApFlU5EZcow69z6tiCr0hlyigwjGooMg3wTZvcSlYcVeTzZ755RArd ...
 
-이 내용 전체를 **키페어 가져오기**의 **공개 Key:** 입력란에 붙여 넣어서 키페어를 등록합니다.
+Copy the whole content to **Open Key** of **Import Key Pairs:** to register a key pair. 
 
-등록한 키페어는 인스턴스를 생성할 때 사용할 수 있고, 인스턴스 접속 시에는 이 키페어의 개인 키로 접속해야 합니다. 인스턴스 접속 방법은 [인스턴스 접속 방법](./overview/#_9)을 참고합니다.
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#_9).   
 
-TOAST에서 생성한 키페어와 마찬가지로 이렇게 만든 키페어의 개인 키도 외부 유출 시에 누구나 유출된 개인 키로 해당 인스턴스에 접근할 수 있게 되므로 신중하게 관리해야 합니다.
+Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+
+

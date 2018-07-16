@@ -324,13 +324,15 @@ X-Auth-Token: {tokenId}
             "keyName": "{PEM Key Name}",
             "volumes": {
                 "root" : {
-                    "size" : "{Root Volume Size}"
+                    "size": "{Root Volume Size}",
+                    "type": "{Root Volume Type}"
                 },
                 "attachments" : [
                     {
                         "id" : "{Attached Volume ID}",
                         "name": "{Attached Volume Name}",
-                        "size": "{Attached Volume Size}"
+                        "size": "{Attached Volume Size}",
+                        "type": "{Attached Volume Type}"
                     }
                 ]
             },
@@ -364,10 +366,12 @@ X-Auth-Token: {tokenId}
 | Image ID | Body | String | 인스턴스에 설치된 이미지 ID |
 | metadata | Body | Object | 인스턴스에 설정할 사용자 메타데이터로, "key": "value" 형태로 저장 |
 | PEM Key Name | Body | String | 인스턴스에 등록할 키페어 이름 |
-| Root Volume Size | Body | Integer | 인스턴스 기본 디스크 장치 크기(GB) |
+| Root Volume Size | Body | Integer | 인스턴스 기본 블록 스토리지 장치 크기(GB) |
+| Root Volume Type | Body | String | 인스턴스 기본 블록 스토리지 장치 종류. "General HDD" 또는 "General SSD" 중 하나. |
 | Attached Volume ID | Body | String | 추가 블록 스토리지 ID |
 | Attached Volume Name | Body | String | 추가 블록 스토리지 이름 |
 | Attached Volume Size | Body | Integer | 추가 블록 스토리지 크기 (GB) |
+| Attached Volume Type | Body | String | 추가 블록 스토리지 장치 종류. "General HDD" 또는 "General SSD" 중 하나. |
 | Security Group Name | Body | String | 인스턴스에 등록된 보안 그룹의 이름 |
 | Launched Time | Body | String | 인스턴스 최근 부팅 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
 | Created Time | Body | String | 인스턴스 생성 시각. yyyy-mm-ddTHH:MM:ssZ의 형태. 예) 2017-05-16T02:17:50.166563 |
@@ -403,7 +407,8 @@ Content-Type: application/json;charset=UTF-8
         "keyName": "{Key Name}",
         "count": "{Count}",
         "volume": {
-           "size": "{Volume Size}"
+           "size": "{Volume Size}",
+           "type": "{Volume Type}",
         },
         "securityGroups": [
         	{
@@ -422,16 +427,16 @@ Content-Type: application/json;charset=UTF-8
 | Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID |
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
-| Count | Body | Integer | 0 | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
-| Volume Size | Body | Integer | 0 | 인스턴스의 기본 디스크 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조 |
+| Count | Body | Integer | O | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
+| Volume Size | Body | Integer | O | 인스턴스의 기본 블록 스토리지 크기, 생성 가능한 크기는 [콘솔 가이드](/Compute/Instance/ko/console-guide/#_5)를 참조 |
+| Volume Type | Body | String | O | 인스턴스의 기본 블록 스토리지 종류, "General HDD" 또는 "General SSD" 중 하나. |
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
-* **"volumeSize" 파라미터 값을 갖는 사양(u2.\*) 로 인스턴스 생성 시**
-	* "instance.volume.size" 파라미터를 생략해야 합니다.
-	* 사양에 설정된 고정 볼륨 크기의 기본 디스크가 생성됩니다.
-* **"volumeSize" 파라미터 값을 갖지 않는 사양으로 인스턴스 생성 시**
-	* "instance.volume.size" 파라미터가 반드시 기재되어야 합니다.
-	* **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 하며, 설정된 크기의 기본 디스크가 생성됩니다.
+> [주의]
+> * `Volume Size`, `Volume Type` 파라미터는 c2, m2, r2, t2 사양에서만 적용됩니다.
+> 	* 이 파라미터는 범용 블록 스토리지가 아닌 로컬 디스크를 사용하는 u2 계열 사양에서는 사용할 수 없습니다.
+> * `Volume Size`는 **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 합니다.
+> * `Volume Type`은 `null`로 지정할 수 있으며, 이 경우 "General HDD"로 지정됩니다.
 
 
 #### Response Body
