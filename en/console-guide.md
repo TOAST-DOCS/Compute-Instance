@@ -42,7 +42,7 @@ Default disk size depends on the instance flavors.
 | Flavors | Supportive Device Size |
 | ----------------| -------------------------- |
 | Type U | Fixed at 20 ~ 100GB: vary by flavors    |
-| Types T, M, C and R | 20 ~ 1000 GB               |
+| Types T, M, C, R, and X | 20 ~ 1000 GB               |
 
 >[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
 
@@ -110,8 +110,8 @@ Change of instance flavors is enabled when an instance is closed. If an instance
 
 Instance flavors are allowed to change, depending on the current flavors.  
 
-* Instances with types M, C, R, and T can be changed to have flavors of types M, C, R, and T. 
-* Instances with types M, C, R, and T cannot be changed to have flavors of type U. 
+* Instances with types M, C, R, T, and X can be changed to have flavors of types M, C, R, T, and X. 
+* Instances with types M, C, R, T, and X cannot be changed to have flavors of type U. 
 * Type U cannot change flavors after created: not even to those of the same U type. 
 
 If an instance changes its flavors, Change and Confirm Change are followed. When all tasks are completed, the VM status changes into **Shutoff**, and you can start an instance by clicking **Start Instance** in **Further Functions**. 
