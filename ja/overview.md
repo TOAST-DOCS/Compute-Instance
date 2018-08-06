@@ -32,6 +32,7 @@ TOASTは顧客の使用用途に合った様々なタイプのインスタンス
 | R | 他のリソースに比べてメモリの使用量が多い場合に使用できます。通常、メモリデータベースやキャッシュサーバーに使用します。 |
 | T | 安価なインスタンスです。ワークロードが高くないサーバーに使用します。 |
 | U | 最も安価なインスタンスです。ワークロードが高くないサーバーで使用します。<br>ローカルディスクを使用するため、相対的に他のインスタンスより安定性が落ちますが、低価格で利用できます。<br>このタイプのインスタンスはI/O性能を保障しません。|
+| X | ハイスペックのCPUとメモリをサポートしている仕様です。高い性能が必要なサービスやアプリケーションに使用します。 |
 
 ### アベイラビリティーゾーン(Availability zone)
 
@@ -97,7 +98,7 @@ Debianインスタンス
 
 #### WindowsでPuTTY SSHクライアントでLinuxインスタンスに接続する方法
 
-PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。 [PuTTY](https：//www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)または日本語パッチが適用された[iPuTTY](https：//github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)をインストールします。
+PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https：//www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
 
 WindowsのPuTTY SSH クライアントでLinuxインスタンスに接続するには、3段階を踏む必要があります。
 
@@ -131,7 +132,7 @@ PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使�
 **A. PuTTYで認証秘密鍵ファイルを登録して使用する方法**
 
 
-PuTTYを実行し、左の**カテゴリ**で**接続 > SSH > Auth**を選択します。右の**認証パラメータ**下の**認証秘密鍵ファイル**にPuTTY用秘密鍵を登録します。
+PuTTYを実行し、左の**カテゴリ**から** Connection > SSH > Auth**を選択します。右の**Authentication parameters**下の**Private key file for authentication**にPuTTY用の秘密鍵を登録します。
 
 ![イメージ3](http：//static.toastoven.net/prod_instance/putty005-en.png)
 
@@ -141,11 +142,11 @@ PuTTYを実行し、左の**カテゴリ**で**接続 > SSH > Auth**を選択し
 **B. pageant(PuTTY認証エージェント)に認証秘密鍵ファイルを登録して使用する方法**
 
 
-PuTTYと一緒にインポートされているpageantを実行すると、下図のようにWindowsトレイにアイコンが表示されます。pageantアイコンをマウス右クリックした後、**キー追加**メニューをクリックしてPuTTY用秘密鍵を追加します。
+PuTTYと一緒にインポートされているpageantを実行すると、下図のようにWindowsトレイにアイコンが表示されます。pageantアイコンを右クリックし、**Add key**メニューをクリックしてPuTTY用の秘密鍵を追加します。
 
 ![イメージ4](http：//static.toastoven.net/prod_instance/putty006.png)
 
-秘密鍵が追加されたことを確認するには**キー表示**を選択します。キーが追加されていれば、下図のように追加されたキーが表示されます。
+秘密鍵が追加されたことを確認するには**View keys**を選択します。キーが追加されていれば、下図のように追加されたキーが表示されます。
 
 ![イメージ5](http：//static.toastoven.net/prod_instance/putty008-en.png)
 
