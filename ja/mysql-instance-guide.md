@@ -1,111 +1,112 @@
-## Compute > Instance > 특화된 인스턴스 사용 가이드 > MySQL Instance 가이드
+## Compute > Instance > 特化したインスタンス使用ガイド > MySQL Instanceガイド
 ## MySQL version
 
-MySQL version은 다음과 같이 2가지 종류가 제공됩니다.
+MySQL versionは次の2種類が提供されます。
 
 * MySQL Community Server 5.6.38
     * mysql-community-server-5.6.38-2.el6.x86_64
 * MySQL Community Server 5.7.20
     * mysql-community-server-5.7.20-1.el6.x86_64
 
-## MySQL 시작/정지 방법
+## MySQL開始/停止方法
 
 ```
-#mysql 서비스 시작
+#mysqlサービス開始
 shell> service mysqld start
 
-#mysql 서비스 중지
+#mysqlサービス中止
 shell> service mysqld stop
 
-#mysql 서비스 재시작
+#mysqlサービス再起動
 shell> service mysqld restart
 ```
 
-## MySQL 접속
+## MySQL接続
 
-이미지 생성 후 초기에는 아래와 같이 접속합니다.
+イメージ生成後、最初は下記のように接続します。
 
 ```
 shell> mysql -uroot
 ```
 
-## MySQL 이미지 생성 후 초기 설정
+## MySQLイメージ生成後、初期設定
 
-### 1\. 비밀번호 변경
+### 1\.パスワード変更
 
-초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번를 변경해야 합니다.
+初期インストール後、 MySQL ROOTアカウントパスワードは指定されていません。したがってインストール後、必ずすぐにパスワードの変更をする必要があります。
 
-* MySQL 5.6 버전 비밀번호 변경
+* MySQL 5.6バージョンパスワード変更
 
 ```
 SET PASSWORD [FOR user] = password_option
 
-mysql> set password=password('비밀번호');
+mysql> set password=password('パスワード');
 ```
 
-* MySQL 5.7 버전 비밀번호 변경
+* MySQL 5.7バージョンパスワード変更
 
 ```
 ALTER USER USER() IDENTIFIED BY 'auth_string';
 
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '새로운 비밀번호';
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '新しいパスワード';
 ```
 
-MySQL 기본 validate\_password\_policy는 아래와 같습니다\.
+MySQL基本validate\_password\_policyは下記のとおりです。
 
 * validate\_password\_policy=MEDIUM
-* 기**본 8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
+* 基本**8文字以上で、アルファベット(大文字/小文字)、数字、特殊文字**を含める必要があります。
 
-### 2\. 포트(port) 변경
+### 2\. ポート(port)変更
 
-제공되는 이미지 포트는 MySQL 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
+提供されるイメージポートはMySQLの基本ポートである3306です。セキュリティー上、ポート変更を推奨します。
 
 ```
 shell> vi /etc/my.cnf
 
 
-#my.cnf 파일에 사용하고자 하는 포트를 명시해 줍니다.
+#my.cnfファイルに使用するポートを明示します。
 
-port =사용하고자 하는 포트명
-
-
-#vi 편집기 저장
+port =使用するポート名
 
 
-#mysql 서비스 재시작
+#viエディタ保存
+
+
+#mysqlサービス再起動
 
 
 shell> service mysqld restart
 
 
-#변경된 포트로 아래와 같이 접속
+#変更されたポートに下記のように接続
 
 
-shell> mysql -uroot -P[변경된 포트 번호]
+shell> mysql -uroot -P[変更されたポート番号]
 ```
 
-## my.cnf 설명
+## my.cnf説明
 
-my.cnf 의 기본 경로는 /etc/my.cnf 이고 TOAST 권장 변수(variable)가 설정되어 있으며, 내용은 아래와 같습니다.
+my.cnfの基本パスは /etc/my.cnfで、TOAST推奨変数(variable)が設定されており、内容は以下のとおりです。
 
-| 이름 | 설명 |
+| 名前 | 説明 |
 | --- | --- |
-| default\_storage\_engine | 기본 스토리지 엔진(stroage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
-| expire\_logs\_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
-| innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
-| innodb\_file\_per\_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
-| innodb\_log\_files\_in\_group | innodb\_log\_file 파일의 개수를 설정하며 순환적\(circular\)으로 사용됩니다\. 최소 2개 이상으로 구성됩니다\. |
-| log_timestamps | MySQL 5.7의 기본 log 시간은 UTC로 표시됩니다. 그러므로 로그 시간을 SYSTEM 로컬 시간으로 변경합니다. |
-| slow\_query\_log | slow\_query log 옵션을 사용합니다\. long\_query\_time에 따른 기본 10초 이상의 쿼리는 slow\_query\_log에 기록됩니다\. |
-| sysdate-is-now | sysdate의 경우 replication에서 sysdate() 사용된 SQL문은 복제 시 마스터와 슬레이브 간의 시간이 달라지는 문제가 있어 sysdate()와 now()의 함수를 동일하게 적용합니다. |
+| default\_storage\_engine | 基本ストレージエンジン(stroage engine)を指定します。 InnoDBで指定され、 Online-DDLとトランザクション(transaction)を使用できます。 |
+| expire\_logs\_days | binlog設定で蓄積されるログ保存日を設定します。基本3日に指定されています。 |
+| innodb\_log\_file\_size | トランザクション(transaction)のredo logを保存するログファイルのサイズを指定します。 <br><br>実際の運営環境では256MB以上を推奨します。現在512MBに設定されています。設定値を修正した際は、DB再起動が必要です。 |
+| innodb\_file\_per\_table | テーブルが削除またはTRUNCATEされる時、テーブルのスペースがOSにすぐに返還されます。 |
+| innodb\_log\_files\_in\_group | innodb\_log\_fileファイルの個数を設定し、循環的\(circular\)に使われます。最低2個以上で構成されます。 |
+| log_timestamps | MySQL 5.7の基本log時間はUTCで表示されます。したがってログ時間をSYSTEMローカル時間に変更します。 |
+| slow\_query\_log | slow\_query logオプションを使用します。 long\_query\_timeに基づく基本10秒以上のクエリーはslow\_query\_logに記録されます。 |
+| sysdate-is-now | sysdateの場合、 replicationでsysdate()使用されたSQL文は複製時、マスターとスレーブ間の時間が変わる問題があり、sysdate()とnow()の関数を同一に適用します。 |
 
-## MySQL 디렉터리 설명
+## MySQLディレクトリ説明
 
-MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
+MySQLディレクトリおよびファイルの説明は下記のとおりです。
 
-| 이름 | 설명 |
+| 名前 | 説明 |
 | --- | --- |
 | my.cnf | /etc/my.cnf |
-| DATADIR | MySQL 데이터 파일 경로  - /var/lib/mysql/ |
-| ERROR_LOG | MySQL error_log 파일 경로  - /var/log/mysqld.log |
-| SLOW_LOG | MySQL Slow Query 파일 경로 -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+| DATADIR | MySQLデータファイルパス - /var/lib/mysql/ |
+| ERROR_LOG | MySQL error_logファイルパス - /var/log/mysqld.log |
+| SLOW_LOG | MySQL Slow Queryファイルパス -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+
