@@ -126,7 +126,7 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 PuTTY SSHクライアントをインストールすると一緒にインストールされるputtygenプログラムでキーペアを生成し、TOASTに登録して使用できます。
 
-[PuTTY](https：//www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
+[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
 
 Puttygenを実行します。
 
