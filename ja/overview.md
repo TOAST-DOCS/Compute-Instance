@@ -17,7 +17,7 @@
 
 ### イメージ
 
-イメージはオペレーションシステムを含む仮想ディスクです。TOASTは現在CentOS、Debian、Ubuntu、Windowsをサポートしています。サポートしているオペレーションシステムのバージョンは[トースト(TOAST)サービス](https：//toast.com/service/compute/instance)を参照してください。
+イメージはオペレーションシステムを含む仮想ディスクです。TOASTは現在CentOS、Debian、Ubuntu、Windowsをサポートしています。サポートしているオペレーションシステムのバージョンは[トースト(TOAST)サービス](https://toast.com/service/compute/instance)を参照してください。
 
 全てのイメージは、インスタンスの仮想ハードウェアで最適に実行されるよう設定されており、TOASTのセキュリティー検証を経ているため、安全に使用できます。イメージの詳細な説明は[イメージ概要](/Compute/Image/ja/overview/)を参照してください。
 
@@ -98,7 +98,7 @@ Debianインスタンス
 
 #### WindowsでPuTTY SSHクライアントでLinuxインスタンスに接続する方法
 
-PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https：//www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
+PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
 
 WindowsのPuTTY SSH クライアントでLinuxインスタンスに接続するには、3段階を踏む必要があります。
 
@@ -111,11 +111,11 @@ WindowsのPuTTY SSH クライアントでLinuxインスタンスに接続する�
 
 PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使用する必要があります。キー変換はPuTTYと一緒にインストールされているputtygenを利用します。
 
-![イメージ1](http：//static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+![イメージ1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
 ** PuTTY Key Generator**ダイアログボックスの一番下**パラメータ**の**「Type of key to generate」欄**で**RSA**を選択して**「Number of bits in a generated key」**はデフォルト値の「2048」を入力します。**Actions**下の**「Load an existing private key file 」**横の**「Load」**ボタンをクリックしてキーペアの秘密鍵ファイルを読み込みます。
 
-![イメージ2](http：//static.toastoven.net/prod_instance/putty002-en.png)
+![イメージ2](http://static.toastoven.net/prod_instance/putty002-en.png)
 
 **Actions**下の**「Save the generated key」**横の**「Save private key」**ボタンをクリックしてPuTTY用に変換されたキーペアの秘密鍵を保存します。**「Key passphrease」欄**を空欄のまま秘密鍵を保存すると、**パスフレーズで保護しないままこのキーを保存しますか？* *というメッセージが表示されます。変換された秘密鍵をより安全に保存するにはパスフレーズを設定して保存します。
 
@@ -134,7 +134,7 @@ PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使�
 
 PuTTYを実行し、左の**カテゴリ**から** Connection > SSH > Auth**を選択します。右の**Authentication parameters**下の**Private key file for authentication**にPuTTY用の秘密鍵を登録します。
 
-![イメージ3](http：//static.toastoven.net/prod_instance/putty005-en.png)
+![イメージ3](http://static.toastoven.net/prod_instance/putty005-en.png)
 
 秘密鍵を登録した後、接続情報を保存しておくと、毎回秘密鍵ファイルを再登録する必要がありません。接続情報を保存する方法は下の接続方法を参照してください。
 
@@ -144,11 +144,11 @@ PuTTYを実行し、左の**カテゴリ**から** Connection > SSH > Auth**を�
 
 PuTTYと一緒にインポートされているpageantを実行すると、下図のようにWindowsトレイにアイコンが表示されます。pageantアイコンを右クリックし、**Add key**メニューをクリックしてPuTTY用の秘密鍵を追加します。
 
-![イメージ4](http：//static.toastoven.net/prod_instance/putty006.png)
+![イメージ4](http://static.toastoven.net/prod_instance/putty006.png)
 
 秘密鍵が追加されたことを確認するには**View keys**を選択します。キーが追加されていれば、下図のように追加されたキーが表示されます。
 
-![イメージ5](http：//static.toastoven.net/prod_instance/putty008-en.png)
+![イメージ5](http://static.toastoven.net/prod_instance/putty008-en.png)
 
 Pageantは一度実行されると、Windowsトレイに残って実行されるのでインスタンスに接続する度に再実行する必要がありません。ただしWindowsを再起動した場合は再度実行する必要があります。
 
@@ -156,7 +156,7 @@ Pageantは一度実行されると、Windowsトレイに残って実行される
 
 PuTTY用に変換された秘密鍵が登録されたらPuTTYを実行します。
 
-![イメージ6](http：//static.toastoven.net/prod_instance/putty009-en.png)
+![イメージ6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
 基本接続情報の**ホスト名**は次のように使用します。
 
@@ -183,7 +183,7 @@ Debian
 
 Windowsサーバーに接続するには、TOASTコンソールから接続するWindowsインスタンスを選択します。下の詳細画面の**インスタンス接続**(Instance接続)タブで**パスワード確認**ボタンをクリックして、Windowsサーバーに設定されたパスワードを確認します。
 
-![Windowsインスタンス接続](http：//static.toastoven.net/prod_instance/windows-login-en.png)
+![Windowsインスタンス接続](http://static.toastoven.net/prod_instance/windows-login-en.png)
 
 **パスワード確認**で入力するキーペアの秘密鍵はサーバーに送信されず、ブラウザでパスワードを復号化する作業にのみ使用します。
 
