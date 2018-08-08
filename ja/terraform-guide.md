@@ -100,7 +100,7 @@ provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
   tenant_id   = "75a4c0a12fd84edeb68965d320d17129"
   password    = "kGzBDD9psmgeH4ji"
-  auth_url    = "https://api-gw.cloud.toast.com/infrastructure/identity/v2.0"
+  auth_url    = "https://api-gw.cloud.toast.com/terraform/identity/v2.0"
   region      = "RegionOne"
 }
 ```
@@ -127,7 +127,6 @@ provider "openstack" {
 
 ```
 $ terraform init
-../terraform init
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...

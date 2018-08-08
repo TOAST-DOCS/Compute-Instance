@@ -100,7 +100,7 @@ provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
   tenant_id   = "75a4c0a12fd84edeb68965d320d17129"
   password    = "kGzBDD9psmgeH4ji"
-  auth_url    = "https://api-gw.cloud.toast.com/infrastructure/identity/v2.0"
+  auth_url    = "https://api-gw.cloud.toast.com/terraform/identity/v2.0"
   region      = "RegionOne"
 }
 ```
@@ -109,25 +109,24 @@ provider "openstack" {
     * 공급자 이름을 명시해야 합니다.
     * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
 * **user_name**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
+    * TOAST 계정 ID를 사용합니다.
 * **tenant_id**
     * TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
 * **password**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **Secret Access Key**를 사용합니다.
+    * **API Endpoint 설정** 창에서 저장한 **API 비밀번호**를 사용합니다.
 * **auth_url**
-    * auth_url은 `` 입니다.
+    * Terraform을 사용하기 위한 auth_url 발급은 고객센터에 문의하시기 바랍니다.
 * **region**
     * 한국 리전은 **RegionOne**을 사용합니다.
 
 > [참고]
-> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
+> API 비밀번호 설정은 API 준비 가이드의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
 
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
 ```
 $ terraform init
-../terraform init
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...
