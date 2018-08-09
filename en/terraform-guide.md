@@ -109,18 +109,18 @@ provider "openstack" {
     * Specify the provider's name.
     * The provider of TOAST is named **_openstack_** as it is built on OpenStack.
 * **user_name**
-    * Use  **User Access Key ID**(or TOAST account ID) which can be issued from **API Security Setting**.
+    * Use your TOAST ID.  
 * **tenant_id**
-    * Click **API Endpoint Setting** from **_Compute > Instance > Management_** in the TOAST console to check tenant ID.
+    * Use API password saved in **API Endpoint Setting**.
 * **password**
-    * Use **Secret Access Key** which can be issued from **API Security Setting** 
+    * Use **Secret Access Key** which can be issued from **API Security Setting**
 * **auth_url**
-    * The auth_url is ``.
+    * Contact Customer Center, regarding the issuance of auth_url for Terraform.
 * **region**
     * Korea uses **RegionOne**.
 
 > [Note]
-> To issue User Access Key ID and Secret Access Key, refer to [Token API](/Compute/Instance/en/api-guide/#api) in the API preparation guide.
+> Set your API password in reference of [Token API](/Compute/Instance/en/api-guide/#api) of **API Guide**. 
 
 
 Command `init`  to initialize Terraform from the route that has configured supplier setting file.  
