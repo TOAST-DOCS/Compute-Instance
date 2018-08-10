@@ -113,7 +113,7 @@ provider "openstack" {
 * **tenant_id**
     * TOASTコンソールの**Compute > Instance > Management** メニューで**API Endpoint設定** ボタンをクリックしてテナントIDを確認できます。
 * **password**
-    * **API Endpoint設定**ウィンドウで保存したAPIパスワードを使用します。
+    * **API Endpoint設定** ウィンドウで保存したAPIパスワードを使用します。
 * **auth_url**
     * Terraformを使用するためのauth_url発行は、カスタマーセンターへお問い合わせください。
 * **region**
@@ -513,4 +513,3 @@ module "name" {
 
 ## 参考サイト
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
-
