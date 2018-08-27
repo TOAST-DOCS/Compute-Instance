@@ -1,31 +1,31 @@
-## Compute > Instance > 서드파티 사용 가이드 > Terraform 사용 가이드
+## Compute > Instance > 第三方使用指南 > Terraform使用指南
 
-이 문서에서는 TOAST 환경에서 Terraform을 이용해 인스턴스를 관리하는 방법을 설명합니다.
+本文档介绍了在TOAST环境中如何通过Terraform管理实例。
 
 ## Terraform
-Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효율적으로 인프라의 형상을 관리할 수 있는 오픈 소스 도구입니다. Terraform의 주요 특징은 다음과 같습니다.
+Terraform是一个开源工具，可以轻松构建，安全地更改基础架构，并有效的进行基础设施的管理。其主要功能包括：
 
 * **Infrastructure as Code**
-    * 인프라를 코드로 정의하여 생산성과 투명성을 높일 수 있습니다.
-    * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업할 수 있습니다.
+    * 可定义基础设施的代码，提高生产力和透明度。
+    * 可轻松共享定义的代码，并有效协作。
 * **Execution Plan**
-    * 변경 계획과 변경 적용을 분리하여 변경 내용을 적용할 때 발생할 수 있는 실수를 줄일 수 있습니다.
+    * 通过更新计划和更新应用的分离，可减少更新时可能发生的错误。
 * **Resource Graph**
-    * 사소한 변경이 인프라 전체에 어떤 영향을 미칠지 미리 확인할 수 있습니다.
-    * 종속성 그래프를 작성하여 이 그래프를 바탕으로 계획을 세우고, 이 계획을 적용했을 때 변경되는 인프라 상태를 확인할 수 있습니다.
+    * 可提前预知微小的更改操作对整个基础设施产生的影响。
+    * 可创建依赖关系的拓扑图，并根据此依赖关系制定计划，同时可查看执行计划过程中，基础设施的变化情况。
 * **Change Automation**
-    * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
-    * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
+    * 可在多个位置自动部署，并可以批量更改相同配置的基础设施。
+    * 可节省部署基础设施所消耗的时间，也可减少在此过程中容易出现的错误。
 
-Terraform은 주요 공급자들의 거의 모든 솔루션을 지원합니다.
+Terraform支持当前主流提供商的几乎所有解决方案。
 
 * AWS, BareMetal, Bitbucket, Chef, Cloudflare, Docker, GitHub, Google Cloud, Grafana, InfluxDB, Heroku, Microsoft Azure, MySQL, OpenStack, PostgreSQL 등
 
 
-## Terraform 설치
-[Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
+## 安装Terraform
+从[Terraform下载页面](https://www.terraform.io/downloads.html)下载本地电脑操作系统所支持的文件。解压文件，将其放在目标路径中，然后将该路径添加到环境变量中完成安装。
 
-다음은 설치 예시입니다.
+以下是安装示例。
 
 ```
 $ wget https://releases.hashicorp.com/terraform/0.11.1/terraform_0.11.1_linux_amd64.zip
@@ -38,15 +38,15 @@ Your version of Terraform is out of date! The latest version
 is 0.11.1. You can update by downloading from www.terraform.io
 ```
 
-> [참고]
-> 이 예시에서는 `export` 명령을 이용해 경로를 설정했기 때문에 터미널을 닫으면 설정한 경로가 사라집니다.
-> `.bashrc` 또는 `.bash_profile`과 같은 사용자 프로파일에서 경로를 설정하도록 하면 계속 사용할 수 있습니다.
+> [参考]
+> 在此示例中，因路径是通过使用`export`命令设置的，因此，如果关闭终端，路径也将随之消失。
+> 如果在`.bashrc`或`.bash_profile`等用户配置文件中设置路径，则该路径可永久有效。
 
-아무런 파라미터 없이 Terraform을 실행하면 간단한 사용법을 볼 수 있습니다.
+如果您在无任何参数的情况下运行Terraform，可以查看其简单用法。
 
 ```
 $ terraform
-Usage: terraform [--version] [--help] <command> [args]
+Usage: terraform [--version] [--help] <command> [args]  
 
 The available commands for execution are listed below.
 The most common, useful commands are shown first, followed by
@@ -82,16 +82,16 @@ All other commands:
     state              Advanced state management
 ```
 
-## TOAST 환경에서 사용
+## 在TOAST环境中使用
 
-TOAST 환경에서 TerraForm을 이용하여 인스턴스를 생성, 추가, 변경, 삭제하는 방법을 예시와 함께 알아보겠습니다.
+我们来看一下如何在TOAST环境中使用TerraForm创建、添加、更改和删除实例。
 
-> [참고]
-> 아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하시기 바랍니다.
+> [参考]
+> 以下示例中的所有数据都不是真实数据。请务必更改为正确的数据。
 
-### Terraform 초기화
+### Terraform初始化
 
-Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 구성해야 합니다.
+在使用Terraform之前，必须按照以下方式部署提供商的配置文件。
 
 ```
 $ vi provider.tf
@@ -106,24 +106,24 @@ provider "openstack" {
 ```
 
 * **provider**
-    * 공급자 이름을 명시해야 합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 공급자 이름은 **openstack**입니다.
+    * 必须指定提供商名称。
+    * 由于TOAST是使用OpenStack构建的，因此提供商名应为**openstack**。
 * **user_name**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **User Access Key ID**(또는 TOAST 계정 ID)를 사용합니다.
+    * 使用TOAST ID。
 * **tenant_id**
-    * TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 **API Endpoint 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
+    * 在TOAST控制台的**Compute > Instance > Management**菜单中，单击**API Endpoint设置**按钮，可查看客户ID。
 * **password**
-    * **API 보안 설정** 메뉴에서 발급받을 수 있는 **Secret Access Key**를 사용합니다.
+    * 使用[设置API Endpoint]窗口中保存的API密码。
 * **auth_url**
-    * auth_url은 `` 입니다.
+    * 使用Terraform需要auth_url，获取auth_url请联系客服咨询。
 * **region**
-    * 한국 리전은 **RegionOne**을 사용합니다.
+    * 韩国地区使用**RegionOne**。
 
-> [참고]
-> User Access Key ID와 Secret Access Key 발급은 API 준비 가이드의 [토큰 API](/Compute/Instance/zh/api-guide/#api) 항목을 참고합니다.
+> [参考]
+> 设置API密码请参考API指南的[令牌API](/Compute/Instance/zh/api-guide/#api)项。
 
 
-구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
+请在提供商配置文件的部署路径下，使用`init`命令对Terraform进行初始化。
 
 ```
 $ terraform init
@@ -153,9 +153,9 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-### 인스턴스 생성
+### 创建实例
 
-인스턴스를 생성하려면 다음과 같이 .tf 파일에 생성할 인스턴스 정보를 입력해야 합니다.
+如果要创建实例，您必须按照以下方式，在.tf文件中输入要创建的实例信息。
 
 ```
 $ vi terraform-instance-01.tf
@@ -182,45 +182,45 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 ```
 
 * **resource**
-    * 리소스 유형과 리소스 이름으로 구성합니다.
-    * TOAST는 OpenStack으로 구축되어 있으므로 리소스 유형은 **openstack_compute_instance_v2**입니다.
-    * 리소스 이름은 생성할 인스턴스의 이름입니다.
+    * 由资源类型和资源名称组成。
+    * TOAST使用OpenStack搭建，故，其资源类型应为**openstack_compute_instance_v2**。
+    * 资源名称即为要创建的实例名称。
 * **name**
-    * 생성할 인스턴스의 이름입니다.
+    * 要创建的实例的名称。
 * **region**
-    * 공급자 설정 파일에 적은 내용과 같아야 합니다.
+    * 必须与提供商配置文件中的内容一致。
 * **flavor_id**
-    * 생성할 인스턴스의 사양 ID입니다.
-    * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](/Compute/Instance/zh/api-guide/#_18)를 통해 조회할 수 있습니다.
+    * 要创建的实例的规格ID。
+    * 可以通过TOAST提供的开源API中的[实例规格条目查询API](/Compute/Instance/zh/api-guide/#_18)查询。
 * **key_pair**
-    * 인스턴스 접속에 사용할 키페어 이름입니다.
-    * TOAST 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 자세한 설명은 콘솔 사용 가이드의 [키페어](/Compute/Instance/zh/console-guide/#_7) 항목을 참고합니다.    
+    * 是指用于访问实例的密钥对名称。
+    * 您可以在TOAST控制台的**Compute > Instance > Key Pair**菜单中，新建或注册现有的密钥对。详细说明请参考控制台使用指南之[密钥对](/Compute/Instance/zh/console-guide/#_7)。    
 * **network**
-    * 인스턴스에 연결할 VPC 이름과 uuid를 입력합니다.
-    * TOAST 콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면, 하단 상세 정보 화면에서 이름과 uuid를 확인할 수 있습니다.
+    * 输入要连接到实例的VPC名称和uuid。
+    * 在TOAST控制台的**Network > VPC > Management**菜单中选择要连接的VPC之后，可在下方详情页面查看到名称与uuid。
 * **security_groups**
-    * 인스턴스에서 사용할 보안 그룹의 이름입니다.
-    * 쉼표(,)로 구분하여 하나 이상의 보안 그룹을 지정할 수 있습니다.
-    * TOAST 콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
+    * 是指用于实例的安全组的名称。
+    * 可使用逗号(,)，指定1个以上的安全组。
+    * 在TOAST控制台的**Network > VPC > Security Groups**菜单中选择要使用的安全组，可在下方详情页面中查看到信息。
 * **block_device**
-    * 인스턴스에 사용할 이미지 또는 블록 스토리지 정보와 디스크 용량을 설정합니다.
+    * 设置要在实例中使用的镜像或块存储信息以及磁盘容量信息。
     * uuid
-        * TOAST 콘솔의 **Compute > Images** 메뉴에서 사용할 이미지를 선택하면 하단 상세 정보 화면에서 정보를 확인할 수 있습니다.
+        * 在TOAST控制台的**Compute > Images**菜单中选择要使用的镜像，可在下方详情页面中查看到信息。
     * source_type
-        * 이미지를 이용해 인스턴스를 생성한다면 source_type은 **image**입니다.
+        * 如果使用镜像创建实例，此时source_type为**image**。
     * destination_type
-        * 블록 디바이스를 인스턴스의 디스크로 사용한다면 destination_type은 **volume**입니다.
+        * 如果将块设备作为实例磁盘使用，则destination_type为**volume**。
     * boot_index
-        * 블록 디바이스를 인스턴스의 부트 디스크로 사용한다면 boot index는 **0**입니다.
+        * 如果使用块设备作为实例的引导盘使用，则boot index为**0**。
     * volume_size
-        * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
-        * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 자세한 설명은 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/zh/console-guide/#_4) 항목을 참고합니다.
+        * 为将要创建的实例设置磁盘容量。
+        * 最小值可设置为20GB，最大值可设置为1,000GB。
+        * 可根据实例配置，设置不同的容量。详细说明请参考控制台使用指南之[创建实例 > 规格](/Compute/Instance/zh/console-guide/#_4)。
     * delete_on_termination
-        * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
+        * 如果将此选项设置为true，则删除实例时块设备也将一并被删除。
 
 
-.tf 파일들이 있는 경로에서 `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
+如果在.tf文件所在的路径下执行`plan`命令，Terraform就会加载.tf文件，并确认其设置是否正确。同时还将与自己的数据库进行对比，并创建计划。 待计划创建完毕后会按照类型进行汇总并以较直观的方式显示出来。
 
 ```
 ./terraform plan
@@ -282,7 +282,7 @@ can't guarantee that exactly these actions will be performed if
 ```
 
 
-`apply` 명령을 실행하면 플랜을 적용하여 인스턴스를 생성합니다. 그리고 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)을 생성합니다.
+执行`apply`命令后会按照计划创建实例。并生成自己的DB文件(terraform.tfstate)，以此记录计划的更改历史。
 
 ```
 $ terraform apply
@@ -305,19 +305,19 @@ $ ls
 provider.tf               tc-instance-01.tf         terraform.tfstate         terraform.tfstate.backup
 ```
 
-생성한 인스턴스는 TOAST 콘솔의 **Compute > Instance > Management** 메뉴에서 확인할 수 있습니다.
+您可以在TOAST控制台的**Compute > Instance > Management**菜单中找到已创建的实例。
 
-### 인스턴스 추가 생성
+### 添加实例
 
-인스턴스 추가는 생성과 같은 방법으로 .tf 파일을 만들고 플랜을 적용합니다. 여러 개의 .tf 파일을 만들고 한꺼번에 적용해도 됩니다.
+与创建实例方法相同。即，先创建.tf文件后发布计划即可。可同时创建多个.tf文件一并使用。
 
-### 인스턴스 변경
+### 更改实例
 
-인스턴스를 변경할 .tf 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다.
+打开要更改的实例.tf文件，修改目标信息，并重新应用计划。
 
-변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안 그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 사양은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
+可更改的配置有限。您可以添加一个新磁盘，或删除/替换连接到实例的安全组和VPC。如果更改引导盘的容量，现有实例将会被删除，同时会生成一个新实例。实例配置只能在实例关闭后更改。
 
-아래 예시는 보안 그룹을 하나 더 추가한 것입니다.
+以下为新增一个安全组的事例。
 
 ```
 $ vi terraform-instance-01.tf
@@ -328,7 +328,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-플랜을 로딩하면 변경된 보안 그룹 정보를 정리하여 출력합니다.
+加载计划时，会显示已更改的安全组信息。
 
 ```
 $ terraform plan
@@ -361,7 +361,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-플랜을 적용하면 인스턴스에 새로운 보안 그룹이 추가됩니다.
+执行计划时，会向实例添加新的安全组。
 
 ```
 $ terraform apply
@@ -375,11 +375,11 @@ openstack_compute_instance_v2.terraform-instance-01: Modifications complete afte
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
-### 인스턴스 삭제
+### 删除实例
 
-인스턴스 생성에서 사용했던 .tf 파일을 삭제하고 플랜을 적용하면 인스턴스가 삭제됩니다.
+如果删除在创建实例过程中所使用的.tf文件，再执行计划，则该实例将被删除。
 
-플랜을 로딩하면 리소스 설정을 삭제했기 때문에 삭제된 플랜이 1건이 있음을 보여줍니다.
+如果资源被删除，加载计划时页面上就会显示存在1个已删除的计划。
 
 ```
 $ rm tc-instance-01.tf
@@ -410,7 +410,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-플랜을 적용하면 인스턴스가 삭제됩니다.
+执行计划时，将删除该实例。
 
 ```
 $ terraform apply
@@ -422,37 +422,37 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## HCL
 
-Terraform 설정 파일은 HCL(HashiCorp Configuration Language)을 사용합니다. HCL은 Terraform 형식(`.tf`)과 JSON 형식(`tf.json`)을 사용합니다.
+Terraform配置文件使用HCL(HashiCorp Configuration Language)。HCL使用Terraform格式(`.tf`)和JSON格式(`tf.json`)。
 
-지정한 폴더에 `.tf`, `.tf.json`을 저장하면 TerraForm이 알파벳 순서로 로드합니다. 변수나 리소스의 정의 순서는 상관이 없습니다.
+如果在指定的文件夹中保存`.tf`, `.tf.json`，则TerraForm会按字母顺序加载。变量或资源的定义顺序无关紧要。
 
-그 외에 다른 설정을 덮어쓰기 위한 오버라이드 파일을 사용할 수 있습니다. 파일명을 `override` 또는 `_override`로 끝나도록 하면 됩니다. 오버라이드 파일은 다른 설정 파일들의 로딩이 다 끝나면 알파벳순으로 로드하여 설정들을 덮어씁니다.
+您可以使用覆盖文件将其它设置覆盖。文件名以`override`或者`_override`结尾即可。在完成其它配置文件加载时，覆盖文件将按照字母顺序依次进行覆盖。
 
-### HCL 문법
+### HCL语法
 
-* **주석**
+* **注释**
 
-**#**, **//**, **/\* \*/**을 사용할 수 있습니다.
+可以使用**#**, **//**, **/\* \*/**。
 
-* **값 할당**
+* **分配值**
 
-**key = value** 형태를 사용합니다. 값은 문자열, 숫자, 불리언, 리스트, 맵을 모두 사용할 수 있습니다.
+使用**key = value**格式。值可以是字符串、数字、布尔值、列表或地图。
 
-* **문자열**
+* **字符串**
 
-큰따옴표를 사용합니다. 여러 줄의 문자열을 사용할 때는 [유닉스 셸의 Here document](https://en.wikipedia.org/wiki/Here_document) 형식으로 `<<EOF`, `EOF` 사이에 문자열을 넣어야 합니다.
+使用双引号。当使用多行字符串时，必须以[Unix shell的Here document](https://en.wikipedia.org/wiki/Here_document)格式在`<<EOF`, `EOF`中间插入字符串。
 
 ```
 description = <<EOF
-...문자열문자열문자열문자열...
-...문자열문자열문자열문자열...
-...문자열문자열문자열문자열...
+... 字符串字符串字符串字符串...
+... 字符串字符串字符串字符串...
+...字符串字符串字符串字符串...
 EOF
 ```
 
-* **자원**
+* **资源**
 
-자원을 선언할 때는 **resource** 키워드를 사용하며 공급자에 따라 Terraform이 정의해 둔 자원 유형을 명시해야 합니다.
+声明资源时，请使用**resource**关键字，并根据不同的提供商指定由Terraform定义的不同资源类型。
 
 ```
 resource "openstack_compute_instance_v2" "web" {
@@ -460,25 +460,25 @@ resource "openstack_compute_instance_v2" "web" {
 }
 ```
 
-* **공급자**
+* **提供商**
 
-공급자를 선언할 때는 **provider** 키워드를 사용합니다. 자원을 선언할 때 명시한 자원 유형의 접두사가 공급자 유형입니다.
+声明提供商时，请使用**provider**关键字。声明资源时，指定的资源类型前缀即为提供商类型。
 
 ```
-# 자원 유형: openstack_compute_instance_v2
+# 资源类型: openstack_compute_instance_v2
 provider "openstack" {
     ...
 }
 
-# 자원 유형: aws_instance
+# 资源类型: aws_instance
 provider "aws" {
     ...
 }
 ```
 
-* **데이터 소스**
+* **数据来源**
 
-공급자로부터 가져올 데이터를 데이터 소스라고 합니다. **data** 키워드를 사용하며, 유형(type)과 이름(name)으로 구성합니다.
+从提供商处获取的数据称之为数据来源。它使用**data**关键字，由类型(type)和名称(name)组成。
 
 ```
 data "type" "name" {
@@ -486,9 +486,9 @@ data "type" "name" {
 }
 ```
 
-* **변수**
+* **变量**
 
-변수를 선언할 때는 **variable** 키워드를 사용합니다. 형식을 추론하기 때문에 정의하지 않아도 무방합니다.
+声明变量时，请使用**variable**关键字。因为会自行推断格式，故无需定义。
 
 ```
 variable "name" {
@@ -500,9 +500,9 @@ variable "name" {
 }
 ```
 
-* **모듈**
+* **模块**
 
-**module** 키워드를 사용하면 기존에 정의한 리소스 그룹을 모듈로 가져와 사용할 수 있습니다. GitHub, Bitbucket 등을 지원합니다.
+使用**module**关键字，可以将之前定义的资源组导入模块中使用。支持GitHub, Bitbucket等。
 
 ```
 module "name" {
@@ -511,5 +511,5 @@ module "name" {
 }
 ```
 
-## 참고 사이트
+## 参考网站
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
