@@ -120,7 +120,7 @@ provider "openstack" {
     * 한국 리전은 **RegionOne**을 사용합니다.
 
 > [참고]
-> API 비밀번호 설정 방법은 **API 가이드**의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다. 
+> API 비밀번호 설정 방법은 **API 가이드**의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
 
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
@@ -189,8 +189,8 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 * **region**
     * 공급자 설정 파일에 적은 내용과 같아야 합니다.
 * **flavor_id**
-    * 생성할 인스턴스의 사양 ID입니다.
-    * TOAST에서 제공하는 공개 API 중 [인스턴스 사양 목록 조회 API](/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
+    * 생성할 인스턴스의 타입 ID입니다.
+    * TOAST에서 제공하는 공개 API 중 [인스턴스 타입 목록 조회 API](/Compute/Instance/ko/api-guide/#_18)를 통해 조회할 수 있습니다.
 * **key_pair**
     * 인스턴스 접속에 사용할 키페어 이름입니다.
     * TOAST 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나, 이미 가지고 있는 키페어를 등록할 수 있습니다. 자세한 설명은 콘솔 사용 가이드의 [키페어](/Compute/Instance/ko/console-guide/#_7) 항목을 참고합니다.    
@@ -214,7 +214,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
     * volume_size
         * 생성할 인스턴스에서 사용할 디스크의 용량을 설정합니다.
         * 최소 20GB에서 최대 1,000GB까지 설정할 수 있습니다.
-        * 인스턴스 사양에 따라 설정할 수 있는 용량이 다릅니다. 자세한 설명은 콘솔 사용 가이드의 [인스턴스 생성 > 사양](/Compute/Instance/ko/console-guide/#_4) 항목을 참고합니다.
+        * 인스턴스 타입에 따라 설정할 수 있는 용량이 다릅니다. 자세한 설명은 콘솔 사용 가이드의 [인스턴스 생성 > 타입](/Compute/Instance/ko/console-guide/#flavor) 항목을 참고합니다.
     * delete_on_termination
         * 이 옵션이 true로 설정되어 있으면 인스턴스를 삭제할 때 블록 디바이스도 함께 삭제됩니다.
 
@@ -314,7 +314,7 @@ provider.tf               tc-instance-01.tf         terraform.tfstate         te
 
 인스턴스를 변경할 .tf 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다.
 
-변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안 그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 사양은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
+변경할 수 있는 사양은 제한적입니다. 디스크를 새로 추가하거나, 인스턴스에 연결한 보안 그룹과 VPC를 제거하거나 교체할 수 있습니다. 부트 디스크의 용량을 변경하면 기존의 인스턴스는 삭제되고 새로운 인스턴스가 생성됩니다. 인스턴스 타입은 인스턴스가 종료된 상태에만 변경할 수 있습니다.
 
 아래 예시는 보안 그룹을 하나 더 추가한 것입니다.
 
