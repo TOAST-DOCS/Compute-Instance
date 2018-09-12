@@ -32,7 +32,7 @@ TOAST provides instance flavors in various types to suit for customer's needs. D
 | R Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
 | T Type | Low-cost instance. Recommended for the servers with low workloads. |
 | U Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
-| X Type | 고사양의 CPU와 메모리를 지원하는 사양입니다. 높은 성능이 필요한 서비스나 애플리케이션에 사용합니다. (번역필요) | 
+| X Type | The flavor supports high-end CPU and memory. It can be applied to services or applications that require high performances. |
 
 ### Availability Zone 
 

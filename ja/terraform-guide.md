@@ -109,18 +109,18 @@ provider "openstack" {
     * プロバイダー名を明示する必要があります。
     * TOASTはOpenStacで構築されているので、プロバイダー名は**openstack**です。
 * **user_name**
-    * **APIセキュリティー設定** メニューで発行できる**User Access Key ID**(またはTOASTアカウントID)を使用します。
+    * TOAST IDを使用します。
 * **tenant_id**
     * TOASTコンソールの**Compute > Instance > Management** メニューで**API Endpoint設定** ボタンをクリックしてテナントIDを確認できます。
 * **password**
-    * **APIセキュリティー設定** メニューから発行できる**Secret Access Key**を使用します。
+    * **API Endpoint設定** ウィンドウで保存したAPIパスワードを使用します。
 * **auth_url**
-    * auth_urlは``です。
+    * Terraformを使用するためのauth_url発行は、カスタマーセンターへお問い合わせください。
 * **region**
     * 韓国リージョンは**RegionOne**を使用します。
 
 > [参考]
-> User Access Key IDとSecret Access Keyの発行はAPI準備ガイドの[トークンAPI](/Compute/Instance/ja/api-guide/#api)項目を参照してください。
+> APIパスワード設定は、APIガイドの [トークンAPI](/Compute/Instance/ja/api-guide/#api)項目を参照してください。
 
 
 構成したプロバイダー設定ファイルがあるパスで`init`コマンドを利用してTerraformを初期化します。
@@ -513,4 +513,3 @@ module "name" {
 
 ## 参考サイト
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
-
