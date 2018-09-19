@@ -124,7 +124,7 @@ rem cmd
 ...
 ```
 
-만약 이 Batch 스크립트와 PowerShell 스크립트를 혼용하고 싶다면 아래와 같이 기술합니다.
+만약 Batch 스크립트와 PowerShell 스크립트를 같이 사용하고 싶다면 아래와 같이 기술합니다.
 
 * EC2 format
 ```
@@ -136,7 +136,7 @@ rem cmd
 </powershell>
 ```
 
-예약 스크립트의 로그는 `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log` 에서 확인할 수 있습니다.
+예약 스크립트의 로그는 `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init` 에서 확인할 수 있습니다.
 
 예약 스크립트와 관련하여 보다 자세한 설명은 [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) 또는 [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) 가이드를 참고합니다.
 
