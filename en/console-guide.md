@@ -50,7 +50,7 @@ Default disk size depends on the instance flavors.
 ### Volume Type
 Determines default disk type of an instance.
 
-- Chooose one of **General HDD** or **General SSD** based on your performance requirement. This changes the price of the instance.
+- Chooose one of **HDD** or **SSD** based on your performance requirement. This changes the price of the instance.
 - Can not change the volume type of the instance once created.
 
 ### Number of Instances 
