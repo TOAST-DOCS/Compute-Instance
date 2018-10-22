@@ -169,7 +169,7 @@ Pageant一旦开始运行，会一直在Windows系统托盘中运行，因此，
 
 CentOS
 
-	root@<实例IP>
+	centos@<实例IP>
 
 Ubuntu
 
