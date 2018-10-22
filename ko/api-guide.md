@@ -5,7 +5,7 @@ TOAST Compute Instance 서비스는 다음 종류의 API를 제공합니다.
 * [가용성 영역 API](#api_2)
 * [인스턴스 API](#api_3)
 * [인스턴스 추가 기능 API](#api_4)
-* [인스턴스 사양 API](#api_5)
+* [인스턴스 타입 API](#api_5)
 * [키페어 API](#api_6)
 
 
@@ -229,7 +229,7 @@ X-Auth-Token: {tokenId}
 | POWERING_OFF | 인스턴스 종료 중 |
 | REBOOTING | 인스턴스 리부팅 중 |
 | DELETING | 인스턴스 삭제 중 |
-| RESIZING | 인스턴스 사양(flavor) 변경 작업 중 |
+| RESIZING | 인스턴스 타입(flavor) 변경 작업 중 |
 | MIGRATING | 인스턴스 마이그레이션 작업 중 |
 | ERROR | 오류 상태 |
 
@@ -356,8 +356,8 @@ X-Auth-Token: {tokenId}
 | version | Body | Integer | IP 버전(IPv4만 지원) |
 | Floating IP Address | Body | String | NIC에 할당된 플로팅 IP 주소 |
 | Zone Name | Body | String | 가용성 영역 이름 |
-| Flavor ID | Body | String | 인스턴스 사양 ID |
-| Flavor Name | Body | String | 인스턴스 사양 이름 |
+| Flavor ID | Body | String | 인스턴스 타입 ID |
+| Flavor Name | Body | String | 인스턴스 타입 이름 |
 | Flavor CPU | Body | Integer | CPU 개수 |
 | Flavor RAM | Body | Integer | RAM 크기(MB) |
 | Status | Body | String | 인스턴스의 상태 |
@@ -423,7 +423,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, Windows의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
 | Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID |
-| Flavor ID | Body | String | - | 인스턴스 사양 ID |
+| Flavor ID | Body | String | - | 인스턴스 타입 ID |
 | Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID |
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
@@ -433,8 +433,8 @@ Content-Type: application/json;charset=UTF-8
 | Security Group Name | Body | String | - | 인스턴스에 등록할 보안 그룹 이름 |
 
 > [주의]
-> * `Volume Size`, `Volume Type` 파라미터는 c2, m2, r2, t2 사양에서만 적용됩니다.
-> 	* 이 파라미터는 범용 블록 스토리지가 아닌 로컬 디스크를 사용하는 u2 계열 사양에서는 사용할 수 없습니다.
+> * `Volume Size`, `Volume Type` 파라미터는 c2, m2, r2, t2 타입에서만 적용됩니다.
+> 	* 이 파라미터는 범용 블록 스토리지가 아닌 로컬 디스크를 사용하는 u2 계열 타입에서는 사용할 수 없습니다.
 > * `Volume Size`는 **사용할 이미지의 "minDisk" 값 ~ 1000의 범위 내에서 10 단위**로 설정되어야 합니다.
 > * `Volume Type`은 `null`로 지정할 수 있으며, 이 경우 "General HDD"로 지정됩니다.
 
@@ -559,7 +559,7 @@ X-Auth-Token: {tokenId}
 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
 
 - 인스턴스 시작, 정지, 재시작
-- 인스턴스 사양 변경(resize)
+- 인스턴스 타입 변경(resize)
 - 인스턴스 이미지 생성
 - 플로팅 IP 연결, 해제
 - 보안 그룹 등록, 해제
@@ -665,8 +665,8 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-### 인스턴스 사양 변경
-인스턴스의 사양을 변경합니다.
+### 인스턴스 타입 변경
+인스턴스의 타입을 변경합니다.
 #### Request Body
 ```json
 {
@@ -679,7 +679,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 변경할 인스턴스 사양 ID |
+|  Flavor ID | body | String | - | 변경할 인스턴스 타입 ID |
 
 #### Response Body
 ```json
@@ -849,9 +849,9 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-## 인스턴스 사양 API
-### 인스턴스 사양 목록 조회
-인스턴스 사양의 목록 및 상세 정보를 조회합니다.
+## 인스턴스 타입 API
+### 인스턴스 타입 목록 조회
+인스턴스 타입의 목록 및 상세 정보를 조회합니다.
 
 #### Method, URL
 ```
@@ -892,15 +892,15 @@ X-Auth-Token: {tokenID}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Disabled | Body | Boolean | 인스턴스 사양 비활성화 여부. |
+| Disabled | Body | Boolean | 인스턴스 타입 비활성화 여부. |
 | Ephermeral | Body | Integer | 임시 디스크 크기(GB). |
-| Type | Body | String | 인스턴스 사양 최적화 특성에 따라 구분되는 Type값.<br>"general, "compute", "memory" 중의 하나. |
-| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 사양의 경우에만 이 값이 전달됩니다. |
+| Type | Body | String | 인스턴스 타입 최적화 특성에 따라 구분되는 Type값.<br>"general, "compute", "memory" 중의 하나. |
+| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 타입의 경우에만 이 값이 전달됩니다. |
 | Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기(GB). |
-| Flavor ID | Body | String | 인스턴스 사양 ID. |
-| Flavor Name | Body | String | 인스턴스 사양 이름. |
-| Is Public | Body | Boolean | 공용 인스턴스 사양 여부. |
-| RAM | Body | Integer | 인스턴스 사양이 갖는 RAM 총량(MB). |
+| Flavor ID | Body | String | 인스턴스 타입 ID. |
+| Flavor Name | Body | String | 인스턴스 타입 이름. |
+| Is Public | Body | Boolean | 공용 인스턴스 타입 여부. |
+| RAM | Body | Integer | 인스턴스 타입이 갖는 RAM 총량(MB). |
 | VCPUs | Body | Integer | 인스턴스에 할당되는 가상 CPU 코어 개수. |
 
 ## 키페어 API
