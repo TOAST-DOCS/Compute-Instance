@@ -86,7 +86,7 @@ Generally, Mac or Linux has ssh client by default. Use a private key of key pair
 
 Access for CentOS instances: 
 
-	$ ssh -i my_private_key.pem root@<instance IP>
+	$ ssh -i my_private_key.pem centos@<instance IP>
 
 For Ubuntu instances: 
 

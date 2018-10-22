@@ -86,7 +86,7 @@ MacやLinuxには通常、SSHクライアントがデフォルトでインスト
 
 CentOSインスタンス
 
-	$ ssh -i my_private_key.pem root@<インスタンスのIP>
+	$ ssh -i my_private_key.pem centos@<インスタンスのIP>
 
 Ubuntuインスタンス
 
