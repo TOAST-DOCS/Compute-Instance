@@ -86,7 +86,7 @@ Mac이나 Linux에는 보통 SSH 클라이언트가 기본적으로 설치되어
 
 CentOS 인스턴스
 
-	$ ssh -i my_private_key.pem root@<인스턴스의 IP>
+	$ ssh -i my_private_key.pem centos@<인스턴스의 IP>
 
 Ubuntu 인스턴스
 
