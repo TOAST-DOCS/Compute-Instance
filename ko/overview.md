@@ -162,7 +162,7 @@ PuTTY용으로 변환된 개인 키가 잘 등록되었다면 PuTTY를 실행합
 
 CentOS
 
-	root@<인스턴스의 IP>
+	centos@<인스턴스의 IP>
 
 Ubuntu
 

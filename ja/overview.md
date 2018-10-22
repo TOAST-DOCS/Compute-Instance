@@ -162,7 +162,7 @@ PuTTY用に変換された秘密鍵が登録されたらPuTTYを実行します�
 
 CentOS
 
-	root@<インスタンスのIP>
+	centos@<インスタンスのIP>
 
 Ubuntu
 

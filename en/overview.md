@@ -159,7 +159,7 @@ Now that the PuTTY private key is registered well, execute Putty.
 
 **Host Name** of default access information for CentOS is: 
 
-	root@<Instance IP>
+	centos@<Instance IP>
 
 For Ubuntu,
 
