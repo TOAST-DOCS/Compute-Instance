@@ -86,7 +86,7 @@ Generally, Mac or Linux has ssh client by default. Use a private key of key pair
 
 Access for CentOS instances: 
 
-	$ ssh -i my_private_key.pem root@<instance IP>
+	$ ssh -i my_private_key.pem centos@<instance IP>
 
 For Ubuntu instances: 
 
@@ -159,7 +159,7 @@ Now that the PuTTY private key is registered well, execute Putty.
 
 **Host Name** of default access information for CentOS is: 
 
-	root@<Instance IP>
+	centos@<Instance IP>
 
 For Ubuntu,
 

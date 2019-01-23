@@ -93,7 +93,7 @@ TOAST提供多种类型的实例规格，以适应客户需求。客户可以根
 
 CentOS实例
 
-	$ ssh -i my_private_key.pem root@<实例IP>
+	$ ssh -i my_private_key.pem centos@<实例IP>
 
 Ubuntu实例
 
@@ -169,7 +169,7 @@ Pageant一旦开始运行，会一直在Windows系统托盘中运行，因此，
 
 CentOS
 
-	root@<实例IP>
+	centos@<实例IP>
 
 Ubuntu
 
