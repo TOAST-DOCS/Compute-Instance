@@ -400,7 +400,8 @@ Content-Type: application/json;charset=UTF-8
         "flavor": "{Flavor ID}",
         "networks": [
         	{
-            	"id": "{Network ID}"
+              "id": "{Network ID}",
+              "subnetId": "{Subnet ID}"
         	}
         ],
         "availabilityZone": "{Availability Zone}",
@@ -423,8 +424,9 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | Instance Name | Body | String | - | 인스턴스 이름 (리눅스의 경우 최대 20자, Windows의 경우 최대 12자, 영문자와 숫자, '-', '.' 만 가능) |
 | Image ID | Body | String | - | 인스턴스에 설치할 이미지 ID |
-| Flavor ID | Body | String | - | 인스턴스 타입 ID |
-| Network ID | Body | String | - | 인스턴스가 연결될 네트워크 ID |
+| Flavor ID | Body | String | - | 인스턴스 사양 ID |
+| Network ID | Body | String | O | 인스턴스가 연결될 네트워크 ID |
+| Subnet ID | Body | String | O | 인스턴스가 연결될 서브넷 ID<br>네트워크 ID 또는 서브넷 ID 중 하나는 반드시 지정되어야 합니다. |
 | Availability Zone | Body | String | - | 인스턴스가 생성될 가용성 영역 이름 |
 | Key Name | Body | String | - | 인스턴스에 등록할 키페어 이름 |
 | Count | Body | Integer | O | 동시 생성할 인스턴스의 개수, 최대 10개로 제한, 1~10 범위. 생략 시 1대 생성  |
