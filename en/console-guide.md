@@ -55,7 +55,7 @@ Determines default disk type of an instance.
 
 ### Number of Instances 
 
-This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instanc `shall result in  `my-instance-1 `and `my-instance-2`. 
+This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instance` shall result in  `my-instance-1 `and `my-instance-2`. 
 
 When many instances are created for a random availability zone, each instance shall be created in a random availability zone. For instance, if two instances are created with a random availability zone, two may be created in the same zone, or in different zones. In case all instances need to be created in a same zone, select a particular zone before creation. 
 
@@ -145,7 +145,7 @@ Like key pairs created from TOAST, these key pairs need to be cautiously managed
 
 ### Import Key Pairs (Mac and Linux)
 
-Key pairs created by `ssh-kegen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
+Key pairs created by `ssh-keygen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
 
 	$ ssh-keygen -t rsa -f my_key.key
 

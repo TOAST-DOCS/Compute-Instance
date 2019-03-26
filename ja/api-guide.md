@@ -42,10 +42,10 @@ Response Bodyには「header」情報が基本的に含まれており、これ�
 
 ```json
 {
-    「header」 ： {
-        "isSuccessful" ： true,
-        "resultCode"： 0,
-        "resultMessage" ： "SUCCESS"
+    "header" : {
+        "isSuccessful" : true,
+        "resultCode" : 0,
+        "resultMessage" : "SUCCESS"
     }
 }
 ```
@@ -76,9 +76,9 @@ Content-Type： application/json;charset=UTF-8
 ##### Request Body
 ```json
 {
-	"auth" ： {
-    	"username" ： "{TOAST ID}",
-        "password" ： "{API Password}"
+	"auth" : {
+    	"username" : "{TOAST ID}",
+        "password" : "{API Password}"
     }
 }
 ```
@@ -91,22 +91,22 @@ Content-Type： application/json;charset=UTF-8
 ##### Response Body
 ```json
 {
-    「header」 ： {
-        "isSuccessful" ：  true,
-        "resultCode" ：  0,
-        "resultMessage" ：  "SUCCESS"
+    "header" : {
+        "isSuccessful" :  true,
+        "resultCode" :  0,
+        "resultMessage" :  "SUCCESS"
     },
-    "access" ： {
-        "token" ： {
-            "expires" ：  "{Expires}",
-            "id" ：  "{Token ID}",
-            "issued_at" ：  "{Issued at}"
+    "access" : {
+        "token" : {
+            "expires" :  "{Expires}",
+            "id" :  "{Token ID}",
+            "issued_at" :  "{Issued at}"
         },
-        "user" ： {
-            "id" ：  "{User ID}",
-            "roles" ： [
+        "user" : {
+            "id" :  "{User ID}",
+            "roles" : [
                 {
-                    "name" ：  "{Role name}"
+                    "name" :  "{Role name}"
                 }
             ]
         }
@@ -138,22 +138,22 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 ##### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "access"： {
-        "token"： {
-            "expires"： "{Expires}",
-            "id"： "{Token ID}",
-            "issued_at"： "{Issued at}"
+    "access": {
+        "token": {
+            "expires": "{Expires}",
+            "id": "{Token ID}",
+            "issued_at": "{Issued at}"
         },
-        "user"： {
-            "id"： "{User ID}",
-            "roles"： [
+        "user": {
+            "id": "{User ID}",
+            "roles": [
                 {
-                    "name"： "{Role name}"
+                    "name": "{Role name}"
                 }
             ]
         }
@@ -191,16 +191,16 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "zones"： [
+    "zones": [
         {
-            "zoneName"： "{Zone Name}",
-            "zoneState"： {
-                "available"： "{Available}"
+            "zoneName": "{Zone Name}",
+            "zoneState": {
+                "available": "{Available}"
             }
         }
     ]
@@ -252,16 +252,16 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instances"： [
+    "instances": [
         {
-            "id"： "{Instance ID}",
-            "name"： "{Instance Name}",
-            "status"： "{Instance Status}"
+            "id": "{Instance ID}",
+            "name": "{Instance Name}",
+            "status": "{Instance Status}"
         }
     ]
 }
@@ -292,58 +292,58 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instances"： [
+    "instances": [
         {
-            "addresses"： [
+            "addresses": [
                 {
-                    "macAddress"： "{MAC Address}",
-                    "ipAddress"： "{IP Address}",
-                    "version"： "{IP Version}",
-                    "floatingIpAddress"： "{Floating IP Address}"
+                    "macAddress": "{MAC Address}",
+                    "ipAddress": "{IP Address}",
+                    "version": "{IP Version}",
+                    "floatingIpAddress": "{Floating IP Address}"
                 }
             ],
-            "availabilityZone"： "{Zone Name}",
-            "flavor"： {
-                "id"： "{Flavor ID}",
-                "name"： "{Flavor Name}",
-                "cpu"： "{Flavor CPU}",
-                "ram"： "{Flavor RAM}"
+            "availabilityZone": "{Zone Name}",
+            "flavor": {
+                "id": "{Flavor ID}",
+                "name": "{Flavor Name}",
+                "cpu": "{Flavor CPU}",
+                "ram": "{Flavor RAM}"
             },
-            "status"： "{Status}",
-            "id"： "{Instance ID}",
-            "name"： "{Instance Name}",
-            "image"： "{Image ID}",
-            "metadata"： {
-                "{key}"： "{value}"
+            "status": "{Status}",
+            "id": "{Instance ID}",
+            "name": "{Instance Name}",
+            "image": "{Image ID}",
+            "metadata": {
+                "{key}": "{value}"
             },
-            "keyName"： "{PEM Key Name}",
-            "volumes"： {
-                "root" ： {
-                    "size"： "{Root Volume Size}",
-                    "type"： "{Root Volume Type}"
+            "keyName": "{PEM Key Name}",
+            "volumes": {
+                "root" : {
+                    "size": "{Root Volume Size}",
+                    "type": "{Root Volume Type}"
                 },
-                "attachments" ： [
+                "attachments" : [
                     {
-                        "id" ： "{Attached Volume ID}",
-                        "name"： "{Attached Volume Name}",
-                        "size"： "{Attached Volume Size}",
-                        "type"： "{Attached Volume Type}"
+                        "id" : "{Attached Volume ID}",
+                        "name": "{Attached Volume Name}",
+                        "size": "{Attached Volume Size}",
+                        "type": "{Attached Volume Type}"
                     }
                 ]
             },
-            "securityGroups"： [
+            "securityGroups": [
                 {
-                    "name"： "{Security Group Name}"
+                    "name": "{Security Group Name}"
                 }
             ],
-            "launchedAt"： "{Launched Time}",
-            "createdAt"： "{Created Time}",
-            "updatedAt"： "{Updated Time}"
+            "launchedAt": "{Launched Time}",
+            "createdAt": "{Created Time}",
+            "updatedAt": "{Updated Time}"
         }
     ]
 }
@@ -394,25 +394,25 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "instance"： {
-        "name"： "{Instance Name}",
-        "image"： "{Image ID}",
-        "flavor"： "{Flavor ID}",
-        "networks"： [
+    "instance": {
+        "name": "{Instance Name}",
+        "image": "{Image ID}",
+        "flavor": "{Flavor ID}",
+        "networks": [
         	{
-            	"id"： "{Network ID}"
+            	"id": "{Network ID}"
         	}
         ],
-        "availabilityZone"： "{Availability Zone}",
-        "keyName"： "{Key Name}",
-        "count"： "{Count}",
-        "volume"： {
-           "size"： "{Volume Size}",
-           "type"： "{Volume Type}",
+        "availabilityZone": "{Availability Zone}",
+        "keyName": "{Key Name}",
+        "count": "{Count}",
+        "volume": {
+           "size": "{Volume Size}",
+           "type": "{Volume Type}",
         },
-        "securityGroups"： [
+        "securityGroups": [
         	{
-            	"name"： "{Security Group Name}"
+            	"name": "{Security Group Name}"
         	}
 		]
     }
@@ -442,15 +442,15 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instance"： {
-        "id"： "{Instance ID}",
-        "name"： "{Instance Name}",
-        "status"： "{Instance Status}"
+    "instance": {
+        "id": "{Instance ID}",
+        "name": "{Instance Name}",
+        "status": "{Instance Status}"
     }
 }
 ```
@@ -492,8 +492,8 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "attachment"：{
-        "volumeId"："{Volume ID}"
+    "attachment":{
+        "volumeId":"{Volume ID}"
     }
 }
 ```
@@ -506,15 +506,15 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "attachment"： {
-        "device"： "{Device ID}",
-        "id"： "{Attachment ID}",
-        "volumeId"： "{Volume ID}"
+    "attachment": {
+        "device": "{Device ID}",
+        "id": "{Attachment ID}",
+        "volumeId": "{Volume ID}"
     }
 }
 ```
@@ -547,10 +547,10 @@ X-Auth-Token： {tokenId}
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -581,9 +581,9 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body Template
 ```json
 {
-    "action"： "{Action Name}",
-    "parameters" ： {
-         "{key}"： "{value}"
+    "action": "{Action Name}",
+    "parameters" : {
+         "{key}": "{value}"
     }
 }
 ```
@@ -597,17 +597,17 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "start"
+    "action" : "start"
 }
 ```
 
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -617,7 +617,7 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "stop"
+    "action" : "stop"
 }
 ```
 
@@ -625,10 +625,10 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -636,16 +636,16 @@ Content-Type： application/json;charset=UTF-8
 ### インスタンス再起動
 インスタンスを再起動します。以下のように再起動方式を指定できます。
 
-- **SOFT**：正常終了(graceful shutdown)後、インスタンスを再起動します。
-- **HARD**：強制終了(shutdown)後、インスタンスを再起動します。
+- **SOFT**:正常終了(graceful shutdown)後、インスタンスを再起動します。
+- **HARD**:強制終了(shutdown)後、インスタンスを再起動します。
 
 #### Request Body
 
 ```json
 {
-    "action" ： "reboot",
-    "parameters"：{
-        "type"："{Reboot Type}"
+    "action" : "reboot",
+    "parameters":{
+        "type":"{Reboot Type}"
     }
 }
 ```
@@ -657,10 +657,10 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -670,9 +670,9 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action"： "resize",
-    "parameters"：{
-        "flavor"："{Flavor ID}"
+    "action": "resize",
+    "parameters":{
+        "flavor":"{Flavor ID}"
     }
 }
 ```
@@ -684,10 +684,10 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -700,9 +700,9 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "uploadImage",
-    "parameters" ： {
-        "name"： "{Image Name}"
+    "action" : "uploadImage",
+    "parameters" : {
+        "name": "{Image Name}"
     }
 }
 ```
@@ -714,14 +714,14 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "createdImage"： {
-        "id" ： "{Created Image ID}",
-        "name" ： "{Created Image Name}"
+    "createdImage": {
+        "id" : "{Created Image ID}",
+        "name" : "{Created Image Name}"
     }
 }
 ```
@@ -737,10 +737,10 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "addFloatingIp",
-    "parameters"： {
-        "address"： "{Floating IP Address}",
-        "ipAddress"： "{IP Address of the instance}"
+    "action": "addFloatingIp",
+    "parameters": {
+        "address": "{Floating IP Address}",
+        "ipAddress": "{IP Address of the instance}"
     }
 }
 ```
@@ -754,10 +754,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -769,9 +769,9 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    "action"： "removeFloatingIp",
-    "parameters" ： {
-        "address"： "{Floating IP Address}"
+    "action": "removeFloatingIp",
+    "parameters" : {
+        "address": "{Floating IP Address}"
     }
 }
 ```
@@ -784,10 +784,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    「header」: {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -798,9 +798,9 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "addSecurityGroup",
-    "parameters"： {
-        "name"： "{Security Group Name}"
+    "action": "addSecurityGroup",
+    "parameters": {
+        "name": "{Security Group Name}"
     }
 }
 ```
@@ -813,10 +813,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -827,9 +827,9 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "removeSecurityGroup",
-    "parameters"： {
-        "name"： "{Security Group Name}"
+    "action": "removeSecurityGroup",
+    "parameters": {
+        "name": "{Security Group Name}"
     }
 }
 ```
@@ -841,10 +841,10 @@ Floating IPをインスタンスに接続します。
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -869,22 +869,22 @@ X-Auth-Token： {tokenID}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "flavors"： [
+    "flavors": [
         {
-            "disabled"： "{Disabled}",
-            "ephemeral"： "{Ephermeral}",
-            "type"： "{Type}",
-            "volumeSize"： "{Volume Size}",
-            "id"： "{Flavor ID}",
-            "name"： "{Flavor Name}",
-            "isPublic"： "{Is Public}",
-            "ram"： "{RAM}",
-            "vcpus"： "{VCPUs}"
+            "disabled": "{Disabled}",
+            "ephemeral": "{Ephermeral}",
+            "type": "{Type}",
+            "volumeSize": "{Volume Size}",
+            "id": "{Flavor ID}",
+            "name": "{Flavor Name}",
+            "isPublic": "{Is Public}",
+            "ram": "{RAM}",
+            "vcpus": "{VCPUs}"
         }
     ]
 }
@@ -925,17 +925,17 @@ X-Auth-Token： {tokenId}
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "keypairs"： [
+    "keypairs": [
         {
-            "name"： "{Keypair Name}",
-            "publicKey"： "{Public Key Value}",
-            "fingerprint"： "{Fingerprint Value}",
-       	    "createdAt"： "{Created At}"
+            "name": "{Keypair Name}",
+            "publicKey": "{Public Key Value}",
+            "fingerprint": "{Fingerprint Value}",
+       	    "createdAt": "{Created At}"
         }
     ]
 }
@@ -966,9 +966,9 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    "keypair"： {
-        "name"： "{Keypair Name}",
-        "publicKey"： "{Public Key Value}"
+    "keypair": {
+        "name": "{Keypair Name}",
+        "publicKey": "{Public Key Value}"
     }
 }
 ```
@@ -982,16 +982,16 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "keypair"： {
-        "name"： "{Keypair Name}",
-        "publicKey"： "{Public Key Value}",
-        "privateKey"： "{Private Key Value}",
-        "fingerprint"： "{Fingerprint Value}"
+    "keypair": {
+        "name": "{Keypair Name}",
+        "publicKey": "{Public Key Value}",
+        "privateKey": "{Private Key Value}",
+        "fingerprint": "{Fingerprint Value}"
     }
 }
 ```
@@ -1024,10 +1024,10 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```

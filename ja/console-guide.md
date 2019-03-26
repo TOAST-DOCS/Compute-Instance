@@ -151,7 +151,7 @@ TOASTで生成したキーペア同様、このように作成されたキーペ
 
 ### キーペア作成(Mac、Linuxユーザー)
 
-MacやLinuxの「ssh-kegen」で作成したキーペアをTOASTに登録して使用できます。キーペアは次のコマンドで作成します。
+MacやLinuxの「ssh-keygen」で作成したキーペアをTOASTに登録して使用できます。キーペアは次のコマンドで作成します。
 
 	$ ssh-keygen -t rsa -f my_key.key
 

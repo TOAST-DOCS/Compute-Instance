@@ -213,7 +213,7 @@ TOAST에서 생성한 키페어와 마찬가지로 이렇게 만든 키페어의
 
 ### 키페어 가져오기(Mac, Linux 사용자)
 
-Mac이나 Linux의 `ssh-kegen`으로 만든 키페어를 TOAST에 등록하여 사용할 수 있습니다. 키페어는 다음 명령으로 생성합니다.
+Mac이나 Linux의 `ssh-keygen`으로 만든 키페어를 TOAST에 등록하여 사용할 수 있습니다. 키페어는 다음 명령으로 생성합니다.
 
 	$ ssh-keygen -t rsa -f my_key.key
 

@@ -149,7 +149,7 @@
 
 ### 导入密钥对(Mac、Linux用户)
 
-利用Mac或Linux的`ssh-kegen`来创建的密钥对可以在TOAST上注册并使用。使用以下命令创建密钥对。
+利用Mac或Linux的`ssh-keygen`来创建的密钥对可以在TOAST上注册并使用。使用以下命令创建密钥对。
 
 	$ ssh-keygen -t rsa -f my_key.key
 
