@@ -784,7 +784,7 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」: {
+    "header": {
         "isSuccessful": true,
         "resultCode": 0,
         "resultMessage": "SUCCESS"
