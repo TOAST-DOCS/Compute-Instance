@@ -217,7 +217,7 @@ X-Auth-Token： {tokenId}
 
 ### インスタンス状態
 インスタンスは生成、変更、削除、運営中は次の状態になります。
-![[図1]インスタンスStatus Diagram](http：//static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
+![[図1]インスタンスStatus Diagram](http://static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
 
 
 | 状態 | 説明 |
