@@ -6,8 +6,8 @@ API呼び出しが失敗すると`isSuccessful`が`false`になり、エラー�
 ```json
 {
     "header" : {
-        "isSuccessful" : true、
-        "resultCode": 0、
+        "isSuccessful" : true,
+        "resultCode": 0,
         "resultMessage" : "SUCCESS"
     }
 }
