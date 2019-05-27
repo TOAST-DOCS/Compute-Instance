@@ -151,8 +151,9 @@ PuTTY的私钥可以通过2种方式进行注册并使用。
 
 当您运行使用PuTTY安装的pageant时，Windows系统托盘中会出现如下图标。右键单击pageant图标并单击**添加密钥 **菜单，为PuTTY添加私钥。
 
-![图片4](http://static.toastoven.net/prod_instance/putty006-en.png)
+![图片4](http://static.toastoven.net/prod_instance/putty006.png)
 
+http://static.toastoven.net/prod_instance/putty006-en.png
 如果要确认私钥是否已添加，请单击**查看密钥**确认。如果密钥添加成功，您可以看到所添加的密钥，如下图所示。
 
 ![图片5](http://static.toastoven.net/prod_instance/putty008-en.png)

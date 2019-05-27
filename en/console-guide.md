@@ -55,7 +55,7 @@ Determines default disk type of an instance.
 
 ### Number of Instances 
 
-This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instanc `shall result in  `my-instance-1 `and `my-instance-2`. 
+This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instance` shall result in  `my-instance-1 `and `my-instance-2`. 
 
 When many instances are created for a random availability zone, each instance shall be created in a random availability zone. For instance, if two instances are created with a random availability zone, two may be created in the same zone, or in different zones. In case all instances need to be created in a same zone, select a particular zone before creation. 
 
@@ -77,6 +77,69 @@ For more details, refer to [Overview of VPC](/Network/VPC/en/overview/)
 Select a subnet to be connected to an instance, among those defined in VPC. Every time a subnet is selected, a network interface is created to be connected to the subnet. The order of selected subnets may be changed to alter network interfaces, in which case, the first network interface  (`eth0`) shall be set as the default gateway. 
 
 For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/en/overview/).
+
+### Floating IP
+
+After instance is created, specify whether to use floating IP. When it is enabled, create and associate a new floating IP to the first network interface. Note that the first network interface must be connected to a subnet where Internet gateway is configured.
+
+Floating IP can be managed under Instance > Management, or Instance > Floating IP. For more floating IP details, see [VPC Console Guide](/Network/VPC/ko/console-guide/).
+
+### Additional Block Storage
+
+After instance is created, specify whether to attach block storage. When it is enabled, create a new block storage, apart from a basic disk, and attach it to an instance. Name, storage type, and size of it can be specified, like in a basic disk.
+
+Leave the basic disk only for OS purposes, and use additional disk to store frequently-used application programs or data. Then, it gets easier to migrate or copy, by attaching/detaching block storage or via snapshots. In addition, when an instance has faults, detach the additional disk and associate it to another instance, so as to recover service easily.
+
+Block storage can be managed under Instances > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/ko/overview/).
+
+### Scheduled Script
+
+After instance is created, specify a script to execute. Scheduled script is executed, after instance is first booted, followed by the initiazliation process, including network configuration. TOAST Scheduled Script is executed by automated tools, such as cloud-init (Linux), Cloudbase-init (Windows), which are embedded in official images.
+
+> [Caution]
+> Scheduled script is executed at the user's authority for root (Linux)/Administrator (Windows).
+
+#### Linux
+The first line of a scheduled script must start with  `#!`.
+```
+#!/bin/bash
+...
+```
+
+To properly run a scheduled script, check log files within an instance. Find log outputs from standard output/error device of a script on `/var/log/cloud-init-output.log`.
+
+#### Windows
+
+Windows images support both Batch and Powershell, for the scheduled script type. Each type is delimited by specified indicator of the first line.
+
+* Batch Script
+```
+rem cmd
+...
+```
+
+* PowerShell Script
+```
+#ps1_sysnative
+...
+```
+
+To use both Batch and Powershell script, describe as below:
+
+* EC2 format
+```
+<script>
+...
+</script>
+<powershell>
+...
+</powershell>
+```
+
+Find logs of a scheduled script at `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
+
+For more details regarding scheduled scripts, see guides for [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html).
+
 
 ## Further Functions of Instances 
 
@@ -145,7 +208,7 @@ Like key pairs created from TOAST, these key pairs need to be cautiously managed
 
 ### Import Key Pairs (Mac and Linux)
 
-Key pairs created by `ssh-kegen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
+Key pairs created by `ssh-keygen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
 
 	$ ssh-keygen -t rsa -f my_key.key
 

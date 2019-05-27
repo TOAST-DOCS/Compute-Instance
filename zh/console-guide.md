@@ -61,6 +61,18 @@
 
 您可以使用现有的密钥对或创建新的密钥对后使用。现有秘钥的注册方法，Windows用户请参考 [导入密钥对 (Windows用户)](./console-guide/#_16)、Mac及Linux 用户请参考[导入密钥对(Mac、Linux用户)](./console-guide/#_17)。
 
+### 网络
+
+在VPC定义的子网中选择连接实例的子网。每当选择一个子网时，都会在实例中创建连接到该子网的网络接口。您也可以更换被选择的子网的顺序来更改网络接口。此时，第一个网络接口(`eth0`)默认为网关。
+
+网络创建及管理相关详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
+
+### 浮动IP
+
+创建实例后，指定是否使用浮动IP。若选择使用浮动IP，新建浮动IP并连接至第一个网络接口。此时，第一个网络接口必须连接至设置了互联网网关的子网。
+
+浮动IP管理也可在实例 > 管理页面或实例 > 浮动IP页面内设置。有关浮动IP的更详细的信息参考[VPC控制台使用指南](/Network/VPC/zh/console-guide/)。
+
 ### 安全组
 
 指定实例要所属的安全组。一个实例可以属于多个安全组。如果实例属于多个安全组时请注意以下事项。
@@ -70,11 +82,62 @@
 
 安全组的详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
 
-### 网络
+### 附加块存储
 
-在VPC定义的子网中选择连接实例的子网。每当选择一个子网时，都会在实例中创建连接到该子网的网络接口。您也可以更换被选择的子网的顺序来更改网络接口。此时，第一个网络接口(`eth0`)默认为网关。
+创建实例后，指定是否连接附加块存储。若选择使用附加块存储，创建与基本磁盘分开的新的块存储并连接至实例。与基本磁盘一样，创建附加磁盘时，可指定名称、存储类型、大小。
 
-网络创建及管理相关详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
+若仅将基本磁盘用于OS，且把经常使用的应用程序或数据保存在附加磁盘中的话，通过块存储连接/断开连接或快照功能，可轻松地迁移或复制。此外，发生实例问题时，仅断开与附加磁盘的连接后，再连接至其他实例，可轻松恢复服务。
+
+也可以在实例 > 块存储页面管理块存储。有关块存储的更详细的说明参考[块存储指南](/Storage/Block%20Storage/zh/overview/)。
+
+### 调度脚本
+
+创建实例后指定要执行的脚本。调度脚本在完成实例的首次启动并结束网络设置等初始化过程后执行。TOAST的调度脚本利用官方镜像内置的cloud-init (Linux)、Cloudbase-init (Windows)等自动化工具执行。
+
+> [注意]
+> 调度脚本以root (Linux)/Administrator (Windows)用户权限执行。
+
+#### Linux
+调度脚本的第一行必须以 `#!` 开头。
+```
+#!/bin/bash
+...
+```
+
+为了正常运行调度脚本，应确认实例内部的日志文件。脚本中向标准输出/错误设备输出的日志可在“/var/log/cloud-init-output.log”中确认。
+
+#### Windows
+
+Windows镜像支持Batch脚本格式、Powershell脚本格式的调度脚本格式。各格式按照第一行列出的指令区分。
+
+* Batch脚本
+```
+rem cmd
+...
+```
+
+* PowerShell脚本
+```
+#ps1_sysnative
+...
+```
+
+若欲同时使用Batch脚本及PowerShell脚本，按如下方式操作。
+
+* EC2 format
+```
+<script>
+...
+</script>
+<powershell>
+...
+</powershell>
+```
+
+调度脚本的日志可在`C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`中确认。
+
+有关调度脚本的更详细的说明参考[cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html)或[Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html)指南。
+
 
 ## 实例添加功能
 
@@ -149,7 +212,7 @@
 
 ### 导入密钥对(Mac、Linux用户)
 
-利用Mac或Linux的`ssh-kegen`来创建的密钥对可以在TOAST上注册并使用。使用以下命令创建密钥对。
+利用Mac或Linux的`ssh-keygen`来创建的密钥对可以在TOAST上注册并使用。使用以下命令创建密钥对。
 
 	$ ssh-keygen -t rsa -f my_key.key
 
