@@ -223,4 +223,94 @@ Key pair, once registered, can be used to create an instance, and its private ke
 
 Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
+## Appendix 1. Change of Windows Language Packs 
 
+TOAST Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
+
+1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
+
+2. Select **Change your language preferences > Add a language**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
+
+3. Choose a language in **Add a language** and click **Add**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
+
+4. Check the language pack just added. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
+
+5. Download and install the language pack. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
+
+6. Download and install updates. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
+
+7. To change the installed language pack, double-click the selected language or select **Options**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
+
+8. Choose **Make this the primary language** for Windows display language.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
+
+9. To apply the change of primary language, click **Log off now**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
+
+10. Log in again, and you can see Windows is displayed by the language pack of your choice.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
+
+## Appendix 2. Change of Windows Routing 
+
+Windows routing for TOAST Cloud can be changed as follows:  
+
+
+* Press **Windows key + R** to open an execution window, and enter`cmd` and execute to open a command prompt window.  
+  Enter route command.  
+* Print current configuration: route print
+* Add: route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Change: route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Delete: route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
+  * Option : -p (specify as permanent route)
+
+Description
+![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+
+* Metric Value: The lower, the higher on the priority
+* Interface Number: Available on route print (in the red box above)
+* Permanent Route: Use the -p option, because otherwise, route configuration returns to default at the system reboot (in the blue box above)
+
+Example 1 - Setting external communication for particular interfaces only 
+* Use command for route change to modify metrics on interface route to which external communication is not wanted, or not enter default gateway information on the fixed IP setting. 
+
+* How to Modify Metric
+  * Increase metrics of an interface 
+
+  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
+  How to Set Fixed IP
+
+  * Enter ipconfig /all to find IP information.
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
+  * Enter IP information, excluding default gateway, on the window for IP settings. 
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
+  * Check route print.
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+    Example 2 - Setting route for a particular bandwidth
+  * Command route add to set route for a particular bandwidth.
+
+  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+  Example 3 - Removing a particular route 
+
+  * Remove specified route, by using route delete. 
+
+  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
