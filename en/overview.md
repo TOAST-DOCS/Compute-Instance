@@ -27,12 +27,12 @@ TOAST provides instance flavors in various types to suit for customer's needs. D
 
 | Type   | Description                              |
 | ------ | ---------------------------------------- |
-| M Type | A balanced flavors between CPU and memory. <br />Recommended when performance requirements of a service or an application are not clear. |
-| C Type | CPU performance is set highly: applied for an web application server or an analysis system requiring high-performance calculation. |
-| R Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
-| T Type | Low-cost instance. Recommended for the servers with low workloads. |
-| U Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
-| X Type | The flavor supports high-end CPU and memory. It can be applied to services or applications that require high performances. |
+| m2 Type | A balanced flavors between CPU and memory. <br />Recommended when performance requirements of a service or an application are not clear. |
+| c2 Type | CPU performance is set highly: applied for an web application server or an analysis system requiring high-performance calculation. |
+| r2 Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
+| t2 Type | Low-cost instance. Recommended for the servers with low workloads. |
+| u2 Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
+| x1 Type | The flavor supports high-end CPU and memory. It can be applied to services or applications that require high performances. |
 
 ### Availability Zone 
 
