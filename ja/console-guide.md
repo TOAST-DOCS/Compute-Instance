@@ -41,8 +41,8 @@
 
 | 仕様              | サポートするディスクのサイズ             |
 | ---------------- | -------------------------------- |
-| Uタイプ            | 20 ～ 100 GB (仕様ごとに固定)        |
-| T、M、C、R、Xタイプ   | 20～1000GB       　               |
+| u2タイプ            | 20 ～ 100 GB (仕様ごとに固定)        |
+| t2、m2、c2、r2、x1タイプ   | 20～1000GB       　               |
 
 >[参考]ディスクのサイズに応じて課金されるため、基本ディスクサイズを無条件に大きくするのは非効率的です。必要に応じてブロックストレージを追加して使用すると良いでしょう。
 
@@ -145,7 +145,7 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 
 ### イメージ作成
 
-インスタンスの基本ディスクからイメージを作成します。イメージ作成はデータの整合性を保障するために、インスタンスを終了した状態でのみ進行できます。イメージ作成コマンドが無効になっている場合は、先にインスタンスを終了する必要があります。
+インスタンスの基本ディスクからイメージを作成します。イメージ作成は、データの整合性を保障するために、インスタンスを終了した状態で行うことを推奨します。
 
 インスタンスの基本ディスクの空き容量が全くない状態でイメージ作成はできますが、イメージを別のインスタンスで使用するための初期化作業は行えないので、正常に使用できません。イメージを作成する前にインスタンスで最低100KBの空き容量を確保します。
 
@@ -173,9 +173,9 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 現在の仕様に応じて、変更できるインスタンスの仕様が異なります。
 
-* M、C、R、T、XタイプのインスタンスはM、C、R、T、Xタイプのインスタンス仕様に変更できます。
-* M、C、R、T、XタイプのインスタンスはUタイプのインスタンス仕様に変更できません。
-* Uタイプは生成後に仕様を変更できません。同じUタイプのインスタンス仕様へも変更できません。
+* m2、c2、r2、t2、x1タイプのインスタンスはm2、c2、r2、t2、x1タイプのインスタンス仕様に変更できます。
+* m2、c2、r2、t2、x1タイプのインスタンスはu2タイプのインスタンス仕様に変更できません。
+* u2タイプは生成後に仕様を変更できません。同じu2タイプのインスタンス仕様へも変更できません。
 
 インスタンスの仕様を変更すると、変更作業と変更確認作業が行われます。全ての作業が完了するとVM状態が**Shutoff**状態になり、**追加機能**の**Start instance**をクリックしてインスタンスを起動できます。
 
@@ -229,3 +229,92 @@ MacやLinuxの「ssh-keygen」で作成したキーペアをTOASTに登録して
 
 TOASTで生成したキーペア同様、このように作成されたキーペアの秘密鍵も外部に流出すると誰でも流出した秘密鍵でそのインスタンスにアクセスできるようになるので慎重に管理する必要があります。
 
+## 付録1. Windows言語パックの変更
+
+TOASTクラウドのWindowsイメージは、英語版が基本設定になっています。他の言語を基本設定にする方法は次のとおりです。
+
+1. **START > Control Panel > Clock, Language, and Region > Add a language**を選択します。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows1.png)
+
+2. **言語基本設定変更 > 言語追加**を選択します。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows2.png)
+
+3. **言語追加(Add a language)**で使用したい言語を選択し、**追加(Add)**をクリックします。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows3.png)
+
+4. 追加された言語パックを確認します。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows4.png)
+
+5. 追加された言語パックをダウンロードし、インストールします。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows5.png)
+
+6. アップデートをダウンロードし、インストールします。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows6.png)
+
+7. インストールされた言語パックを変更するには、選択した言語をダブルクリックするか、**オプション(Options)**を選択します。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows7.png)
+
+8. 言語オプションで、**基本言語に設定**を選択します。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows8.png)
+
+9. 基本言語設定を適用するには、**いまログオフ(Log off now)**をクリックします。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows9.png)
+
+10. 再度ログインすると、ユーザーが選択した言語パックへの変更を確認できます。
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows10.png)
+
+## 付録2. Windowsルーティングの変更
+
+TOASTクラウドWindowsでルーティングを変更する方法は次のとおりです。
+
+
+* **Windowsキー + R**を押すと「ファイル名を指定して実行」ダイアログが表示されるので、名前に`cmd`と入力してOKボタンをクリックし、コマンドプロンプトウィンドウを開きます。
+  Routeコマンドを入力します。
+* 現在設定の出力：route print
+* 追加：route add "宛先" mask "subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
+* 変更：route change "宛先" mask "subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
+* 削除：route delete "宛先" mask "宛先subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
+  * オプション：-p (永久ルート指定)
+
+説明
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route1.png)
+* メトリック値：値が小さいほど優先順位が高い
+* インターフェイス番号：route printで確認可能(上の図で赤色の枠)
+* 永久ルート：-pオプションを使用しない場合、システム再起動時に、設定したルートが初期化されるため使用(上の図で青色の枠)
+
+事例1 - 特定インターフェイスのみ外部通信設定
+* route changeコマンドを使用し、外部通信をしたくないインターフェイスルートのmetricを修正するか、固定IP設定でデフォルトゲートウェイ情報を入力しない方法などがあります。
+
+* Metricの修正方法
+  * インターフェイスのmetric増加
+
+  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route2.png)
+ 固定IPの設定方法
+  * ipconfig /allを入力し、IP情報を確認します。
+    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route3.png)
+  * 確認したIP情報を利用し、IP設定ウィンドウでデフォルトゲートウェイを除いて入力します。
+    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route4.png)
+  * route printで確認します。
+    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route5.png)
+   事例2 - 特定帯域に対するルート設定
+  * route addコマンドで、特定帯域に対するルートを設定します。
+
+  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route6.png)
+ 事例3 - 特定ルートの除去
+
+  * route deleteを使用し、指定したルートを除去します。
+
+  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route7.png)
