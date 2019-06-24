@@ -40,8 +40,8 @@
 
 | 规格            | 支持的设备大小         |
 | ----------------| -------------------------- |
-| U 类型           | 固定为20G，无法更改 |
-| T, M, C, R, X 类型 | 20~1000GB               |
+| u2 类型           | 固定为20G，无法更改 |
+| t2, m2, c2, r2, x1 类型 | 20~1000GB               |
 
 >[参考] 根据磁盘空间的大小决定实际支付金额。因此磁盘的容量不要设置太大。建议您根据需求添加块存储。
 
@@ -170,10 +170,9 @@ rem cmd
 
 根据当前的规格，可更改的实例规格不同。
 
-* M, C, R, T, X类型的实例可以更改为M, C, R, T, X类型的实例规格。
-* M, C, R, T, X类型的实例无法更改为U类型的实例规格。
-* I 类型的实例创建后无法更改规格。也无法更改为同样I类型的实例规格。
-* U类型与I类型相同，创建后无法更改规格。也无法更改为同样U类型的实例规格。
+* m2, c2, r2, t2, x1类型的实例可以更改为m2, c2, r2, t2, x1类型的实例规格。
+* m2, c2, r2, t2, x1类型的实例无法更改为u2类型的实例规格。
+* u2类型与I类型相同，创建后无法更改规格。也无法更改为同样u2类型的实例规格。
 
 更改实例规格时需要进行更改及验证更改操作。当所有的操作结束后VM状态更改为**Shutoff**状态，点击**追加功能**的 **Start instance**按钮即可启动实例。
 
@@ -226,3 +225,92 @@ rem cmd
 
 与在TOAST创建的密钥对一样，利用这种方式创建的密钥对的私钥如果一旦泄露，任何人都可以利用泄露的私钥访问实例，因此请慎重管理私钥。
 
+## 附录 1.更改Windows语言包
+
+TOAST云Windows图像默认提供英文版。默认使用其他语言的方法如下。
+
+1.选择**START > Control Panel > Clock, Language, and Region > Add a language**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
+
+2.选择**更改语言默认设置 > 添加语言**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
+
+3.在**添加语言(Add a language)**中选择想要使用的语言，单击**添加(Add)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
+
+4.确认添加的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
+
+5.下载并安装添加的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
+
+6.下载并安装更新。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
+
+7.若欲更改安装的语言包，双击选择的语言，或选择**选项(Options)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
+
+8.在语言选项中选择**设置为默认语言**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
+
+9.若欲应用默认语言设置，单击**现在注销(Log off now)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
+
+10.再次登录即可确认已更改为用户选择的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
+
+## 附录 2.更改Windows路由
+
+在TOAST云Windows中更改路由的方法如下。
+
+
+* 按**Windows键 + R**打开运行窗口后输入`cmd`并执行，打开命令提示符窗口。
+  输入Route命令。
+* 输出当前设置：route print
+* 添加：route add “目的地” mask “subnet” “gateway” metric “Metric值” if “Interface号"
+* 更改：route change “目的地” mask “subnet” “gateway” metric “Metric值” if “Interface号"
+* 删除：route delete “目的地” mask “目的地subnet” “gateway” metric “Metric值” if “Interface号"
+  * 选项：-p（指定永久路径）
+
+说明
+![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+* Metric值：值越小，优先顺序越高
+* Interface号：可在route print中确认（上图中红色边框）
+* 永久路径：若不使用-p选项，重启系统时设置的路径会初始化，因此使用（上图中蓝色边框）
+
+案例1 - 仅特定接口设置外部通信
+* 有使用route change命令更改不需要外部通信的接口路径的metric，或不在固定IP设置中输入网关信息的方法等。
+
+* Metric更改方法
+  * 增加接口的metric
+
+  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
+  固定IP设置方法
+  * 输入ipconfig /all，确认IP信息。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
+  * 利用确认的IP信息，在IP设置窗口中输入，不包括默认网关。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
+  * 利用route print确认。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+    案例2 - 设置特定段的路径
+  * 利用route add命令设置指定段的路径。
+
+  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+  案例3 - 删除特定路径
+
+  * 使用route delete删除指定的路径。
+
+  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
