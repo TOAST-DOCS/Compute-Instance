@@ -424,7 +424,8 @@ Content-Type： application/json;charset=UTF-8
 | Instance Name | Body | String | - | インスタンス名(Linuxの場合、最大20文字、Windowsの場合は最大12文字、英数字、'-'、'.'のみ可能) |
 | Image ID | Body | String | - | インスタンスにインストールするイメージID |
 | Flavor ID | Body | String | - | インスタンス仕様ID |
-| Network ID | Body | String | - | インスタンスが接続するネットワークID |
+| Network ID | Body | String | O | インスタンスが接続するネットワークID |
+| Subnet ID | Body | String | O | インスタンスが接続されるサブネットID<br>ネットワークIDまたはサブネットIDのどちらかを指定する必要あります。 |
 | Availability Zone | Body | String | - | インスタンスが生成されるアベイラビリティーゾーン名 |
 | Key Name | Body | String | - | インスタンスに登録するキーペア名 |
 | Count | Body | Integer | O | 同時生成するインスタンスの個数、最大10個に制限、1～10の範囲。省略すると1個生成 |
