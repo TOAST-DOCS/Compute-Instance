@@ -365,6 +365,7 @@ X-Auth-Token: {tokenId}
 | metadata | Body | Object | 保存为"key": "value"格式，用作实例中要设置的用户元数据 |
 | PEM Key Name | Body | String | 要在实例上注册的密钥对的名称 |
 | Root Volume Size | Body | Integer | 实例默认系统盘大小(GB) |
+| Root Volume Type | Body | String | 实例默认块存储设备种类。"General HDD"或"General SSD"中之一。|
 | Attached Volume ID | Body | String | 附加块存储 ID |
 | Attached Volume Name | Body | String | 附加块存储名称 |
 | Attached Volume Size | Body | Integer | 附加块存储大小(GB) |
