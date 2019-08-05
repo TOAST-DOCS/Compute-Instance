@@ -396,7 +396,8 @@ Content-Type: application/json;charset=UTF-8
         "flavor": "{Flavor ID}",
         "networks": [
         	{
-            	"id": "{Network ID}"
+              "id": "{Network ID}",
+              "subnetId": "{Subnet ID}"
         	}
         ],
         "availabilityZone": "{Availability Zone}",
@@ -419,7 +420,8 @@ Content-Type: application/json;charset=UTF-8
 | Instance Name | Body | String | - | 实例名称(Linux最多20个字符，Windows最多12字符，只能为英文字母和数字，'-'，'.') |
 | Image ID | Body | String | - | 实例使用的镜像ID |
 | Flavor ID | Body | String | - | 实例配置ID |
-| Network ID | Body | String | - | 实例要连接的网络ID |
+| Network ID | Body | String | O | 实例要连接的网络ID |
+| Subnet ID | Body | String | O | 连接实例的子网ID<br>必须指定网络ID或子网ID中的一个。|
 | Availability Zone | Body | String | - | 要创建实例的可用区名称 |
 | Key Name | Body | String | - | 要在实例中注册的密钥对名称 |
 | Count | Body | Integer | 0 | 可同时创建的实例个数，最多可创建10个，1~10范围。省略时生成1个 |
