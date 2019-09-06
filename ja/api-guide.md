@@ -1,5 +1,7 @@
 ## Compute > Instance > APIガイド
 
+APIは現在、韓国リージョンでのみ使用できます。
+
 TOAST Compute Instanceサービスは次のAPIを提供します。
 
 * [アベイラビリティーゾーンAPI](#api_2)
@@ -7,7 +9,6 @@ TOAST Compute Instanceサービスは次のAPIを提供します。
 * [インスタンス追加機能API](#api_4)
 * [インスタンス仕様API](#api_5)
 * [キーペアAPI](#api_6)
-
 
 ## 事前準備
 

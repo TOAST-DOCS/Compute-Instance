@@ -1,5 +1,7 @@
 ## Compute > Instance > API 가이드
 
+API는 현재 한국 리전에서만 사용할 수 있습니다.
+
 TOAST Compute Instance 서비스는 다음 종류의 API를 제공합니다.
 
 * [가용성 영역 API](#api_2)
@@ -7,8 +9,6 @@ TOAST Compute Instance 서비스는 다음 종류의 API를 제공합니다.
 * [인스턴스 추가 기능 API](#api_4)
 * [인스턴스 타입 API](#api_5)
 * [키페어 API](#api_6)
-
-API는 현재 한국 리전에서만 사용할 수 있습니다.
 
 ## 사전 준비
 
