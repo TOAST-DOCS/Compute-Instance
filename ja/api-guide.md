@@ -1,5 +1,7 @@
 ## Compute > Instance > APIガイド
 
+APIは現在、韓国リージョンでのみ使用できます。
+
 TOAST Compute Instanceサービスは次のAPIを提供します。
 
 * [アベイラビリティーゾーンAPI](#api_2)
@@ -7,7 +9,6 @@ TOAST Compute Instanceサービスは次のAPIを提供します。
 * [インスタンス追加機能API](#api_4)
 * [インスタンス仕様API](#api_5)
 * [キーペアAPI](#api_6)
-
 
 ## 事前準備
 
@@ -400,7 +401,8 @@ Content-Type： application/json;charset=UTF-8
         "flavor": "{Flavor ID}",
         "networks": [
         	{
-            	"id": "{Network ID}"
+              "id": "{Network ID}",
+              "subnetId": "{Subnet ID}"
         	}
         ],
         "availabilityZone": "{Availability Zone}",
@@ -424,7 +426,8 @@ Content-Type： application/json;charset=UTF-8
 | Instance Name | Body | String | - | インスタンス名(Linuxの場合、最大20文字、Windowsの場合は最大12文字、英数字、'-'、'.'のみ可能) |
 | Image ID | Body | String | - | インスタンスにインストールするイメージID |
 | Flavor ID | Body | String | - | インスタンス仕様ID |
-| Network ID | Body | String | - | インスタンスが接続するネットワークID |
+| Network ID | Body | String | O | インスタンスが接続するネットワークID |
+| Subnet ID | Body | String | O | インスタンスが接続されるサブネットID<br>ネットワークIDまたはサブネットIDのどちらかを指定する必要あります。 |
 | Availability Zone | Body | String | - | インスタンスが生成されるアベイラビリティーゾーン名 |
 | Key Name | Body | String | - | インスタンスに登録するキーペア名 |
 | Count | Body | Integer | O | 同時生成するインスタンスの個数、最大10個に制限、1～10の範囲。省略すると1個生成 |
