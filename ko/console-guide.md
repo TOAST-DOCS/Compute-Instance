@@ -316,3 +316,28 @@ Case 3 - 특정 경로 제거
 
 	$ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
+
+## 부록 3. System Locale 변경
+
+TOAST Cloud Windows에서 System Locale을 변경하는 방법은 다음과 같은 방법 등이 있습니다.
+
+* START -> Control Panel -> Clock, Language, and Region
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* Region을 선택 합니다.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* Administrative 탭 이동-> Change system Locale...을 선택 합니다.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* 변경하려는 System Locale을 선택 합니다.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* 적용을 위해 시스템을 재시작 합니다.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
