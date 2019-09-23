@@ -145,7 +145,7 @@ For more details regarding scheduled scripts, see guides for [cloud-init](https:
 
 ### Create Image 
 
-Image is created from a default instance disk. Creating an image is available only after an instance is closed to ensure data integrity. If Create Image is disabled, close instances first. 
+Create an image from default disk of an instance. It is recommended to close instances before creating an image, so as to ensure data integrity. 
 
 Even when a default disk has no additional space, image can be created but normal usage is impossible as initialization to use the image in other instances is unavailable. Before creating an image, empty at least 100KB of space.   
 

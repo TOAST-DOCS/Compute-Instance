@@ -1,5 +1,7 @@
 ## Compute > Instance > API Guide
 
+API is currently available only in the Korea region.
+
 The TOAST Compute Instance service provides APIs of the following types:
 
 * [Availability Zone API](#api_2)
