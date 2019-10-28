@@ -1,5 +1,7 @@
 ## Compute > Instance > API向导
 
+API目前仅限韩国地区使用。
+
 TOAST Compute Instance服务提供以下类型的API。
 
 * [可用区API](#api_2)
