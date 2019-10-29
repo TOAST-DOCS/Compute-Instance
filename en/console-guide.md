@@ -314,3 +314,27 @@ Example 1 - Setting external communication for particular interfaces only
 
   $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
   ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
+## Appendix 3. Change of System Locale 
+
+You can change system locale  for TOAST Cloud on Windows as follows. 
+
+* Go to **Windows Key > Control Panel > Clock and Country**.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* Select the **Country or Region** item. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* On the **Administrative Option** tab, click **Change System Locale**.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* Select a system locale to change. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* Restart the system to apply the change. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
