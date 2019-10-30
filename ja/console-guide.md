@@ -319,8 +319,31 @@ TOASTクラウドWindowsでルーティングを変更する方法は次のと�
   $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
   ![イメージ1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
+## 付録3. システムロケールの変更
 
-## 付録3. ハイパーバイザメンテナンスのためのインスタンス再起動ガイド
+TOASTクラウドのWindowsで、システムロケールを変更する方法は次の通りです。
+
+* **スタート > コントロールパネル > 時計、言語、および地域**を選択します。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* **地域と言語**を選択します。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* **管理**タブで**システムロケール変更**をクリックします。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* 変更するシステムロケールを選択します。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* 適用するにはシステムを再起動します。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
+## 付録4. ハイパーバイザメンテナンスのためのインスタンス再起動ガイド
 
 インスタンスを再起動するには、コンソールでインスタンス名の横に作成された**!再起動** ボタンを使用する必要があります。
 `コンソールにあるインスタンス再起動またはOSの再起動機能では、インスタンスが別のハイパーバイザに移動しません。`

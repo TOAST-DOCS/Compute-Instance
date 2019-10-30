@@ -318,27 +318,27 @@ Case 3 - 특정 경로 제거
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
 
-## 부록 3. System Locale 변경
+## 부록 3. 시스템 로캘 변경
 
-TOAST Cloud Windows에서 System Locale을 변경하는 방법은 다음과 같은 방법 등이 있습니다.
+TOAST 클라우드 Windows에서 시스템 로캘을 변경하는 방법은 다음과 같습니다.
 
-* START -> Control Panel -> Clock, Language, and Region
+* **Windows 키 > 제어판 > 시계 및 국가**를 선택합니다.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
-* Region을 선택 합니다.
+* **국가 또는 지역**을 선택합니다.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
-* Administrative 탭 이동-> Change system Locale...을 선택 합니다.
+* **관리자 옵션** 탭에서 **시스템 로캘 변경**을 클릭합니다.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
-* 변경하려는 System Locale을 선택 합니다.
+* 변경할 시스템 로캘을 선택합니다.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
-* 적용을 위해 시스템을 재시작 합니다.
+* 적용하려면 시스템을 재시작합니다.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
