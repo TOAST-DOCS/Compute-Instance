@@ -338,3 +338,41 @@ You can change system locale  for TOAST Cloud on Windows as follows.
 * Restart the system to apply the change. 
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
+## Appendix 4. Guide for Restarting Instances for Hypervisor Maintenance 
+
+TOAST updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
+Instances that are running on a target hypervisor for maintenance must be restarted and migrated to a hypervisor which is completed with maintenance. 
+
+To restart an instance, use the **! Restart** button which is created next to each instance name on console.  `Rebooting instances on console or restarting an operating system does not lead into migrating instances to another hypervisor.`
+Follow the guide as below to use the restarting feature on console. 
+
+Go to the project where your instance specified as maintenance target is located.  
+
+**1. Check if your instance is the target of maintenance.**
+
+Any instance that has the **! Restart** button before its name requires maintenance. 
+Put the mouse cursor on the  **! Restart** button to find maintenance schedule details. 
+![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_ko_1.png)    
+
+**2. Disable or close application programs that are running on the target instance for maintenance.**
+
+Any application programs running on target instances for maintenance must be disabled or closed so as not to impact the service. 
+
+If impact on service is inevitable, please contact TOAST Customer Center and be guided with appropriate measures. 
+
+**3. Click the [! Restart] button created next to the name of the target instance.**
+
+![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_ko_2.png)
+
+**4. Click [OK] onto the window asking of restarting instance. **
+
+![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_ko_3.png)
+
+**5. Wait until the instance status turns green and the [! Restart] button disappers.** 
+
+If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
+![Instance Maintenance Image 4](http://static.toastoven.net/prod_instance/instance_p_migration_ko_4.png)
+
+The instance becomes inoperable while restarting is underway. 
+Unless restarting instance is not normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.
