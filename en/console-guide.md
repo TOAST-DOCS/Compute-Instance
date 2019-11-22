@@ -365,14 +365,14 @@ If impact on service is inevitable, please contact TOAST Customer Center and be 
 
 ![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_ko_2.png)
 
-**4. Click [OK] onto the window asking of restarting instance. **
+**4. Click [OK] onto the window asking of restarting instance.**
 
 ![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_ko_3.png)
 
-**5. Wait until the instance status turns green and the [! Restart] button disappers.** 
+**5. Wait until the instance status turns green and the [! Restart] button disappers.**
 
 If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
 ![Instance Maintenance Image 4](http://static.toastoven.net/prod_instance/instance_p_migration_ko_4.png)
 
 The instance becomes inoperable while restarting is underway. 
-Unless restarting instance is not normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.
+Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.  
