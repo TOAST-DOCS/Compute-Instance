@@ -314,3 +314,27 @@ TOAST云Windows图像默认提供英文版。默认使用其他语言的方法�
 
   $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
   ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
+## 附录 3.更改系统Locale
+
+在TOAST云Windows中更改系统Locale的方法如下。
+
+* 选择**Windows键 > 控制面板 > 时间及国家**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* 选择**国家或地区**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* 在**管理员选项**选项卡中单击**更改系统Locale**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* 选择要更改的系统Locale。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* 若欲应用，重启系统。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
