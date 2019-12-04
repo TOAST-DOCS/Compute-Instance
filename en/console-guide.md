@@ -353,7 +353,7 @@ Go to the project where your instance specified as maintenance target is located
 
 Any instance that has the **! Restart** button before its name requires maintenance. 
 Put the mouse cursor on the  **! Restart** button to find maintenance schedule details. 
-![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_ko_1.png)    
+![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_en_1.png)    
 
 **2. Disable or close application programs that are running on the target instance for maintenance.**
 
@@ -363,16 +363,16 @@ If impact on service is inevitable, please contact TOAST Customer Center and be 
 
 **3. Click the [! Restart] button created next to the name of the target instance.**
 
-![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_ko_2.png)
+![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_en_2.png)
 
 **4. Click [OK] onto the window asking of restarting instance.**
 
-![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_ko_3.png)
+![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_en_3.png)
 
 **5. Wait until the instance status turns green and the [! Restart] button disappers.**
 
 If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
-![Instance Maintenance Image 4](http://static.toastoven.net/prod_instance/instance_p_migration_ko_4.png)
+![Instance Maintenance Image 4](http://static.toastoven.net/prod_instance/instance_p_migration_en_4.png)
 
 The instance becomes inoperable while restarting is underway. 
 Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.  
