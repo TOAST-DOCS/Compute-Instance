@@ -7,7 +7,7 @@ TOAST Compute Instanceサービスは次のAPIを提供します。
 * [アベイラビリティーゾーンAPI](#api_2)
 * [インスタンスAPI](#api_3)
 * [インスタンス追加機能API](#api_4)
-* [インスタンス仕様API](#api_5)
+* [インスタンスタイプAPI](#api_5)
 * [キーペアAPI](#api_6)
 
 ## 事前準備
@@ -230,7 +230,7 @@ X-Auth-Token： {tokenId}
 | POWERING_OFF | インスタンス終了中 |
 | REBOOTING | インスタンス再起動中 |
 | DELETING | インスタンス削除中 |
-| RESIZING | インスタンス仕様(flavor)変更作業中 |
+| RESIZING | インスタンスタイプ(flavor)変更作業中 |
 | MIGRATING | インスタンスマイグレーション作業中 |
 | ERROR | エラー状態 |
 
@@ -357,8 +357,8 @@ X-Auth-Token： {tokenId}
 | version | Body | Integer | IPバージョン(IPv4のみサポート) |
 | Floating IP Address | Body | String | NICに割り当てられたFloating IPアドレス |
 | Zone Name | Body | String | アベイラビリティーゾーン名 |
-| Flavor ID | Body | String | インスタンス仕様ID |
-| Flavor Name | Body | String | インスタンス仕様名 |
+| Flavor ID | Body | String | インスタンスタイプ(flavor) ID |
+| Flavor Name | Body | String | インスタンスタイプ(flavor) 名 |
 | Flavor CPU | Body | Integer | CPU個数 |
 | Flavor RAM | Body | Integer | RAMサイズ(MB) |
 | Status | Body | String | インスタンスの状態 |
@@ -425,7 +425,7 @@ Content-Type： application/json;charset=UTF-8
 |--|--|--|--|--|
 | Instance Name | Body | String | - | インスタンス名(Linuxの場合、最大20文字、Windowsの場合は最大12文字、英数字、'-'、'.'のみ可能) |
 | Image ID | Body | String | - | インスタンスにインストールするイメージID |
-| Flavor ID | Body | String | - | インスタンス仕様ID |
+| Flavor ID | Body | String | - | インスタンスタイプ(flavor) ID |
 | Network ID | Body | String | O | インスタンスが接続するネットワークID |
 | Subnet ID | Body | String | O | インスタンスが接続されるサブネットID<br>ネットワークIDまたはサブネットIDのどちらかを指定する必要あります。 |
 | Availability Zone | Body | String | - | インスタンスが生成されるアベイラビリティーゾーン名 |
@@ -562,7 +562,7 @@ X-Auth-Token： {tokenId}
 次のようなインスタンス制御および付加機能を提供します。
 
 - インスタンス起動、停止、再起動
-- インスタンス仕様変更(resize)
+- インスタンスタイプ変更(resize)
 - インスタンスイメージ生成
 - Floating IP接続、解除
 - セキュリティーグループ登録、解除
@@ -668,8 +668,8 @@ Content-Type： application/json;charset=UTF-8
 }
 ```
 
-### インスタンス仕様変更
-インスタンスの仕様を変更します。
+### インスタンスタイプ変更
+インスタンスタイプを変更します。
 #### Request Body
 ```json
 {
@@ -682,7 +682,7 @@ Content-Type： application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 変更するインスタンス仕様ID |
+|  Flavor ID | body | String | - | 変更するインスタンスタイプ(flavor) ID |
 
 #### Response Body
 ```json
@@ -852,9 +852,9 @@ Floating IPをインスタンスに接続します。
 }
 ```
 
-## インスタンス仕様API
-### インスタンス仕様リスト照会
-インスタンス仕様のリストおよび詳細情報を照会します。
+## インスタンスタイプAPI
+### インスタンスタイプのリスト照会
+インスタンスタイプのリストおよび詳細情報を照会します。
 
 #### Method、URL
 ```
@@ -895,15 +895,15 @@ X-Auth-Token： {tokenID}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Disabled | Body | Boolean | インスタンス仕様非活性化の可否。 |
+| Disabled | Body | Boolean | インスタンスタイプの無効化の可否。 |
 | Ephermeral | Body | Integer | 臨時ディスクサイズ(GB)。|
-| Type | Body | String | インスタンス仕様最適化特性に応じて区分されるType値。<br>"general、"compute"、"memory"のどれか。 |
+| Type | Body | String | インスタンスタイプが最適化される特性に応じての区分。<br>"general、"compute"、"memory"のいずれか。 |
 | Volume Size | Body | Integer | インスタンス生成時、基本ディスクデバイスに作られるディスクサイズ(GB).<br>基本ディスクが固定サイズで作られるu2仕様の場合にのみこの値が渡されます。 |
 | Max Volume Size | Body | Integer | 基本ディスクデバイスで作成できる最大ディスクサイズ(GB). |
-| Flavor ID | Body | String | インスタンス仕様ID。 |
-| Flavor Name | Body | String | インスタンス仕様の名前。 |
-| Is Public | Body | Boolean | 共用インスタンス仕様かどうか。 |
-| RAM | Body | Integer | インスタンス仕様が持つRAM総量(MB)。 |
+| Flavor ID | Body | String | インスタンスタイプ(flavor)ID。 |
+| Flavor Name | Body | String | インスタンスタイプの名前。 |
+| Is Public | Body | Boolean | 共用インスタンスタイプかどうか。 |
+| RAM | Body | Integer | インスタンスタイプが持つRAM総量(MB)。 |
 | VCPUs | Body | Integer | インスタンスに割り当てられる仮想CPUコア個数。 |
 
 ## キーペアAPI
@@ -948,7 +948,7 @@ X-Auth-Token： {tokenId}
 |--|--|--|--|
 | Keypair Name | Body | String | キーペアの名前。 |
 | Public Key Value | Body | String | キーペアの公開鍵の値。 |
-| Fingerprint Value | Body | String | フィンガープリント(fingerprint)値。 |
+| Fingerprint Value | Body | String | フィンガープリント(fingerprint)の値。 |
 | Created At | Body | DateTime | キーペア生成時間。 "Keypair Name"を指定した1件の照会の時にのみ表示されます。 |
 
 ### キーペア生成とアップロード
@@ -1004,9 +1004,9 @@ Content-Type： application/json;charset=UTF-8
 | Keypair Name | Body | String | キーペアの名前 |
 | Public Key Value | Body | String | キーペアの公開鍵 |
 | Private Key Value | Body | String | キーペアの秘密鍵。キーペアアップロード(Requestに"publickey"項目を含む)の場合は省略されます。|
-| Fingerprint value | Body | String | Fingerprintの値 |
+| Fingerprint value | Body | String | フィンガープリント(fingerprint)の値 |
 
-生成されたPrivate Key Valueは全文を.pemファイルで保存した後、該当のKeypairを使用するように設定されたインスタンスにアクセスする時に使用できます。 **生成されたPrivate Key Valueは1度しか照会できないため**紛失または削除されないよう、しっかりと保管し、流出防止のためになるべく補助記憶装置(USBフラッシュメモリ)で管理するのが良いでしょう。
+生成されたPrivate Key Valueは全文を.pemファイルで保存した後、該当のキーペアが設定されたインスタンスへのアクセス時に使用できます。 **生成されたPrivate Key Valueは1度しか照会できないため**紛失または削除されないよう、しっかりと保管し、流出防止のためになるべく補助記憶装置(USBフラッシュメモリ)で管理するのが良いでしょう。
 
 ### キーペア削除
 指定したキーペアを削除します。
