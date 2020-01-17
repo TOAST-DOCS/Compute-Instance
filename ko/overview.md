@@ -77,6 +77,10 @@ TOAST는 물리 하드웨어 문제로 생기는 장애에 대비하기 위해 �
 
 ## 인스턴스 접속 방법
 
+### 동영상 가이드
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3-ab3H-GbHQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Linux 인스턴스 접속 방법
 
 Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 TOAST 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
