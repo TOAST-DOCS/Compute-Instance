@@ -20,13 +20,13 @@ Unless specified, the availability zone shall be set randomly. Depending on the 
 
 > [Note] VPC resources are available in all availability zones.
 
-For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](/Compute/Instance/en/overview/#_4).
+For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](./overview/#availability-zone).
 
 ### Flavors 
 
 Flavors can be selected depending on virtual hardware performance. Nevertheless, such selection may be limited depending on the performance that image requires. For more details, refer to [Overview of Instances](./overview). 
 
-Instance flavors may be changed in the TOAST console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#_14)
+Instance flavors may be changed in the TOAST console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#change-instance-flavors)
 
 > [Caution] Default instance disk cannot be changed with Change of Instance Flavors. 
 
@@ -61,7 +61,7 @@ When many instances are created for a random availability zone, each instance sh
 
 ### Key Pair
 
-Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#_16) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#_17) for Mac and Linux users. 
+Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users. 
 
 ### Security Group
 
@@ -200,7 +200,7 @@ Click **Save private key** of **Actions** and save the private key. Try saving p
 > [Caution]
 To set automatic login to an instance, encrypted phrases should not be used. When encrypted phrases are in use, directly enter password to a private key to login. 
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#_9). 
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#how-to-access-instances). 
 
 Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
@@ -219,7 +219,7 @@ Passwords for key pair may or may not be set, although it is recommended to set 
 
 Copy the whole content to **Open Key** of **Import Key Pairs:** to register a key pair. 
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#_9).   
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#how-to-access-instances).   
 
 Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
@@ -338,3 +338,38 @@ You can change system locale  for TOAST Cloud on Windows as follows.
 * Restart the system to apply the change. 
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
+## Appendix 4. Guide for Restarting Instances for Hypervisor Maintenance 
+TOAST updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
+Instances that are running on a target hypervisor for maintenance must be restarted and migrated to a hypervisor which is completed with maintenance. 
+
+To restart an instance, use the **! Restart** button which is created next to each instance name on console.  `Rebooting instances on console or restarting an operating system does not lead into migrating instances to another hypervisor.`
+Follow the guide as below to use the restarting feature on console. 
+
+Go to the project where your instance specified as maintenance target is located.  
+
+**1. Check if your instance is the target of maintenance.**
+
+Any instance that has the **! Restart** button before its name requires maintenance. 
+Put the mouse cursor on the  **! Restart** button to find maintenance schedule details. 
+![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_en_1.png)    
+
+**2. Disable or close application programs that are running on the target instance for maintenance.**
+
+Any application programs running on target instances for maintenance must be disabled or closed so as not to impact the service. 
+If impact on service is inevitable, please contact TOAST Customer Center and be guided with appropriate measures. 
+
+**3. Click the [! Restart] button created next to the name of the target instance.**
+
+![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_en_2.png)
+
+**4. Click [OK] onto the window asking of restarting instance.**
+
+![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_en_3.png)
+
+**5. Wait until the instance status turns green and the [! Restart] button disappers.**
+
+If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
+
+The instance becomes inoperable while restarting is underway. 
+Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.  

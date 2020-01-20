@@ -13,7 +13,7 @@ An instance is composed of the following:
 - **Security Group**: Security setting for an instance network 
 - **Network**: Virtual network where an instance is to be connected
 
-Flavors and method of use change depending on the above information. Settings, except image and availability area, may change after an instance is created. Some flavors cannot be changed once an instance is created. For more details on change of instance flavors, refer to [Change of Instance Flavors of User Guide on Console](./console-guide/#_14).
+Flavors and method of use change depending on the above information. Settings, except image and availability area, may change after an instance is created. Some flavors cannot be changed once an instance is created. For more details on change of instance flavors, refer to [Change of Instance Flavors of User Guide on Console](./console-guide/#change-instance-flavors).
 
 ### Image 
 
@@ -47,9 +47,9 @@ Following features exist between different availability zones.
 
 ### Key Pair 
 
-Key pair is a pair of a [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based open SSH key and a private key. To access an instance created in TOAST, key pair is required, instead of ID/PW authentication based on keyboard strokes which is vulnerable to security attacks. Using the private key of a key pair, user encodes and sends login information to an instance to get access authentication, and then safely access the instance. On how to access instances using key pair, refer to [How to Access Instances](#_9). 
+Key pair is a pair of a [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based open SSH key and a private key. To access an instance created in TOAST, key pair is required, instead of ID/PW authentication based on keyboard strokes which is vulnerable to security attacks. Using the private key of a key pair, user encodes and sends login information to an instance to get access authentication, and then safely access the instance. On how to access instances using key pair, refer to [How to Access Instances](#how-to-access-instances). 
 
-Key pairs can be newly created in the TOAST console when an instance is created, or may be registered as made by customer. For how to register key pairs, refer to [Getting Key Pair from Console Guide](./console-guide/#_15). 
+Key pairs can be newly created in the TOAST console when an instance is created, or may be registered as made by customer. For how to register key pairs, refer to [Getting Key Pair from Console Guide](./console-guide/#key-pair_1). 
 
 > [Caution]
 > When a key pair is newly created, its private key is downloaded. As a private key is not issued no more than once, be sure to store downloaded private keys in a safe disk or USB drive. When a private key is exposed, anyone can access instances, so a cautious approach is required.  
