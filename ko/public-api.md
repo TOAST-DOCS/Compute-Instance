@@ -21,49 +21,34 @@ GET /
 
 ```json
 {
-  "versions": {
-    "values": [
-      {
-        "status": "stable",
-        "updated": "2015-03-30T00:00:00Z",
-        "media-types": [
-          {
-            "base": "application/json",
-            "type": "application/vnd.openstack.identity-v3+json"
-          }
-        ],
-        "id": "v3.4",
-        "links": [
-          {
-            "href": "https://api-identity.cloud.toast.com/v3/",
-            "rel": "self"
-          }
-        ]
-      },
-      {
-        "status": "stable",
-        "updated": "2014-04-17T00:00:00Z",
-        "media-types": [
-          {
-            "base": "application/json",
-            "type": "application/vnd.openstack.identity-v2.0+json"
-          }
-        ],
-        "id": "v2.0",
-        "links": [
-          {
-            "href": "https://api-identity.cloud.toast.com/v2.0/",
-            "rel": "self"
-          },
-          {
-            "href": "http://docs.openstack.org/",
-            "type": "text/html",
-            "rel": "describedby"
-          }
-        ]
-      }
-    ]
-  }
+  "versions": [
+    {
+      "status": "SUPPORTED",
+      "updated": "2011-01-21T11:33:21Z",
+      "links": [
+        {
+          "href": "https://kr1-api-compute.cloud.toast.com/v2/",
+          "rel": "self"
+        }
+      ],
+      "min_version": "",
+      "version": "",
+      "id": "v2.0"
+    },
+    {
+      "status": "CURRENT",
+      "updated": "2013-07-23T11:33:21Z",
+      "links": [
+        {
+          "href": "https://kr1-api-compute.cloud.toast.com/v2.1/",
+          "rel": "self"
+        }
+      ],
+      "min_version": "2.1",
+      "version": "2.3",
+      "id": "v2.1"
+    }
+  ]
 }
 ```
 
