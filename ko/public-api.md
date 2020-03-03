@@ -1,4 +1,4 @@
-## Compute API
+## Compute > Instance > Public API 가이드
 
 ## API 버전
 
