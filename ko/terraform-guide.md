@@ -4,7 +4,7 @@ TOAST 리소스는 TerraForm을 통해 생성, 추가, 변경, 삭제할 수 있
 
 다음은 TOAST가 지원하는 TerraForm 기능 목록입니다.
 
-* Management TOAST resource
+* 리소스 관리 
     * Compute
         * openstack_compute_instance_v2
         * openstack_compute_volume_attach_v2
@@ -20,7 +20,7 @@ TOAST 리소스는 TerraForm을 통해 생성, 추가, 변경, 삭제할 수 있
     * Storage
         * openstack_blockstorage_volume_v2
 
-* Reference TOAST resource data
+* 리소스 정보 조회
     * openstack_images_image_v2
     * openstack_blockstorage_volume_v2
     * openstack_compute_flavor_v2
@@ -47,24 +47,17 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
     * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
-Terraform은 주요 공급자들의 거의 모든 솔루션을 지원합니다.
-
-* AWS, BareMetal, Bitbucket, Chef, Cloudflare, Docker, GitHub, Google Cloud, Grafana, InfluxDB, Heroku, Microsoft Azure, MySQL, OpenStack, PostgreSQL 등
-
 ## Terraform 설치
 [Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
 
 다음은 설치 예시입니다.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/0.11.1/terraform_0.11.1_linux_amd64.zip
-$ unzip terraform_0.11.1_linux_amd64.zip
+$ wget https://releases.hashicorp.com/terraform/0.11.1/terraform_0.12.24_linux_amd64.zip
+$ unzip terraform_0.12.24_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.10.5
-
-Your version of Terraform is out of date! The latest version
-is 0.11.1. You can update by downloading from www.terraform.io
+Terraform v0.12.24
 ```
 
 > [참고]
@@ -122,7 +115,7 @@ provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
   tenant_id   = "75a4c0a12fd84edeb68965d320d17129"
   password    = "kGzBDD9psmgeH4ji"
-  auth_url    = "https://api-gw.cloud.toast.com/terraform/identity/v2.0"
+  auth_url    = "https://api-identity.infrastructure.cloud.toast.com/v2.0"
   region      = "KR1"
 }
 ```
@@ -135,6 +128,7 @@ provider "openstack" {
     * TOAST 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 테넌트 ID를 확인할 수 있습니다.
 * **password**
     * **API Endpoint 설정** 창에서 저장한 **API 비밀번호**를 사용합니다.
+    * API 비밀번호 설정 방법은 **API 가이드**의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
 * **auth_url**
     * Terraform을 사용하기 위한 auth_url 
     * TOAST 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 신원 서비스(identity) URL을 확인할 수 있습니다.
@@ -145,9 +139,6 @@ provider "openstack" {
     * `JP1`: 일본(도쿄) 리전
     * `US1`: 미국(캘리포니아) 리전
     
-> [참고]
-> API 비밀번호 설정 방법은 **API 가이드**의 [토큰 API](/Compute/Instance/ko/api-guide/#api) 항목을 참고합니다.
-
 구성한 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
 ```
