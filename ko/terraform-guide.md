@@ -573,15 +573,43 @@ resource "openstack_blockstorage_volume_v2" "volume_05" {
 ```
 | 이름    | 타입 | 필수  | 설명       |
 | ------ | --- |---- | --------- |
-| name | String | - | 생성할 블록 스토리지 이름 |
+| name | String | O | 생성할 블록 스토리지 이름 |
 | description | String | - | 블록 스토리지 설명 |
 | size | Integer | - | 생성할 블록 스토리지 크기(GB) |
 | source_vol_id | String | - | 복제할 블록 스토리지 ID |
-| availability_zone | String | - | 생성할 블록 스토리지의 가용성 영역 |
-| volume_type | String | O | 블록 스토리지 타입 (General HDD, General SSD) |
+| availability_zone | String | - | 생성할 블록 스토리지의 가용성 영역, 값이 존재 하지 않을 경우 임의의 가용성 영역 |
+| volume_type | String | - | 블록 스토리지 타입<br>`General HDD`: HDD 블록 스토리지(기본값)<br>`General SSD`: SSD 블록 스토리지 |
 
 >[참고]
 >* availability_zone은 TOAST 콘솔 Storage > Block Storage > 관리의 블록 스토리지 생성 버튼을 눌러서 표시되는 가용성 영역에서 확인할 수 있습니다.
+
+### 블록 스토리지 불러오기
+Terraform으로 생성하지 않은 블록 스토리지도 Terraform으로 불러와 관리 할 수 있습니다.
+
+1. `.tf` 파일에 불러올 블록스토리지 정보를 작성합니다.
+```
+$ vi block_storage.tf
+
+resource "openstack_blockstorage_volume_v2" "volume_06" {
+  name = "volume_06"
+  size = 10
+}
+``` 
+2. `terraform import openstack_blockstorage_volume_v2.[name] [bloack storage id]` 명령을 통해 블록 스토리지를 불러옵니다.  
+```
+$ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
+
+openstack_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
+openstack_blockstorage_volume_v2.volume_06: Import prepared!
+  Prepared openstack_blockstorage_volume_v2 for import
+openstack_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
 
 ## 네트워크 관리 
 ### 로드 밸런서 생성
