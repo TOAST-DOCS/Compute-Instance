@@ -17,8 +17,8 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
+| minDisk | Query | Integer | - | 최소 디스크 크기 (GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
+| minRam | Query | Integer | - | 최소 RAM 크기 (MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
 | limit | Query | Integer | - | 타입 목록 갯수<br>지정된 갯수 만큼의 타입 목록을 반환 |
 | marker | Query | UUID | - | 목록의 첫번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 갯수 만큼의 인스턴스 목록을 반환 |
 
@@ -90,8 +90,8 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
+| minDisk | Query | Integer | - | 최소 디스크 크기 (GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
+| minRam | Query | Integer | - | 최소 RAM 크기 (MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
 | limit | Query | Integer | - | 타입 목록 갯수<br>지정된 갯수 만큼의 타입 목록을 반환 |
 | marker | Query | UUID | - | 목록의 첫번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 갯수 만큼의 인스턴스 목록을 반환 |
 
@@ -841,6 +841,7 @@ X-Auth-Token: {tokenId}
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
 | server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 갯수만큼 NIC이 추가됨. 네트워크 ID, 포트 ID, 고정 IP 중 하나만 지정. |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
+| server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
 | server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID |
 | server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP |
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용. 단, Windows 이미지의 경우 15자 이하이어야 함 |
@@ -849,6 +850,7 @@ X-Auth-Token: {tokenId}
 | server.personality.path | Body | String | - | 인스턴스에 추가할 파일 경로 |
 | server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열. 인코딩 전 기준으로 65535자까지 허용. |
 | server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정하여여 함.** |
+| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함.** |
 | server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입. TOAST는 `image`만 지원.|
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치. 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우.<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우. |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제시 볼륨 처리 여부. 기본값은 `false`.<br>`true`이면 삭제, `false`이면 유지 |
@@ -898,9 +900,7 @@ X-Auth-Token: {tokenId}
 | server.OS-DCF:diskConfig | Body | Enum | `MANUAL`로 설정됨. |
 | server.id | Body | UUID | 생성한 인스턴스의 ID |
 
-#### 예시
-
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
