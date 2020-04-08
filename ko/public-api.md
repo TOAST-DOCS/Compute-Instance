@@ -1385,10 +1385,6 @@ X-Auth-Token: {tokenId}
 |--|--|--|--|
 | Location | Header | String | 생성한 이미지 URL |
 
-
-</p>
-</details>
-
 ---
 
 ### 보안 그룹 추가
