@@ -67,9 +67,9 @@ Terraform v0.12.24
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
 
-```
-$ vi provider.tf
+공급자 파일 이름은 임의로 설정 가능하며, 이 예제에서는 `provider.tf`를 사용합니다.
 
+```
 # Configure the OpenStack Provider
 provider "openstack" {
   user_name   = "terraform-guide@nhnent.com"
@@ -98,6 +98,8 @@ provider "openstack" {
 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
 ```
+$ ls
+provider.tf
 $ terraform init
 ```
 
@@ -132,6 +134,9 @@ $ terraform apply
 아래는 `instance.tf` 파일에 인스턴스를 생성하는 리소스를 정의한 tf 파일 예제입니다.
 
 ```
+$ ls
+instance.tf provider.tf
+$ cat instance.tf
 resource "openstack_compute_instance_v2" "terraform-instance-01" {
   name      = "terraform-instance-01"
   region    = "KR1"
@@ -274,7 +279,7 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔을 통해 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다.
 
-Data sources는 `{data sources 모듈}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `openstack_images_image_v2.ubuntu_1804_20200218`로 가져온 이미지 정보를 참조합니다.
+Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `openstack_images_image_v2.ubuntu_1804_20200218`로 가져온 이미지 정보를 참조합니다.
 
 ```
 data "openstack_images_image_v2" "ubuntu_1804_20200218" {
