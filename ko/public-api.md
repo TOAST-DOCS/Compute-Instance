@@ -8,6 +8,7 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 |---|---|---|
 | compute | 한국(판교) 리전<br>한국(평촌) 리전<br>일본 리전 | https://kr1-api-compute.infrastructure.cloud.toast.com<br>https://kr2-api-compute.infrastructure.cloud.toast.com<br>https://jp1-api-compute.infrastructure.cloud.toast.com |
 
+API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
 
 ## 인스턴스 타입
 
@@ -208,7 +209,6 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | availabilityZoneInfo | Body | Object | 가용성 영역 정보 객체 |
-| availabilityZoneInfo.hosts | Body | - | 가용성 영역에 속한 호스트 정보 객체<br>항상 null로 표시 |
 | availabilityZoneInfo.zoneName | Body | String | 가용성 영역 이름 |
 | availabilityZoneInfo.zoneState | Body | Object | 가용성 영역 상태 정보 객체 |
 | availabilityZoneInfo.available | Body | Object | 가용성 영역 상태 |
@@ -223,14 +223,12 @@ X-Auth-Token: {tokenId}
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-a"
       },
       {
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-b"
       }
     ]
@@ -396,7 +394,7 @@ X-Auth-Token: {tokenId}
         "fingerprint": "SHA256:+EZoD ... /DKiGnY4zf5tYrcix0",
         "name": "keypair",
         "public_key": "ssh-rsa ... Generated-by-Nova",
-        "user_id": "fake"
+        "user_id": "436f727b7c9142f896ddd56be591dd7f"
     }
 }
 ```
@@ -479,6 +477,7 @@ X-Auth-Token: {tokenId}
 | servers | Body | Object | 인스턴스 목록 객체 |
 | id | Body | UUID | 인스턴스 UUID |
 | links | body | Object | 인스턴스 경로 객체 |
+| name | body | String | 인스턴스 이름 |
 
 <details><summary>예시</summary>
 <p>
@@ -824,7 +823,7 @@ X-Auth-Token: {tokenId}
 
 Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
 
-* Windows 인스턴스는 2GB 이상의 RAM이 필요합니다. RAM 2GB 이상인 인스턴스 타입을 사용합니다.
+* RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
 * 50GB 이상의 기본 디스크가 필요합니다.
 * U2 타입은 Windows 이미지를 사용하실 수 없습니다.
 
@@ -1035,7 +1034,7 @@ X-Auth-Token: {tokenId}
 {
     "volumeAttachments": [
         {
-            "device": "/dev/vdc",
+            "device": "/dev/vda",
             "id": "227cc671-f30b-4488-96fd-7d0bf13648d8",
             "serverId": "4b293d31-ebd5-4a7f-be03-874b90021e54",
             "volumeId": "227cc671-f30b-4488-96fd-7d0bf13648d8"
@@ -1332,7 +1331,7 @@ X-Auth-Token: {tokenId}
 ```json
 {
   "resize" : {
-    "flavorRef": "UUID"
+    "flavorRef": "b5f1c148-732c-417d-9d1b-1dffca105dbe"
   }
 }
 ```
