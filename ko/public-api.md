@@ -867,7 +867,7 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0` 이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클 수록 부팅 순서는 낮아짐. |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최솟값.<br>기본값은 1. |
-| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 1, 최대값은 10. |
+| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 min_count, 최대값은 10. |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
 
 <details><summary>예시</summary>
