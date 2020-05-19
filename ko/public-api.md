@@ -1328,7 +1328,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청 |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| resize.OS-DCF:diskConfig | Body | Enum | O | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 
 <details><summary>예시</summary>
 <p>
