@@ -17,10 +17,10 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기 (GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기 (MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 갯수<br>지정된 갯수 만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 갯수 만큼의 인스턴스 목록을 반환 |
+| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
+| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
+| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수만큼의 타입 목록을 반환 |
+| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수만큼의 인스턴스 목록을 반환 |
 
 #### 응답
 
@@ -90,10 +90,10 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기 (GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기 (MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 갯수<br>지정된 갯수 만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 갯수 만큼의 인스턴스 목록을 반환 |
+| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
+| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
+| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수 만큼의 타입 목록을 반환 |
+| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
 
 #### 응답
 
@@ -103,15 +103,15 @@ X-Auth-Token: {tokenId}
 | flavors.id | Body | UUID | 인스턴스 타입 ID |
 | flavors.links | Body | Object | 인스턴스 타입 경로 객체 |
 | flavors.name | Body | String | 인스턴스 타입 이름 |
-| flavors.ram | Body | Integer | 메모리 크기 (MB) |
+| flavors.ram | Body | Integer | 메모리 크기(MB) |
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 활성화 여부 |
-| flavors.vcpus | Body | Integer | vCPU 갯수 |
+| flavors.vcpus | Body | Integer | vCPU 개수 |
 | flavors.extra_specs | Body | Object | 추가 사양 객체 |
-| flavors.swap | Body | Integer | 스왑 영역 크기 (GB) |
+| flavors.swap | Body | Integer | 스와프 영역 크기(GB) |
 | flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부 |
 | flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
-| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기 (GB) |
-| flavors.disk | Body | Integer | 기본 디스크 크기 (GB) |
+| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기(GB) |
+| flavors.disk | Body | Integer | 기본 디스크 크기(GB) |
 
 <details><summary>예시</summary>
 <p>
@@ -373,7 +373,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|
 | keypair | Body | Object | 키페어 객체 |
 | keypair.public_key | Body | String | 공개키 |
-| keypair.private_key | Body | String | 비밀키. 새로운 키페어를 생성한 경우에 비밀키를 반환합니다. |
+| keypair.private_key | Body | String | 비밀키, 새로운 키페어를 생성한 경우에 비밀키를 반환합니다. |
 | keypair.user_id | Body | String | 키페어 소유주 ID |
 | keypair.name | Body | String | 키페어 이름 |
 | keypair.fingerprint | Body | String | 키페어 지문 |
@@ -429,16 +429,16 @@ X-Auth-Token: {tokenId}
 | `STOPPED`| 인스턴스가 종료된 경우 |
 | `DELETED`| 인스턴스가 삭제된 경우 |
 | `REBOOT`| 인스턴스를 재시작한 경우 |
-| `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우. 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작. |
-| `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우.<br>인스턴스가 종료되었다가 다시 시작된 상태. |
+| `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
+| `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 종료되었다가 다시 시작된 상태 |
 | `REVERT_RESIZE`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원 상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우.<br>TOAST에서는  이 경우 자동으로 `ACTIVE` 상태로 전이함. |
+| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>TOAST에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
 | `ERROR`| 직전 인스턴스에 취한 동작이 실패한 경우 |
-| `PAUSED`| 인스턴스가 일시정지된 경우. 일시정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨. |
+| `PAUSED`| 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
 | `REBUILD`| 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
 | `RESCUED`| 인스턴스를 복구 모드에서 실행 중 |
 | `SUSPENDED`| 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
-| `UNKNOWN`| 인스턴스의 상태를 알 수 없는 경우. `인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
+| `UNKNOWN`| 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
 
 ### 인스턴스 목록 보기
 
@@ -455,13 +455,13 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을 반환. `YYYY-MM-DDThh:mm:ss`의 형태. |
+| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을  `YYYY-MM-DDThh:mm:ss`의 형태. |
 | image | Query | UUID | - | 이미지 ID<br>지정된 이미지를 사용한 인스턴스 목록을 반환 |
 | flavor | Query | UUID | - | 인스턴스 타입 ID<br>지정된 타입을 사용한 인스턴스 목록을 반환 |
-| name | Query | String | - | 인스턴스 이름<br>지정된 이름을 가진 인스턴스 목록을 반환. 정규 표현식으로 질의 가능. |
+| name | Query | String | - | 인스턴스 이름<br>지정된 이름을 가진 인스턴스 목록을 반환, 정규 표현식으로 질의 가능 |
 | status | Query | Enum | - | 인스턴스 상태<br>지정된 상태를 가진 인스턴스 목록을 반환 |
-| limit | Query | Integer | - | 인스턴스 목록 갯수<br>지정된 갯수 만큼의 인스턴스 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫번째 인스턴스 UUID<br>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 갯수 만큼의 인스턴스 목록을 반환 |
+| limit | Query | Integer | - | 인스턴스 목록 개수<br>지정된 개수 만큼의 인스턴스 목록을 반환 |
+| marker | Query | UUID | - | 목록의 첫번째 인스턴스 UUID<br>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
 
 #### 응답
 
@@ -520,8 +520,8 @@ X-Auth-Token: {tokenId}
 | servers | body | Object | 인스턴스 목록 객체 |
 | status | body | Enum | 인스턴스 상태 |
 | servers.id | Body | UUID | 인스턴스 ID |
-| servers.name | Body | String | 인스턴스 이름. 최대 255자. |
-| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각. `YYYY-MM-DDThh:mm:ssZ` 형식. |
+| servers.name | Body | String | 인스턴스 이름, 최대 255자 |
+| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | servers.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
 | servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨. |
 | servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
@@ -546,7 +546,7 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
 | servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
+| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
@@ -675,10 +675,10 @@ X-Auth-Token: {tokenId}
 | server | body | Object | 인스턴스 객체 |
 | status | body | Enum | 인스턴스 상태 |
 | server.id | Body | UUID | 인스턴스 ID |
-| server.name | Body | String | 인스턴스 이름. 최대 255자. |
-| server.updated | Body | Datetime | 인스턴스 최종 수정 시각. `YYYY-MM-DDThh:mm:ssZ` 형식. |
+| server.name | Body | String | 인스턴스 이름, 최대 255자 |
+| server.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | server.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| server.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨. |
+| server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨 |
 | server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
 | server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
 | server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>TOAST는 IPv4만 지원 |
@@ -689,7 +689,7 @@ X-Auth-Token: {tokenId}
 | server.image | Body | Object | 인스턴스 이미지 객체 |
 | server.image.id | Body | UUID | 인스턴스 이미지 ID |
 | server.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알려줌 |
+| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알림 |
 | server.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
 | server.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
 | server.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
@@ -699,9 +699,9 @@ X-Auth-Token: {tokenId}
 | server.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
 | server.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
 | server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| server.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식 |
+| server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 설정 모드. `MANUAL` 또는 `AUTO` 중 하나. TOAST는 `MANUAL`를 사용 |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 설정 모드. `MANUAL` 또는 `AUTO` 중 하나로, TOAST는 `MANUAL`를 사용 |
 | server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
@@ -808,16 +808,16 @@ X-Auth-Token: {tokenId}
 
 인스턴스를 생성합니다.
 
-인스턴스 생성 API를 호출 후에 인스턴스 조회를 통해 인스턴스의 상태를 확인합니다.
+인스턴스 생성 API를 호출한 후에 인스턴스 조회를 통해 인스턴스 상태를 확인합니다.
 
 * 인스턴스의 상태가 **ACTIVE**가 되면 인스턴스가 정상적으로 생성 완료됩니다.
-* 인스턴스 상태가 **BUILDING**에서 오래 지속되거나 **ERROR**인 경우, 인스턴스 생성 매개 변수를 확인하고 다시 생성 시도합니다.
+* 인스턴스 상태가 **BUILDING**에서 오래 지속되거나 **ERROR**인 경우, 인스턴스 생성 매개 변수를 확인하고 다시 생성을 시도합니다.
 
 Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
 
 * Windows 인스턴스는 2GB 이상의 RAM이 필요합니다. RAM 2GB 이상인 인스턴스 타입을 사용합니다.
 * 50GB 이상의 기본 디스크가 필요합니다.
-* U2 타입은 Windows 이미지를 사용하실 수 없습니다.
+* U2 타입은 Windows 이미지를 사용할 수 없습니다.
 
 기본 디스크 크기는 Linux는 10GB, Windows는 50GB부터 1TB까지 지정할 수 있습니다.
 
@@ -839,22 +839,22 @@ X-Auth-Token: {tokenId}
 | server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨 |
 | server.imageRef | Body | String | O | 인스턴스를 생성할 때 사용할 이미지 ID |
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 갯수만큼 NIC이 추가됨. 네트워크 ID, 포트 ID, 고정 IP 중 하나만 지정. |
+| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 포트 ID, 고정 IP 중 하나만 지정 |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
 | server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
 | server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID |
 | server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP |
-| server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용. 단, Windows 이미지의 경우 15자 이하이어야 함 |
+| server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함 |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
 | server.personality | Body | Object | - | 인스턴스에 추가할 파일 정보 객체 |
 | server.personality.path | Body | String | - | 인스턴스에 추가할 파일 경로 |
-| server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열. 인코딩 전 기준으로 65535자까지 허용. |
-| server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정하여여 함.** |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함.** |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입. TOAST는 `image`만 지원.|
-| server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치. 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우.<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우. |
-| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제시 볼륨 처리 여부. 기본값은 `false`.<br>`true`이면 삭제, `false`이면 유지 |
-| server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0` 이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클 수록 부팅 순서는 낮아짐 |
+| server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열로, 인코딩 전 기준으로 65535자까지 허용 |
+| server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
+| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함** |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입으로, TOAST는 `image`만 지원|
+| server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
+| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
+| server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
 
 <details><summary>예시</summary>
@@ -897,7 +897,7 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름 |
-| server.OS-DCF:diskConfig | Body | Enum | `MANUAL`로 설정됨. |
+| server.OS-DCF:diskConfig | Body | Enum | `MANUAL`로 설정됨 |
 | server.id | Body | UUID | 생성한 인스턴스의 ID |
 
 <details><summary>예시</summary>
@@ -1006,8 +1006,8 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| limit | Query | Integer | - | 조회할 목록 갯수 |
-| offset | Query | Integer | - | 반환될 목록의 시작점<br>전체 목록 중 offset 번째 볼륨부터 반환 |
+| limit | Query | Integer | - | 조회할 목록 개수 |
+| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 offset번째 볼륨부터 반환 |
 
 #### 응답
 
@@ -1182,7 +1182,7 @@ TOAST는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니�
 
 ### 인스턴스 시작
 
-종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE** 로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF** 이어야 합니다.
+종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1216,7 +1216,7 @@ X-Auth-Token: {tokenId}
 
 ### 인스턴스 종료
 
-인스턴스를 종료하고 상태를 **SHUTOFF** 로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE** 또는 **ERROR** 이어야 합니다.
+인스턴스를 종료하고 상태를 **SHUTOFF**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE** 또는 **ERROR**여야 합니다.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1250,10 +1250,10 @@ X-Auth-Token: {tokenId}
 
 ### 인스턴스 재시작
 
-인스턴스를 재시작 합니다. 재시작 방식은 **SOFT** 와 **HARD** 로 나눌 수 있습니다.
+인스턴스를 재시작 합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
 
-* **SOFT** 방식: **"우아한 연결종료 (Graceful shutown)"**을 통해 인스턴스를 종료하고 재시작합니다. 인스턴스가 **ACTIVE** 상태이어야 합니다.
-* **HARD** 방식: 강제종료 후 인스턴스를 재시작합니다. 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작입니다. 인스턴스가 다음 상태일때만 강제종료할 수 있습니다.
+* **SOFT** 방식: **"우아한 연결 종료(Graceful shutdown)"**를 통해 인스턴스를 종료하고 재시작합니다. 인스턴스가 **ACTIVE** 상태여야 합니다.
+* **HARD** 방식: 강제 종료 후 인스턴스를 재시작합니다. 물리 서버의 전원을 끄고 다시 켜는 것과 동일한 동작입니다. 인스턴스가 다음 상태일 때만 강제로 종료할 수 있습니다.
     * **ACTIVE**
     * **ERROR**
     * **HARD_REBOOT**
@@ -1274,7 +1274,7 @@ X-Auth-Token: {tokenId}
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | reboot | Body | Object | O | 인스턴스 재부팅 요청 객체 |
-| reboot.type | Body | Enum | O | 재부팅 방식. **SOFT** 또는 **HARD** |
+| reboot.type | Body | Enum | O | 재부팅 방식, **SOFT** 또는 **HARD** |
 
 <details><summary>예시</summary>
 <p>
@@ -1297,7 +1297,7 @@ X-Auth-Token: {tokenId}
 
 ### 인스턴스 타입 변경
 
-인스턴스 타입을 변경합니다. 인스턴스가 **ACTIVE**이거나 **SHUTOFF** 상태일 때만 인스턴스 타입 변경이 가능합니다. 인스턴스의 상태가 **ACTIVE**인 경우에는 인스턴스 타입 변경 과정에서 인스턴스는 종료되고 다시 시작됩니다.
+인스턴스 타입을 변경합니다. 인스턴스가 **ACTIVE**이거나 **SHUTOFF** 상태일 때만 인스턴스 타입 변경할 수 있습니다. 인스턴스의 상태가 **ACTIVE**인 경우에는 인스턴스 타입 변경 과정에서 인스턴스는 종료되고 다시 시작됩니다.
 
 사용하는 이미지나 인스턴스 타입에 따라 변경할 수 있는 타입이 제한될 수 있습니다. 자세한 변경 제약 사항은 콘솔 사용자 가이드를 참고합니다.
 
@@ -1315,7 +1315,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청 |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. TOAST는 **MANUAL**를 사용 |
+| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식, TOAST는 **MANUAL**를 사용 |
 
 <details><summary>예시</summary>
 <p>
@@ -1340,9 +1340,9 @@ X-Auth-Token: {tokenId}
 
 인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 블록 스토리지 API를 참고합니다.
 
-인스턴스의 상태가 **ACTIVE**, **SHUTOFF**, **SUSPENDED**, **PAUSED** 일때만 이미지를 생성할 수 있습니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서 진행하는 것을 권장합니다.
+인스턴스의 상태가 **ACTIVE**, **SHUTOFF**, **SUSPENDED**, **PAUSED**일 때만 이미지를 생성할 수 있습니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서 진행하는 것을 권장합니다.
 
-이미지 생성이 성공하면 이미지 상태가 `active` 로 바뀝니다. 이미지 생성이 완료되는 것을 확인하기 위해서는 이미지 조회 API를 통해 지속적으로 상태를 확인합니다.
+이미지 생성이 성공하면 이미지 상태가 `active`로 바뀝니다. 이미지 생성이 완료되는 것을 확인하려면 이미지 조회 API를 통해 지속적으로 상태를 확인합니다.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1427,7 +1427,7 @@ X-Auth-Token: {tokenId}
 
 ### 보안 그룹 삭제
 
-인스턴스에서 보안 그룹을 제거합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 제거됩니다.
+인스턴스에서 보안 그룹을 삭제합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 삭제됩니다.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
