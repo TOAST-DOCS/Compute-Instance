@@ -600,7 +600,7 @@ resource "openstack_blockstorage_volume_v2" "volume_06" {
 }
 ```
 
-`terraform import openstack_blockstorage_volume_v2.{name} {bloack storage id}` 명령으로 블록 스토리지를 불러옵니다.
+`terraform import openstack_blockstorage_volume_v2.{name} {block storage id}` 명령으로 블록 스토리지를 불러옵니다.
 
 ```
 $ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
@@ -661,7 +661,7 @@ resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
 | floating_ip | String | O | 연결할 플로팅 IP |
 | instance_id | String | O | 플로팅 IP를 연결할 대상 인스턴스 UUID |
 | fixed_ip | String | - | 플로팅 IP를 연결할 대상의 고정 IP |
-| wait_until_associated | Boolean | - | `true`: 플로팅 IP를 연결될 때까지 대상 인스턴스를 폴링<br>`false`: 플로팅 IP를 연결될 때까지 대기하지 않음(본값) |
+| wait_until_associated | Boolean | - | `true`: 플로팅 IP를 연결될 때까지 대상 인스턴스를 폴링<br>`false`: 플로팅 IP를 연결될 때까지 대기하지 않음(기본값) |
 
 ### 네트워크 포트 생성
 
