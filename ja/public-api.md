@@ -1,48 +1,38 @@
-## Compute > Instance > API v2 가이드
+﻿## Compute > Instance > API v2ガイド
 
-API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+## インスタンスタイプ
 
-인스턴스 API는 `compute` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
-
-| 타입 | 리전 | 엔드포인트 |
-|---|---|---|
-| compute | 한국(판교) 리전<br>일본 리전 | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
-
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
-
-## 인스턴스 타입
-
-### 타입 목록 보기
+### タイプリスト表示
 
 ```
 GET /v2/{tenantId}/flavors
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
+| minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
+| limit | Query | Integer | - | タイプリストの個数<br>指定された数のタイプリストを返す |
+| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| flavors | Body | Object | 인스턴스 타입 목록 객체 |
-| flavors.id | Body | UUID | 인스턴스 타입 ID |
-| flavors.links | Body | Object | 인스턴스 타입 경로 객체 |
-| flavors.name | Body | String | 인스턴스 타입 이름 |
+| flavors | Body | Object | インスタンスタイプリストオブジェクト |
+| flavors.id | Body | UUID | インスタンスタイプID |
+| flavors.links | Body | Object | インスタンスタイプパスオブジェクト |
+| flavors.name | Body | String | インスタンスタイプ名 |
 
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -85,45 +75,45 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 타입 목록 상세 보기
+### タイプリスト詳細表示
 
 ```
 GET /v2/{tenantId}/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수 만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
+| minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
+| limit | Query | Integer | - | タイプリストの数<br>指定された数のタイプリストを返す |
+| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| flavors | Body | Object | 인스턴스 타입 목록 객체 |
-| flavors.id | Body | UUID | 인스턴스 타입 ID |
-| flavors.links | Body | Object | 인스턴스 타입 경로 객체 |
-| flavors.name | Body | String | 인스턴스 타입 이름 |
-| flavors.ram | Body | Integer | 메모리 크기(MB) |
-| flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 활성화 여부 |
-| flavors.vcpus | Body | Integer | vCPU 개수 |
-| flavors.extra_specs | Body | Object | 추가 사양 객체 |
-| flavors.swap | Body | Integer | 스와프 영역 크기(GB) |
-| flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부 |
-| flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
-| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기(GB) |
-| flavors.disk | Body | Integer | 기본 디스크 크기(GB) |
+| flavors | Body | Object | インスタンスタイプリストオブジェクト |
+| flavors.id | Body | UUID | インスタンスタイプID |
+| flavors.links | Body | Object | インスタンスタイプパスオブジェクト |
+| flavors.name | Body | String | インスタンスタイプ名 |
+| flavors.ram | Body | Integer | メモリサイズ(MB) |
+| flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 有効/無効 |
+| flavors.vcpus | Body | Integer | vCPUの数 |
+| flavors.extra_specs | Body | Object | 追加仕様オブジェクト |
+| flavors.swap | Body | Integer | スワップ領域サイズ(GB) |
+| flavors.os-flavor-access:is_public | Body | Boolean | 共有有無 |
+| flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率 |
+| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ボリュームサイズ(GB) |
+| flavors.disk | Body | Integer | 基本ディスクサイズ(GB) |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -188,32 +178,33 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 가용성 영역
+## アベイラビリティゾーン
 
-### 가용성 목록 보기
+### 可用性リスト表示
 
 ```
 GET /v2/{tenantId}/os-availability-zone
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
-| 이름 | 종류 | 형식 | 설명 |
+#### レスポンス
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| availabilityZoneInfo | Body | Object | 가용성 영역 정보 객체 |
-| availabilityZoneInfo.zoneName | Body | String | 가용성 영역 이름 |
-| availabilityZoneInfo.zoneState | Body | Object | 가용성 영역 상태 정보 객체 |
-| availabilityZoneInfo.available | Body | Object | 가용성 영역 상태 |
+| availabilityZoneInfo | Body | Object | アベイラビリティゾーン情報オブジェクト |
+| availabilityZoneInfo.hosts | Body | - | アベイラビリティゾーンに属しているホスト情報オブジェクト<br>常にnullと表示 |
+| availabilityZoneInfo.zoneName | Body | String | アベイラビリティゾーン名 |
+| availabilityZoneInfo.zoneState | Body | Object | アベイラビリティゾーン状態情報オブジェクト |
+| availabilityZoneInfo.available | Body | Object | アベイラビリティゾーンの状態 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -223,12 +214,14 @@ X-Auth-Token: {tokenId}
         "zoneState": {
           "available": true
         },
+        "hosts": null,
         "zoneName": "kr-pub-a"
       },
       {
         "zoneState": {
           "available": true
         },
+        "hosts": null,
         "zoneName": "kr-pub-b"
       }
     ]
@@ -240,33 +233,33 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 키페어
+## キーペア
 
-### 키페어 목록 보기
+### キーペアリスト表示
 ```
 GET /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| keypairs | Body | Array | 키페어 객체 목록 |
-| keypairs.keypair | Body | Object | 키페어 객체 |
-| keypairs.keypair.name | Body | String | 키페어 이름 |
-| keypairs.keypair.public_key | Body | String | 공개키 |
-| keypairs.keypair.fingerprint | Body | String | 키페어 지문 |
+| keypairs | Body | Array | キーペアオブジェクトリスト |
+| keypairs.keypair | Body | Object | キーペアオブジェクト |
+| keypairs.keypair.name | Body | String | キーペア名 |
+| keypairs.keypair.public_key | Body | String | 公開鍵 |
+| keypairs.keypair.fingerprint | Body | String | キーペア指紋 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -288,37 +281,37 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 보기
+### キーペア表示
 ```
 GET /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| keypairName | URL | String | O | 키페어 이름 |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| keypairName | URL | String | O | キーペア名 |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| keypair | Body | Object | 키페어 객체 목록 |
-| keypair.public_key | Body | String | 공개키 |
-| keypair.user_id | Body | String | 키페어 소유주 ID |
-| keypair.name | Body | String | 키페어 이름 |
-| keypair.deleted | Body | Boolean | 키페어 삭제 여부 |
-| keypair.created_at | Body | Datetime | 키페어 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.updated_at | Body | Datetime | 키페어 수정 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.deleted_at | Body | Datetime | 키페어 삭제 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.fingerprint | Body | String | 키페어 지문 |
-| keypair.id | Body | Integer | 키페어 ID |
+| keypair | Body | Object | キーペアオブジェクトリスト |
+| keypair.public_key | Body | String | 公開鍵 |
+| keypair.user_id | Body | String | キーペアのオーナーID |
+| keypair.name | Body | String | キーペア名 |
+| keypair.deleted | Body | Boolean | キーペアが削除されているかどうか |
+| keypair.created_at | Body | Datetime | キーペア作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.updated_at | Body | Datetime | キーペア修正日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.deleted_at | Body | Datetime | キーペア削除日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.fingerprint | Body | String | キーペア指紋 |
+| keypair.id | Body | Integer | キーペアID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -342,24 +335,24 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 생성/등록하기
+### キーペアの作成/登録
 
 ```
 POST /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| keypair | Body | Object | O | 키페어 객체 |
-| keypair.name | Body | String | O | 생성 또는 등록할 키페어 이름 |
-| keypair.public_key | Body | String | - | 등록할 공개키. 이 필드가 생략되면 새로운 키페어를 생성합니다. |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| keypair | Body | Object | O | キーペアオブジェクト |
+| keypair.name | Body | String | O | 作成または登録するキーペア名 |
+| keypair.public_key | Body | String | - | 登録する公開鍵。このフィールドが省略されている場合、新しいキーペアを作成します。|
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -374,18 +367,18 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| keypair | Body | Object | 키페어 객체 |
-| keypair.public_key | Body | String | 공개키 |
-| keypair.private_key | Body | String | 비밀키, 새로운 키페어를 생성한 경우에 비밀키를 반환합니다. |
-| keypair.user_id | Body | String | 키페어 소유주 ID |
-| keypair.name | Body | String | 키페어 이름 |
-| keypair.fingerprint | Body | String | 키페어 지문 |
+| keypair | Body | Object | キーペアオブジェクト |
+| keypair.public_key | Body | String | 公開鍵 |
+| keypair.private_key | Body | String | 秘密鍵。新しいキーペアを作成した場合に秘密鍵を返します。|
+| keypair.user_id | Body | String | キーペアのオーナーID |
+| keypair.name | Body | String | キーペア名 |
+| keypair.fingerprint | Body | String | キーペア指紋 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -394,7 +387,7 @@ X-Auth-Token: {tokenId}
         "fingerprint": "SHA256:+EZoD ... /DKiGnY4zf5tYrcix0",
         "name": "keypair",
         "public_key": "ssh-rsa ... Generated-by-Nova",
-        "user_id": "436f727b7c9142f896ddd56be591dd7f"
+        "user_id": "fake"
     }
 }
 ```
@@ -404,83 +397,81 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 삭제하기
+### キーペアを削除する
 ```
 DELETE /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| keypairName | URL | String | O | 키페어 이름 |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| keypairName | URL | String | O | キーペア名 |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 
-## 인스턴스
+## インスタンス
 
-### 인스턴스 상태
+### インスタンス状態
 
-인스턴스는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 인스턴스 상태 목록은 다음과 같습니다.
+インスタンスはさまざまな状態を持ち、状態によって行える動作が決められています。インスタンス状態リストは次のとおりです。
 
-| 상태 명 | 설명 |
+| 状態名 | 説明 |
 |--|--|
-| `ACTIVE` | 인스턴스가 활성 상태인 경우 |
-| `BUILDING` | 인스턴스가 생성 중인 경우 |
-| `STOPPED`| 인스턴스가 종료된 경우 |
-| `DELETED`| 인스턴스가 삭제된 경우 |
-| `REBOOT`| 인스턴스를 재시작한 경우 |
-| `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
-| `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 종료되었다가 다시 시작된 상태 |
-| `REVERT_RESIZE`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원 상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>TOAST에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
-| `ERROR`| 직전 인스턴스에 취한 동작이 실패한 경우 |
-| `PAUSED`| 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
-| `REBUILD`| 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
-| `RESCUED`| 인스턴스를 복구 모드에서 실행 중 |
-| `SUSPENDED`| 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
-| `UNKNOWN`| 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
+| `ACTIVE` | インスタンスがアクティブな状態の場合 |
+| `BUILDING` | インスタンスが作成中の場合 |
+| `STOPPED`| インスタンスが終了している場合 |
+| `DELETED`| インスタンスが削除されている場合 |
+| `REBOOT`| インスタンスを再起動した場合 |
+| `HARD_REBOOT`| インスタンスを強制的に再起動した場合。物理サーバーの電源を落とし、再び入れるのと同じ動作。|
+| `RESIZED`| インスタンスタイプを変更したり、インスタンスを他のホストへ移した場合。<br>インスタンスが終了して、再び起動した状態。|
+| `REVERT_RESIZE`| インスタンスタイプを変更したり、インスタンスを他のホストへ移す過程で失敗した時、元の状態に戻すために復旧する場合 |
+| `VERIFY_RESIZE`| インスタンスが、タイプ変更またはインスタンスを他のホストへ移す過程を終えてユーザーの承認を待っている場合。<br>TOASTではこの場合、自動的に`ACTIVE`状態に変わる。|
+| `ERROR`| 直前にインスタンスに行った動作が失敗した場合 |
+| `PAUSED`| インスタンスが一時停止した場合。一時停止したインスタンスはハイパーバイザのメモリに保存される。|
+| `REBUILD`| インスタンスを作成時、イメージから新たに作り出す状態 |
+| `RESCUED`| インスタンスを復旧モードで実行中 |
+| `SUSPENDED`| インスタンスが管理者により最大節電モードになっている場合 |
+| `UNKNOWN`| インスタンスの状態が不明な場合。`インスタンスがこの状態になった場合、管理者に問い合わせます。` |
 
-### 인스턴스 목록 보기
+### インスタンスリスト表示
 
 ```
 GET /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| reservation_id | Query | String | - | 인스턴스 생성 예약 ID. <br>예약 ID를 지정하면 동시에 생성된 인스턴스 목록만 반환함 |
-| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을 반환. `YYYY-MM-DDThh:mm:ss`의 형태. |
-| image | Query | UUID | - | 이미지 ID<br>지정된 이미지를 사용한 인스턴스 목록을 반환 |
-| flavor | Query | UUID | - | 인스턴스 타입 ID<br>지정된 타입을 사용한 인스턴스 목록을 반환 |
-| name | Query | String | - | 인스턴스 이름<br>지정된 이름을 가진 인스턴스 목록을 반환, 정규 표현식으로 질의 가능 |
-| status | Query | Enum | - | 인스턴스 상태<br>지정된 상태를 가진 인스턴스 목록을 반환 |
-| limit | Query | Integer | - | 인스턴스 목록 개수<br>지정된 개수 만큼의 인스턴스 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫번째 인스턴스 UUID<br>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| changes-since | Query | Datetime | - | 指定された日時以降に変更されたインスタンスリストを返す。`YYYY-MM-DDThh:mm:ss`の形式。|
+| image | Query | UUID | - | イメージID<br>指定されたイメージを使用したインスタンスリストを返す |
+| flavor | Query | UUID | - | インスタンスタイプID<br>指定されたタイプを使用しているインスタンスリストを返す |
+| name | Query | String | - | インスタンス名<br>指定された名前のインスタンスリストを返す。正規表現を使用可能。|
+| status | Query | Enum | - | インスタンスの状態<br>指定された状態のインスタンスリストを返す |
+| limit | Query | Integer | - | インスタンスリスト数<br>指定された数のインスタンスリストを返す |
+| marker | Query | UUID | - | リストの最初のインスタンスUUID<br>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| servers | Body | Object | 인스턴스 목록 객체 |
-| id | Body | UUID | 인스턴스 UUID |
-| links | body | Object | 인스턴스 경로 객체 |
-| name | body | String | 인스턴스 이름 |
+| servers | Body | Object | インスタンスリストオブジェクト |
+| id | Body | UUID | インスタンスUUID |
+| links | body | Object | インスタンスパスオブジェクト |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -509,59 +500,59 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 목록 상세 보기
+### インスタンスリスト詳細表示
 
-인스턴스 목록 보기와 동일하게 현재 테넌트에 생성된 인스턴스 목록을 반환합니다. 단, 인스턴스별 상세한 정보가 같이 조회됩니다.
+インスタンスリスト表示と同じように現在テナントに作成されているインスタンスリストを返します。ただし、各インスタンスの詳細な情報が一緒に照会されます。
 
 ```
-GET /v2/{tenantId}/servers/detail
+GET /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-인스턴스 목록 보기와 동일한 요청 형태입니다.
+インスタンスリスト表示と同じリクエスト形式です。
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| servers | body | Object | 인스턴스 목록 객체 |
-| status | body | Enum | 인스턴스 상태 |
-| servers.id | Body | UUID | 인스턴스 ID |
-| servers.name | Body | String | 인스턴스 이름, 최대 255자 |
-| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨. |
-| servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
-| servers.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>TOAST는 IPv4만 지원 |
-| servers.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
-| servers.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
-| servers.links | Body | Object | 인스턴스 경로 객체 |
-| servers.key_name | Body | String | 인스턴스 키페어 이름 |
-| servers.image | Body | Object | 인스턴스 이미지 객체 |
-| servers.image.id | Body | UUID | 인스턴스 이미지 ID |
-| servers.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| servers.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알려줌 |
-| servers.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
-| servers.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
-| servers.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.flavor | Body | Object | 인스턴스 타입 정보 객체 |
-| servers.flavor.id | Body | UUID | 인스턴스 타입 ID |
-| servers.flavor.links | Body | Object | 인스턴스 타입 경로 객체 |
-| servers.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
-| servers.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
-| servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
-| servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
-| servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
-| servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
-| servers.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
+| servers | body | Object | インスタンスリストオブジェクト |
+| status | body | Enum | インスタンスの状態 |
+| servers.id | Body | UUID | インスタンスID |
+| servers.name | Body | String | インスタンス名。最大255文字。|
+| servers.updated | Body | Datetime | インスタンスの最終修正日時。`YYYY-MM-DDThh:mm:ssZ`形式。|
+| servers.hostId | Body | String | インスタンスが起動中のホストID |
+| servers.addresses | Body | Object | インスタンスIPリストオブジェクト。<br>インスタンスに接続されたポート数分のリストが作成される。 |
+| servers.addresses."Network名" | Body | Object | インスタンスに接続されている各Networkのポート情報 |
+| servers.addresses."Network名".OS-EXT-IPS-MAC:mac_addr | Body | String | インスタンスに接続されたポートのMACアドレス |
+| servers.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>TOASTはIPv4のみサポート |
+| servers.addresses."Network名".addr | Body | String | インスタンスに接続されたポートのIPアドレス |
+| servers.addresses."Network名".OS-EXT-IPS:type | Body | Enum | ポートのIPアドレスタイプ<br>`fixed`または`floating`のいずれか1つ。 |
+| servers.links | Body | Object | インスタンスパスオブジェクト |
+| servers.key_name | Body | String | インスタンスキーペア名 |
+| servers.image | Body | Object | インスタンスイメージオブジェクト |
+| servers.image.id | Body | UUID | インスタンスイメージID |
+| servers.image.links | Body | Object | インスタンスイメージパスオブジェクト |
+| servers.OS-EXT-STS:task_state | Body | String | インスタンス作業状態<br>インスタンスに動作を加えた時、動作進行状態を伝える。 |
+| servers.OS-EXT-STS:vm_state | Body | String | インスタンスの現在の状態 |
+| servers.OS-SRV-USG:launched_at | Body | Datetime | インスタンスの最終起動日時<br>`YYYY-MM-DDThh:mm:ss.ssssss`形式 |
+| servers.OS-SRV-USG:terminated_at | Body | Datetime | インスタンスの削除日時<br>`YYYY-MM-DDThh:mm:ssZ`形式 |
+| servers.flavor | Body | Object | インスタンスタイプ情報オブジェクト |
+| servers.flavor.id | Body | UUID | インスタンスタイプID |
+| servers.flavor.links | Body | Object | インスタンスタイプパスオブジェクト |
+| servers.security_groups | Body | Object | インスタンスに割り当てられたセキュリティグループリストオブジェクト |
+| servers.security_groups.name | Body | String | インスタンスに割り当てられたセキュリティグループ名 |
+| servers.user_id | Body | String | インスタンスを作成したユーザーID |
+| servers.created | Body | Datetime | インスタンス作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
+| servers.tenant_id | Body | String | インスタンスが属しているテナントID |
+| servers.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用しないまま残す。TOASTは`MANUAL`を使用 |
+| servers.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
+| servers.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
+| servers.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
+| servers.metadata | Body | Object | インスタンスメタデータオブジェクト<br>インスタンスメタデータをキーと値のペアで保管 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -660,63 +651,63 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 보기
+### インスタンス表示
 
 ```
 GET /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-이 API는 요청 본문을 요구하지 않습니다.
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | インスタンスID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| server | body | Object | 인스턴스 객체 |
-| status | body | Enum | 인스턴스 상태 |
-| server.id | Body | UUID | 인스턴스 ID |
-| server.name | Body | String | 인스턴스 이름, 최대 255자 |
-| server.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨 |
-| server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
-| server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>TOAST는 IPv4만 지원 |
-| server.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
-| server.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
-| server.links | Body | Object | 인스턴스 경로 객체 |
-| server.key_name | Body | String | 인스턴스 키페어 이름 |
-| server.image | Body | Object | 인스턴스 이미지 객체 |
-| server.image.id | Body | UUID | 인스턴스 이미지 ID |
-| server.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알림 |
-| server.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
-| server.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
-| server.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.flavor | Body | Object | 인스턴스 타입 정보 객체 |
-| server.flavor.id | Body | UUID | 인스턴스 타입 ID |
-| server.flavor.links | Body | Object | 인스턴스 타입 경로 객체 |
-| server.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
-| server.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
-| server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
-| server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
-| server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
-| server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
-| server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
+| server | body | Object | インスタンスオブジェクト |
+| status | body | Enum | インスタンスの状態 |
+| server.id | Body | UUID | インスタンスID |
+| server.name | Body | String | インスタンス名。最大255文字。|
+| server.updated | Body | Datetime | インスタンスの最終修正日時。`YYYY-MM-DDThh:mm:ssZ`形式。|
+| server.hostId | Body | String | インスタンスが起動中のホストID |
+| server.addresses | Body | Object | インスタンスIPリストオブジェクト。<br>インスタンスに接続されたポート数分のリストが作成される。 |
+| server.addresses."Network名" | Body | Object | インスタンスに接続された各Networkのポート情報 |
+| server.addresses."Network名".OS-EXT-IPS-MAC:mac_addr | Body | String | インスタンスに接続されたポートのMACアドレス |
+| server.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>TOASTはIPv4のみサポート |
+| server.addresses."Network名".addr | Body | String | インスタンスに接続されたポートのIPアドレス |
+| server.addresses."Network名".OS-EXT-IPS:type | Body | Enum | ポートのIPアドレスタイプ<br>`fixed`または`floating`のいずれか1つ。 |
+| server.links | Body | Object | インスタンスパスオブジェクト |
+| server.key_name | Body | String | インスタンスキーペア名 |
+| server.image | Body | Object | インスタンスイメージオブジェクト |
+| server.image.id | Body | UUID | インスタンスイメージID |
+| server.image.links | Body | Object | インスタンスイメージパスオブジェクト |
+| server.OS-EXT-STS:task_state | Body | String | インスタンス作業状態<br>インスタンスに動作を加えた時、動作進行状態を伝える。 |
+| server.OS-EXT-STS:vm_state | Body | String | インスタンスの現在状態 |
+| server.OS-SRV-USG:launched_at | Body | Datetime | インスタンスの最終起動日時<br>`YYYY-MM-DDThh:mm:ss.ssssss`形式 |
+| server.OS-SRV-USG:terminated_at | Body | Datetime | インスタンスの削除日時<br>`YYYY-MM-DDThh:mm:ssZ`形式 |
+| server.flavor | Body | Object | インスタンスタイプ情報オブジェクト |
+| server.flavor.id | Body | UUID | インスタンスタイプID |
+| server.flavor.links | Body | Object | インスタンスタイプパスオブジェクト |
+| server.security_groups | Body | Object | インスタンスに割り当てられたセキュリティグループリストオブジェクト |
+| server.security_groups.name | Body | String | インスタンスに割り当てられたセキュリティグループ名 |
+| server.user_id | Body | String | インスタンスを作成したユーザーID |
+| server.created | Body | Datetime | インスタンスの作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
+| server.tenant_id | Body | String | インスタンスが属しているテナントID |
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスク設定モード。`MANUAL`または`AUTO`のうちいずれか1つ。TOASTは`MANUAL`を使用 |
+| server.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
+| server.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
+| server.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
+| server.metadata | Body | Object | インスタンスメタデータオブジェクト<br>インスタンスメタデータをキーと値のペアで保管 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -813,22 +804,22 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 생성하기
+### インスタンスを作成する
 
-인스턴스를 생성합니다.
+インスタンスを作成します。
 
-인스턴스 생성 API를 호출한 후에 인스턴스 조회를 통해 인스턴스 상태를 확인합니다.
+インスタンス作成APIを呼び出し、インスタンス照会でインスタンスの状態を確認します。
 
-* 인스턴스의 상태가 **ACTIVE**가 되면 인스턴스가 정상적으로 생성 완료됩니다.
-* 인스턴스 상태가 **BUILDING**에서 오래 지속되거나 **ERROR**인 경우, 인스턴스 생성 매개 변수를 확인하고 다시 생성을 시도합니다.
+* インスタンスの状態が**ACTIVE**になるとインスタンスが正常に作成完了します。
+* インスタンスの状態が**BUILDING**から長時間変わらなかったり、**ERROR**の場合は、インスタンス作成引数を確認し、再度作成してください。
 
-Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
+Windowsインスタンスは安定的な動作のために、次のような作成制約条件があります。
 
-* RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
-* 50GB 이상의 기본 디스크가 필요합니다.
-* U2 타입은 Windows 이미지를 사용할 수 없습니다.
+* Windowsインスタンスは2GB以上のRAMが必要です。RAM 2GB以上のインスタンスタイプを使用します。
+* 50GB以上の基本ディスクが必要です。
+* U2タイプはWindowsイメージを使用できません。
 
-기본 디스크 크기는 Linux는 10GB, Windows는 50GB부터 1TB까지 지정할 수 있습니다.
+基本ディスクサイズはLinuxは10GB、Windowsは50GBから1TBまで指定できます。
 
 
 ```
@@ -836,40 +827,37 @@ POST /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨 |
-| server.security_groups.name | body | String | - | 인스턴스에 추가할 보안 그룹 이름 |
-| server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용 |
-| server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨 |
-| server.imageRef | Body | String | O | 인스턴스를 생성할 때 사용할 이미지 ID |
-| server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정 |
-| server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
-| server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
-| server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID |
-| server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP |
-| server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함 |
-| server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
-| server.personality | Body | Object | - | 인스턴스에 추가할 파일 정보 객체 |
-| server.personality.path | Body | String | - | 인스턴스에 추가할 파일 경로 |
-| server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열로, 인코딩 전 기준으로 65535자까지 허용 |
-| server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함** |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입으로, TOAST는 `image`만 지원|
-| server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
-| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
-| server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
-| server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
-| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최솟값.<br>기본값은 1. |
-| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 min_count, 최대값은 10. |
-| server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略する場合`default`グループが追加される |
+| server.security_groups.name | body | String | - | インスタンスに追加するセキュリティグループ名 |
+| server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可 |
+| server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意で選択される |
+| server.imageRef | Body | String | O | インスタンスを作成する時に使用するイメージID |
+| server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
+| server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、ポートID、固定IPの中から1つだけ指定。|
+| server.networks.uuid | Body | UUID | - | インスタンスを作成する時に使用するネットワークID |
+| server.networks.subnet | Body | UUID | - | インスタンスを作成する時に使用するネットワークのサブネットID |
+| server.networks.port | Body | UUID | - | インスタンスを作成する時に使用するポートID |
+| server.networks.fixed_ip | Body | String | - | インスタンスを作成する時に使用する固定IP |
+| server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
+| server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
+| server.personality | Body | Object | - | インスタンスに追加するファイル情報オブジェクト |
+| server.personality.path | Body | String | - | インスタンスに追加するファイルのパス |
+| server.personality.content | Body | String | - | インスタンスに追加するファイルの内容<br>Base64エンコーディングされた文字列。エンコーディング前を基準に65535文字まで許可。 |
+| server.block_device_mapping_v2 | Body | Object | - | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルディスクを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
+| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本ID<br>**TOASTは`image`のみサポートするため、必ずimage IDで作成する必要がある。** |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | インスタンスのボリューム原型タイプ。TOASTは`image`のみサポート。|
+| server.block_device_mapping_v2.destination_type | Body | Enum | - | インスタンスボリュームの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：U2インスタンスタイプを利用する場合。<br>- `volume`：U2以外のインスタンスタイプを利用する場合。|
+| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のボリューム処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
+| server.block_device_mapping_v2.boot_index | Body | Integer | - | 指定したボリュームの起動順序<br>-`0`はルートボリューム<br>- それ以外は追加ボリューム<br>サイズが大きいほど起動順序が下がる。 |
+| server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -904,15 +892,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름 |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
-| server.id | Body | UUID | 생성한 인스턴스의 ID |
+| server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名 |
+| server.OS-DCF:diskConfig | Body | Enum | `MANUAL`に設定される。 |
+| server.id | Body | UUID | 作成したインスタンスのID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -944,25 +932,25 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 수정하기
-생성된 인스턴스를 수정합니다. 변경할 수 있는 속성은 일부 항목으로 제한됩니다.
+### インスタンスを修正する
+作成されたインスタンスを修正します。変更できるプロパティは一部の項目に制限されます。
 
 ```
 PUT /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| server | Body | Object | O | 인스턴스 변경 요청 객체 |
-| server.name | Body | String | - | 인스턴스의 새로운 이름 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| server | Body | Object | O | インスタンス変更リクエストオブジェクト |
+| server.name | Body | String | - | インスタンスの新しい名前 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -976,69 +964,69 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-인스턴스 보기와 동일합니다.
+#### レスポンス
+インスタンスの表示と同じです。
 
 ---
 
-### 인스턴스 삭제하기
-생성된 인스턴스를 삭제합니다.
+### インスタンスを削除する
+作成されたインスタンスを削除します。
 
 ```
 DELETE /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 삭제할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 削除するインスタンスID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-## 볼륨 연결 관리
-### 인스턴스에 연결된 볼륨 목록 보기
+## ボリューム接続管理
+### インスタンスに接続されたボリュームリスト表示
 ```
-GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
+GET /v2/{tenantId}/servers/{server_id}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| limit | Query | Integer | - | 조회할 목록 개수 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 offset번째 볼륨부터 반환 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| limit | Query | Integer | - | 照会するリストの数 |
+| offset | Query | Integer | - | 返されるリストの開始点<br>全てのリストの中からoffset番目のボリュームから返す |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| volumeAttachments | Body | Array | 연결 정보 객체 목록 |
-| volumeAttachments.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachments.id | Body | UUID | 연결 정보 ID |
-| volumeAttachments.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachments.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachments | Body | Array | 接続情報オブジェクトリスト |
+| volumeAttachments.device | Body | String | インスタンスのボリューム名<br>例) `/dev/vdb` |
+| volumeAttachments.id | Body | UUID | 接続情報ID |
+| volumeAttachments.serverId | Body | UUID | インスタンスID |
+| volumeAttachments.volumeId | Body | UUID | ボリュームID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
 {
     "volumeAttachments": [
         {
-            "device": "/dev/vda",
+            "device": "/dev/vdc",
             "id": "227cc671-f30b-4488-96fd-7d0bf13648d8",
             "serverId": "4b293d31-ebd5-4a7f-be03-874b90021e54",
             "volumeId": "227cc671-f30b-4488-96fd-7d0bf13648d8"
@@ -1058,33 +1046,33 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스에 연결된 볼륨 보기
+### インスタンスに接続されたボリューム表示
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| volumeId | URL | UUID | O | 조회할 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | インスタンスID |
+| volumeId | URL | UUID | O | 照会するボリュームID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| volumeAttachment | Body | Object | 연결 정보 객체 |
-| volumeAttachment.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachment.id | Body | UUID | 연결 정보 ID |
-| volumeAttachment.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachment.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachment | Body | Object | 接続情報オブジェクト |
+| volumeAttachment.device | Body | String | インスタンスのボリューム名<br>例) `/dev/vdb` |
+| volumeAttachment.id | Body | UUID | 接続情報ID |
+| volumeAttachment.serverId | Body | UUID | インスタンスID |
+| volumeAttachment.volumeId | Body | UUID | ボリュームID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1103,23 +1091,23 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스에 추가 볼륨 연결하기
+### インスタンスに追加ボリュームを接続する
 ```
 POST /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### リクエスト
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| volumeAttachment | Body | Object | O | 볼륨 연결 요청 객체 |
-| volumeAttachment.volumeId | Body | UUID | O | 연결할 볼륨 ID |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| volumeAttachment | Body | Object | O | ボリューム接続リクエストオブジェクト |
+| volumeAttachment.volumeId | Body | UUID | O | 接続するボリュームID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1133,17 +1121,17 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### レスポンス
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| volumeAttachment | Body | Object | 연결 정보 객체 |
-| volumeAttachment.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachment.id | Body | UUID | 연결 정보 ID |
-| volumeAttachment.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachment.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachment | Body | Object | 接続情報オブジェクト |
+| volumeAttachment.device | Body | String | インスタンスのボリューム名<br>例) `/dev/vdb` |
+| volumeAttachment.id | Body | UUID | 接続情報ID |
+| volumeAttachment.serverId | Body | UUID | インスタンスID |
+| volumeAttachment.volumeId | Body | UUID | ボリュームID |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1162,54 +1150,54 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 볼륨 연결 끊기
+### インスタンスボリュームの接続を切る
 ```
 DELETE /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| volumeId | URL | UUID | O | 연결을 끊을 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | インスタンスID |
+| volumeId | URL | UUID | O | 接続を切るボリュームID |
+| tokenId | Header | String | O | トークンID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-## 인스턴스 추가기능
-TOAST는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
+## インスタンス追加機能
+TOASTは、次のようなインスタンス制御および付加機能を提供します。
 
-* 인스턴스 시작, 종료, 재시작
-* 인스턴스 타입 변경
-* 인스턴스 이미지 생성
-* 플로팅 IP 연결 및 해제
-* 보안 그룹 추가 및 삭제
+* インスタンス起動、終了、再起動
+* インスタンスタイプ変更
+* インスタンスイメージ作成
+* Floating IPの接続および解除
+* セキュリティグループの追加および削除
 
-### 인스턴스 시작
+### インスタンスの起動
 
-종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
+終了したインスタンスを再び起動し、状態を**ACTIVE**に変更します。このAPIを呼び出すにはインスタンスの状態が**SHUTOFF**になっている必要があります。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-start | Body | none | O | 인스턴스 시작 요청 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| os-start | Body | none | O | インスタンス起動リクエスト |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1223,27 +1211,27 @@ X-Auth-Token: {tokenId}
 
 ---
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
-### 인스턴스 종료
+### インスタンス停止
 
-인스턴스를 종료하고 상태를 **SHUTOFF**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE** 또는 **ERROR**여야 합니다.
+インスタンスを終了し、状態を**SHUTOFF**に変更します。このAPIを呼び出すにはインスタンスの状態が**ACTIVE**または**ERROR**になっている必要があります。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-stop | Body | none | O | 인스턴스 종료 요청 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| os-stop | Body | none | O | インスタンス停止リクエスト |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1255,17 +1243,17 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-### 인스턴스 재시작
+### インスタンス再起動
 
-인스턴스를 재시작 합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
+インスタンスを再起動します。再起動の方法は**SOFT**と**HARD**があります。
 
-* **SOFT** 방식: **"우아한 연결 종료(Graceful shutdown)"**를 통해 인스턴스를 종료하고 재시작합니다. 인스턴스가 **ACTIVE** 상태여야 합니다.
-* **HARD** 방식: 강제 종료 후 인스턴스를 재시작합니다. 물리 서버의 전원을 끄고 다시 켜는 것과 동일한 동작입니다. 인스턴스가 다음 상태일 때만 강제로 종료할 수 있습니다.
+* **SOFT**方式：**「優雅な接続終了(Graceful shutdown)」**でインスタンスを終了し、再起動します。インスタンスが**ACTIVE**状態になっている必要があります。
+* **HARD**方式：強制終了してインスタンスを再起動します。物理サーバーの電源を落とし、再び入れるのと同じ動作です。インスタンスが次の状態の時のみ強制終了できます。
     * **ACTIVE**
     * **ERROR**
     * **HARD_REBOOT**
@@ -1279,16 +1267,16 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| reboot | Body | Object | O | 인스턴스 재부팅 요청 객체 |
-| reboot.type | Body | Enum | O | 재부팅 방식, **SOFT** 또는 **HARD** |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| reboot | Body | Object | O | インスタンス再起動リクエストオブジェクト |
+| reboot.type | Body | Enum | O | 再起動方法。**SOFT**または**HARD** |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1302,16 +1290,16 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-### 인스턴스 타입 변경
+### インスタンスタイプ変更
 
-인스턴스 타입을 변경합니다. 인스턴스가 **ACTIVE**이거나 **SHUTOFF** 상태일 때만 인스턴스 타입 변경할 수 있습니다. 인스턴스의 상태가 **ACTIVE**인 경우에는 인스턴스 타입 변경 과정에서 인스턴스는 종료되고 다시 시작됩니다.
+インスタンスタイプを変更します。インスタンスが**ACTIVE**または**SHUTOFF**状態の時のみインスタンスタイプを変更できます。インスタンスの状態が**ACTIVE**の場合はインスタンスタイプ変更過程でインスタンスは終了し、再起動します。
 
-사용하는 이미지나 인스턴스 타입에 따라 변경할 수 있는 타입이 제한될 수 있습니다. 자세한 변경 제약 사항은 콘솔 사용자 가이드를 참고합니다.
+使用するイメージやインスタンスタイプによって、変更できるタイプが制限される場合があります。詳細はコンソールユーザーガイドを参照してください。
 
 
 ```
@@ -1319,23 +1307,23 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| resize | Body | Object | O | 인스턴스 타입 변경 요청 |
-| resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| resize | Body | Object | O | インスタンスタイプ変更リクエスト |
+| resize.flavorRef | Body | UUID | O | 変更するインスタンスタイプID |
+| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。TOASTは**MANUAL**を使用 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
 {
   "resize" : {
-    "flavorRef": "b5f1c148-732c-417d-9d1b-1dffca105dbe"
+    "flavorRef": "UUID"
   }
 }
 ```
@@ -1343,35 +1331,35 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-### 인스턴스 이미지 생성
+### インスタンスイメージ作成
 
-인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 [블록 스토리지 API](/Storage/Block Storage/ko/public-api/#_22)를 참고합니다.
+インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するにはブロックストレージAPIを参照してください。
 
-인스턴스의 상태가 **ACTIVE**, **SHUTOFF**, **SUSPENDED**, **PAUSED**일 때만 이미지를 생성할 수 있습니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서 진행하는 것을 권장합니다.
+インスタンスの状態が**ACTIVE**、**SHUTOFF**、**SUSPENDED**、**PAUSED**の時のみイメージを作成できます。イメージの作成は、データの整合性を保障するためにインスタンスを終了した状態で進行することを推奨します。
 
-이미지 생성이 성공하면 이미지 상태가 `active`로 바뀝니다. 이미지 생성이 완료되는 것을 확인하려면 이미지 조회 API를 통해 지속적으로 상태를 확인합니다.
+イメージの作成に成功すると、イメージの状態が`active`に変わります。イメージの作成が完了したことを確認するにはイメージ照会APIで持続的に状態を確認します。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| createImage | Body | Object | O | 이미지 생성 요청 |
-| createImage.name | Body | String | O | 생성할 이미지 이름 |
-| createImage.metadata | Body | Object | - | 생성할 이미지의 메타데이터<br>Key-Value 형태로 기술 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| createImage | Body | Object | O | イメージ作成リクエスト |
+| createImage.name | Body | String | O | 作成するイメージの名前 |
+| createImage.metadata | Body | Object | - | 作成するイメージのメタデータ<br>Key-Value形式で記述 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1389,35 +1377,35 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
+#### レスポンス
 
-이 API는 응답 본문을 반환하지 않습니다. 생성된 이미지는 응답 헤더의 `Location`으로 확인합니다.
+このAPIはレスポンス本文を返しません。作成されたイメージはレスポンスヘッダの`Location`で確認します。
 
-| 이름 | 종류 | 형식 | 설명 |
+| 名前 | 種類 | 形式 | 説明 |
 |--|--|--|--|
-| Location | Header | String | 생성한 이미지 URL |
+| Location | Header | String | 作成したイメージURL |
 
 ---
 
-### 보안 그룹 추가
+### セキュリティグループ追加
 
-인스턴스에 보안 그룹을 추가합니다. 추가한 보안 그룹은 인스턴스의 모든 포트에 적용됩니다.
+インスタンスにセキュリティグループを追加します。追加したセキュリティグループはインスタンスのすべてのポートに適用されます。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| addSecurityGroup | Body | Object | O | 보안 그룹 추가 요청 객체 |
-| addSecurityGroup.name | Body | String | O | 추가할 보안 그룹 이름 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| addSecurityGroup | Body | Object | O | セキュリティグループ追加リクエストオブジェクト |
+| addSecurityGroup.name | Body | String | O | 追加するセキュリティグループ名 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1432,30 +1420,30 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
 
 ---
 
-### 보안 그룹 삭제
+### セキュリティグループ削除
 
-인스턴스에서 보안 그룹을 삭제합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 삭제됩니다.
+インスタンスからセキュリティグループを削除します。インスタンスのすべてのポートから指定したセキュリティグループが削除されます。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| removeSecurityGroup | Body | Object | O | 보안 그룹 삭제 요청 객체 |
-| removeSecurityGroup.name | Body | String | O | 삭제할 보안 그룹 이름 |
+| tenantId | URL | String | O | テナントID |
+| serverId | URL | UUID | O | 変更するインスタンスID |
+| tokenId | Header | String | O | トークンID |
+| removeSecurityGroup | Body | Object | O | セキュリティグループ削除リクエストオブジェクト |
+| removeSecurityGroup.name | Body | String | O | 削除するセキュリティグループ名 |
 
-<details><summary>예시</summary>
+<details><summary>例</summary>
 <p>
 
 ```json
@@ -1470,5 +1458,5 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### レスポンス
+このAPIはレスポンス本文を返しません。
