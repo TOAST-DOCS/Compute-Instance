@@ -1,4 +1,4 @@
-﻿## サードパーティー使用ガイド > Terraform使用ガイド
+## サードパーティー使用ガイド > Terraform使用ガイド
 この文書はTerraformでTOASTを使用する方法を説明します。
 
 ## Terraform

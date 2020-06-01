@@ -1,4 +1,4 @@
-﻿## Compute > Instance > API v2ガイド
+## Compute > Instance > API v2ガイド
 
 ## インスタンスタイプ
 
