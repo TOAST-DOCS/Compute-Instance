@@ -855,9 +855,6 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP |
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함 |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
-| server.personality | Body | Object | - | 인스턴스에 추가할 파일 정보 객체 |
-| server.personality.path | Body | String | - | 인스턴스에 추가할 파일 경로 |
-| server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열로, 인코딩 전 기준으로 65535자까지 허용 |
 | server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
 | server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함** |
 | server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입으로, TOAST는 `image`만 지원|
