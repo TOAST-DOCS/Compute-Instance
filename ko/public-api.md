@@ -1,5 +1,15 @@
 ## Compute > Instance > API v2 가이드
 
+API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+
+인스턴스 API는 `compute` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
+
+| 타입 | 리전 | 엔드포인트 |
+|---|---|---|
+| compute | 한국(판교) 리전<br>일본 리전 | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
+
+API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+
 ## 인스턴스 타입
 
 ### 타입 목록 보기
@@ -199,7 +209,6 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | availabilityZoneInfo | Body | Object | 가용성 영역 정보 객체 |
-| availabilityZoneInfo.hosts | Body | - | 가용성 영역에 속한 호스트 정보 객체<br>항상 null로 표시 |
 | availabilityZoneInfo.zoneName | Body | String | 가용성 영역 이름 |
 | availabilityZoneInfo.zoneState | Body | Object | 가용성 영역 상태 정보 객체 |
 | availabilityZoneInfo.available | Body | Object | 가용성 영역 상태 |
@@ -214,14 +223,12 @@ X-Auth-Token: {tokenId}
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-a"
       },
       {
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-b"
       }
     ]
@@ -387,7 +394,7 @@ X-Auth-Token: {tokenId}
         "fingerprint": "SHA256:+EZoD ... /DKiGnY4zf5tYrcix0",
         "name": "keypair",
         "public_key": "ssh-rsa ... Generated-by-Nova",
-        "user_id": "fake"
+        "user_id": "436f727b7c9142f896ddd56be591dd7f"
     }
 }
 ```
@@ -455,7 +462,8 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을  `YYYY-MM-DDThh:mm:ss`의 형태. |
+| reservation_id | Query | String | - | 인스턴스 생성 예약 ID. <br>예약 ID를 지정하면 동시에 생성된 인스턴스 목록만 반환함 |
+| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을 반환. `YYYY-MM-DDThh:mm:ss`의 형태. |
 | image | Query | UUID | - | 이미지 ID<br>지정된 이미지를 사용한 인스턴스 목록을 반환 |
 | flavor | Query | UUID | - | 인스턴스 타입 ID<br>지정된 타입을 사용한 인스턴스 목록을 반환 |
 | name | Query | String | - | 인스턴스 이름<br>지정된 이름을 가진 인스턴스 목록을 반환, 정규 표현식으로 질의 가능 |
@@ -470,6 +478,7 @@ X-Auth-Token: {tokenId}
 | servers | Body | Object | 인스턴스 목록 객체 |
 | id | Body | UUID | 인스턴스 UUID |
 | links | body | Object | 인스턴스 경로 객체 |
+| name | body | String | 인스턴스 이름 |
 
 <details><summary>예시</summary>
 <p>
@@ -505,7 +514,7 @@ X-Auth-Token: {tokenId}
 인스턴스 목록 보기와 동일하게 현재 테넌트에 생성된 인스턴스 목록을 반환합니다. 단, 인스턴스별 상세한 정보가 같이 조회됩니다.
 
 ```
-GET /v2/{tenantId}/servers
+GET /v2/{tenantId}/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -701,7 +710,7 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
 | server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 설정 모드. `MANUAL` 또는 `AUTO` 중 하나로, TOAST는 `MANUAL`를 사용 |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
 | server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
@@ -815,7 +824,7 @@ X-Auth-Token: {tokenId}
 
 Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
 
-* Windows 인스턴스는 2GB 이상의 RAM이 필요합니다. RAM 2GB 이상인 인스턴스 타입을 사용합니다.
+* RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
 * 50GB 이상의 기본 디스크가 필요합니다.
 * U2 타입은 Windows 이미지를 사용할 수 없습니다.
 
@@ -839,7 +848,7 @@ X-Auth-Token: {tokenId}
 | server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨 |
 | server.imageRef | Body | String | O | 인스턴스를 생성할 때 사용할 이미지 ID |
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 포트 ID, 고정 IP 중 하나만 지정 |
+| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정 |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
 | server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
 | server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID |
@@ -856,6 +865,9 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
+| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최솟값.<br>기본값은 1. |
+| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 min_count, 최대값은 10. |
+| server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
 
 <details><summary>예시</summary>
 <p>
@@ -897,7 +909,7 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름 |
-| server.OS-DCF:diskConfig | Body | Enum | `MANUAL`로 설정됨 |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 | server.id | Body | UUID | 생성한 인스턴스의 ID |
 
 <details><summary>예시</summary>
@@ -994,7 +1006,7 @@ X-Auth-Token: {tokenId}
 ## 볼륨 연결 관리
 ### 인스턴스에 연결된 볼륨 목록 보기
 ```
-GET /v2/{tenantId}/servers/{server_id}/os-volume_attachments
+GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1026,7 +1038,7 @@ X-Auth-Token: {tokenId}
 {
     "volumeAttachments": [
         {
-            "device": "/dev/vdc",
+            "device": "/dev/vda",
             "id": "227cc671-f30b-4488-96fd-7d0bf13648d8",
             "serverId": "4b293d31-ebd5-4a7f-be03-874b90021e54",
             "volumeId": "227cc671-f30b-4488-96fd-7d0bf13648d8"
@@ -1315,7 +1327,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청 |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식, TOAST는 **MANUAL**를 사용 |
+| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 
 <details><summary>예시</summary>
 <p>
@@ -1323,7 +1335,7 @@ X-Auth-Token: {tokenId}
 ```json
 {
   "resize" : {
-    "flavorRef": "UUID"
+    "flavorRef": "b5f1c148-732c-417d-9d1b-1dffca105dbe"
   }
 }
 ```
@@ -1338,7 +1350,7 @@ X-Auth-Token: {tokenId}
 
 ### 인스턴스 이미지 생성
 
-인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 블록 스토리지 API를 참고합니다.
+인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 [블록 스토리지 API](/Storage/Block Storage/ko/public-api/#_22)를 참고합니다.
 
 인스턴스의 상태가 **ACTIVE**, **SHUTOFF**, **SUSPENDED**, **PAUSED**일 때만 이미지를 생성할 수 있습니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서 진행하는 것을 권장합니다.
 
