@@ -8,7 +8,7 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 |---|---|---|
 | compute | 한국(판교) 리전<br>일본 리전 | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
 
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
 ## 인스턴스 타입
 
@@ -862,8 +862,8 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
-| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최솟값.<br>기본값은 1. |
-| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 min_count, 최대값은 10. |
+| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1. |
+| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10. |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
 
 <details><summary>예시</summary>
