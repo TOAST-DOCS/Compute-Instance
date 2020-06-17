@@ -1,5 +1,15 @@
 ## Compute > Instance > API v2ガイド
 
+APIを使用するにはAPIエンドポイントとトークンなどが必要です。 [API使用準備](/Compute/Compute/ko/identity-api/)を参照してAPIを使用するのに必要な情報を準備します。
+
+インスタンスAPIは`compute`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
+
+| タイプ | リージョン | エンドポイント |
+|---|---|---|
+| compute | 韓国(パンギョ)リージョン<br>日本リージョン | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
+
+APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、TOAST内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
+
 ## インスタンスタイプ
 
 ### タイプリスト表示
@@ -198,7 +208,6 @@ X-Auth-Token: {tokenId}
 #### レスポンス
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| availabilityZoneInfo | Body | Object | アベイラビリティゾーン情報オブジェクト |
 | availabilityZoneInfo.hosts | Body | - | アベイラビリティゾーンに属しているホスト情報オブジェクト<br>常にnullと表示 |
 | availabilityZoneInfo.zoneName | Body | String | アベイラビリティゾーン名 |
 | availabilityZoneInfo.zoneState | Body | Object | アベイラビリティゾーン状態情報オブジェクト |
@@ -214,14 +223,12 @@ X-Auth-Token: {tokenId}
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-a"
       },
       {
         "zoneState": {
           "available": true
         },
-        "hosts": null,
         "zoneName": "kr-pub-b"
       }
     ]
@@ -387,7 +394,7 @@ X-Auth-Token: {tokenId}
         "fingerprint": "SHA256:+EZoD ... /DKiGnY4zf5tYrcix0",
         "name": "keypair",
         "public_key": "ssh-rsa ... Generated-by-Nova",
-        "user_id": "fake"
+        "user_id": "436f727b7c9142f896ddd56be591dd7f"
     }
 }
 ```
@@ -455,6 +462,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| reservation_id | Query | String | - | インスタンス作成予約ID。<br>予約IDを指定すると、同時に作成されたインスタンスリストのみ返す。 |
 | changes-since | Query | Datetime | - | 指定された日時以降に変更されたインスタンスリストを返す。`YYYY-MM-DDThh:mm:ss`の形式。|
 | image | Query | UUID | - | イメージID<br>指定されたイメージを使用したインスタンスリストを返す |
 | flavor | Query | UUID | - | インスタンスタイプID<br>指定されたタイプを使用しているインスタンスリストを返す |
@@ -470,6 +478,7 @@ X-Auth-Token: {tokenId}
 | servers | Body | Object | インスタンスリストオブジェクト |
 | id | Body | UUID | インスタンスUUID |
 | links | body | Object | インスタンスパスオブジェクト |
+| name | body | String | インスタンス名 |
 
 <details><summary>例</summary>
 <p>
@@ -505,7 +514,7 @@ X-Auth-Token: {tokenId}
 インスタンスリスト表示と同じように現在テナントに作成されているインスタンスリストを返します。ただし、各インスタンスの詳細な情報が一緒に照会されます。
 
 ```
-GET /v2/{tenantId}/servers
+GET /v2/{tenantId}/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -701,7 +710,7 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | インスタンスを作成したユーザーID |
 | server.created | Body | Datetime | インスタンスの作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | server.tenant_id | Body | String | インスタンスが属しているテナントID |
-| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスク設定モード。`MANUAL`または`AUTO`のうちいずれか1つ。TOASTは`MANUAL`を使用 |
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。TOASTは`MANUAL`を使用 |
 | server.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | server.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
@@ -813,7 +822,7 @@ X-Auth-Token: {tokenId}
 * インスタンスの状態が**ACTIVE**になるとインスタンスが正常に作成完了します。
 * インスタンスの状態が**BUILDING**から長時間変わらなかったり、**ERROR**の場合は、インスタンス作成引数を確認し、再度作成してください。
 
-Windowsインスタンスは安定的な動作のために、次のような作成制約条件があります。
+* RAMが2GB以上のインスタンスタイプを使用します。
 
 * Windowsインスタンスは2GB以上のRAMが必要です。RAM 2GB以上のインスタンスタイプを使用します。
 * 50GB以上の基本ディスクが必要です。
@@ -839,16 +848,13 @@ X-Auth-Token: {tokenId}
 | server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意で選択される |
 | server.imageRef | Body | String | O | インスタンスを作成する時に使用するイメージID |
 | server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
-| server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、ポートID、固定IPの中から1つだけ指定。|
+| server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、サブネットID、ポートID、固定IPの中から1つ指定 |
 | server.networks.uuid | Body | UUID | - | インスタンスを作成する時に使用するネットワークID |
 | server.networks.subnet | Body | UUID | - | インスタンスを作成する時に使用するネットワークのサブネットID |
 | server.networks.port | Body | UUID | - | インスタンスを作成する時に使用するポートID |
 | server.networks.fixed_ip | Body | String | - | インスタンスを作成する時に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
-| server.personality | Body | Object | - | インスタンスに追加するファイル情報オブジェクト |
-| server.personality.path | Body | String | - | インスタンスに追加するファイルのパス |
-| server.personality.content | Body | String | - | インスタンスに追加するファイルの内容<br>Base64エンコーディングされた文字列。エンコーディング前を基準に65535文字まで許可。 |
 | server.block_device_mapping_v2 | Body | Object | - | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルディスクを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本ID<br>**TOASTは`image`のみサポートするため、必ずimage IDで作成する必要がある。** |
 | server.block_device_mapping_v2.source_type | Body | Enum | - | インスタンスのボリューム原型タイプ。TOASTは`image`のみサポート。|
@@ -856,6 +862,9 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のボリューム処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 指定したボリュームの起動順序<br>-`0`はルートボリューム<br>- それ以外は追加ボリューム<br>サイズが大きいほど起動順序が下がる。 |
 | server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
+| server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。 |
+| server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。 |
+| server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエスト予約ID。<br>Trueに指定すると、インスタンス作成情報の代わりに予約IDを返す。<br>デフォルト値はFalse |
 
 <details><summary>例</summary>
 <p>
@@ -897,7 +906,7 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名 |
-| server.OS-DCF:diskConfig | Body | Enum | `MANUAL`に設定される。 |
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。TOASTでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
 | server.id | Body | UUID | 作成したインスタンスのID |
 
 <details><summary>例</summary>
@@ -994,7 +1003,7 @@ X-Auth-Token: {tokenId}
 ## ボリューム接続管理
 ### インスタンスに接続されたボリュームリスト表示
 ```
-GET /v2/{tenantId}/servers/{server_id}/os-volume_attachments
+GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1026,7 +1035,7 @@ X-Auth-Token: {tokenId}
 {
     "volumeAttachments": [
         {
-            "device": "/dev/vdc",
+            "device": "/dev/vda",
             "id": "227cc671-f30b-4488-96fd-7d0bf13648d8",
             "serverId": "4b293d31-ebd5-4a7f-be03-874b90021e54",
             "volumeId": "227cc671-f30b-4488-96fd-7d0bf13648d8"
@@ -1315,7 +1324,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | resize | Body | Object | O | インスタンスタイプ変更リクエスト |
 | resize.flavorRef | Body | UUID | O | 変更するインスタンスタイプID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。TOASTは**MANUAL**を使用 |
+| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。TOASTでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
 
 <details><summary>例</summary>
 <p>
@@ -1323,7 +1332,7 @@ X-Auth-Token: {tokenId}
 ```json
 {
   "resize" : {
-    "flavorRef": "UUID"
+    "flavorRef": "b5f1c148-732c-417d-9d1b-1dffca105dbe"
   }
 }
 ```
@@ -1338,7 +1347,7 @@ X-Auth-Token: {tokenId}
 
 ### インスタンスイメージ作成
 
-インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するにはブロックストレージAPIを参照してください。
+インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するにはブロックストレージAPI](/Storage/Block Storage/ko/public-api/#_22)を参照します。
 
 インスタンスの状態が**ACTIVE**、**SHUTOFF**、**SUSPENDED**、**PAUSED**の時のみイメージを作成できます。イメージの作成は、データの整合性を保障するためにインスタンスを終了した状態で進行することを推奨します。
 
