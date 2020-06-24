@@ -856,8 +856,8 @@ X-Auth-Token: {tokenId}
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함 |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
 | server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**TOAST는 `image`만 지원하므로 반드시 image ID로 작성해야 함** |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입으로, TOAST는 `image`만 지원|
+| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID <br>루트 볼륨인 경우 반드시 부팅가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume, snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함 |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | 생성할 블록 스토리지의 원본의 타입<br>`image`: 이미지를 통해 블록 스토리지 생성<br>`volume`: 기존에 생성된 볼륨으로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅샷을 통해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정|
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
