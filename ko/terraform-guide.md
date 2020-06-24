@@ -521,8 +521,8 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | security_groups | Array | - | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
 | user_data | String | - | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br> |
 | block_device | Object | - | 인스턴스에 사용할 이미지 또는 블록 스토리지 정보 객체 |
-| block_device.uuid | String | - | 생성할 블록 스토리지 원본의 ID |
-| block_device.source_type | String | O | 생성할 블록 디바이스 원본의 타입 <br>루트 볼륨은 반드시 부팅가능한 원본이어야 하며 `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 한다.<br>`image`: 이미지를 통해 블록 스토리지 생성<br>`volume`: 기존에 생성된 볼륨으로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅샷을 통해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
+| block_device.uuid | String | - | 블록 스토리지의 원본 ID <br>루트 볼륨인 경우 반드시 부팅가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume, snapshot은 사용할 수 없음<br> image를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함 |
+| block_device.source_type | String | O | 생성할 블록 스토리지의 원본의 타입<br>image: 이미지를 통해 블록 스토리지 생성<br>volume: 기존에 생성된 볼륨으로 사용, destination_type은 반드시 volume으로 지정<br>snapshot: 스냅샷을 통해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
 | block_device.destination_type | String | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
 | block_device.boot_index | Integer | - | 지정한 볼륨의 부팅 순서<br>0 이면 루트 볼륨<br>그 외는 추가 볼륨<br>숫자가 클 수록 부팅 순서는 낮아짐<br> |
 | block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 디스크 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고 |
