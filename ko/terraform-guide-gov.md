@@ -16,7 +16,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
     * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
-TOAST는 Terraform OpenStact Provider에서 아래 기술된 data sources와 resources를 지원합니다. 더 자세한 Terraform OpenStact Provider와 Terraform이 지원하는 기능은 [Terraform 사이트의 OpenStact Provider](https://www.terraform.io/docs/providers/openstack/index.html) 페이지를 참고합니다. 아래 목록 이외의 기능 사용 시 TOAST는 정상 동작을 보장하지 않습니다.
+TOAST는 Terraform OpenStack Provider에서 아래 기술된 data sources와 resources를 지원합니다. 더 자세한 Terraform OpenStack Provider와 Terraform이 지원하는 기능은 [Terraform 사이트의 OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html) 페이지를 참고합니다. 아래 목록 이외의 기능 사용 시 TOAST는 정상 동작을 보장하지 않습니다.
 
 #### Resources 지원
 
