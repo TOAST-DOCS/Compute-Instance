@@ -29,8 +29,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
 | minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수만큼의 인스턴스 목록을 반환 |
 
 #### 응답
 
@@ -102,8 +100,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
 | minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수 만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
 
 #### 응답
 

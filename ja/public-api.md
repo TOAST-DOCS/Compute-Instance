@@ -29,8 +29,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
-| limit | Query | Integer | - | タイプリストの個数<br>指定された数のタイプリストを返す |
-| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
 #### レスポンス
 
@@ -102,8 +100,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
-| limit | Query | Integer | - | タイプリストの数<br>指定された数のタイプリストを返す |
-| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
 #### レスポンス
 
