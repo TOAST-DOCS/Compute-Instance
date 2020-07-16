@@ -1,9 +1,5 @@
 ## Compute > Instance > 콘솔 사용 가이드
 
-## 동영상 가이드
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6Qa7sCNklSE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## 인스턴스 생성
 
 ### 이미지
