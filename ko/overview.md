@@ -77,9 +77,9 @@ TOAST는 물리 하드웨어 문제로 생기는 장애에 대비하기 위해 �
 
 ## 인스턴스 접속 방법
 
-### 동영상 가이드
+## 동영상 가이드
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/3-ab3H-GbHQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O8xhss2uyjk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Linux 인스턴스 접속 방법
 

@@ -2,7 +2,7 @@
 
 ## 동영상 가이드
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6Qa7sCNklSE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ig-DjAj7xcY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## 인스턴스 생성
 
