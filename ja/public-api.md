@@ -29,8 +29,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
-| limit | Query | Integer | - | タイプリストの個数<br>指定された数のタイプリストを返す |
-| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
 #### レスポンス
 
@@ -102,8 +100,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
-| limit | Query | Integer | - | タイプリストの数<br>指定された数のタイプリストを返す |
-| marker | Query | UUID | - | リストの最初のタイプID<br/>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
 #### レスポンス
 
@@ -856,7 +852,8 @@ X-Auth-Token: {tokenId}
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
 | server.block_device_mapping_v2 | Body | Object | - | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルディスクを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
-| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本ID<br>**TOASTは`image`のみサポートするため、必ずimage IDで作成する必要がある。** |
+| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本ID <br>ルートボリュームの場合、必ず起動可能な原本でなければならず、イメージの作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたボリュームを使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
 | server.block_device_mapping_v2.source_type | Body | Enum | - | インスタンスのボリューム原型タイプ。TOASTは`image`のみサポート。|
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | インスタンスボリュームの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：U2インスタンスタイプを利用する場合。<br>- `volume`：U2以外のインスタンスタイプを利用する場合。|
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のボリューム処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
@@ -1347,7 +1344,7 @@ X-Auth-Token: {tokenId}
 
 ### インスタンスイメージ作成
 
-インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するにはブロックストレージAPI](/Storage/Block Storage/ko/public-api/#_22)を参照します。
+インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するには[ブロックストレージAPI](/Storage/Block Storage/ja/public-api/#_22)を参照します。
 
 インスタンスの状態が**ACTIVE**、**SHUTOFF**、**SUSPENDED**、**PAUSED**の時のみイメージを作成できます。イメージの作成は、データの整合性を保障するためにインスタンスを終了した状態で進行することを推奨します。
 
