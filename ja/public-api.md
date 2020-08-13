@@ -1,6 +1,6 @@
 ## Compute > Instance > API v2ガイド
 
-APIを使用するにはAPIエンドポイントとトークンなどが必要です。 [API使用準備](/Compute/Compute/ko/identity-api/)を参照してAPIを使用するのに必要な情報を準備します。
+APIを使用するにはAPIエンドポイントとトークンなどが必要です。 [API使用準備](/Compute/Compute/ja/identity-api/)を参照してAPIを使用するのに必要な情報を準備します。
 
 インスタンスAPIは`compute`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
 
