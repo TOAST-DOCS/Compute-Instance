@@ -29,8 +29,6 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 | minDisk | Query | Integer | - | Minimum Disk Size (GB)<br>Return only bigger-size disk types than specified |
 | minRam | Query | Integer | - | Minimum RAM Size (MB)<br>Return only bigger RAM-size types than specified |
-| limit | Query | Integer | - | Number of types on the list <br>Return the list of types as many as specified |
-| marker | Query | UUID | - | ID of the first type on the list <br/>Return the list of instances as many as `limit` from the `marker` instance, according to the sorting order |
 
 #### Response
 
