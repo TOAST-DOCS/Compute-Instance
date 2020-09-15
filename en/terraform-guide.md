@@ -513,7 +513,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | image_name | String | - | Name of image to create an instance <br>Required if image_id is empty <br>Available only when the instance type is U2 |
 | image_id | String | - | Image ID to create an instance <br>Required if image_name is empty <br>Available only when the instance type is U2 |
 | key_pair | String | - | Keypair name to access instance<br>You may create a new keypair from **Compute > Instance > Key Pair** on TOAST console, <br>or register an existing keypair<br>See  `User Guide > Compute > Instance > Console User Guide` for more details |
-| availability_zone | String | - | 생성할 인스턴스의 가용성 영역 |
+| availability_zone | String | - | Availability zone of an instance to create |
 | network | Object | - | VPC network information to be attached to an instance to create.<br>On console, go to **Network > VPC > Management** and select VPC to be attached, and find the name and UUID of network at the bottom. |
 | network.name | String | - | Name of VPC network <br>Must specify one of network.name, network.uuid, and network.port |
 | network.uuid | String | - | ID of VPC network |
@@ -521,8 +521,8 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | security_groups | Array | - | List of the security group names for instance  <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detail information at the bottom of the page. |
 | user_data | String | - | Script and setting to be executed after instance booting<br>Allows up to 65535 bytes with character strings encoded in base64 <br> |
 | block_device | Object | - | Information object of image or block storage to be applied for an instance |
-| block_device.uuid | String | - | ID of original block storage |<br>루트 볼륨인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함 |
-| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Create block storage by using image <br>`volume`: 기존에 생성된 볼륨으로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅숏을 이용해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
+| block_device.uuid | String | - | ID of original block storage |<br> The original must be bootable for a root volume, and a volume or snapshot that has WAF, from which images cannot be created, or MS-SQL images as the original, are not available. <br> The original excluding `image` must have the same availability zone with an instance to create.|
+| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Create block storage by using image <br>`volume`: Use previously-created volume, with the destination_type specified by volume <br>`snapshot`: Use snapshot to create a block storage, with the destination_type specified by volume |
 | block_device.destination_type | String | - | Requires different settings for each location or type of instance volume <br>`local`: For U2 instance type <br>`volume`: For other instances than U2 |
 | block_device.boot_index | Integer | - | Booting order of specified volumes<br>Root volume for 0 <br>Additional volumes for others<br>The bigger the number, the lower the booting on the priority<br> |
 | block_device.volume_size | Integer | - | Disk size for instance to create <br>Available from 20GB to 2,000GB (required, if the instance type is U2) <br>Since each instance type allows different volume size, see `User Guide > Compute > Console User Guide for Instance` |
