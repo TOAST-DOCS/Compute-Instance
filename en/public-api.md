@@ -863,9 +863,9 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | Fixed IP to create instances |
 | server.name | Body | String | O | Instance name<br>Allows up to 255 letters for English, but less than 15 letters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to be added to an instance<br>Key-value pairs with less than 255 letters |
-| server.block_device_mapping_v2 | Body | Object | - | Block storage information object of instance<br>**Must be specified for any instance types other than U2 on local disks ** |
-| server.block_device_mapping_v2.uuid | Body | String | - | Original ID of block storage<br>**Must be created as Image ID since TOAST supports only`image`** |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | Source volume type of instance, for which TOAST supports only  `image` |
+| server.block_device_mapping_v2 | Body | Object | - | Block storage information object of instance<br> **Must be specified for any instance types other than U2 on local disks**|
+| server.block_device_mapping_v2.uuid | Body | String | - | Original ID of block storage <br> The original must be bootable for a root volume, and a volume or snapshot that has WAF, from which images cannot be created, or MS-SQL images as the original, are not available. <br> The original excluding `image` must have the same availability zone with an instance to create. |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | Type of block storage original to create <br>`image`: Use image to create a block storage <br>`volume`: Use previously-created volume, with the destination_type specified by volume <br>`snapshot`: Use snapshot to create a block storage, with the destination_type specified by volume |
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | Requires different settings for each location or type of instance volume. <br>- `local`: For U2-instance types<br>- `volume`: For other instances types |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Process volume when instance is deleted, with  `false` as default <br>With`true`, delete; with`false`, remain |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | Booting order of specified volumes<br>- Root volume for`0`<br>- Additional volumes for others<br>The larger, the lower on the booting order |
