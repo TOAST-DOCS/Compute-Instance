@@ -41,7 +41,7 @@ To resolve this issue, set block storage of the `/etc/fstab` file, except defaul
 It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receive DNS. 
 <br>
 
-<h3> I find "Could not resolve the host" and cannot use yum.  메시지가 나타나며 yum 등을 사용할 수 없습니다.</h3>
+<h3> I find "Could not resolve the host" and cannot use yum. </h3>
 
 It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receivie DNS. 
 <br>
