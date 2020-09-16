@@ -2,7 +2,7 @@
 
 The document describes how to resolve issues you may encouter while using TOAST. 
 
-<h3> I want to use a different version, other than the default OS version of TOAST. Can I upload my personal image? </h3>
+<h3> I want to use a different version, other than the default OS version of TOAST. Can I upload my personal images? </h3>
 
 You can only use the OS version provided by TOAST. And uploading personal images is not allowed. 
 To use personal OS images, create an instance with TOAST image and apply **Create Image**.  
