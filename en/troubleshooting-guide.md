@@ -25,7 +25,7 @@ To get root authority from CentOS instance, use the 'sudo' command like follows.
 
 <br>
 
-<h3>개인 I find error mounting, after creating image and instance, and booting it. </h3>
+<h3> I find error mounting, after creating image and instance, and booting it. </h3>
 
 You shall encounter with such error, when an image is created with instance using two or more block storages and instance is created and booted with such image. 
 
