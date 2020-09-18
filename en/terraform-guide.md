@@ -1,24 +1,24 @@
-## 서드파티 사용 가이드 > Terraform 사용 가이드
-이 문서는 Terraform으로 TOAST를 사용하는 방법을 설명합니다.
+## Third Party User Guide > Terraform User Guide 
+This document describes how to use TOAST with Terraform. 
 
 ## Terraform
-Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효율적으로 인프라의 형상을 관리할 수 있는 오픈 소스 도구입니다. Terraform의 주요 특징은 다음과 같습니다.
+ Terraform is an open-source tool to easily build and safely change infrastructure, and also to efficiently manage infrastructure configuration. Find out the main features of Terraform as follows:  
 
 * **Infrastructure as Code**
-    * 인프라를 코드로 정의하여 생산성과 투명성을 높일 수 있습니다.
-    * 정의한 코드를 쉽게 공유할 수 있어 효율적으로 협업할 수 있습니다.
+    * With infrastructure defined in codes, productivity and transparency can be raised.   
+    * Sharing defined codes is easy enough to allow efficient collaboration. 
 * **Execution Plan**
-    * 변경 계획과 변경 적용을 분리하여 변경 내용을 적용할 때 발생할 수 있는 실수를 줄일 수 있습니다.
+    * Change plan is separated from application so that mistakes from change application can be minimized. 
 * **Resource Graph**
-    * 사소한 변경이 인프라 전체에 어떤 영향을 미칠지 미리 확인할 수 있습니다.
-    * 종속성 그래프를 작성하여 이 그래프를 바탕으로 계획을 세우고, 이 계획을 적용했을 때 변경되는 인프라 상태를 확인할 수 있습니다.
+    * You can predict how a small change might impact the entire infrastructure. 
+    *  Map out a dependency graph to plan and to check expected change of infrastructure.  
 * **Change Automation**
-    * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
-    * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
+    * Automation is applied to build and change infrastructure of same configuration in many locations. 
+    * Time and mistakes can be saved while building infrastructure. 
 
-TOAST는 Terraform OpenStack Provider에서 아래 기술된 data sources와 resources를 지원합니다. 더 자세한 Terraform OpenStack Provider와 Terraform이 지원하는 기능은 [Terraform 사이트의 OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html) 페이지를 참고합니다. 아래 목록 이외의 기능 사용 시 TOAST는 정상 동작을 보장하지 않습니다.
+TOAST supports data sources and resources described as below with Terraform OpenStack Provider. For more details regarding Terraform OpenStack Provider and its features, see [Terraform website for OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)
 
-#### Resources 지원
+#### Support of Resources 
 
 * Compute
     * openstack_compute_instance_v2
@@ -35,7 +35,7 @@ TOAST는 Terraform OpenStack Provider에서 아래 기술된 data sources와 res
 * Storage
     * openstack_blockstorage_volume_v2
 
-#### Data sources 지원
+#### Support of Data Sources 
 
 * openstack_images_image_v2
 * openstack_blockstorage_volume_v2
@@ -44,16 +44,16 @@ TOAST는 Terraform OpenStack Provider에서 아래 기술된 data sources와 res
 * openstack_networking_network_v2
 * openstack_networking_subnet_v2
 
-### 알아두기
+### Note
 
-* **아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하여 사용합니다.**
-* **아래 모든 예시는 Terraform 0.12.24를 이용했습니다.**
+* **All data in the below example are not real. Replace them with precise data before application.**
+* **All examples below are made with Terraform 0.12.24.**
 
 
-## Terraform 설치
-[Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
+## Terraform Installation 
+Go to [Download Terraform](https://www.terraform.io/downloads.html) and download files for a local operating system. Decompress the files and send them to an appropriate path, and add the following path to the environment setup, and the installation is complete.  
 
-다음은 설치 예시입니다.
+See the following example for installation.
 
 ```
 $ wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
@@ -64,10 +64,10 @@ Terraform v0.12.24
 ```
 
 
-## Terraform 초기화
-Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
+## Terraform Initialization 
+Before using Terraform, create supplier configuration files like below. 
 
-공급자 파일 이름은 임의로 설정 가능하며, 이 예제에서는 `provider.tf`를 사용합니다.
+Name of the supplier file can be randomly configured, which is set as `provider.tf` in this example.    
 
 ```
 # Configure the OpenStack Provider
@@ -80,22 +80,22 @@ provider "openstack" {
 }
 ```
 * **user_name**
-    * TOAST ID를 사용합니다.
+    * Use TOAST ID. 
 * **tenant_id**
-    * TOAST 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 테넌트 ID를 확인합니다.
+    * From **Compute > Instance > Management** on TOAST Console, click **API Endpoint Setting** to check Tenant ID. 
 * **password**
-    * **API Endpoint 설정** 대화 상자에서 저장한 **API 비밀번호**를 사용합니다.
-    * API 비밀번호 설정 방법은 **사용자 가이드 > Compute > Instance > API 사용 준비**를 참고합니다.
+    * Use **API Password** saved for **API Endpoint Setting**.
+    * Regarding how to set API passwords, see **User Guide > Compute > Instance > Preparing for APIs**.
 * **auth_url**
-    * TOAST 신원 서비스 주소를 명시합니다.
-    * TOAST 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 신원 서비스(identity) URL을 확인합니다.
+    * Specify the address of TOAST identification service.  
+    * From **Compute > Instance > Management** on TOAST console, click **API Endpoint Setting** to check Identity URL.  
 * **region**
-    * TOAST 리소스를 관리할 리전 정보를 입력합니다.
-    * **KR1**: 한국(판교) 리전
-    * **KR2**: 한국(평촌) 리전
-    * **JP1**: 일본(도쿄) 리전
+    * Enter the region to manage TOAST resources.
+    * **KR1**: Korea (Pangyo) Region 
+    * **KR2**: Korea (Pyeongchon) Region 
+    * **JP1**:  Japan (Tokyo) Region 
 
-공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
+On the path including supplier configuration files,  use the `init` command to initialize Terraform. 
 
 ```
 $ ls
@@ -103,35 +103,35 @@ provider.tf
 $ terraform init
 ```
 
-## Terraform 기본 사용법
+## Terraform Usage 
 
-Terraform을 이용한 인프라 구축은 보통 아래와 같은 수명 주기(라이프 사이클)를 가집니다.
+Infrastructure buildup with Terraform has the following life cycle: 
 
-1. tf 파일 작성
-2. 구축 계획 확인
-3. 리소스 생성
-4. 리소스 수정
-5. 리소스 삭제
+1. Create TF Files
+2. Confirm Buildup Plan 
+3. Create Resources
+4. Modify Resources
+5. Delete Resources
 
-먼저 구축할 인프라 형상을 tf 파일에 작성합니다. 작성된 tf 파일에 따른 구축 계획은 아래와 같이 `plan` 명령으로 확인합니다.
+Create infrastructure configuration to build on a tf file. Apply the  `plan` command like below, to confirm the buildup plan according to the tf file.  
 
 ```
 $ terraform plan
 ```
 
-구축 계획이 문제가 없다면 `apply` 명령을 이용하여 리소스를 생성, 수정, 삭제합니다.
+If well planned, command with `apply` to create, modify, or delete resources. 
 
 ```
 $ terraform apply
 ```
 
-다음 섹션에서는 이 단계들을 예제와 함께 더 자세히 설명합니다.
+See the following section to learn more details on each phase with examples. 
 
-### tf 파일 작성
+### Create TF Files 
 
-공급자 설정 파일이 있는 경로에 tf 파일을 작성합니다. 여러 리소스 설정을 하나의 tf 파일에 모아두거나, 리소스별로 별도의 tf 파일로도 작성 가능합니다. Terraform은 작성된 전체 tf 파일을 한번에 읽어서 구축 계획을 수립합니다.
+Create a tf file to the path with supplier configuration files. You may collect many resource settings for a single tf file, or write for each tf file per resource. Terraform reads the entire tf files all at once to set up a buildup plan.  
 
-아래는 `instance.tf` 파일에 인스턴스를 생성하는 리소스를 정의한 tf 파일 예제입니다.
+See the below example on tf files in which resources creating instances are defined in the `instance.tf` file.
 
 ```
 $ ls
@@ -157,21 +157,21 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-### 구축 계획 확인
+### Confirm Buildup Plan  
 
-tf 파일에서 변경될 리소스를 `plan` 명령으로 확인할 수 있습니다. `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
+With the `plan` command, check resources for a change in tf files. By executing the `plan` command, Terraform loads .tf files to check if the setting is correct, and compare it with its own database and create a plan. When the plan is completely created, collect each type of plan for a neat output.    
 
 ```
 $ terraform plan
 ```
 
-생성된 플랜이 잘못되었다면 tf 파일을 수정하고 다시 반복하여 `plan` 명령을 실행합니다. `plan` 명령은 실제 TOAST 리소스를 변경하지 않으므로 인프라 변경 사항을 부담없이 확인할 수 있습니다.
+If a new plan is invalid, correct tf files and repeat the process, and execute the `plan` command. Since the `plan` command requires no change of actual TOAST resources, you can check infrastructure changes any time. 
 
-### 리소스 생성하기
+### Create Resources 
 
-원하는 플랜으로 tf 파일을 작성한 후에, `apply` 명령으로 리소스를 생성합니다.
+After a tf file is created with a plan of choice, execute  `apply` to create resources. 
 
-아래는 위에서 작성한 `instance.tf` 파일을 이용해 `apply` 명령을 수행한 결과 예제입니다.
+See the result example of executing the `apply` command by using the `instance.tf` file created in the above.  
 
 ```
 $ terraform apply
@@ -186,13 +186,13 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ...
 ```
 
-`apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 현재 디렉토리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
+After the `apply` command is executed, the database file (terraform.tfstate) recording the history of plan changes is created in the current directory. Take cautions for not deleting this file.  
 
-### 리소스 수정하기
+### Modify Resources 
 
-변경할 리소스가 정의된 `.tf` 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다. 변경할 수 있는 사양은 일부 속성으로 제한됩니다. 만약 변경할 수 없는 속성을 수정하면 해당 리소스는 삭제 후 새롭게 다시 생성됩니다.
+Open the  `.tf` file in which resources for change are defined, modify information, and apply the plan. Specificiation changes are restricted only to some attributes. If there is a change in an attribute which cannot be changed, the resource is deleted and created anew.   
 
-다음은 인스턴스에 `terraform-sg` 보안 그룹을 하나 더 추가하는 예시입니다. 위에서 작성한 `instance.tf` 파일을 아래와 같이 수정합니다.
+Below example shows adding one more`terraform-sg` security group to an instance. Modify the  `instance.tf`  file created in the above, like follows. 
 
 ```
 resource "openstack_compute_instance_v2" "terraform-instance-01" {
@@ -202,7 +202,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-구축 계획을 확인하면 변경된 보안 그룹 정보를 정리하여 출력합니다.
+Check the buildup plan, and the changed security group information comes as an output. 
 
 ```
 $ terraform plan
@@ -223,7 +223,7 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ...
 ```
 
-플랜을 적용하면 인스턴스에 새로운 보안 그룹이 추가됩니다.
+With the plan applied, a new security group is added to instance. 
 ```
 $ terraform apply
 ...
@@ -237,15 +237,15 @@ openstack_compute_instance_v2.terraform-instance-01: Modifications complete afte
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
-### 리소스 삭제하기
+### Delete Resources
 
-Terraform으로 생성한 리소스를 지우기 위해 해당하는 `.tf` 파일을 삭제합니다.
+To delete resources created with Terraform, delete corresponding `.tf`  files. 
 
 ```
 $ rm instance.tf
 ```
 
-구축 계획에서 해당 리소스가 삭제될 것을 확인할 수 있습니다.
+In the buildup plan, confirm the resources have been deleted. 
 
 ```
 $ terraform plan
@@ -263,7 +263,7 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ...
 ```
 
-`apply` 명령으로 생성된 instance가 삭제됩니다.
+With the `apply` command, created instances are deleted.  
 
 ```
 $ terraform apply
@@ -275,11 +275,11 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 ...
 ```
 
-## Data sources
+## Data Sources
 
-tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다.
+You can find Instance Type ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. 
 
-Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `openstack_images_image_v2.ubuntu_1804_20200218`로 가져온 이미지 정보를 참조합니다.
+Get a reference of data sources in `{data sources type}.{data source name}`. In the below example, refer to the image information imported to `openstack_images_image_v2.ubuntu_1804_20200218`.
 
 ```
 data "openstack_images_image_v2" "ubuntu_1804_20200218" {
@@ -288,7 +288,7 @@ data "openstack_images_image_v2" "ubuntu_1804_20200218" {
 }
 ```
 
-Data sources 안에서 다른 data source를 참조할 수 있습니다.
+It is available to get a reference of other data sources within a data source. 
 
 ```
 data "openstack_blockstorage_volume_v2" "volume_00"{
@@ -304,14 +304,14 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 }
 ```
 
-더 자세한 data sources 사용법은 [Terraform 사이트](https://www.terraform.io/docs/providers/openstack/index.html)의 `Data Sources` 항목을 참고합니다.
+For more details on the usage of data sources, read `Data Sources` from the [Terraform Website](https://www.terraform.io/docs/providers/openstack/index.html).
 
 
-다음 섹션에서는 TOAST가 제공하는 각종 리소스를 data sources 기능으로 가져오는 방법을 설명합니다.
+The next section describes how to import TOAST resources to data resources.  
 
-### 이미지
+### Image
 
-이미지 정보를 가져옵니다. TOAST가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
+Imports image information. TOAST common images as well as personal images are supported.  
 
 ```
 data "openstack_images_image_v2" "ubuntu_1804_20200218" {
@@ -319,7 +319,7 @@ data "openstack_images_image_v2" "ubuntu_1804_20200218" {
   most_recent = true
 }
 
-# 같은 이름의 이미지 중 가장 오래된 이미지 조회
+# Query the oldest image from same-name images 
 data "openstack_images_image_v2" "windows2016_20200218" {
   name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO"
   sort_key = "created_at"
@@ -328,21 +328,21 @@ data "openstack_images_image_v2" "windows2016_20200218" {
   tag = "_AVAILABLE_"
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 이미지 이름<br>이미지 이름은 TOAST 콘솔 **Compute > Instance에서 인스턴스 생성 버튼**을 클릭하면 TOAST에서 제공하는 이미지 목록에서 확인합니다.<br>이미지 이름은 TOAST 콘솔에 표시된 **<이미지 설명>**으로 작성해야 함<br>만약 언어 항목이 존재한다면 위의 예시처럼 **"<이미지 설명> <언어>"** 형식으로 입력해야 함 |
-| size_min | Integer | - | 조회할 이미지의 최소 크기(바이트) |
-| size_max | Integer | - | 조회할 이미지의 최대 크기(바이트) |
-| properties | Object | - | 조회할 이미지의 속성<br>모든 속성 값이 일치하는 이미지 조회 |
-| sort_key | String | - | 특정 속성을 기준으로 조회한 이미지 목록 정렬<br>기본값은 `name` |
-| sort_direction | String | - | 조회한 이미지 목록 정렬 방향 <br>`asc`: 오름차순(기본값) <br>`desc`: 내림차순 |
-| owner | String | - | 조회할 이미지가 속한 테넌트 ID |
-| tag | String | - | 특정 태그가 존재하는 이미지 검색 |
-| visibility | String | - | 조회할 이미지의 보여주기 속성<br>public, private, shared 중 하나의 값만 선택 가능<br>생략하면 모든 종류의 이미지 목록을 반환 |
-| most_recent | Boolean | - | `true`: 조회한 이미지 목록 중 가장 최근에 생성된 이미지 선택<br>`false`: 조회된 순서로 이미지 선택 |
-| member_status | String | - | 조회할 이미지 멤버 상태 <br>`accepted`,`pending`,`rejected`,`all` 중 하나|
+| name | String | - | Name of image to query<br>To check image name, go to **Compute > Instance** on TOAST console and click **Create Instance**. <br>Image name must be created as **< Image Description >** which shows on TOAST console<br>If the language item exists, follow the format as **"< Image Description > < Language >"** like the above example. |
+| size_min | Integer | - | Minimum size of image to query (bytes) |
+| size_max | Integer | - | Maximum size of image to query (bytes) |
+| properties | Object | - | Attributes of image to query <br>Query image in which all attributes coincide |
+| sort_key | String | - | Sort the list of images queried by particular attribute <br>Default is `name` |
+| sort_direction | String | - | Sorting direction of the list of queried images <br>`asc`: Ascending order (Default) <br>`desc`: Descending order |
+| owner | String | - | ID of tenant which includes the image to query |
+| tag | String | - | Search image in which a particular tag exists |
+| visibility | String | - | Show attribute of image to query <br>Select only one out of public, private, and shared <br>If left blank, all types of image list are returned |
+| most_recent | Boolean | - | `true`: Select the most recently created image from the list of queried images <br>`false`: Select images in the queried order |
+| member_status | String | - | Status of image member to query <br>One of`accepted`,`pending`, 'rejected', and`all` |
 
-### 블록 스토리지
+### Block Storage
 
 ```
 data "openstack_blockstorage_volume_v2" "volume_00" {
@@ -351,15 +351,15 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 블록 스토리지 이름 |
-| status | String | - | 조회할 블록 스토리지 상태 |
-| metadata | Object | - | 조회할 블록 스토리지와 관련된 메타데이터 |
+| name | String | - | Name of block storage to query |
+| status | String | - | Status of block storage to query |
+| metadata | Object | - | Metadata related with block storage to query |
 
-### 인스턴스 타입
+### Instance Type
 
-인스턴스 타입 이름은 TOAST 콘솔 **Compute > Instance**에서 **인스턴스 생성 > 인스턴스 타입 선택** 버튼을 클릭해 확인할 수 있습니다.
+To check name of an instance type, go to TOAST Console and click **Create Instance > Instance Type** from **Compute > Instance**. 
 
 ```
 data "openstack_compute_flavor_v2" "u2c2m4"{
@@ -367,12 +367,12 @@ data "openstack_compute_flavor_v2" "u2c2m4"{
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Descrition |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 인스턴스 타입 이름 |
+| name | String | - | Name of instance type to query |
 
 
-### 스냅숏
+### Snapshot
 
 ```
 data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
@@ -383,17 +383,17 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 스냅숏 이름 |
-| volume_id | String | - | 조회할 스냅숏의 원본 블록 스토리지 ID |
-| status | String | - | 조회할 스냅숏의 상태 |
-| most_recent | Boolean | - | `true`: 조회한 스냅숏 목록 중 가장 최근에 만들어진 스냅숏 선택<br>`false`: 조회된 순서로 스냅숏 선택 |
+| name | String | - | Name of snapshot to query |
+| volume_id | String | - | ID of original block storage of snapshot to query |
+| status | String | - | Status of snapshot to query |
+| most_recent | Boolean | - | `true`: Select the most recently created snapshot from the queried snapshot list <br>`false`: Select snapshots in the queried order |
 
 
 ### VPC
 
-VPC 네트워크의 UUID는 TOAST 콘솔 **Network > VPC**에서 VPC를 선택하여 확인 가능합니다.
+To check UUID of VPC network, go to TOAST console and select VPC from **Network > VPC**. 
 
 ```
 data "openstack_networking_network_v2" "default_network" {
@@ -402,15 +402,15 @@ data "openstack_networking_network_v2" "default_network" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 VPC 네트워크 이름 |
-| network_id | String | - | 조회할 VPC 네트워크 UUID |
+| name | String | - | Name of VPC network to query |
+| network_id | String | - | UUID of VPC network to query |
 
 
-### 서브넷
+### Subnet
 
-서브넷 ID는 TOAST 콘솔 **Network > VPC > 서브넷**에서 서브넷을 선택하여 확인 가능합니다.
+To check subnet ID, go to TOAST console and select a subnet from **Network > VPC > Subnet**. 
 
 ```
 data "openstack_networking_subnet_v2" "default_subnet" {
@@ -419,31 +419,31 @@ data "openstack_networking_subnet_v2" "default_subnet" {
   network_id = data.openstack_networking_network_v2.default_network.network_id
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 서브넷의 이름 |
-| subnet_id | String | - | 조회할 서브넷의 UUID |
-| network_id | String | - | 조회할 서브넷이 속한 네트워크 UUID |
+| name | String | - | Name of subnet to query |
+| subnet_id | String | - | UUID of subnet to query |
+| network_id | String | - | UUID of network to which subnet to query is included |
 
 
 ## Resources
 
-Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습니다. TOAST에서는 Terraform을 통해 다음 리소스 관리를 지원합니다.
+You may create, modify, or delete resources with Terraform Resources. With Terraform, TOAST supports the following to manage resources:  
 
-* 인스턴스
-* 블록 스토리지
-* 플로팅 IP
-* 네트워크 포트
-* 로드 밸런서
+* Instance 
+* Block Storage
+* Floating IP 
+* Network Port
+* Load Balancer
 
-다음 섹션에는 각 리소스를 사용하는 방법을 설명합니다.
+The following sections describe how to use each resource.  
 
-## Resources - 인스턴스
+## Resources - Instance
 
-### 인스턴스 생성
+### Create Instance 
 
 ```
-# u2 인스턴스 생성
+# Create u2 Instance
 resource "openstack_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
@@ -451,6 +451,7 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   image_id = data.openstack_images_image_v2.centos_610_20200218.id
   flavor_id = data.openstack_compute_flavor_v2.u2c1m2.id
   security_groups = ["default"]
+  availability_zone = "kr-pub-a"
 
   network {
     name = data.openstack_networking_network_v2.default_network.name
@@ -467,8 +468,8 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   }
 }
 
-# u2 외의 인스턴스 타입
-# 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
+# Instance types other than u2 
+# Create instances with network or block storage added 
 resource "openstack_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
   region    = "KR1"
@@ -503,58 +504,59 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | O | 생성할 인스턴스의 이름 |
-| region | String | - | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전 |
-| flavor_name | String | - | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수 |
-| flavor_id | String | - | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수 |
-| image_name | String | - | 인스턴스 생성 시 사용할 이미지 이름<br>image_id가 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능 |
-| image_id | String | - | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능 |
-| key_pair | String | - | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 TOAST 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고 |
-| network | Object | - | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면, 하단 상세 정보 화면에서 네트워크 이름과 uuid를 확인 가능 |
-| network.name | String | - | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 꼭 명시. |
-| network.uuid | String | - | VPC 네트워크 ID |
-| network.port | String | - | VPC 네트워크에 연결할 포트의 ID |
-| security_groups | Array | - | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
-| user_data | String | - | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br> |
-| block_device | Object | - | 인스턴스에 사용할 이미지 또는 블록 스토리지 정보 객체 |
-| block_device.uuid | String | - | 생성할 블록 스토리지 원본의 ID |
-| block_device.source_type | String | O | 생성할 블록 디바이스 원본의 타입<br>`image`: 이미지로 블록 스토리지 생성<br>`blank`: 추가 볼륨 생성 시 빈 블록 디바이스 생성 |
-| block_device.destination_type | String | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
-| block_device.boot_index | Integer | - | 지정한 볼륨의 부팅 순서<br>0 이면 루트 볼륨<br>그 외는 추가 볼륨<br>숫자가 클 수록 부팅 순서는 낮아짐<br> |
-| block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 디스크 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고 |
-| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음 |
+| name | String | O | Name of instance to create |
+| region | String | - | Region of instance to create <br>Default is the region setting at  provider.tf |
+| flavor_name | String | - | Name of instance type of instance to create <br>Required if flavor_id is empty |
+| flavor_id | String | - | ID of instance type of instance to create <br>Required if flavor_name is empty |
+| image_name | String | - | Name of image to create an instance <br>Required if image_id is empty <br>Available only when the instance type is U2 |
+| image_id | String | - | Image ID to create an instance <br>Required if image_name is empty <br>Available only when the instance type is U2 |
+| key_pair | String | - | Keypair name to access instance<br>You may create a new keypair from **Compute > Instance > Key Pair** on TOAST console, <br>or register an existing keypair<br>See  `User Guide > Compute > Instance > Console User Guide` for more details |
+| availability_zone | String | - | Availability zone of an instance to create |
+| network | Object | - | VPC network information to be attached to an instance to create.<br>On console, go to **Network > VPC > Management** and select VPC to be attached, and find the name and UUID of network at the bottom. |
+| network.name | String | - | Name of VPC network <br>Must specify one of network.name, network.uuid, and network.port |
+| network.uuid | String | - | ID of VPC network |
+| network.port | String | - | ID of a port to be attached to VPC network |
+| security_groups | Array | - | List of the security group names for instance  <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detail information at the bottom of the page. |
+| user_data | String | - | Script and setting to be executed after instance booting<br>Allows up to 65535 bytes with character strings encoded in base64 <br> |
+| block_device | Object | - | Information object of image or block storage to be applied for an instance |
+| block_device.uuid | String | - | ID of original block storage |<br> The original must be bootable for a root volume, and a volume or snapshot that has WAF, from which images cannot be created, or MS-SQL images as the original, are not available. <br> The original excluding `image` must have the same availability zone with an instance to create.|
+| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Create block storage by using image <br>`volume`: Use previously-created volume, with the destination_type specified by volume <br>`snapshot`: Use snapshot to create a block storage, with the destination_type specified by volume |
+| block_device.destination_type | String | - | Requires different settings for each location or type of instance volume <br>`local`: For U2 instance type <br>`volume`: For other instances than U2 |
+| block_device.boot_index | Integer | - | Booting order of specified volumes<br>Root volume for 0 <br>Additional volumes for others<br>The bigger the number, the lower the booting on the priority<br> |
+| block_device.volume_size | Integer | - | Disk size for instance to create <br>Available from 20GB to 2,000GB (required, if the instance type is U2) <br>Since each instance type allows different volume size, see `User Guide > Compute > Console User Guide for Instance` |
+| block_device.delete_on_termination | Boolean | - | `true`: Delete block device along with instance <br>`false`: Delete instance, but not block instance |
 
-### 블록 스토리지 연결
+### Attach Block Storage
 ```
-# 인스턴스 생성
+# Create Instance
 resource "openstack_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
-# 블록 스토리지 생성
+# Create Block Storage
 resource "openstack_blockstorage_volume_v2" "volume_01" {
   ...
 }
 
-# 블록 스토리지 연결
+# Attach Block Storage 
 resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = openstack_compute_instance_v2.tf_instance_02.id
   volume_id = openstack_blockstorage_volume_v2.volume_01.id
 }
 ```
-| 이름    | 타입 | 필수  | 설명       |
+| Name | Type | Required | Description |
 | ------ | --- |---- | --------- |
-| instance_id | String | - | 블록 스토리지를 연결할 대상 인스턴스 |
-| volume_id | String | - | 연결할 블록 스토리지 UUID |
+| instance_id | String | - | Instance of a target to be attached with block storage |
+| volume_id | String | - | UUID of block storage to be attached |
 
 
-## Resources - 블록 스토리지
+## Resources - Block Storage
 
-### 블록 스토리지 생성
+### Create Block Storage
 ```
-# HDD 타입의 빈 블록 스토리지 생성
+# Create HDD-type Empty Block Storage 
 resource "openstack_blockstorage_volume_v2" "volume_01" {
   name = "tf_volume_01"
   size = 10
@@ -562,7 +564,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
   volume_type = "General HDD"
 }
 
-# SSD 타입의 빈 블록 스토리지 생성
+# Create SSD-type Empty Block Storage 
 resource "openstack_blockstorage_volume_v2" "volume_02" {
   name = "tf_volume_02"
   size = 10
@@ -570,7 +572,7 @@ resource "openstack_blockstorage_volume_v2" "volume_02" {
   volume_type = "General SSD"
 }
 
-# 스냅숏으로 블록 스토리지 생성
+# Create Block Storage with Snapshot 
 resource "openstack_blockstorage_volume_v2" "volume_03" {
   name = "tf_volume_03"
   description = "terraform create volume with snapshot test"
@@ -579,20 +581,21 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| 이름    | 타입 | 필수  | 설명       |
+| Name | Type | Required | Description |
 | ------ | --- |---- | --------- |
-| name | String | O | 생성할 블록 스토리지 이름 |
-| description | String | - | 블록 스토리지 설명 |
-| size | Integer | - | 생성할 블록 스토리지 크기(GB) |
-| availability_zone | String | - | 생성할 블록 스토리지의 가용성 영역, 값이 존재하지 않을 경우 임의의 가용성 영역<br>availability_zone은 콘솔 `Storage > Block Storage > 관리`의 **블록 스토리지 생성** 버튼을 클릭하면 표시되는 가용성 영역에서 확인할 수 있습니다. |
-| volume_type | String | - | 블록 스토리지 타입<br>`General HDD`: HDD 블록 스토리지(기본값)<br>`General SSD`: SSD 블록 스토리지 |
+| name | String | O | Name of block storage to create |
+| description | String | - | Description of block storage |
+| size | Integer | - | Size of block storage to create (GB) |
+| availability_zone | String | - | Availability zone of a block storage to create; random zone, if value does not exist. <br>To check availability_zone, go to `Storage > Block Storage > Management` of the console and click **Create Block Storage**. |
+| volume_type | String | - | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
 
 
-### 블록 스토리지 불러오기
+### Import Block Storage
 
-콘솔 또는 API를 통해 생성한 블록 스토리지를 Terraform으로 불러와 관리할 수 있습니다.
+Import block storage created on console or via API to Terraform.  
 
-`.tf` 파일에 불러올 블록 스토리지 정보를 작성합니다.
+Create block storage information to be imported onto `.tf` file. 
+
 ```
 resource "openstack_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"
@@ -600,7 +603,7 @@ resource "openstack_blockstorage_volume_v2" "volume_06" {
 }
 ```
 
-`terraform import openstack_blockstorage_volume_v2.{name} {block storage id}` 명령으로 블록 스토리지를 불러옵니다.
+With the command of `terraform import openstack_blockstorage_volume_v2.{name} {block storage id}`, import block storage. 
 
 ```
 $ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
@@ -617,14 +620,14 @@ Import successful!
 
 ## Resources - VPC
 
-TOAST는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
+TOAST supports creating the following resources with Terraform: 
 
-* 플로팅 IP
-* 네트워크 포트
+* Floating IP 
+* Network port 
 
-이외의 VPC 자원은 콘솔에서 생성해야 합니다.
+Other VPC resources must be created on console. 
 
-### 플로팅 IP 생성
+### Create Floating IP
 
 ```
 resource "openstack_compute_floatingip_v2" "fip_01" {
@@ -632,38 +635,38 @@ resource "openstack_compute_floatingip_v2" "fip_01" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | --- |---- | --------- |
-| pool | String | O | 플로팅 IP를 생성할 IP 풀<br>콘솔 `Network > Floating IP`에서 `플로팅 IP 생성` 버튼을 클릭해서 표시되는 IP 풀에서 확인할 수 있습니다. |
+| pool | String | O | IP pool to create a floating IP <br>From `Network > Floating IP` on console, click`Create Floating IP` and check IP pool. |
 
 
-### 플로팅 IP 연결
+### Associate Floating IP
 ```
-# 인스턴스 생성
+# Create Instance
 resource "openstack_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
-# 플로팅 IP 생성
+# Create Floating IP
 resource "openstack_compute_floatingip_v2" "fip_01" {
   ...
 }
 
-# 플로팅 IP 연결
+# Associate Floating IP
 resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
   floating_ip = openstack_compute_floatingip_v2.fip_01.address
   instance_id = openstack_compute_instance_v2.tf_instance_01.id
 }
 
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | --- |---- | --------- |
-| floating_ip | String | O | 연결할 플로팅 IP |
-| instance_id | String | O | 플로팅 IP를 연결할 대상 인스턴스 UUID |
-| fixed_ip | String | - | 플로팅 IP를 연결할 대상의 고정 IP |
-| wait_until_associated | Boolean | - | `true`: 플로팅 IP를 연결될 때까지 대상 인스턴스를 폴링<br>`false`: 플로팅 IP를 연결될 때까지 대기하지 않음(기본값) |
+| floating_ip | String | O | Floating IP to associate |
+| instance_id | String | O | UUID of instance for a target to be associated with floating IP |
+| fixed_ip | String | - | Fixed IP of a target to be associated with floating IP |
+| wait_until_associated | Boolean | - | `true`: Poll a target instance until floating IP is associated <br>`false`: Do not wait until floating IP is associated (default) |
 
-### 네트워크 포트 생성
+### Create Network Port
 
 ```
 resource "openstack_networking_port_v2" "port_1" {
@@ -673,24 +676,24 @@ resource "openstack_networking_port_v2" "port_1" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | O | 생성할 포트의 이름 |
-| description | String | O | 포트 설명 |
-| network_id | String | O | 포트를 생성할 VPC 네트워크 ID |
-| tenant_id | String | O | 생성할 포트의 테넌트 ID |
-| device_id | String | - | 생성된 포트가 연결될 장치 ID |
-| fixed_ip | Object | - | 생성할 포트의 고정 IP 설정 정보<br>`no_fixed_ip` 속성이 없어야 함 |
-| fixed_ip.subent_id | String | O | 고정 IP의 서브넷 ID |
-| fixed_ip.ip_address | String | - | 설정할 고정 IP의 주소 |
-| no_fixed_ip | Boolean | - | `true`: 고정 IP가 없는 포트<br>`fixed_ip` 속성이 없어야 함 |
-| admin_state_up | Boolean | - | 관리자 제어 상태<br> `true`: 작동<br>`false`: 중지 |
+| name | String | O | Name of port to create |
+| description | String | O | Description of port |
+| network_id | String | O | Network ID of VPC to create a port |
+| tenant_id | String | O | Tenant ID of port to create |
+| device_id | String | - | ID of device to be attached to a created port |
+| fixed_ip | Object | - | Setting information of fixed IP of a port to create <br>Must not include the`no_fixed_ip` attribute |
+| fixed_ip.subent_id | String | O | Subnet ID of fixed IP |
+| fixed_ip.ip_address | String | - | Address of fixed IP to configure |
+| no_fixed_ip | Boolean | - | `true`: Port without fixed IP<br>Must not include the`fixed_ip` attribute |
+| admin_state_up | Boolean | - | Administrator control status <br> `true`: Running <br>`false`: Suspended |
 
 
 
 
-## Resources - 로드 밸런서
-### 로드 밸런서 생성
+## Resources - Load Balancer 
+### Create Load Balancer
 
 ```
 resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
@@ -701,21 +704,21 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   admin_state_up = true
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 로드 밸런서 이름 |
-| description | String | - | 로드 밸런서 설명 |
-| tenant_id | String | - | 로드 밸런서가 생성될 테넌트 ID |
-| vip_subnet_id | String | O | 로드 밸런서가 사용할 서브넷 UUID |
-| vip_address | String | - | 로드 밸런서의 IP 지정 |
-| security_group_ids | Object | - | 로드 벨런서에 적용할 보안 그룹 ID 목록<br>**보안 그룹은 반드시 이름이 아닌 ID로 지정해야 함** |
-| admin_state_up | Boolean | - | 관리자 제어 상태 |
+| name | String | - | Name of load balancer |
+| description | String | - | Description of load balancer |
+| tenant_id | String | - | Tenant ID to which load balancer is to be created |
+| vip_subnet_id | String | O | Subnet UUID to be used by load balancer |
+| vip_address | String | - | IP specified by load balancer |
+| security_group_ids | Object | - | List of security group IDs to be applied for load balancer <br>**Security groups must be specified by ID, not by name** |
+| admin_state_up | Boolean | - | Administrator control status |
 
 
-### 리스너 생성
+### Create Listener 
 
 ```
-# HTTP 리스너
+# HTTP Listener
 resource "openstack_lb_listener_v2" "tf_listener_http_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
@@ -731,7 +734,7 @@ resource "openstack_lb_listener_v2" "tf_listener_http_01"{
   admin_state_up = true
 }
 
-# Terminated HTTPS 리스너
+# Terminated HTTPS Listener
 resource "openstack_lb_listener_v2" "tf_listener_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
@@ -749,27 +752,27 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
   admin_state_up = true
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 생성할 리스너 이름 |
-| description  | String | - | 리스너 설명 |
-| protocol | String | O | 생성할 리스너 프로토콜<br>`TCP`, `HTTP,HTTPS`, `TERMINATED_HTTPS` 중 하나 |
-| protocol_port | Integer | O | 생성할 리스너 포트 |
-| loadbalancer_id | String | O | 생성할 리스너가 연결될 로드 밸런서 ID |
-| default_pool_id | String | - | 생성할 리스너에 연결될 기본 풀 ID |
-| connection_limit  | Integer | - | 생성할 리스너에 허용되는 최대 연결 수 |
-| timeout_client_data  | Integer | - | 클라이언트 비활동 시 타임아웃 설정(ms) |
-| timeout_member_connect  | Integer | - | 멤버 연결 시 타임아웃 설정(ms) |
-| timeout_member_data | Integer | - | 멤버 비활동 시 타임아웃 시간 설정(ms) |
-| timeout_tcp_inspect | Integer | - | 콘텐츠 검사를 위해 추가 TCP 패킷을 기다리는 시간(ms) |
-| default_tls_container_ref | String | - | 프로토콜이 `TERMINATED_HTTPS`인 경우 사용할 TLS 인증서 경로 |
-| sni_container_refs | Array | - | SNI 인증서 경로 목록 |
-| insert_headers | String | - | 백엔드 멤버에게 요청을 전송하기 전에 추가할 헤더 목록 |
-| admin_state_up | Boolean | - | 관리자 제어 상태 |
+| name | String | - | Name of listener to create |
+| description  | String | - | Description of listener |
+| protocol | String | O | Listener protocol to create <br>One of`TCP`, `HTTP,HTTPS`, and `TERMINATED_HTTPS` |
+| protocol_port | Integer | O | Listener port to create |
+| loadbalancer_id | String | O | ID of load balancer to be connected with listener to create |
+| default_pool_id | String | - | ID of default pool to be connected with listener to create |
+| connection_limit  | Integer | - | Maximum connection count allowed to listener to create |
+| timeout_client_data  | Integer | - | Timeout setting when client is disabled (ms) |
+| timeout_member_connect  | Integer | - | Timeout setting when member is connected (ms) |
+| timeout_member_data | Integer | - | Timeout setting when member is disabled (ms) |
+| timeout_tcp_inspect | Integer | - | Timeout for additional TCP packet to inspect content (ms) |
+| default_tls_container_ref | String | - | Path of TLC certificate to be enabled when the protocol is`TERMINATED_HTTPS` |
+| sni_container_refs | Array | - | List of SNI certificate paths |
+| insert_headers | String | - | List of headers to be added before request is sent to a backend member |
+| admin_state_up | Boolean | - | Administrator control status |
 
-### 풀 생성
+### Create Pool
 
-<font color='red'>**(주의) TOAST는 풀 생성 시에 `loadbalancer_id` 지정을 지원하지 않습니다.**</font>
+<font color='red'>**(Caution) TOAST does not support for specifying `loadbalancer_id` .**</font>
 
 ```
 resource "openstack_lb_pool_v2" "tf_pool_01"{
@@ -785,20 +788,20 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
   admin_state_up = true
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 로드 밸런서 이름 |
-| description | String | - | 풀 설명 |
-| protocol | String | O | 프로토콜<br>`TCP`, `HTTP`, `HTTPS`, `PROXY` 중 하나 |
-| listener_id | String | O | 생성할 풀이 연결될 리스너 ID |
-| lb_method | String | O | 풀의 트래픽을 멤버에게 분배하는 로드 밸런싱 방식<br>`ROUND_ROBIN`,`LEAST_CONNECTIONS`,`SOURCE_IP` 중 하나 |
-| persistence | Object | - | 생성할 풀의 세션 지속성 |
-| persistence.type | String | O | 세션 지속성 타입<br>`SOURCE_IP`, `HTTP_COOKIE`, `APP_COOKIE` 중 하나<br>로드 밸런싱 방식이 `SOURCE_IP`인 경우 사용 할 수 없음<br>프로토콜이 `HTTPS`이거나 `TCP`인 경우 HTTP_COOKIE와 APP_COOKIE를 사용할 수 없음 |
-| persistence.cookie_name | String | - | 쿠키 이름<br>persistence.cookie_name은 세션 지속성 타입이 APP_COOKIE인 경우에만 사용 가능 |
-| admin_state_up | Boolean | - | 관리자 제어 상태 |
+| name | String | - | Load balancer name |
+| description | String | - | Pool description |
+| protocol | String | O | Protocol <br>One of `TCP`, `HTTP`, `HTTPS`, and `PROXY` |
+| listener_id | String | O | Listener ID with which a pool to create is to be associated |
+| lb_method | String | O | Load balancing method to distribute pool traffic to members <br>One of `ROUND_ROBIN`,`LEAST_CONNECTIONS`, and`SOURCE_IP` |
+| persistence | Object | - | Session persistence of a pool to create |
+| persistence.type | String | O | Session persistence type<br>One of`SOURCE_IP`, `HTTP_COOKIE`, and `APP_COOKIE` <br>Unavailable if the load balancing type is `SOURCE_IP`<br>HTTP_COOKIE and APP_COOKIE are unavailable if the protocol is  `HTTPS` or`TCP` |
+| persistence.cookie_name | String | - | Name of cookie <br>persistence.cookie_name is available only when the session persistence type is APP_COOKIE |
+| admin_state_up | Boolean | - | Administrator control status |
 
 
-### 헬스 모니터 생성
+### Create Health Monitor 
 
 ```
 resource "openstack_lb_monitor_v2" "tf_monitor_01"{
@@ -814,23 +817,23 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
   admin_state_up = true
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 생성할 헬스 모니터의 이름 |
-| pool_id | String | O | 생성할 헬스 모니터가 연결될 풀 ID |
-| type | String | O | `TCP`, `HTTP`, `HTTPS`만 지원 |
-| delay | Integer | O | 상태 확인 간격(초) |
-| timeout | Integer | O | 상태 확인 응답 대기 시간(초)<br> timeout은 delay 값보다 작아야 함 |
-| max_retries | Integer | O | 최대 재시도 횟수로 1~10 사이의 값 |
-| url_path | String | - | 상태 확인 요청 URL |
-| http_method | String | - | 상태 확인에 사용할 HTTP 메서드<br>기본값은 GET|
-| expected_codes | String | - | 정상 상태로 간주할 멤버의 HTTP(S) 응답 코드<br>expected_codes는 목록(`200,201,202`)이나 범위 지정(`200-202`)도 가능 |
-| admin_state_up | Boolean | - | 관리자 제어 상태 |
+| name | String | - | Name of health monitor to create |
+| pool_id | String | O | Pool ID to be connected with health monitor to create |
+| type | String | O | Support`TCP`, `HTTP`, and `HTTPS` only |
+| delay | Integer | O | Interval of status check |
+| timeout | Integer | O | Timeout for status check (seconds)<br>Timeout must have smaller value than delay |
+| max_retries | Integer | O | Number of maximum retries, between 1 and 10 |
+| url_path | String | - | URL requesting of status checks |
+| http_method | String | - | HTTP method to check status<br>Default is GET |
+| expected_codes | String | - | HTTP response code of members to be considered in normal status <br/>expected_codes is available as list (`200,201,202`), or range (`200-202`) |
+| admin_state_up | Boolean | - | Administrator control status |
 
 
-### 멤버 생성
+### Create Member
 
-<font color='red'>**(주의) TOAST에서 멤버 생성 시에 `subnet_id`를 필수로 지정합니다. 또한 `name`은 지원하지 않습니다.**</font>
+<font color='red'>**(Caution) `subnet_id` must be specified when TOAST creates a member. Also note that`name` is not supported. **</font>
 
 ```
 resource "openstack_lb_member_v2" "tf_member_01"{
@@ -843,15 +846,15 @@ resource "openstack_lb_member_v2" "tf_member_01"{
 }
 
 ```
-| 이름    | 형식 | 필수  | 설명       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| pool_id | String | O | 생성할 멤버가 속한 풀 ID |
-| subnet_id | String | O | 생성할 멤버의 서브넷 ID |
-| address | String | O | 로드 밸런서에서 트래픽을 수신할 멤버의 IP 주소 |
-| protocol_port | Integer | O | 트래픽을 수신할 멤버의 포트 |
-| weight | Integer | - | 풀에서 받아야 하는 트래픽의 가중치<br>높을수록 트래픽을 많이 받음 |
-| admin_state_up | Boolean | - | 관리자 제어 상태 |
+| pool_id | String | O | ID of pool including member to create |
+| subnet_id | String | O | Subnet ID of member to create |
+| address | String | O | IP address of member to receive traffic from load balancer |
+| protocol_port | Integer | O | Port of member to receive traffic |
+| weight | Integer | - | Weight of traffic to receive from the pool <br>The higher the weight, the more traffic you receive. |
+| admin_state_up | Boolean | - | Administrator control status |
 
 
-## 참고 사이트
+## Reference 
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
