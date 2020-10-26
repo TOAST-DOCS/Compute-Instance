@@ -180,7 +180,7 @@ Now click **Open** to access to instance.
 
 To access a Windows server, select a Windows instance to access from TOAST console. Click **Check Password** in the **Instance Access** tab from screen details at the bottom to check password set in the Windows server. 
 
-![윈도우 인스턴스 접속](http://static.toastoven.net/prod_instance/windows-login-en.png)
+![Access to Windows Instance](http://static.toastoven.net/prod_instance/windows-login-en.png)
 
 Private key of key pair required to check password is not transmitted to the server but used only to decrypt password at the browser. 
 
