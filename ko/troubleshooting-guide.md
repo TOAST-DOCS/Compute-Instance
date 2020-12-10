@@ -48,6 +48,7 @@ CentOS 인스턴스에서 root 권한을 얻으려면 다음과 같이 `sudo` �
 
 다음과 같이 `yum repository`파일을 수정하여 사용합니다.
 ```
+$ sudo vi /etc/yum.repo.d/CentOS-Base.repo
 ...
 [base]
 name=CentOS-$releasever - Base
@@ -75,4 +76,7 @@ baseurl=https://vault.centos.org/6.10/extras/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ...
+
+$ sudo yum clean all
+$ sudo yum repolist
 ```
