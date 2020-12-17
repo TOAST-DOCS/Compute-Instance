@@ -46,7 +46,7 @@ CentOS 인스턴스에서 root 권한을 얻으려면 다음과 같이 `sudo` �
 
 <h3>CentOS 6.x 인스턴스에서 패키지 업데이트에 실패합니다.</h3>
 
-다음과 같이 `yum repository`파일을 수정하여 사용합니다.
+다음과 같이 `yum repository` 파일을 수정하여 사용합니다.
 공식 지원이 종료된 OS는 추가 업데이트가 지원되지 않으므로, 상위 버전의 OS 사용을 권장합니다.
 ```
 $ sudo vi /etc/yum.repo.d/CentOS-Base.repo
