@@ -49,7 +49,7 @@ CentOSインスタンスでroot権限を取得するには、次のように`sud
 次のように`yum repository`ファイルを修正して使用します。
 公式サポートが終了したOSは追加アップデートがサポートされないため、上位バージョンOSの使用を推奨します。
 ```
-$ sudo vi /etc/yum.repo.d/CentOS-Base.repo
+$ sudo vi /etc/yum.repos.d/CentOS-Base.repo
 ...
 [base]
 name=CentOS-$releasever - Base

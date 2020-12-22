@@ -51,7 +51,7 @@ It happens when DNS is blocked at the receiving part of the security group to wh
 다음과 같이 `yum repository` 파일을 수정하여 사용합니다.
 공식 지원이 종료된 OS는 추가 업데이트가 지원되지 않으므로, 상위 버전의 OS 사용을 권장합니다.
 ```
-$ sudo vi /etc/yum.repo.d/CentOS-Base.repo
+$ sudo vi /etc/yum.repos.d/CentOS-Base.repo
 ...
 [base]
 name=CentOS-$releasever - Base
