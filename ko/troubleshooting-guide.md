@@ -43,3 +43,41 @@ CentOS 인스턴스에서 root 권한을 얻으려면 다음과 같이 `sudo` �
 
 인스턴스가 속한 보안 그룹의 송신 부분에서 DNS를 막은 경우 발생합니다. DNS 송신을 할 수 있도록 보안 그룹을 조정합니다.
 <br>
+
+<h3>CentOS 6.x 인스턴스에서 패키지 업데이트에 실패합니다.</h3>
+
+다음과 같이 `yum repository` 파일을 수정하여 사용합니다.
+공식 지원이 종료된 OS는 추가 업데이트가 지원되지 않으므로, 상위 버전의 OS 사용을 권장합니다.
+```
+$ sudo vi /etc/yum.repos.d/CentOS-Base.repo
+...
+[base]
+name=CentOS-$releasever - Base
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+baseurl=https://vault.centos.org/6.10/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#released updates
+[updates]
+name=CentOS-$releasever - Updates
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+baseurl=https://vault.centos.org/6.10/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+baseurl=https://vault.centos.org/6.10/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+...
+
+$ sudo yum clean all
+$ sudo yum repolist
+```
