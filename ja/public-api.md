@@ -8,7 +8,7 @@ APIを使用するにはAPIエンドポイントとトークンなどが必要�
 |---|---|---|
 | compute | 韓国(パンギョ)リージョン<br>韓国(坪村)リージョン<br>日本リージョン | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://kr2-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
 
-APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、TOAST内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
+APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
 ## インスタンスタイプ
 
@@ -435,7 +435,7 @@ X-Auth-Token: {tokenId}
 | `HARD_REBOOT`| インスタンスを強制的に再起動した場合。物理サーバーの電源を落とし、再び入れるのと同じ動作。|
 | `RESIZED`| インスタンスタイプを変更したり、インスタンスを他のホストへ移した場合。<br>インスタンスが終了して、再び起動した状態。|
 | `REVERT_RESIZE`| インスタンスタイプを変更したり、インスタンスを他のホストへ移す過程で失敗した時、元の状態に戻すために復旧する場合 |
-| `VERIFY_RESIZE`| インスタンスが、タイプ変更またはインスタンスを他のホストへ移す過程を終えてユーザーの承認を待っている場合。<br>TOASTではこの場合、自動的に`ACTIVE`状態に変わる。|
+| `VERIFY_RESIZE`| インスタンスが、タイプ変更またはインスタンスを他のホストへ移す過程を終えてユーザーの承認を待っている場合。<br>NHN Cloudではこの場合、自動的に`ACTIVE`状態に変わる。|
 | `ERROR`| 直前にインスタンスに行った動作が失敗した場合 |
 | `PAUSED`| インスタンスが一時停止した場合。一時停止したインスタンスはハイパーバイザのメモリに保存される。|
 | `REBUILD`| インスタンスを作成時、イメージから新たに作り出す状態 |
@@ -531,7 +531,7 @@ X-Auth-Token: {tokenId}
 | servers.addresses | Body | Object | インスタンスIPリストオブジェクト。<br>インスタンスに接続されたポート数分のリストが作成される。 |
 | servers.addresses."Network名" | Body | Object | インスタンスに接続されている各Networkのポート情報 |
 | servers.addresses."Network名".OS-EXT-IPS-MAC:mac_addr | Body | String | インスタンスに接続されたポートのMACアドレス |
-| servers.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>TOASTはIPv4のみサポート |
+| servers.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>NHN CloudはIPv4のみサポート |
 | servers.addresses."Network名".addr | Body | String | インスタンスに接続されたポートのIPアドレス |
 | servers.addresses."Network名".OS-EXT-IPS:type | Body | Enum | ポートのIPアドレスタイプ<br>`fixed`または`floating`のいずれか1つ。 |
 | servers.links | Body | Object | インスタンスパスオブジェクト |
@@ -551,7 +551,7 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | インスタンスを作成したユーザーID |
 | servers.created | Body | Datetime | インスタンス作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | servers.tenant_id | Body | String | インスタンスが属しているテナントID |
-| servers.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用しないまま残す。TOASTは`MANUAL`を使用 |
+| servers.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用しないまま残す。NHN Cloudは`MANUAL`を使用 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | servers.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
@@ -686,7 +686,7 @@ X-Auth-Token: {tokenId}
 | server.addresses | Body | Object | インスタンスIPリストオブジェクト。<br>インスタンスに接続されたポート数分のリストが作成される。 |
 | server.addresses."Network名" | Body | Object | インスタンスに接続された各Networkのポート情報 |
 | server.addresses."Network名".OS-EXT-IPS-MAC:mac_addr | Body | String | インスタンスに接続されたポートのMACアドレス |
-| server.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>TOASTはIPv4のみサポート |
+| server.addresses."Network名".version | Body | Integer | インスタンスに接続されたポートのIPバージョン<br>NHN CloudはIPv4のみサポート |
 | server.addresses."Network名".addr | Body | String | インスタンスに接続されたポートのIPアドレス |
 | server.addresses."Network名".OS-EXT-IPS:type | Body | Enum | ポートのIPアドレスタイプ<br>`fixed`または`floating`のいずれか1つ。 |
 | server.links | Body | Object | インスタンスパスオブジェクト |
@@ -706,7 +706,7 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | インスタンスを作成したユーザーID |
 | server.created | Body | Datetime | インスタンスの作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | server.tenant_id | Body | String | インスタンスが属しているテナントID |
-| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。TOASTは`MANUAL`を使用 |
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。NHN Cloudは`MANUAL`を使用 |
 | server.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | server.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
@@ -854,7 +854,7 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2 | Body | Object | - | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルディスクを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本ID <br>ルートボリュームの場合、必ず起動可能な原本でなければならず、イメージの作成ができないWAF、MS-SQL, MySQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある |
 | server.block_device_mapping_v2.source_type | Body | Enum | - | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたボリュームを使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | インスタンスのボリューム原型タイプ。TOASTは`image`のみサポート。|
+| server.block_device_mapping_v2.source_type | Body | Enum | - | インスタンスのボリューム原型タイプ。NHN Cloudは`image`のみサポート。|
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | インスタンスボリュームの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：U2インスタンスタイプを利用する場合。<br>- `volume`：U2以外のインスタンスタイプを利用する場合。|
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のボリューム処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 指定したボリュームの起動順序<br>-`0`はルートボリューム<br>- それ以外は追加ボリューム<br>サイズが大きいほど起動順序が下がる。 |
@@ -903,7 +903,7 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名 |
-| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。TOASTでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
 | server.id | Body | UUID | 作成したインスタンスのID |
 
 <details><summary>例</summary>
@@ -1178,7 +1178,7 @@ X-Auth-Token: {tokenId}
 ---
 
 ## インスタンス追加機能
-TOASTは、次のようなインスタンス制御および付加機能を提供します。
+NHN Cloudは、次のようなインスタンス制御および付加機能を提供します。
 
 * インスタンス起動、終了、再起動
 * インスタンスタイプ変更
@@ -1321,7 +1321,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | resize | Body | Object | O | インスタンスタイプ変更リクエスト |
 | resize.flavorRef | Body | UUID | O | 変更するインスタンスタイプID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。TOASTでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
+| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
 
 <details><summary>例</summary>
 <p>

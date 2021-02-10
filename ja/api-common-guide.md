@@ -12,7 +12,7 @@ Object Storage를 제외한 Compute, Network, Storage API를 사용하기 위해
 
 앱키는 다음과 같은 방법으로 발급받을 수 있습니다.
 
-1. TOAST 콘솔 **Compute** 페이지 위쪽에서 **URL & Appkey**를 클릭합니다.
+1. NHN Cloud 콘솔 **Compute** 페이지 위쪽에서 **URL & Appkey**를 클릭합니다.
 2. **URL & Appkey** 대화 상자에서 **Appkey** 값을 복사해 사용합니다.
 
 
