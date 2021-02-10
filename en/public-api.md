@@ -8,7 +8,7 @@ Use `compute`-type endpoint for Instance API. For more details, see `serviceCata
 |---|---|---|
 | compute | Korea (Pangyo) <br>Japan | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
 
-In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the TOAST internal usage and might be changed without previous notice. 
+In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the NHN Cloud internal usage and might be changed without previous notice. 
 
 ## Instance Type
 
@@ -540,7 +540,7 @@ The request format is same as List Instances.
 | servers.addresses | Body | Object | List object of instance IP. <br>The list is created as many as ports attached to instance. |
 | servers.addresses."Network Name" | Body | Object | Port information of each network associated with instance |
 | servers.addresses."Network Name".OS-EXT-IPS-MAC:mac_addr | Body | String | MAC address of port associated with instance |
-| servers.addresses."Network Name".version | Body | Integer | IP version of port associated with instance <br>TOAST supports only IPv4 |
+| servers.addresses."Network Name".version | Body | Integer | IP version of port associated with instance <br>NHN Cloud supports only IPv4 |
 | servers.addresses."Network Name".addr | Body | String | IP address of port associated with instance |
 | servers.addresses."Network Name".OS-EXT-IPS:type | Body | Enum | IP address type of port <br>Either `fixed` or `floating` |
 | servers.links | Body | Object | Instance path object |
@@ -560,7 +560,7 @@ The request format is same as List Instances.
 | servers.user_id | Body | String | ID of user creating instance |
 | servers.created | Body | Datetime | Instance created time. In the `YYYY-MM-DDThh:mm:ssZ` format |
 | servers.tenant_id | Body | String | ID of tenant that includes instance |
-| servers.OS-DCF:diskConfig | Body | Enum | Disk partition method of instance, either `MANUAL` or `AUTO` <br>**AUTO**: Automatically set the entire disk as a partition <br>**MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. TOAST adopts `MANUAL`. |
+| servers.OS-DCF:diskConfig | Body | Enum | Disk partition method of instance, either `MANUAL` or `AUTO` <br>**AUTO**: Automatically set the entire disk as a partition <br>**MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. NHN Cloud adopts `MANUAL`. |
 | servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional volume attached to instance |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
@@ -696,7 +696,7 @@ This API does not require a request body.
 | server.addresses | Body | Object | List object of instance IP <br>List is created as many as ports attached to instance |
 | server.addresses."Network Name" | Body | Object | Port information of each network associated with instance |
 | server.addresses."Network Name".OS-EXT-IPS-MAC:mac_addr | Body | String | MAC address of port associated with instance |
-| server.addresses."Network Name".version | Body | Integer | IP version of port associated with instance <br>TOAST supports only IPv4 |
+| server.addresses."Network Name".version | Body | Integer | IP version of port associated with instance <br>NHN Cloud supports only IPv4 |
 | server.addresses."Network Name".addr | Body | String | IP address of port associated with instance |
 | server.addresses."Network Name".OS-EXT-IPS:type | Body | Enum | IP address type of port <br>Either `fixed` or `floating` |
 | server.links | Body | Object | Instance path object |
@@ -717,7 +717,7 @@ This API does not require a request body.
 | server.created | Body | Datetime | Instance created time, in the `YYYY-MM-DDThh:mm:ssZ` format |
 | server.tenant_id | Body | String | ID of tenant including instance |
 | server.OS-DCF:diskConfig | Body | Enum | Disk partition method of instance, either `MANUAL` or `AUTO` <br/>**AUTO**: Automatically set the entire disk as a partition 
-**MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. Adopts `MANUAL` for TOAST. |
+**MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. Adopts `MANUAL` for NHN Cloud. |
 | server.os-extended-volumes:volumes_attached | Body | Object | List object of additional volume attached to instance |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
@@ -915,7 +915,7 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Description |
 |---|---|---|---|
 | server.security_groups.name | Body | String | Security group name of created instance |
-| server.OS-DCF:diskConfig | Body | Enum | Disk partition method of instance, either `MANUAL` or `AUTO`. Adopts`MANUAL` for TOAST. <br/>**AUTO**: Automatically set the entire disk as a partition 
+| server.OS-DCF:diskConfig | Body | Enum | Disk partition method of instance, either `MANUAL` or `AUTO`. Adopts`MANUAL` for NHN Cloud. <br/>**AUTO**: Automatically set the entire disk as a partition 
 **MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. |
 | server.id | Body | UUID | ID of created instance |
 
@@ -1197,7 +1197,7 @@ This API does not return a response body.
 ---
 
 ## Additional Features 
-TOAST provides the following features regarding instance control with additional features: 
+NHN Cloud provides the following features regarding instance control with additional features: 
 
 * Start, Close, and Restart Instance 
 * Change Instance Type
@@ -1343,7 +1343,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | Token ID |
 | resize | Body | Object | O | Request of changing instance type |
 | resize.flavorRef | Body | UUID | O | Instance type ID to change |
-| resize.OS-DCF:diskConfig | Body | Enum | - | Disk partition method of instance, either `MANUAL` or `AUTO`. Adopts`MANUAL` for TOAST. <br/>**AUTO**: Automatically set the entire disk as a partition 
+| resize.OS-DCF:diskConfig | Body | Enum | - | Disk partition method of instance, either `MANUAL` or `AUTO`. Adopts`MANUAL` for NHN Cloud. <br/>**AUTO**: Automatically set the entire disk as a partition 
 **MANUAL**: Set partition as specified for each image. If a disk size is larger than the image setting, leave it unused. |
 
 <details><summary>Example</summary>

@@ -4,7 +4,7 @@
 
 ### Image
 
-Select an image with the operating system you need: select either from public images of TOAST, user images, or shared images.  
+Select an image with the operating system you need: select either from public images of NHN Cloud, user images, or shared images.  
 
 Instance flavors vary depending on the image you choose, so it is recommended to choose an image first before creating an instance. 
 
@@ -26,7 +26,7 @@ For more details of Availability Zone, refer to [Availibility Zone of Overview o
 
 Flavors can be selected depending on virtual hardware performance. Nevertheless, such selection may be limited depending on the performance that image requires. For more details, refer to [Overview of Instances](./overview). 
 
-Instance flavors may be changed in the TOAST console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#change-instance-flavors)
+Instance flavors may be changed in the NHN Cloud console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#change-instance-flavors)
 
 > [Caution] Default instance disk cannot be changed with Change of Instance Flavors. 
 
@@ -94,7 +94,7 @@ Block storage can be managed under Instances > Block Storage. For more details o
 
 ### Scheduled Script
 
-After instance is created, specify a script to execute. Scheduled script is executed, after instance is first booted, followed by the initiazliation process, including network configuration. TOAST Scheduled Script is executed by automated tools, such as cloud-init (Linux), Cloudbase-init (Windows), which are embedded in official images.
+After instance is created, specify a script to execute. Scheduled script is executed, after instance is first booted, followed by the initiazliation process, including network configuration. NHN Cloud Scheduled Script is executed by automated tools, such as cloud-init (Linux), Cloudbase-init (Windows), which are embedded in official images.
 
 > [Caution]
 > Scheduled script is executed at the user's authority for root (Linux)/Administrator (Windows).
@@ -187,7 +187,7 @@ Instances shall be charged by changed flavors, as of the time of change.
 
 ### Import Key Pairs (Windows)
 
-To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to TOAST. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
+To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to NHN Cloud. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 
 Run puttygen. 
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
@@ -202,7 +202,7 @@ To set automatic login to an instance, encrypted phrases should not be used. Whe
 
 Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#how-to-access-instances). 
 
-Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
 
 
@@ -221,11 +221,11 @@ Copy the whole content to **Open Key** of **Import Key Pairs:** to register a ke
 
 Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#how-to-access-instances).   
 
-Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
 ## Appendix 1. Change of Windows Language Packs 
 
-TOAST Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
+NHN Cloud Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
 
 1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
 
@@ -269,7 +269,7 @@ TOAST Cloud primarily supports English for Windows display. You may change your 
 
 ## Appendix 2. Change of Windows Routing 
 
-Windows routing for TOAST Cloud can be changed as follows:  
+Windows routing for NHN Cloud Cloud can be changed as follows:  
 
 
 * Press **Windows key + R** to open an execution window, and enter`cmd` and execute to open a command prompt window.  
@@ -317,7 +317,7 @@ Example 1 - Setting external communication for particular interfaces only
 
 ## Appendix 3. Change of System Locale 
 
-You can change system locale  for TOAST Cloud on Windows as follows. 
+You can change system locale  for NHN Cloud Cloud on Windows as follows. 
 
 * Go to **Windows Key > Control Panel > Clock and Country**.
 
@@ -340,7 +340,7 @@ You can change system locale  for TOAST Cloud on Windows as follows.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 ## Appendix 4. Guide for Restarting Instances for Hypervisor Maintenance 
-TOAST updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
+NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
 Instances that are running on a target hypervisor for maintenance must be restarted and migrated to a hypervisor which is completed with maintenance. 
 
 To restart an instance, use the **! Restart** button which is created next to each instance name on console.  `Rebooting instances on console or restarting an operating system does not lead into migrating instances to another hypervisor.`
@@ -357,7 +357,7 @@ Put the mouse cursor on the  **! Restart** button to find maintenance schedule d
 **2. Disable or close application programs that are running on the target instance for maintenance.**
 
 Any application programs running on target instances for maintenance must be disabled or closed so as not to impact the service. 
-If impact on service is inevitable, please contact TOAST Customer Center and be guided with appropriate measures. 
+If impact on service is inevitable, please contact NHN Cloud Customer Center and be guided with appropriate measures. 
 
 **3. Click the [! Restart] button created next to the name of the target instance.**
 
@@ -372,4 +372,4 @@ If impact on service is inevitable, please contact TOAST Customer Center and be 
 If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
 
 The instance becomes inoperable while restarting is underway. 
-Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by TOAST.  
+Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by NHN Cloud.  

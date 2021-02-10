@@ -1,5 +1,5 @@
 ## Third Party User Guide > Terraform User Guide 
-This document describes how to use TOAST with Terraform. 
+This document describes how to use NHN Cloud with Terraform. 
 
 ## Terraform
  Terraform is an open-source tool to easily build and safely change infrastructure, and also to efficiently manage infrastructure configuration. Find out the main features of Terraform as follows:  
@@ -16,7 +16,7 @@ This document describes how to use TOAST with Terraform.
     * Automation is applied to build and change infrastructure of same configuration in many locations. 
     * Time and mistakes can be saved while building infrastructure. 
 
-TOAST supports data sources and resources described as below with Terraform OpenStack Provider. For more details regarding Terraform OpenStack Provider and its features, see [Terraform website for OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)
+NHN Cloud supports data sources and resources described as below with Terraform OpenStack Provider. For more details regarding Terraform OpenStack Provider and its features, see [Terraform website for OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)
 
 #### Support of Resources 
 
@@ -80,17 +80,17 @@ provider "openstack" {
 }
 ```
 * **user_name**
-    * Use TOAST ID. 
+    * Use NHN Cloud ID. 
 * **tenant_id**
-    * From **Compute > Instance > Management** on TOAST Console, click **API Endpoint Setting** to check Tenant ID. 
+    * From **Compute > Instance > Management** on NHN Cloud Console, click **API Endpoint Setting** to check Tenant ID. 
 * **password**
     * Use **API Password** saved for **API Endpoint Setting**.
     * Regarding how to set API passwords, see **User Guide > Compute > Instance > Preparing for APIs**.
 * **auth_url**
-    * Specify the address of TOAST identification service.  
-    * From **Compute > Instance > Management** on TOAST console, click **API Endpoint Setting** to check Identity URL.  
+    * Specify the address of NHN Cloud identification service.  
+    * From **Compute > Instance > Management** on NHN Cloud console, click **API Endpoint Setting** to check Identity URL.  
 * **region**
-    * Enter the region to manage TOAST resources.
+    * Enter the region to manage NHN Cloud resources.
     * **KR1**: Korea (Pangyo) Region 
     * **KR2**: Korea (Pyeongchon) Region 
     * **JP1**:  Japan (Tokyo) Region 
@@ -165,7 +165,7 @@ With the `plan` command, check resources for a change in tf files. By executing 
 $ terraform plan
 ```
 
-If a new plan is invalid, correct tf files and repeat the process, and execute the `plan` command. Since the `plan` command requires no change of actual TOAST resources, you can check infrastructure changes any time. 
+If a new plan is invalid, correct tf files and repeat the process, and execute the `plan` command. Since the `plan` command requires no change of actual NHN Cloud resources, you can check infrastructure changes any time. 
 
 ### Create Resources 
 
@@ -307,11 +307,11 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 For more details on the usage of data sources, read `Data Sources` from the [Terraform Website](https://www.terraform.io/docs/providers/openstack/index.html).
 
 
-The next section describes how to import TOAST resources to data resources.  
+The next section describes how to import NHN Cloud resources to data resources.  
 
 ### Image
 
-Imports image information. TOAST common images as well as personal images are supported.  
+Imports image information. NHN Cloud common images as well as personal images are supported.  
 
 ```
 data "openstack_images_image_v2" "ubuntu_1804_20200218" {
@@ -330,7 +330,7 @@ data "openstack_images_image_v2" "windows2016_20200218" {
 ```
 | Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | Name of image to query<br>To check image name, go to **Compute > Instance** on TOAST console and click **Create Instance**. <br>Image name must be created as **< Image Description >** which shows on TOAST console<br>If the language item exists, follow the format as **"< Image Description > < Language >"** like the above example. |
+| name | String | - | Name of image to query<br>To check image name, go to **Compute > Instance** on NHN Cloud console and click **Create Instance**. <br>Image name must be created as **< Image Description >** which shows on NHN Cloud console<br>If the language item exists, follow the format as **"< Image Description > < Language >"** like the above example. |
 | size_min | Integer | - | Minimum size of image to query (bytes) |
 | size_max | Integer | - | Maximum size of image to query (bytes) |
 | properties | Object | - | Attributes of image to query <br>Query image in which all attributes coincide |
@@ -359,7 +359,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 
 ### Instance Type
 
-To check name of an instance type, go to TOAST Console and click **Create Instance > Instance Type** from **Compute > Instance**. 
+To check name of an instance type, go to NHN Cloud Console and click **Create Instance > Instance Type** from **Compute > Instance**. 
 
 ```
 data "openstack_compute_flavor_v2" "u2c2m4"{
@@ -393,7 +393,7 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 
 ### VPC
 
-To check UUID of VPC network, go to TOAST console and select VPC from **Network > VPC**. 
+To check UUID of VPC network, go to NHN Cloud console and select VPC from **Network > VPC**. 
 
 ```
 data "openstack_networking_network_v2" "default_network" {
@@ -410,7 +410,7 @@ data "openstack_networking_network_v2" "default_network" {
 
 ### Subnet
 
-To check subnet ID, go to TOAST console and select a subnet from **Network > VPC > Subnet**. 
+To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**. 
 
 ```
 data "openstack_networking_subnet_v2" "default_subnet" {
@@ -428,7 +428,7 @@ data "openstack_networking_subnet_v2" "default_subnet" {
 
 ## Resources
 
-You may create, modify, or delete resources with Terraform Resources. With Terraform, TOAST supports the following to manage resources:  
+You may create, modify, or delete resources with Terraform Resources. With Terraform, NHN Cloud supports the following to manage resources:  
 
 * Instance 
 * Block Storage
@@ -512,7 +512,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | flavor_id | String | - | ID of instance type of instance to create <br>Required if flavor_name is empty |
 | image_name | String | - | Name of image to create an instance <br>Required if image_id is empty <br>Available only when the instance type is U2 |
 | image_id | String | - | Image ID to create an instance <br>Required if image_name is empty <br>Available only when the instance type is U2 |
-| key_pair | String | - | Keypair name to access instance<br>You may create a new keypair from **Compute > Instance > Key Pair** on TOAST console, <br>or register an existing keypair<br>See  `User Guide > Compute > Instance > Console User Guide` for more details |
+| key_pair | String | - | Keypair name to access instance<br>You may create a new keypair from **Compute > Instance > Key Pair** on NHN Cloud console, <br>or register an existing keypair<br>See  `User Guide > Compute > Instance > Console User Guide` for more details |
 | availability_zone | String | - | Availability zone of an instance to create |
 | network | Object | - | VPC network information to be attached to an instance to create.<br>On console, go to **Network > VPC > Management** and select VPC to be attached, and find the name and UUID of network at the bottom. |
 | network.name | String | - | Name of VPC network <br>Must specify one of network.name, network.uuid, and network.port |
@@ -620,7 +620,7 @@ Import successful!
 
 ## Resources - VPC
 
-TOAST supports creating the following resources with Terraform: 
+NHN Cloud supports creating the following resources with Terraform: 
 
 * Floating IP 
 * Network port 
@@ -772,7 +772,7 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
 
 ### Create Pool
 
-<font color='red'>**(Caution) TOAST does not support for specifying `loadbalancer_id` .**</font>
+<font color='red'>**(Caution) NHN Cloud does not support for specifying `loadbalancer_id` .**</font>
 
 ```
 resource "openstack_lb_pool_v2" "tf_pool_01"{
@@ -833,7 +833,7 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
 
 ### Create Member
 
-<font color='red'>**(Caution) `subnet_id` must be specified when TOAST creates a member. Also note that`name` is not supported. **</font>
+<font color='red'>**(Caution) `subnet_id` must be specified when NHN Cloud creates a member. Also note that`name` is not supported. **</font>
 
 ```
 resource "openstack_lb_member_v2" "tf_member_01"{
