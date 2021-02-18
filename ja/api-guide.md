@@ -2,7 +2,7 @@
 
 APIは現在、韓国リージョンでのみ使用できます。
 
-TOAST Compute Instanceサービスは次のAPIを提供します。
+NHN Cloud Compute Instanceサービスは次のAPIを提供します。
 
 * [アベイラビリティーゾーンAPI](#api_2)
 * [インスタンスAPI](#api_3)
@@ -22,7 +22,7 @@ TOAST Compute Instanceサービスは次のAPIを提供します。
 
 APIをリクエストする時は、常にアプリケーションキーを含めてリクエストする必要があります。アプリケーションキーは下記のように発行を受けることができます。
 
-1. TOASTコンソール**Compute**ページ上側で**URL & Appkey**をクリックします。
+1. NHN Cloudコンソール**Compute**ページ上側で**URL & Appkey**をクリックします。
 2. **URL & Appkey**ダイアログボックスで**Appkey**の値をコピーして使用します。
 
 例えば、トークン発行URLは次のとおりです。
@@ -86,7 +86,7 @@ Content-Type： application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | TOASTアカウントID(Email)入力 |
+| NHN Cloud ID | Body | String | - | NHN CloudアカウントID(Email)入力 |
 | API Password | Body | String | - | **API Endpoint設定**で保存したパスワード |
 
 ##### Response Body

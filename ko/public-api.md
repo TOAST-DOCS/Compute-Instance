@@ -8,7 +8,7 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 |---|---|---|
 | compute | 한국(판교) 리전<br>한국(평촌) 리전<br>일본 리전 | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://kr2-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
 
-API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
+API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
 ## 인스턴스 타입
 
@@ -435,7 +435,7 @@ X-Auth-Token: {tokenId}
 | `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
 | `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 종료되었다가 다시 시작된 상태 |
 | `REVERT_RESIZE`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원 상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>TOAST에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
+| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
 | `ERROR`| 직전 인스턴스에 취한 동작이 실패한 경우 |
 | `PAUSED`| 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
 | `REBUILD`| 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
@@ -531,7 +531,7 @@ X-Auth-Token: {tokenId}
 | servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨. |
 | servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
 | servers.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>TOAST는 IPv4만 지원 |
+| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원 |
 | servers.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
 | servers.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
 | servers.links | Body | Object | 인스턴스 경로 객체 |
@@ -551,7 +551,7 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
 | servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
+| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
@@ -686,7 +686,7 @@ X-Auth-Token: {tokenId}
 | server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨 |
 | server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
 | server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>TOAST는 IPv4만 지원 |
+| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원 |
 | server.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
 | server.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
 | server.links | Body | Object | 인스턴스 경로 객체 |
@@ -706,7 +706,7 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
 | server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
 | server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. TOAST는 `MANUAL`를 사용 |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
 | server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
@@ -902,7 +902,7 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름 |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 | server.id | Body | UUID | 생성한 인스턴스의 ID |
 
 <details><summary>예시</summary>
@@ -1177,7 +1177,7 @@ X-Auth-Token: {tokenId}
 ---
 
 ## 인스턴스 추가기능
-TOAST는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
+NHN Cloud는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
 
 * 인스턴스 시작, 종료, 재시작
 * 인스턴스 타입 변경
@@ -1320,7 +1320,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청 |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. TOAST에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 
 <details><summary>예시</summary>
 <p>

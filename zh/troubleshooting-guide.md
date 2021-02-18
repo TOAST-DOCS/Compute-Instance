@@ -1,11 +1,11 @@
 ## Compute > Instance > Troubleshooting Guide 
 
-The document describes how to resolve issues you may encouter while using TOAST. 
+The document describes how to resolve issues you may encouter while using NHN Cloud. 
 
-<h3> I want to use a different version, other than the default OS version of TOAST. Can I upload my personal images? </h3>
+<h3> I want to use a different version, other than the default OS version of NHN Cloud. Can I upload my personal images? </h3>
 
-You can only use the OS version provided by TOAST. And uploading personal images is not allowed. 
-To use personal OS images, create an instance with TOAST image and apply **Create Image**.  
+You can only use the OS version provided by NHN Cloud. And uploading personal images is not allowed. 
+To use personal OS images, create an instance with NHN Cloud image and apply **Create Image**.  
 <br>
 
 <h3> When I try to access instance, I find "Permissions 0644 for '/Users/username/.ssh/your-key.pem' are too open." and access is not available. </h3>

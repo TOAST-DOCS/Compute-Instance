@@ -2,7 +2,7 @@
 
 API目前仅限韩国地区使用。
 
-TOAST Compute Instance服务提供以下类型的API。
+NHN Cloud Compute Instance服务提供以下类型的API。
 
 * [可用区API](#api_2)
 * [实例API](#api_3)
@@ -23,7 +23,7 @@ TOAST Compute Instance服务提供以下类型的API。
 
 请求API时，必须将appkey包含在您的请求中。您可以获得一个APK密钥，如下所示。
 
-1. 在TOAST控制台**计算**页面上方单击**URL & Appkey**。
+1. 在NHN Cloud控制台**计算**页面上方单击**URL & Appkey**。
 2. 在**URL & Appkey**对话框中复制并使用**Appkey**值。
 
 例如，令牌发布URL如下。
@@ -87,7 +87,7 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | 输入TOAST账号ID(Email) |
+| NHN Cloud ID | Body | String | - | 输入NHN Cloud账号ID(Email) |
 | API Password | Body | String | - | 在**API Endpoint设置**保存的密码 |
 
 ##### Response Body
