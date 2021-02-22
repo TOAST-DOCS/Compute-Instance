@@ -1,5 +1,5 @@
 ## サードパーティー使用ガイド > Terraform使用ガイド
-この文書はTerraformでTOASTを使用する方法を説明します。
+この文書はTerraformでNHN Cloudを使用する方法を説明します。
 
 ## Terraform
 Terraformはインフラを簡単に構築し、安全に変更し、効率的にインフラの形状を管理できるオープンソースのツールです。Terraformの主な特徴は次のとおりです。
@@ -16,7 +16,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * 複数の場所に同じ構成のインフラを構築し、変更できるように自動化できます。
     * インフラを構築するのにかかる時間を節約することができ、失敗も減らすことができます。
 
-TOASTはTerraform OpenStack providerに記載された下記のdata sourcesとresourcesをサポートします。Terraform OpenStack providerとTerraformがサポートするより詳しい機能は[TerraformサイトのOpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)ページを参照します。下記のリスト以外の機能を使用した場合、TOASTは正常に動作することを保障しません。
+NHN CloudはTerraform OpenStack providerに記載された下記のdata sourcesとresourcesをサポートします。Terraform OpenStack providerとTerraformがサポートするより詳しい機能は[TerraformサイトのOpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)ページを参照します。下記のリスト以外の機能を使用した場合、NHN Cloudは正常に動作することを保障しません。
 
 #### Resourcesサポート
 
@@ -80,17 +80,17 @@ provider "openstack" {
 }
 ```
 * **user_name**
-    * TOAST IDを使用します。
+    * NHN Cloud IDを使用します。
 * **tenant_id**
-    * TOASTコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンを押してテナントIDを確認します。
+    * NHN Cloudコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンを押してテナントIDを確認します。
 * **password**
     * **API Endpoint設定**ウィンドウで保存した**APIパスワード**を使用します。
     * APIパスワードの設定方法は**ユーザーガイド > Compute > Instance > API使用準備**を参照します。
 * **auth_url**
-    * TOAST身元サービスアドレスを明示します。
-    * TOASTコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンをクリックして身元サービス(identity) URLを確認します。
+    * NHN Cloud身元サービスアドレスを明示します。
+    * NHN Cloudコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンをクリックして身元サービス(identity) URLを確認します。
 * **region**
-    * TOASTリソースを管理するリージョン情報を入力します。
+    * NHN Cloudリソースを管理するリージョン情報を入力します。
     * **KR1**：韓国(パンギョ)リージョン
     * **KR2**：韓国(坪村)リージョン
     * **JP1**：日本(東京)リージョン
@@ -165,7 +165,7 @@ tfファイルを通して変更されるリソースを`plan`コマンドで確
 $ terraform plan
 ```
 
-作成されたプランが無効な場合、tfファイルを修正し、再度反復して`plan`コマンドを実行します。`plan`コマンドは実際のTOASTリソースを変更しないため、インフラ変更事項を負担なく確認できます。
+作成されたプランが無効な場合、tfファイルを修正し、再度反復して`plan`コマンドを実行します。`plan`コマンドは実際のNHN Cloudリソースを変更しないため、インフラ変更事項を負担なく確認できます。
 
 ### リソースを作成する
 
@@ -307,11 +307,11 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 詳細なdata sources使用方法は[Terraformサイト](https://www.terraform.io/docs/providers/openstack/index.html)の`Data Sources`項目を参照します。
 
 
-次のセッションでは、TOASTが提供する各種リソースをdata sources機能で取得する方法を説明します。
+次のセッションでは、NHN Cloudが提供する各種リソースをdata sources機能で取得する方法を説明します。
 
 ### イメージ
 
-イメージ情報を取得します。TOASTが提供するパブリックイメージまたは個人イメージをサポートします。
+イメージ情報を取得します。NHN Cloudが提供するパブリックイメージまたは個人イメージをサポートします。
 
 ```
 data "openstack_images_image_v2" "ubuntu_1804_20200218" {
@@ -330,7 +330,7 @@ data "openstack_images_image_v2" "windows2016_20200218" {
 ```
 | 名前 | 形式 | 必須 | 説明 |
 | ------ | ---- | ---- | --------- |
-| name | String | - | 照会するイメージ名<br>イメージ名は、**TOASTコンソールCompute > Instanceでインスタンス作成ボタン**を押すとTOASTが提供するイメージリストで確認します。<br>イメージ名はTOASTコンソールに表示された**<イメージ説明>**で作成する必要があります。<br>もし言語項目が存在する場合、上の例のように**「<イメージ説明> <言語>」**形式で入力する必要があります。 |
+| name | String | - | 照会するイメージ名<br>イメージ名は、**NHN CloudコンソールCompute > Instanceでインスタンス作成ボタン**を押すとNHN Cloudが提供するイメージリストで確認します。<br>イメージ名はNHN Cloudコンソールに表示された**<イメージ説明>**で作成する必要があります。<br>もし言語項目が存在する場合、上の例のように**「<イメージ説明> <言語>」**形式で入力する必要があります。 |
 | size_min | Integer | - | 照会するイメージの最小サイズ(byte) |
 | size_max | Integer | - | 照会するイメージの最大サイズ(byte) |
 | properties | Object | - | 照会するイメージのプロパティ<br>すべてのプロパティ値が一致するイメージを照会 |
@@ -359,7 +359,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 
 ### インスタンスタイプ
 
-インスタンスタイプ名は**TOASTコンソールCompute > Instanceでインスタンス作成 > インスタンスタイプ選択ボタン**を押すと確認できます。
+インスタンスタイプ名は**NHN CloudコンソールCompute > Instanceでインスタンス作成 > インスタンスタイプ選択ボタン**を押すと確認できます。
 
 ```
 data "openstack_compute_flavor_v2" "u2c2m4"{
@@ -393,7 +393,7 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 
 ### VPC
 
-VPCネットワークのUUIDは、**TOASTコンソールNetwork > VPC**でVPCを選択して確認可能です。
+VPCネットワークのUUIDは、**NHN CloudコンソールNetwork > VPC**でVPCを選択して確認可能です。
 
 ```
 data "openstack_networking_network_v2" "default_network" {
@@ -410,7 +410,7 @@ data "openstack_networking_network_v2" "default_network" {
 
 ### サブネット
 
-サブネットIDは、**TOASTコンソールNetwork > VPC > サブネット**でサブネットを選択して確認可能です。
+サブネットIDは、**NHN CloudコンソールNetwork > VPC > サブネット**でサブネットを選択して確認可能です。
 
 ```
 data "openstack_networking_subnet_v2" "default_subnet" {
@@ -428,7 +428,7 @@ data "openstack_networking_subnet_v2" "default_subnet" {
 
 ## Resources
 
-Terraform resourcesでリソースを作成、修正、削除できます。TOASTでは、Terraformによる次のリソース管理をサポートします。
+Terraform resourcesでリソースを作成、修正、削除できます。NHN Cloudでは、Terraformによる次のリソース管理をサポートします。
 
 * インスタンス
 * ブロックストレージ
@@ -512,7 +512,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | flavor_id | String | - | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須 |
 | image_name | String | - | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可能 |
 | image_id | String | - | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可能 |
-| key_pair | String | - | インスタンス接続に使用するキーペア名<br>キーペアはTOASTコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。 |
+| key_pair | String | - | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。 |
 | availability_zone | String | - | 作成するインスタンスのアベイラビリティゾーン |
 | network | Object | - | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可能。 |
 | network.name | String | - | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示 |
@@ -620,7 +620,7 @@ Import successful!
 
 ## Resources - VPC
 
-TOASTはTerraformを通して、下記のリソースの作成をサポートします。
+NHN CloudはTerraformを通して、下記のリソースの作成をサポートします。
 
 * Floating IP
 * ネットワークポート
@@ -772,7 +772,7 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
 
 ### プール作成
 
-<font color='red'>**(注意) TOASTは、プール作成時に`loadbalancer_id`の指定をサポートしません。**</font>
+<font color='red'>**(注意) NHN Cloudは、プール作成時に`loadbalancer_id`の指定をサポートしません。**</font>
 
 ```
 resource "openstack_lb_pool_v2" "tf_pool_01"{
@@ -833,7 +833,7 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
 
 ### メンバー作成
 
-<font color='red'>**(注意)TOASTでメンバー作成時に`subnet_id`を必ず指定します。また`name`はサポートしません。**</font>
+<font color='red'>**(注意)NHN Cloudでメンバー作成時に`subnet_id`を必ず指定します。また`name`はサポートしません。**</font>
 
 ```
 resource "openstack_lb_member_v2" "tf_member_01"{
