@@ -225,7 +225,7 @@ Like key pairs created from NHN Cloud, these key pairs need to be cautiously man
 
 ## Appendix 1. Change of Windows Language Packs 
 
-NHN Cloud Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
+NHN Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
 
 1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
 
@@ -269,7 +269,7 @@ NHN Cloud Cloud primarily supports English for Windows display. You may change y
 
 ## Appendix 2. Change of Windows Routing 
 
-Windows routing for NHN Cloud Cloud can be changed as follows:  
+Windows routing for NHN Cloud can be changed as follows:  
 
 
 * Press **Windows key + R** to open an execution window, and enter`cmd` and execute to open a command prompt window.  
@@ -317,7 +317,7 @@ Example 1 - Setting external communication for particular interfaces only
 
 ## Appendix 3. Change of System Locale 
 
-You can change system locale  for NHN Cloud Cloud on Windows as follows. 
+You can change system locale  for NHN Cloud on Windows as follows. 
 
 * Go to **Windows Key > Control Panel > Clock and Country**.
 
