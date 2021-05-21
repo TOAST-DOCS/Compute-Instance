@@ -1,5 +1,7 @@
 ## Compute > Instance > API Guide
 
+API is currently available only in the Korea region.
+
 The TOAST Compute Instance service provides APIs of the following types:
 
 * [Availability Zone API](#api_2)
@@ -424,12 +426,13 @@ Content-Type: application/json;charset=UTF-8
 | Instance Name       | Body | String  | -        | Name of an instance (allows up to 20 characters for Linux and 12 for Windows, including alphabets, numbers, '-', and '.' only) |
 | Image ID            | Body | String  | -        | ID of an image to be installed at an instance. |
 | Flavor ID           | Body | String  | -        | Instance flavors ID.              |
-| Network ID          | Body | String  | -        | ID of a network to which an instance is to be connected. |
+| Network ID          | Body | String  | O        | ID of a network to which an instance is to be connected. |
+| Subnet ID           | Body | String  | O        | Subnet ID to be connected with instances. <br> Either network ID or subnet ID must be specified. |
 | Availability Zone   | Body | String  | -        | Name of availability zone to which an instance is to be created. |
 | Key Name            | Body | String  | -        | Name of a key pair to be registered at a instance. |
-| Count               | Body | Integer | 0        | Number of instances to be concurrently created: between 1 and 10, and no more than 10. |
+| Count               | Body | Integer | O        | Number of instances to be concurrently created: between 1 and 10, and no more than 10. |
 | Volume Size         | Body | Integer | -        | Size of Instance root block storage (GB), Refer to the [Console Guide ](/Compute/Instance/en/console-guide/#_5) for the available size to create. |
-| Volume Type         | Body | String | 0        | Type of Instance root block storage, Select "General HDD" or "General SSD" |
+| Volume Type         | Body | String  | O        | Type of Instance root block storage, Select "General HDD" or "General SSD" |
 | Security Group Name | Body | String  | -        | Name of a security group to be registered at an instance |
 
 > [Caution]

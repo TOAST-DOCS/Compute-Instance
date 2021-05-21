@@ -86,7 +86,7 @@ shell> mysql -uroot -P[变更后的端口号]
 
 ## my.cnf描述
 
-my.cnf的默认路径为/etc/my.cnf，并设置有TOAST推荐变量(variable)，内容如下。
+my.cnf的默认路径为/etc/my.cnf，并设置有NHN Cloud推荐变量(variable)，内容如下。
 
 | 名称 | 描述 |
 | --- | --- |

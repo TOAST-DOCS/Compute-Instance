@@ -1,6 +1,6 @@
 ## Compute > Instance > Overview 
 
-An instance refers a virtual server composed of a virtual CPU, memory, and a default disk: with customer's services or applications installed to it, various TOAST service combinations are applied.  
+An instance refers a virtual server composed of a virtual CPU, memory, and a default disk: with customer's services or applications installed to it, various NHN Cloud service combinations are applied.  
 
 ## Components  
 
@@ -13,30 +13,30 @@ An instance is composed of the following:
 - **Security Group**: Security setting for an instance network 
 - **Network**: Virtual network where an instance is to be connected
 
-Flavors and method of use change depending on the above information. Settings, except image and availability area, may change after an instance is created. Some flavors cannot be changed once an instance is created. For more details on change of instance flavors, refer to [Change of Instance Flavors of User Guide on Console](./console-guide/#_14).
+Flavors and method of use change depending on the above information. Settings, except image and availability area, may change after an instance is created. Some flavors cannot be changed once an instance is created. For more details on change of instance flavors, refer to [Change of Instance Flavors of User Guide on Console](./console-guide/#change-instance-flavors).
 
 ### Image 
 
-Image is a virtual disk that has an operating system. TOAST currently supports CentOS, Debian, Ubuntu, and Windows. For more information about the versions we support, refer to [TOAST Service](https://toast.com/service/compute/instance).
+Image is a virtual disk that has an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more information about the versions we support, refer to [NHN Cloud Service](https://toast.com/service/compute/instance).
 
-All images are configured for optimal execution under virtual hardware of an instance and are safe to use as they have been authenticated by TOAST security. For more details, refer to [Overview of Image](/Compute/Image/en/overview/).
+All images are configured for optimal execution under virtual hardware of an instance and are safe to use as they have been authenticated by NHN Cloud security. For more details, refer to [Overview of Image](/Compute/Image/en/overview/).
 
 ### Flavors 
 
-TOAST provides instance flavors in various types to suit for customer's needs. Depending on the service to run or feature of an application, instances with appropriate flavors can be created.  Flavors can be easily modified on a web console .
+NHN Cloud provides instance flavors in various types to suit for customer's needs. Depending on the service to run or feature of an application, instances with appropriate flavors can be created.  Flavors can be easily modified on a web console .
 
 | Type   | Description                              |
 | ------ | ---------------------------------------- |
-| M Type | A balanced flavors between CPU and memory. <br />Recommended when performance requirements of a service or an application are not clear. |
-| C Type | CPU performance is set highly: applied for an web application server or an analysis system requiring high-performance calculation. |
-| R Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
-| T Type | Low-cost instance. Recommended for the servers with low workloads. |
-| U Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
-| X Type | The flavor supports high-end CPU and memory. It can be applied to services or applications that require high performances. |
+| m2 Type | A balanced flavors between CPU and memory. <br />Recommended when performance requirements of a service or an application are not clear. |
+| c2 Type | CPU performance is set highly: applied for an web application server or an analysis system requiring high-performance calculation. |
+| r2 Type | Recommended when memory usage volume is high, compared to other resources. Generally applied to memory database or cache server. |
+| t2 Type | Low-cost instance. Recommended for the servers with low workloads. |
+| u2 Type | The cheapest instance. Recommended for servers with low workloads. <br>Using local disks poses a risk of low stability compared to other instances, but it is more affordable. <br>This type of instance does not ensure I/O performance. |
+| x1 Type | The flavor supports high-end CPU and memory. It can be applied to services or applications that require high performances. |
 
 ### Availability Zone 
 
-TOAST divides the whole system into many availability zones to prepare against potential failure owing to physical hardware issues.  Each availability zone has its own storage system, network switch, raised floor, and power devices. Failure occurred within an availability zone does not affect other zones, so as to raise availability of a whole service. If an instance is built throughout many availability zones, then service availability should raise even more.   
+NHN Cloud divides the whole system into many availability zones to prepare against potential failure owing to physical hardware issues.  Each availability zone has its own storage system, network switch, raised floor, and power devices. Failure occurred within an availability zone does not affect other zones, so as to raise availability of a whole service. If an instance is built throughout many availability zones, then service availability should raise even more.   
 
 Following features exist between different availability zones.
 
@@ -47,9 +47,9 @@ Following features exist between different availability zones.
 
 ### Key Pair 
 
-Key pair is a pair of a [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based open SSH key and a private key. To access an instance created in TOAST, key pair is required, instead of ID/PW authentication based on keyboard strokes which is vulnerable to security attacks. Using the private key of a key pair, user encodes and sends login information to an instance to get access authentication, and then safely access the instance. On how to access instances using key pair, refer to [How to Access Instances](#_9). 
+Key pair is a pair of a [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based open SSH key and a private key. To access an instance created in NHN Cloud, key pair is required, instead of ID/PW authentication based on keyboard strokes which is vulnerable to security attacks. Using the private key of a key pair, user encodes and sends login information to an instance to get access authentication, and then safely access the instance. On how to access instances using key pair, refer to [How to Access Instances](#how-to-access-instances). 
 
-Key pairs can be newly created in the TOAST console when an instance is created, or may be registered as made by customer. For how to register key pairs, refer to [Getting Key Pair from Console Guide](./console-guide/#_15). 
+Key pairs can be newly created in the NHN Cloud console when an instance is created, or may be registered as made by customer. For how to register key pairs, refer to [Getting Key Pair from Console Guide](./console-guide/#key-pair_1). 
 
 > [Caution]
 > When a key pair is newly created, its private key is downloaded. As a private key is not issued no more than once, be sure to store downloaded private keys in a safe disk or USB drive. When a private key is exposed, anyone can access instances, so a cautious approach is required.  
@@ -78,7 +78,7 @@ Instance shall be charged as follows:
 
 ### How to Access Linux Instances 
 
-Use ssh client to access Linux instances. Access is not available if ssh access port (default 22) is not open to an instance security group. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to allow ssh access. If a floating IP is not assigned to an instance, access from outside of TOAST is unavailable. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to assign a floating IP.  
+Use ssh client to access Linux instances. Access is not available if ssh access port (default 22) is not open to an instance security group. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to allow ssh access. If a floating IP is not assigned to an instance, access from outside of NHN Cloud is unavailable. Refer to [Overview of VPC](/Network/VPC/en/overview/) on how to assign a floating IP.  
 
 #### How to Access Linux Instances with ssh Client for Mac or Linux 
 
@@ -178,10 +178,10 @@ Now click **Open** to access to instance.
 
 ### How to Access Windows Instances 
 
-To access a Windows server, select a Windows instance to access from TOAST console. Click **Check Password** in the **Instance Access** tab from screen details at the bottom to check password set in the Windows server. 
+To access a Windows server, select a Windows instance to access from NHN Cloud console. Click **Check Password** in the **Instance Access** tab from screen details at the bottom to check password set in the Windows server. 
 
-![윈도우 인스턴스 접속](http://static.toastoven.net/prod_instance/windows-login-en.png)
+![Access to Windows Instance](http://static.toastoven.net/prod_instance/windows-login-en.png)
 
 Private key of key pair required to check password is not transmitted to the server but used only to decrypt password at the browser. 
 
-Click **Connect** next to **Check Password**, receive the rdp file containing setting for remote desktop access, and execute, to get access to Windows server.  `Administrator` is the ID for the Windows server and use the password confirmed in the TOAST console. 
+Click **Connect** next to **Check Password**, receive the rdp file containing setting for remote desktop access, and execute, to get access to Windows server.  `Administrator` is the ID for the Windows server and use the password confirmed in the NHN Cloud console. 

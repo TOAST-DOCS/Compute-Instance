@@ -1,6 +1,8 @@
 ## Compute > Instance > API向导
 
-TOAST Compute Instance服务提供以下类型的API。
+API目前仅限韩国地区使用。
+
+NHN Cloud Compute Instance服务提供以下类型的API。
 
 * [可用区API](#api_2)
 * [实例API](#api_3)
@@ -21,7 +23,7 @@ TOAST Compute Instance服务提供以下类型的API。
 
 请求API时，必须将appkey包含在您的请求中。您可以获得一个APK密钥，如下所示。
 
-1. 在TOAST控制台**计算**页面上方单击**URL & Appkey**。
+1. 在NHN Cloud控制台**计算**页面上方单击**URL & Appkey**。
 2. 在**URL & Appkey**对话框中复制并使用**Appkey**值。
 
 例如，令牌发布URL如下。
@@ -85,7 +87,7 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | 输入TOAST账号ID(Email) |
+| NHN Cloud ID | Body | String | - | 输入NHN Cloud账号ID(Email) |
 | API Password | Body | String | - | 在**API Endpoint设置**保存的密码 |
 
 ##### Response Body
@@ -365,6 +367,7 @@ X-Auth-Token: {tokenId}
 | metadata | Body | Object | 保存为"key": "value"格式，用作实例中要设置的用户元数据 |
 | PEM Key Name | Body | String | 要在实例上注册的密钥对的名称 |
 | Root Volume Size | Body | Integer | 实例默认系统盘大小(GB) |
+| Root Volume Type | Body | String | 实例默认块存储设备种类。"General HDD"或"General SSD"中之一。|
 | Attached Volume ID | Body | String | 附加块存储 ID |
 | Attached Volume Name | Body | String | 附加块存储名称 |
 | Attached Volume Size | Body | Integer | 附加块存储大小(GB) |
@@ -396,7 +399,8 @@ Content-Type: application/json;charset=UTF-8
         "flavor": "{Flavor ID}",
         "networks": [
         	{
-            	"id": "{Network ID}"
+              "id": "{Network ID}",
+              "subnetId": "{Subnet ID}"
         	}
         ],
         "availabilityZone": "{Availability Zone}",
@@ -419,7 +423,8 @@ Content-Type: application/json;charset=UTF-8
 | Instance Name | Body | String | - | 实例名称(Linux最多20个字符，Windows最多12字符，只能为英文字母和数字，'-'，'.') |
 | Image ID | Body | String | - | 实例使用的镜像ID |
 | Flavor ID | Body | String | - | 实例配置ID |
-| Network ID | Body | String | - | 实例要连接的网络ID |
+| Network ID | Body | String | O | 实例要连接的网络ID |
+| Subnet ID | Body | String | O | 连接实例的子网ID<br>必须指定网络ID或子网ID中的一个。|
 | Availability Zone | Body | String | - | 要创建实例的可用区名称 |
 | Key Name | Body | String | - | 要在实例中注册的密钥对名称 |
 | Count | Body | Integer | 0 | 可同时创建的实例个数，最多可创建10个，1~10范围。省略时生成1个 |

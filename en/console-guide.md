@@ -4,7 +4,7 @@
 
 ### Image
 
-Select an image with the operating system you need: select either from public images of TOAST, user images, or shared images.  
+Select an image with the operating system you need: select either from public images of NHN Cloud, user images, or shared images.  
 
 Instance flavors vary depending on the image you choose, so it is recommended to choose an image first before creating an instance. 
 
@@ -20,13 +20,13 @@ Unless specified, the availability zone shall be set randomly. Depending on the 
 
 > [Note] VPC resources are available in all availability zones.
 
-For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](/Compute/Instance/en/overview/#_4).
+For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](./overview/#availability-zone).
 
 ### Flavors 
 
 Flavors can be selected depending on virtual hardware performance. Nevertheless, such selection may be limited depending on the performance that image requires. For more details, refer to [Overview of Instances](./overview). 
 
-Instance flavors may be changed in the TOAST console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#_14)
+Instance flavors may be changed in the NHN Cloud console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#change-instance-flavors)
 
 > [Caution] Default instance disk cannot be changed with Change of Instance Flavors. 
 
@@ -41,8 +41,8 @@ Default disk size depends on the instance flavors.
 
 | Flavors | Supportive Device Size |
 | ----------------| -------------------------- |
-| Type U | Fixed at 20 ~ 100GB: vary by flavors    |
-| Types T, M, C, R, and X | 20 ~ 1000 GB               |
+| Type u2 | Fixed at 20 ~ 100GB: vary by flavors    |
+| Types t2, m2, c2, r2, and x1 | 20 ~ 1000 GB               |
 
 >[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
 
@@ -55,13 +55,13 @@ Determines default disk type of an instance.
 
 ### Number of Instances 
 
-This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instanc `shall result in  `my-instance-1 `and `my-instance-2`. 
+This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instance` shall result in  `my-instance-1 `and `my-instance-2`. 
 
 When many instances are created for a random availability zone, each instance shall be created in a random availability zone. For instance, if two instances are created with a random availability zone, two may be created in the same zone, or in different zones. In case all instances need to be created in a same zone, select a particular zone before creation. 
 
 ### Key Pair
 
-Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#_16) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#_17) for Mac and Linux users. 
+Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users. 
 
 ### Security Group
 
@@ -78,11 +78,74 @@ Select a subnet to be connected to an instance, among those defined in VPC. Ever
 
 For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/en/overview/).
 
+### Floating IP
+
+After instance is created, specify whether to use floating IP. When it is enabled, create and associate a new floating IP to the first network interface. Note that the first network interface must be connected to a subnet where Internet gateway is configured.
+
+Floating IP can be managed under Instance > Management, or Instance > Floating IP. For more floating IP details, see [VPC Console Guide](/Network/VPC/ko/console-guide/).
+
+### Additional Block Storage
+
+After instance is created, specify whether to attach block storage. When it is enabled, create a new block storage, apart from a basic disk, and attach it to an instance. Name, storage type, and size of it can be specified, like in a basic disk.
+
+Leave the basic disk only for OS purposes, and use additional disk to store frequently-used application programs or data. Then, it gets easier to migrate or copy, by attaching/detaching block storage or via snapshots. In addition, when an instance has faults, detach the additional disk and associate it to another instance, so as to recover service easily.
+
+Block storage can be managed under Instances > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/ko/overview/).
+
+### Scheduled Script
+
+After instance is created, specify a script to execute. Scheduled script is executed, after instance is first booted, followed by the initiazliation process, including network configuration. NHN Cloud Scheduled Script is executed by automated tools, such as cloud-init (Linux), Cloudbase-init (Windows), which are embedded in official images.
+
+> [Caution]
+> Scheduled script is executed at the user's authority for root (Linux)/Administrator (Windows).
+
+#### Linux
+The first line of a scheduled script must start with  `#!`.
+```
+#!/bin/bash
+...
+```
+
+To properly run a scheduled script, check log files within an instance. Find log outputs from standard output/error device of a script on `/var/log/cloud-init-output.log`.
+
+#### Windows
+
+Windows images support both Batch and Powershell, for the scheduled script type. Each type is delimited by specified indicator of the first line.
+
+* Batch Script
+```
+rem cmd
+...
+```
+
+* PowerShell Script
+```
+#ps1_sysnative
+...
+```
+
+To use both Batch and Powershell script, describe as below:
+
+* EC2 format
+```
+<script>
+...
+</script>
+<powershell>
+...
+</powershell>
+```
+
+Find logs of a scheduled script at `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
+
+For more details regarding scheduled scripts, see guides for [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html).
+
+
 ## Further Functions of Instances 
 
 ### Create Image 
 
-Image is created from a default instance disk. Creating an image is available only after an instance is closed to ensure data integrity. If Create Image is disabled, close instances first. 
+Create an image from default disk of an instance. It is recommended to close instances before creating an image, so as to ensure data integrity. 
 
 Even when a default disk has no additional space, image can be created but normal usage is impossible as initialization to use the image in other instances is unavailable. Before creating an image, empty at least 100KB of space.   
 
@@ -110,9 +173,9 @@ Change of instance flavors is enabled when an instance is closed. If an instance
 
 Instance flavors are allowed to change, depending on the current flavors.  
 
-* Instances with types M, C, R, T, and X can be changed to have flavors of types M, C, R, T, and X. 
-* Instances with types M, C, R, T, and X cannot be changed to have flavors of type U. 
-* Type U cannot change flavors after created: not even to those of the same U type. 
+* Instances with types m2, c2, r2, t2, and x1 can be changed to have flavors of types m2, c2, r2, t2, and x1. 
+* Instances with types m2, c2, r2, t2, and x1 cannot be changed to have flavors of type u2. 
+* Type u2 cannot change flavors after created: not even to those of the same u2 type. 
 
 If an instance changes its flavors, Change and Confirm Change are followed. When all tasks are completed, the VM status changes into **Shutoff**, and you can start an instance by clicking **Start Instance** in **Further Functions**. 
 
@@ -124,7 +187,7 @@ Instances shall be charged by changed flavors, as of the time of change.
 
 ### Import Key Pairs (Windows)
 
-To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to TOAST. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
+To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to NHN Cloud. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 
 Run puttygen. 
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
@@ -137,15 +200,15 @@ Click **Save private key** of **Actions** and save the private key. Try saving p
 > [Caution]
 To set automatic login to an instance, encrypted phrases should not be used. When encrypted phrases are in use, directly enter password to a private key to login. 
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#_9). 
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#how-to-access-instances). 
 
-Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
 
 
 
 ### Import Key Pairs (Mac and Linux)
 
-Key pairs created by `ssh-kegen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
+Key pairs created by `ssh-keygen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
 
 	$ ssh-keygen -t rsa -f my_key.key
 
@@ -156,8 +219,157 @@ Passwords for key pair may or may not be set, although it is recommended to set 
 
 Copy the whole content to **Open Key** of **Import Key Pairs:** to register a key pair. 
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#_9).   
+Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#how-to-access-instances).   
 
-Like key pairs created from TOAST, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+
+## Appendix 1. Change of Windows Language Packs 
+
+NHN Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
+
+1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
+
+2. Select **Change your language preferences > Add a language**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
+
+3. Choose a language in **Add a language** and click **Add**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
+
+4. Check the language pack just added. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
+
+5. Download and install the language pack. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
+
+6. Download and install updates. 
+
+![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
+
+7. To change the installed language pack, double-click the selected language or select **Options**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
+
+8. Choose **Make this the primary language** for Windows display language.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
+
+9. To apply the change of primary language, click **Log off now**.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
+
+10. Log in again, and you can see Windows is displayed by the language pack of your choice.
+
+![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
+
+## Appendix 2. Change of Windows Routing 
+
+Windows routing for NHN Cloud can be changed as follows:  
 
 
+* Press **Windows key + R** to open an execution window, and enter`cmd` and execute to open a command prompt window.  
+  Enter route command.  
+* Print current configuration: route print
+* Add: route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Change: route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Delete: route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
+  * Option : -p (specify as permanent route)
+
+Description
+![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+
+* Metric Value: The lower, the higher on the priority
+* Interface Number: Available on route print (in the red box above)
+* Permanent Route: Use the -p option, because otherwise, route configuration returns to default at the system reboot (in the blue box above)
+
+Example 1 - Setting external communication for particular interfaces only 
+* Use command for route change to modify metrics on interface route to which external communication is not wanted, or not enter default gateway information on the fixed IP setting. 
+
+* How to Modify Metric
+  * Increase metrics of an interface 
+
+  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
+  How to Set Fixed IP
+
+  * Enter ipconfig /all to find IP information.
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
+  * Enter IP information, excluding default gateway, on the window for IP settings. 
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
+  * Check route print.
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+    Example 2 - Setting route for a particular bandwidth
+  * Command route add to set route for a particular bandwidth.
+
+  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+  Example 3 - Removing a particular route 
+
+  * Remove specified route, by using route delete. 
+
+  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
+## Appendix 3. Change of System Locale 
+
+You can change system locale  for NHN Cloud on Windows as follows. 
+
+* Go to **Windows Key > Control Panel > Clock and Country**.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* Select the **Country or Region** item. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* On the **Administrative Option** tab, click **Change System Locale**.
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* Select a system locale to change. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* Restart the system to apply the change. 
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
+## Appendix 4. Guide for Restarting Instances for Hypervisor Maintenance 
+NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
+Instances that are running on a target hypervisor for maintenance must be restarted and migrated to a hypervisor which is completed with maintenance. 
+
+To restart an instance, use the **! Restart** button which is created next to each instance name on console.  `Rebooting instances on console or restarting an operating system does not lead into migrating instances to another hypervisor.`
+Follow the guide as below to use the restarting feature on console. 
+
+Go to the project where your instance specified as maintenance target is located.  
+
+**1. Check if your instance is the target of maintenance.**
+
+Any instance that has the **! Restart** button before its name requires maintenance. 
+Put the mouse cursor on the  **! Restart** button to find maintenance schedule details. 
+![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_en_1.png)    
+
+**2. Disable or close application programs that are running on the target instance for maintenance.**
+
+Any application programs running on target instances for maintenance must be disabled or closed so as not to impact the service. 
+If impact on service is inevitable, please contact NHN Cloud Customer Center and be guided with appropriate measures. 
+
+**3. Click the [! Restart] button created next to the name of the target instance.**
+
+![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_en_2.png)
+
+**4. Click [OK] onto the window asking of restarting instance.**
+
+![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_en_3.png)
+
+**5. Wait until the instance status turns green and the [! Restart] button disappers.**
+
+If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
+
+The instance becomes inoperable while restarting is underway. 
+Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by NHN Cloud.  

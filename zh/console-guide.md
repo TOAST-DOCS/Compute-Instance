@@ -4,7 +4,7 @@
 
 ### 镜像
 
-请选择安装操作系统所需的镜像。镜像可以从TOAST提供的公共镜像、已创建的用户自定义镜像、共享镜像中选择。
+请选择安装操作系统所需的镜像。镜像可以从NHN Cloud提供的公共镜像、已创建的用户自定义镜像、共享镜像中选择。
 
 根据您使用的镜像，实例规格（flavor）会有所不同，因此创建实例时请先选择镜像后再进行后面的操作。
 
@@ -20,13 +20,13 @@
 
 > [参考] VPC的资源可以在所有可用区域中使用。
 
-有关可用性区域的详细说明请参考[实例概述中的可用区域](/Compute/Instance/zh/overview/#_4)。
+有关可用性区域的详细说明请参考[实例概述中的可用区域](./overview/#availability-zone)。
 
 ### 规格(flavor)
 
 您可以根据虚拟硬件的性能来选择各种规格。但是，根据镜像要求的虚拟硬件性能，可选择的规格会受到限制。有关详细说明请参考[实例概述](./overview)。
 
-实例在创建后，可以在TOAST控制台更改实例规格。可以从高规格降配为低规格，也可以从低规格升配为高规格。但部分规格是无法更改的，有关详细说明请参考[实例规格的更改](./console-guide/#_14)。 
+实例在创建后，可以在NHN Cloud控制台更改实例规格。可以从高规格降配为低规格，也可以从低规格升配为高规格。但部分规格是无法更改的，有关详细说明请参考[实例规格的更改](./console-guide/#_15)。 
 > [注意] 实例的默认系统盘无法通过规格更改来变更。
 
 ### 磁盘空间
@@ -40,8 +40,8 @@
 
 | 规格            | 支持的设备大小         |
 | ----------------| -------------------------- |
-| U 类型           | 固定为20G，无法更改 |
-| T, M, C, R, X 类型 | 20~1000GB               |
+| u2 类型           | 固定为20G，无法更改 |
+| t2, m2, c2, r2, x1 类型 | 20~1000GB               |
 
 >[参考] 根据磁盘空间的大小决定实际支付金额。因此磁盘的容量不要设置太大。建议您根据需求添加块存储。
 
@@ -59,7 +59,19 @@
 
 ### 密钥对
 
-您可以使用现有的密钥对或创建新的密钥对后使用。现有秘钥的注册方法，Windows用户请参考 [导入密钥对 (Windows用户)](./console-guide/#_16)、Mac及Linux 用户请参考[导入密钥对(Mac、Linux用户)](./console-guide/#_17)。
+您可以使用现有的密钥对或创建新的密钥对后使用。现有秘钥的注册方法，Windows用户请参考 [导入密钥对 (Windows用户)](./console-guide/#windows_1)、Mac及Linux 用户请参考[导入密钥对(Mac、Linux用户)](./console-guide/#maclinux)。
+
+### 网络
+
+在VPC定义的子网中选择连接实例的子网。每当选择一个子网时，都会在实例中创建连接到该子网的网络接口。您也可以更换被选择的子网的顺序来更改网络接口。此时，第一个网络接口(`eth0`)默认为网关。
+
+网络创建及管理相关详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
+
+### 浮动IP
+
+创建实例后，指定是否使用浮动IP。若选择使用浮动IP，新建浮动IP并连接至第一个网络接口。此时，第一个网络接口必须连接至设置了互联网网关的子网。
+
+浮动IP管理也可在实例 > 管理页面或实例 > 浮动IP页面内设置。有关浮动IP的更详细的信息参考[VPC控制台使用指南](/Network/VPC/zh/console-guide/)。
 
 ### 安全组
 
@@ -70,17 +82,68 @@
 
 安全组的详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
 
-### 网络
+### 附加块存储
 
-在VPC定义的子网中选择连接实例的子网。每当选择一个子网时，都会在实例中创建连接到该子网的网络接口。您也可以更换被选择的子网的顺序来更改网络接口。此时，第一个网络接口(`eth0`)默认为网关。
+创建实例后，指定是否连接附加块存储。若选择使用附加块存储，创建与基本磁盘分开的新的块存储并连接至实例。与基本磁盘一样，创建附加磁盘时，可指定名称、存储类型、大小。
 
-网络创建及管理相关详细说明请参考[VPC概述](/Network/VPC/zh/overview/)。
+若仅将基本磁盘用于OS，且把经常使用的应用程序或数据保存在附加磁盘中的话，通过块存储连接/断开连接或快照功能，可轻松地迁移或复制。此外，发生实例问题时，仅断开与附加磁盘的连接后，再连接至其他实例，可轻松恢复服务。
+
+也可以在实例 > 块存储页面管理块存储。有关块存储的更详细的说明参考[块存储指南](/Storage/Block%20Storage/zh/overview/)。
+
+### 调度脚本
+
+创建实例后指定要执行的脚本。调度脚本在完成实例的首次启动并结束网络设置等初始化过程后执行。NHN Cloud的调度脚本利用官方镜像内置的cloud-init (Linux)、Cloudbase-init (Windows)等自动化工具执行。
+
+> [注意]
+> 调度脚本以root (Linux)/Administrator (Windows)用户权限执行。
+
+#### Linux
+调度脚本的第一行必须以 `#!` 开头。
+```
+#!/bin/bash
+...
+```
+
+为了正常运行调度脚本，应确认实例内部的日志文件。脚本中向标准输出/错误设备输出的日志可在“/var/log/cloud-init-output.log”中确认。
+
+#### Windows
+
+Windows镜像支持Batch脚本格式、Powershell脚本格式的调度脚本格式。各格式按照第一行列出的指令区分。
+
+* Batch脚本
+```
+rem cmd
+...
+```
+
+* PowerShell脚本
+```
+#ps1_sysnative
+...
+```
+
+若欲同时使用Batch脚本及PowerShell脚本，按如下方式操作。
+
+* EC2 format
+```
+<script>
+...
+</script>
+<powershell>
+...
+</powershell>
+```
+
+调度脚本的日志可在`C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`中确认。
+
+有关调度脚本的更详细的说明参考[cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html)或[Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html)指南。
+
 
 ## 实例添加功能
 
 ### 创建镜像
 
-使用实例的默认系统盘创建镜像。创建镜像时为了确保数据的一致性，务必要在关闭实例的情况下进行。如果创建镜像命令是禁止状态，则必须先关闭该实例。
+从实例的默认磁盘创建镜像。为保证数据整合性，建议在终止实例的状态下创建镜像。
 
 实例的默认系统盘中没有空间的情况下也可以创建镜像，但是无法为了将镜像用于其他实例而进行初始化。在创建镜像之前请确保实例具有至少100KB的可用空间。
 
@@ -107,10 +170,9 @@
 
 根据当前的规格，可更改的实例规格不同。
 
-* M, C, R, T, X类型的实例可以更改为M, C, R, T, X类型的实例规格。
-* M, C, R, T, X类型的实例无法更改为U类型的实例规格。
-* I 类型的实例创建后无法更改规格。也无法更改为同样I类型的实例规格。
-* U类型与I类型相同，创建后无法更改规格。也无法更改为同样U类型的实例规格。
+* m2, c2, r2, t2, x1类型的实例可以更改为m2, c2, r2, t2, x1类型的实例规格。
+* m2, c2, r2, t2, x1类型的实例无法更改为u2类型的实例规格。
+* u2类型与I类型相同，创建后无法更改规格。也无法更改为同样u2类型的实例规格。
 
 更改实例规格时需要进行更改及验证更改操作。当所有的操作结束后VM状态更改为**Shutoff**状态，点击**追加功能**的 **Start instance**按钮即可启动实例。
 
@@ -122,7 +184,7 @@
 
 ### 导入密钥对(Windows用户)
 
-安装PuTTY SSH客户端的同时会自动安装puttygen程序，利用此程序可以创建密钥对并将其注册到TOAST后使用。
+安装PuTTY SSH客户端的同时会自动安装puttygen程序，利用此程序可以创建密钥对并将其注册到NHN Cloud后使用。
 
 设置[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)或运用韩语补丁的[iPuTTY](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)。 
 
@@ -141,15 +203,15 @@
 > [注意]
 如果想自动登录到实例，请不要使用私钥密码。如果使用了私钥密码，则必须在登录时手动输入秘钥的密码。
 
-已注册的密钥对可以在创建实例时使用。访问实例时则需要此密钥对的私钥进行访问。有关实例的访问方法请参考[实例概述](./overview/#_9)。
+已注册的密钥对可以在创建实例时使用。访问实例时则需要此密钥对的私钥进行访问。有关实例的访问方法请参考[实例概述](./overview/#_5)。
 
-与在TOAST创建的密钥对一样，利用此方式创建的密钥对的私钥如果一旦泄露，任何人都可以利用泄露的私钥访问实例，因此请慎重管理私钥。
+与在NHN Cloud创建的密钥对一样，利用此方式创建的密钥对的私钥如果一旦泄露，任何人都可以利用泄露的私钥访问实例，因此请慎重管理私钥。
 
 
 
 ### 导入密钥对(Mac、Linux用户)
 
-利用Mac或Linux的`ssh-kegen`来创建的密钥对可以在TOAST上注册并使用。使用以下命令创建密钥对。
+利用Mac或Linux的`ssh-keygen`来创建的密钥对可以在NHN Cloud上注册并使用。使用以下命令创建密钥对。
 
 	$ ssh-keygen -t rsa -f my_key.key
 
@@ -159,7 +221,157 @@
 
 将整个内容粘贴到**导入密钥对**的**公钥:**字段中以注册密钥对。
 
-已注册的密钥对可以在创建实例时使用。访问实例时则需要此密钥对的私钥进行访问。实例的访问方法请参考[实例概述](./overview/#_9)。
+已注册的密钥对可以在创建实例时使用。访问实例时则需要此密钥对的私钥进行访问。实例的访问方法请参考[实例概述](./overview/#_5)。
 
-与在TOAST创建的密钥对一样，利用这种方式创建的密钥对的私钥如果一旦泄露，任何人都可以利用泄露的私钥访问实例，因此请慎重管理私钥。
+与在NHN Cloud创建的密钥对一样，利用这种方式创建的密钥对的私钥如果一旦泄露，任何人都可以利用泄露的私钥访问实例，因此请慎重管理私钥。
 
+## 附录 1.更改Windows语言包
+
+NHN Cloud云Windows图像默认提供英文版。默认使用其他语言的方法如下。
+
+1.选择**START > Control Panel > Clock, Language, and Region > Add a language**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
+
+2.选择**更改语言默认设置 > 添加语言**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
+
+3.在**添加语言(Add a language)**中选择想要使用的语言，单击**添加(Add)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
+
+4.确认添加的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
+
+5.下载并安装添加的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
+
+6.下载并安装更新。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
+
+7.若欲更改安装的语言包，双击选择的语言，或选择**选项(Options)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
+
+8.在语言选项中选择**设置为默认语言**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
+
+9.若欲应用默认语言设置，单击**现在注销(Log off now)**。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
+
+10.再次登录即可确认已更改为用户选择的语言包。
+
+![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
+
+## 附录 2.更改Windows路由
+
+在NHN Cloud云Windows中更改路由的方法如下。
+
+
+* 按**Windows键 + R**打开运行窗口后输入`cmd`并执行，打开命令提示符窗口。
+  输入Route命令。
+* 输出当前设置：route print
+* 添加：route add “目的地” mask “subnet” “gateway” metric “Metric值” if “Interface号"
+* 更改：route change “目的地” mask “subnet” “gateway” metric “Metric值” if “Interface号"
+* 删除：route delete “目的地” mask “目的地subnet” “gateway” metric “Metric值” if “Interface号"
+  * 选项：-p（指定永久路径）
+
+说明
+![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+* Metric值：值越小，优先顺序越高
+* Interface号：可在route print中确认（上图中红色边框）
+* 永久路径：若不使用-p选项，重启系统时设置的路径会初始化，因此使用（上图中蓝色边框）
+
+案例1 - 仅特定接口设置外部通信
+* 有使用route change命令更改不需要外部通信的接口路径的metric，或不在固定IP设置中输入网关信息的方法等。
+
+* Metric更改方法
+  * 增加接口的metric
+
+  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
+  固定IP设置方法
+  * 输入ipconfig /all，确认IP信息。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
+  * 利用确认的IP信息，在IP设置窗口中输入，不包括默认网关。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
+  * 利用route print确认。
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+    案例2 - 设置特定段的路径
+  * 利用route add命令设置指定段的路径。
+
+  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+  案例3 - 删除特定路径
+
+  * 使用route delete删除指定的路径。
+
+  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+  ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
+## 附录 3.更改系统Locale
+
+在NHN Cloud云Windows中更改系统Locale的方法如下。
+
+* 选择**Windows键 > 控制面板 > 时间及国家**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+
+* 选择**国家或地区**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+
+* 在**管理员选项**选项卡中单击**更改系统Locale**。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+
+* 选择要更改的系统Locale。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+
+* 若欲应用，重启系统。
+
+![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
+## 附录 4.用于维护管理程序的实例重启指南
+NHN Cloud定期升级管理程序软件，提升基本基础设施服务的安全性及稳定性。
+驱动中的实例应通过重启从维护对象管理程序移动至完成维护的管理程序。
+
+若欲重启实例，应通过控制台使用实例名前生成的**! 重启**按钮。
+`实例无法通过控制台中的实例重启或操作系统的重启功能移动至其他管理程序。`
+请按照以下指南使用控制台中的重启功能。
+
+移动至被指定为维护对象的实例所在的项目。
+
+**1. 确认维护对象实例。**
+
+实例名前有**! 重启**按钮的实例是维护对象实例。
+将鼠标光标放在**! 重启**按钮上，可确认详细的维护日程。
+![实例维护图像1](http://static.toastoven.net/prod_instance/instance_p_migration_zh_1.png)    
+
+**2.禁用或结束维护对象实例中驱动中的应用程序**
+
+禁用或结束维护对象实例中驱动中的应用程序时，应采取措施避免影响服务。 
+不可避免地影响服务时，联系NHN Cloud客服中心，将为您介绍合适的措施。
+
+**3.单击维护对象实例名旁生成的[! 重启]按钮。**
+
+![实例维护图像2](http://static.toastoven.net/prod_instance/instance_p_migration_zh_2.png)
+
+**4.当询问是否重启实例的窗口跳出时，单击[确定]按钮。**
+
+![实例维护图像3](http://static.toastoven.net/prod_instance/instance_p_migration_zh_3.png)
+
+**5.实例状态显示灯变为绿色，等待至[! 重启]按钮消失。**
+
+若实例状态显示灯未改变或**! 重启**按钮未禁用，请进行“刷新”。
+
+
+实例重启过程中，无法对相应实例进行任何操作。
+若实例重启未正常完成，将自动向管理员报告，NHN Cloud会另行联系您。

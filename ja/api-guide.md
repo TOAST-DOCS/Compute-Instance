@@ -1,13 +1,14 @@
 ## Compute > Instance > APIガイド
 
-TOAST Compute Instanceサービスは次のAPIを提供します。
+APIは現在、韓国リージョンでのみ使用できます。
+
+NHN Cloud Compute Instanceサービスは次のAPIを提供します。
 
 * [アベイラビリティーゾーンAPI](#api_2)
 * [インスタンスAPI](#api_3)
 * [インスタンス追加機能API](#api_4)
-* [インスタンス仕様API](#api_5)
+* [インスタンスタイプAPI](#api_5)
 * [キーペアAPI](#api_6)
-
 
 ## 事前準備
 
@@ -21,7 +22,7 @@ TOAST Compute Instanceサービスは次のAPIを提供します。
 
 APIをリクエストする時は、常にアプリケーションキーを含めてリクエストする必要があります。アプリケーションキーは下記のように発行を受けることができます。
 
-1. TOASTコンソール**Compute**ページ上側で**URL & Appkey**をクリックします。
+1. NHN Cloudコンソール**Compute**ページ上側で**URL & Appkey**をクリックします。
 2. **URL & Appkey**ダイアログボックスで**Appkey**の値をコピーして使用します。
 
 例えば、トークン発行URLは次のとおりです。
@@ -42,10 +43,10 @@ Response Bodyには「header」情報が基本的に含まれており、これ�
 
 ```json
 {
-    「header」 ： {
-        "isSuccessful" ： true,
-        "resultCode"： 0,
-        "resultMessage" ： "SUCCESS"
+    "header" : {
+        "isSuccessful" : true,
+        "resultCode" : 0,
+        "resultMessage" : "SUCCESS"
     }
 }
 ```
@@ -76,37 +77,37 @@ Content-Type： application/json;charset=UTF-8
 ##### Request Body
 ```json
 {
-	"auth" ： {
-    	"username" ： "{TOAST ID}",
-        "password" ： "{API Password}"
+	"auth" : {
+    	"username" : "{TOAST ID}",
+        "password" : "{API Password}"
     }
 }
 ```
 
 | Name | In | Type | Optional | Description |
 | -- | -- | -- | -- | -- |
-| TOAST ID | Body | String | - | TOASTアカウントID(Email)入力 |
+| NHN Cloud ID | Body | String | - | NHN CloudアカウントID(Email)入力 |
 | API Password | Body | String | - | **API Endpoint設定**で保存したパスワード |
 
 ##### Response Body
 ```json
 {
-    「header」 ： {
-        "isSuccessful" ：  true,
-        "resultCode" ：  0,
-        "resultMessage" ：  "SUCCESS"
+    "header" : {
+        "isSuccessful" :  true,
+        "resultCode" :  0,
+        "resultMessage" :  "SUCCESS"
     },
-    "access" ： {
-        "token" ： {
-            "expires" ：  "{Expires}",
-            "id" ：  "{Token ID}",
-            "issued_at" ：  "{Issued at}"
+    "access" : {
+        "token" : {
+            "expires" :  "{Expires}",
+            "id" :  "{Token ID}",
+            "issued_at" :  "{Issued at}"
         },
-        "user" ： {
-            "id" ：  "{User ID}",
-            "roles" ： [
+        "user" : {
+            "id" :  "{User ID}",
+            "roles" : [
                 {
-                    "name" ：  "{Role name}"
+                    "name" :  "{Role name}"
                 }
             ]
         }
@@ -138,22 +139,22 @@ GET /v1.0/appkeys/{appkey}/tokens?id={tokenId}
 ##### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "access"： {
-        "token"： {
-            "expires"： "{Expires}",
-            "id"： "{Token ID}",
-            "issued_at"： "{Issued at}"
+    "access": {
+        "token": {
+            "expires": "{Expires}",
+            "id": "{Token ID}",
+            "issued_at": "{Issued at}"
         },
-        "user"： {
-            "id"： "{User ID}",
-            "roles"： [
+        "user": {
+            "id": "{User ID}",
+            "roles": [
                 {
-                    "name"： "{Role name}"
+                    "name": "{Role name}"
                 }
             ]
         }
@@ -191,16 +192,16 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "zones"： [
+    "zones": [
         {
-            "zoneName"： "{Zone Name}",
-            "zoneState"： {
-                "available"： "{Available}"
+            "zoneName": "{Zone Name}",
+            "zoneState": {
+                "available": "{Available}"
             }
         }
     ]
@@ -217,7 +218,7 @@ X-Auth-Token： {tokenId}
 
 ### インスタンス状態
 インスタンスは生成、変更、削除、運営中は次の状態になります。
-![[図1]インスタンスStatus Diagram](http：//static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
+![[図1]インスタンスStatus Diagram](http://static.toastoven.net/prod_infrastructure/compute/developersguide/img_001.png)
 
 
 | 状態 | 説明 |
@@ -229,7 +230,7 @@ X-Auth-Token： {tokenId}
 | POWERING_OFF | インスタンス終了中 |
 | REBOOTING | インスタンス再起動中 |
 | DELETING | インスタンス削除中 |
-| RESIZING | インスタンス仕様(flavor)変更作業中 |
+| RESIZING | インスタンスタイプ(flavor)変更作業中 |
 | MIGRATING | インスタンスマイグレーション作業中 |
 | ERROR | エラー状態 |
 
@@ -252,16 +253,16 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instances"： [
+    "instances": [
         {
-            "id"： "{Instance ID}",
-            "name"： "{Instance Name}",
-            "status"： "{Instance Status}"
+            "id": "{Instance ID}",
+            "name": "{Instance Name}",
+            "status": "{Instance Status}"
         }
     ]
 }
@@ -292,58 +293,58 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instances"： [
+    "instances": [
         {
-            "addresses"： [
+            "addresses": [
                 {
-                    "macAddress"： "{MAC Address}",
-                    "ipAddress"： "{IP Address}",
-                    "version"： "{IP Version}",
-                    "floatingIpAddress"： "{Floating IP Address}"
+                    "macAddress": "{MAC Address}",
+                    "ipAddress": "{IP Address}",
+                    "version": "{IP Version}",
+                    "floatingIpAddress": "{Floating IP Address}"
                 }
             ],
-            "availabilityZone"： "{Zone Name}",
-            "flavor"： {
-                "id"： "{Flavor ID}",
-                "name"： "{Flavor Name}",
-                "cpu"： "{Flavor CPU}",
-                "ram"： "{Flavor RAM}"
+            "availabilityZone": "{Zone Name}",
+            "flavor": {
+                "id": "{Flavor ID}",
+                "name": "{Flavor Name}",
+                "cpu": "{Flavor CPU}",
+                "ram": "{Flavor RAM}"
             },
-            "status"： "{Status}",
-            "id"： "{Instance ID}",
-            "name"： "{Instance Name}",
-            "image"： "{Image ID}",
-            "metadata"： {
-                "{key}"： "{value}"
+            "status": "{Status}",
+            "id": "{Instance ID}",
+            "name": "{Instance Name}",
+            "image": "{Image ID}",
+            "metadata": {
+                "{key}": "{value}"
             },
-            "keyName"： "{PEM Key Name}",
-            "volumes"： {
-                "root" ： {
-                    "size"： "{Root Volume Size}",
-                    "type"： "{Root Volume Type}"
+            "keyName": "{PEM Key Name}",
+            "volumes": {
+                "root" : {
+                    "size": "{Root Volume Size}",
+                    "type": "{Root Volume Type}"
                 },
-                "attachments" ： [
+                "attachments" : [
                     {
-                        "id" ： "{Attached Volume ID}",
-                        "name"： "{Attached Volume Name}",
-                        "size"： "{Attached Volume Size}",
-                        "type"： "{Attached Volume Type}"
+                        "id" : "{Attached Volume ID}",
+                        "name": "{Attached Volume Name}",
+                        "size": "{Attached Volume Size}",
+                        "type": "{Attached Volume Type}"
                     }
                 ]
             },
-            "securityGroups"： [
+            "securityGroups": [
                 {
-                    "name"： "{Security Group Name}"
+                    "name": "{Security Group Name}"
                 }
             ],
-            "launchedAt"： "{Launched Time}",
-            "createdAt"： "{Created Time}",
-            "updatedAt"： "{Updated Time}"
+            "launchedAt": "{Launched Time}",
+            "createdAt": "{Created Time}",
+            "updatedAt": "{Updated Time}"
         }
     ]
 }
@@ -356,8 +357,8 @@ X-Auth-Token： {tokenId}
 | version | Body | Integer | IPバージョン(IPv4のみサポート) |
 | Floating IP Address | Body | String | NICに割り当てられたFloating IPアドレス |
 | Zone Name | Body | String | アベイラビリティーゾーン名 |
-| Flavor ID | Body | String | インスタンス仕様ID |
-| Flavor Name | Body | String | インスタンス仕様名 |
+| Flavor ID | Body | String | インスタンスタイプ(flavor) ID |
+| Flavor Name | Body | String | インスタンスタイプ(flavor) 名 |
 | Flavor CPU | Body | Integer | CPU個数 |
 | Flavor RAM | Body | Integer | RAMサイズ(MB) |
 | Status | Body | String | インスタンスの状態 |
@@ -394,25 +395,26 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "instance"： {
-        "name"： "{Instance Name}",
-        "image"： "{Image ID}",
-        "flavor"： "{Flavor ID}",
-        "networks"： [
+    "instance": {
+        "name": "{Instance Name}",
+        "image": "{Image ID}",
+        "flavor": "{Flavor ID}",
+        "networks": [
         	{
-            	"id"： "{Network ID}"
+              "id": "{Network ID}",
+              "subnetId": "{Subnet ID}"
         	}
         ],
-        "availabilityZone"： "{Availability Zone}",
-        "keyName"： "{Key Name}",
-        "count"： "{Count}",
-        "volume"： {
-           "size"： "{Volume Size}",
-           "type"： "{Volume Type}",
+        "availabilityZone": "{Availability Zone}",
+        "keyName": "{Key Name}",
+        "count": "{Count}",
+        "volume": {
+           "size": "{Volume Size}",
+           "type": "{Volume Type}",
         },
-        "securityGroups"： [
+        "securityGroups": [
         	{
-            	"name"： "{Security Group Name}"
+            	"name": "{Security Group Name}"
         	}
 		]
     }
@@ -423,8 +425,9 @@ Content-Type： application/json;charset=UTF-8
 |--|--|--|--|--|
 | Instance Name | Body | String | - | インスタンス名(Linuxの場合、最大20文字、Windowsの場合は最大12文字、英数字、'-'、'.'のみ可能) |
 | Image ID | Body | String | - | インスタンスにインストールするイメージID |
-| Flavor ID | Body | String | - | インスタンス仕様ID |
-| Network ID | Body | String | - | インスタンスが接続するネットワークID |
+| Flavor ID | Body | String | - | インスタンスタイプ(flavor) ID |
+| Network ID | Body | String | O | インスタンスが接続するネットワークID |
+| Subnet ID | Body | String | O | インスタンスが接続されるサブネットID<br>ネットワークIDまたはサブネットIDのどちらかを指定する必要あります。 |
 | Availability Zone | Body | String | - | インスタンスが生成されるアベイラビリティーゾーン名 |
 | Key Name | Body | String | - | インスタンスに登録するキーペア名 |
 | Count | Body | Integer | O | 同時生成するインスタンスの個数、最大10個に制限、1～10の範囲。省略すると1個生成 |
@@ -442,15 +445,15 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "instance"： {
-        "id"： "{Instance ID}",
-        "name"： "{Instance Name}",
-        "status"： "{Instance Status}"
+    "instance": {
+        "id": "{Instance ID}",
+        "name": "{Instance Name}",
+        "status": "{Instance Status}"
     }
 }
 ```
@@ -492,8 +495,8 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "attachment"：{
-        "volumeId"："{Volume ID}"
+    "attachment":{
+        "volumeId":"{Volume ID}"
     }
 }
 ```
@@ -506,15 +509,15 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "attachment"： {
-        "device"： "{Device ID}",
-        "id"： "{Attachment ID}",
-        "volumeId"： "{Volume ID}"
+    "attachment": {
+        "device": "{Device ID}",
+        "id": "{Attachment ID}",
+        "volumeId": "{Volume ID}"
     }
 }
 ```
@@ -547,10 +550,10 @@ X-Auth-Token： {tokenId}
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -559,7 +562,7 @@ X-Auth-Token： {tokenId}
 次のようなインスタンス制御および付加機能を提供します。
 
 - インスタンス起動、停止、再起動
-- インスタンス仕様変更(resize)
+- インスタンスタイプ変更(resize)
 - インスタンスイメージ生成
 - Floating IP接続、解除
 - セキュリティーグループ登録、解除
@@ -581,9 +584,9 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body Template
 ```json
 {
-    "action"： "{Action Name}",
-    "parameters" ： {
-         "{key}"： "{value}"
+    "action": "{Action Name}",
+    "parameters" : {
+         "{key}": "{value}"
     }
 }
 ```
@@ -597,17 +600,17 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "start"
+    "action" : "start"
 }
 ```
 
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -617,7 +620,7 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "stop"
+    "action" : "stop"
 }
 ```
 
@@ -625,10 +628,10 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -636,16 +639,16 @@ Content-Type： application/json;charset=UTF-8
 ### インスタンス再起動
 インスタンスを再起動します。以下のように再起動方式を指定できます。
 
-- **SOFT**：正常終了(graceful shutdown)後、インスタンスを再起動します。
-- **HARD**：強制終了(shutdown)後、インスタンスを再起動します。
+- **SOFT**:正常終了(graceful shutdown)後、インスタンスを再起動します。
+- **HARD**:強制終了(shutdown)後、インスタンスを再起動します。
 
 #### Request Body
 
 ```json
 {
-    "action" ： "reboot",
-    "parameters"：{
-        "type"："{Reboot Type}"
+    "action" : "reboot",
+    "parameters":{
+        "type":"{Reboot Type}"
     }
 }
 ```
@@ -657,37 +660,37 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
 
-### インスタンス仕様変更
-インスタンスの仕様を変更します。
+### インスタンスタイプ変更
+インスタンスタイプを変更します。
 #### Request Body
 ```json
 {
-    "action"： "resize",
-    "parameters"：{
-        "flavor"："{Flavor ID}"
+    "action": "resize",
+    "parameters":{
+        "flavor":"{Flavor ID}"
     }
 }
 ```
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-|  Flavor ID | body | String | - | 変更するインスタンス仕様ID |
+|  Flavor ID | body | String | - | 変更するインスタンスタイプ(flavor) ID |
 
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -700,9 +703,9 @@ Content-Type： application/json;charset=UTF-8
 #### Request Body
 ```json
 {
-    "action" ： "uploadImage",
-    "parameters" ： {
-        "name"： "{Image Name}"
+    "action" : "uploadImage",
+    "parameters" : {
+        "name": "{Image Name}"
     }
 }
 ```
@@ -714,14 +717,14 @@ Content-Type： application/json;charset=UTF-8
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "createdImage"： {
-        "id" ： "{Created Image ID}",
-        "name" ： "{Created Image Name}"
+    "createdImage": {
+        "id" : "{Created Image ID}",
+        "name" : "{Created Image Name}"
     }
 }
 ```
@@ -737,10 +740,10 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "addFloatingIp",
-    "parameters"： {
-        "address"： "{Floating IP Address}",
-        "ipAddress"： "{IP Address of the instance}"
+    "action": "addFloatingIp",
+    "parameters": {
+        "address": "{Floating IP Address}",
+        "ipAddress": "{IP Address of the instance}"
     }
 }
 ```
@@ -754,10 +757,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -769,9 +772,9 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    "action"： "removeFloatingIp",
-    "parameters" ： {
-        "address"： "{Floating IP Address}"
+    "action": "removeFloatingIp",
+    "parameters" : {
+        "address": "{Floating IP Address}"
     }
 }
 ```
@@ -784,10 +787,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -798,9 +801,9 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "addSecurityGroup",
-    "parameters"： {
-        "name"： "{Security Group Name}"
+    "action": "addSecurityGroup",
+    "parameters": {
+        "name": "{Security Group Name}"
     }
 }
 ```
@@ -813,10 +816,10 @@ Floating IPをインスタンスに接続します。
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
@@ -827,9 +830,9 @@ Floating IPをインスタンスに接続します。
 #### Request Body
 ```json
 {
-    "action"： "removeSecurityGroup",
-    "parameters"： {
-        "name"： "{Security Group Name}"
+    "action": "removeSecurityGroup",
+    "parameters": {
+        "name": "{Security Group Name}"
     }
 }
 ```
@@ -841,17 +844,17 @@ Floating IPをインスタンスに接続します。
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
 
-## インスタンス仕様API
-### インスタンス仕様リスト照会
-インスタンス仕様のリストおよび詳細情報を照会します。
+## インスタンスタイプAPI
+### インスタンスタイプのリスト照会
+インスタンスタイプのリストおよび詳細情報を照会します。
 
 #### Method、URL
 ```
@@ -869,22 +872,22 @@ X-Auth-Token： {tokenID}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "flavors"： [
+    "flavors": [
         {
-            "disabled"： "{Disabled}",
-            "ephemeral"： "{Ephermeral}",
-            "type"： "{Type}",
-            "volumeSize"： "{Volume Size}",
-            "id"： "{Flavor ID}",
-            "name"： "{Flavor Name}",
-            "isPublic"： "{Is Public}",
-            "ram"： "{RAM}",
-            "vcpus"： "{VCPUs}"
+            "disabled": "{Disabled}",
+            "ephemeral": "{Ephermeral}",
+            "type": "{Type}",
+            "volumeSize": "{Volume Size}",
+            "id": "{Flavor ID}",
+            "name": "{Flavor Name}",
+            "isPublic": "{Is Public}",
+            "ram": "{RAM}",
+            "vcpus": "{VCPUs}"
         }
     ]
 }
@@ -892,15 +895,15 @@ X-Auth-Token： {tokenID}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Disabled | Body | Boolean | インスタンス仕様非活性化の可否。 |
+| Disabled | Body | Boolean | インスタンスタイプの無効化の可否。 |
 | Ephermeral | Body | Integer | 臨時ディスクサイズ(GB)。|
-| Type | Body | String | インスタンス仕様最適化特性に応じて区分されるType値。<br>"general、"compute"、"memory"のどれか。 |
+| Type | Body | String | インスタンスタイプが最適化される特性に応じての区分。<br>"general、"compute"、"memory"のいずれか。 |
 | Volume Size | Body | Integer | インスタンス生成時、基本ディスクデバイスに作られるディスクサイズ(GB).<br>基本ディスクが固定サイズで作られるu2仕様の場合にのみこの値が渡されます。 |
 | Max Volume Size | Body | Integer | 基本ディスクデバイスで作成できる最大ディスクサイズ(GB). |
-| Flavor ID | Body | String | インスタンス仕様ID。 |
-| Flavor Name | Body | String | インスタンス仕様の名前。 |
-| Is Public | Body | Boolean | 共用インスタンス仕様かどうか。 |
-| RAM | Body | Integer | インスタンス仕様が持つRAM総量(MB)。 |
+| Flavor ID | Body | String | インスタンスタイプ(flavor)ID。 |
+| Flavor Name | Body | String | インスタンスタイプの名前。 |
+| Is Public | Body | Boolean | 共用インスタンスタイプかどうか。 |
+| RAM | Body | Integer | インスタンスタイプが持つRAM総量(MB)。 |
 | VCPUs | Body | Integer | インスタンスに割り当てられる仮想CPUコア個数。 |
 
 ## キーペアAPI
@@ -925,17 +928,17 @@ X-Auth-Token： {tokenId}
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "keypairs"： [
+    "keypairs": [
         {
-            "name"： "{Keypair Name}",
-            "publicKey"： "{Public Key Value}",
-            "fingerprint"： "{Fingerprint Value}",
-       	    "createdAt"： "{Created At}"
+            "name": "{Keypair Name}",
+            "publicKey": "{Public Key Value}",
+            "fingerprint": "{Fingerprint Value}",
+       	    "createdAt": "{Created At}"
         }
     ]
 }
@@ -945,7 +948,7 @@ X-Auth-Token： {tokenId}
 |--|--|--|--|
 | Keypair Name | Body | String | キーペアの名前。 |
 | Public Key Value | Body | String | キーペアの公開鍵の値。 |
-| Fingerprint Value | Body | String | フィンガープリント(fingerprint)値。 |
+| Fingerprint Value | Body | String | フィンガープリント(fingerprint)の値。 |
 | Created At | Body | DateTime | キーペア生成時間。 "Keypair Name"を指定した1件の照会の時にのみ表示されます。 |
 
 ### キーペア生成とアップロード
@@ -966,9 +969,9 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    "keypair"： {
-        "name"： "{Keypair Name}",
-        "publicKey"： "{Public Key Value}"
+    "keypair": {
+        "name": "{Keypair Name}",
+        "publicKey": "{Public Key Value}"
     }
 }
 ```
@@ -982,16 +985,16 @@ Content-Type： application/json;charset=UTF-8
 
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header" : {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     },
-    "keypair"： {
-        "name"： "{Keypair Name}",
-        "publicKey"： "{Public Key Value}",
-        "privateKey"： "{Private Key Value}",
-        "fingerprint"： "{Fingerprint Value}"
+    "keypair": {
+        "name": "{Keypair Name}",
+        "publicKey": "{Public Key Value}",
+        "privateKey": "{Private Key Value}",
+        "fingerprint": "{Fingerprint Value}"
     }
 }
 ```
@@ -1001,9 +1004,9 @@ Content-Type： application/json;charset=UTF-8
 | Keypair Name | Body | String | キーペアの名前 |
 | Public Key Value | Body | String | キーペアの公開鍵 |
 | Private Key Value | Body | String | キーペアの秘密鍵。キーペアアップロード(Requestに"publickey"項目を含む)の場合は省略されます。|
-| Fingerprint value | Body | String | Fingerprintの値 |
+| Fingerprint value | Body | String | フィンガープリント(fingerprint)の値 |
 
-生成されたPrivate Key Valueは全文を.pemファイルで保存した後、該当のKeypairを使用するように設定されたインスタンスにアクセスする時に使用できます。 **生成されたPrivate Key Valueは1度しか照会できないため**紛失または削除されないよう、しっかりと保管し、流出防止のためになるべく補助記憶装置(USBフラッシュメモリ)で管理するのが良いでしょう。
+生成されたPrivate Key Valueは全文を.pemファイルで保存した後、該当のキーペアが設定されたインスタンスへのアクセス時に使用できます。 **生成されたPrivate Key Valueは1度しか照会できないため**紛失または削除されないよう、しっかりと保管し、流出防止のためになるべく補助記憶装置(USBフラッシュメモリ)で管理するのが良いでしょう。
 
 ### キーペア削除
 指定したキーペアを削除します。
@@ -1024,10 +1027,10 @@ X-Auth-Token： {tokenId}
 #### Response Body
 ```json
 {
-    「header」： {
-        "isSuccessful"： true,
-        "resultCode"： 0,
-        "resultMessage"： "SUCCESS"
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": "SUCCESS"
     }
 }
 ```
