@@ -558,6 +558,9 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
 resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = openstack_compute_instance_v2.tf_instance_02.id
   volume_id = openstack_blockstorage_volume_v2.volume_01.id
+  vendor_options {
+    ignore_volume_confirmation = true
+  }
 }
 ```
 | 이름    | 타입 | 필수  | 설명       |
