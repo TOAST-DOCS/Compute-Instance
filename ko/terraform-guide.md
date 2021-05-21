@@ -70,9 +70,20 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 공급자 파일 이름은 임의로 설정 가능하며, 이 예제에서는 `provider.tf`를 사용합니다.
 
 ```
+# Define required providers
+terraform {
+required_version = ">= 0.14.0" # 최신 terraform 버전 명시
+  required_providers {
+    openstack = {
+      source  = "terraform-provider-openstack/openstack"
+      version = "~> 1.40.0"  # 최신 openstack provider 버전 명시
+    }
+  }
+}
+
 # Configure the OpenStack Provider
 provider "openstack" {
-  user_name   = "terraform-guide@nhnent.com"
+  user_name   = "terraform-guide@nhn.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
   auth_url    = "https://api-identity.infrastructure.cloud.toast.com/v2.0"
