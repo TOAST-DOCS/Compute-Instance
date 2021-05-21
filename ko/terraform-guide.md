@@ -218,17 +218,24 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   ~ update in-place
 
 Terraform will perform the following actions:
 
-  ~ openstack_compute_instance_v2.terraform-instance-01
-      security_groups.#:          "1" => "2"
-      security_groups.3814588639: "default" => "default"
-      security_groups.4051241745: "" => "terraform-sg"
+  # openstack_compute_instance_v2.terraform-instance-01 will be updated in-place
+  ~ resource "openstack_compute_instance_v2" "terraform-instance-01" {
+        id                  = "1e846787-04e9-4701-957c-78001b4b7257"
+        name                = "terraform-instance-01"
+      ~ security_groups     = [
+          + "http",
+            # (1 unchanged element hidden)
+        ]
+        # (12 unchanged attributes hidden)
 
+
+        # (2 unchanged blocks hidden)
+    }
 
 Plan: 0 to add, 1 to change, 0 to destroy.
 ...
@@ -238,12 +245,8 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Refreshing state... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-instance-01: Modifying... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-  security_groups.#:          "1" => "2"
-  security_groups.3814588639: "default" => "default"
-  security_groups.4051241745: "" => "terraform-sg"
-openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 1s (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
+openstack_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
