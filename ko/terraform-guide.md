@@ -291,13 +291,13 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## Data sources
 
-tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다.
+tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
 Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `openstack_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
 
 ```
 data "openstack_images_image_v2" "ubuntu_2004_20201222" {
-  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"  # 최신 ubuntu 버전 명시
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 ```
@@ -329,13 +329,13 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 
 ```
 data "openstack_images_image_v2" "ubuntu_2004_20201222" {
-  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"  # 최신 ubuntu 버전 명시
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # 같은 이름의 이미지 중 가장 오래된 이미지 조회
 data "openstack_images_image_v2" "windows2016_20200218" {
-  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"  # 최신 windows 버전 명시
+  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
   owner = "c289b99209ca4e189095cdecebbd092d"
@@ -462,7 +462,7 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.centos_78_20210223.id  # 최신 CentOS 버전 명시
+  image_id = data.openstack_images_image_v2.centos_78_20210223.id
   flavor_id = data.openstack_compute_flavor_v2.u2c1m2.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
