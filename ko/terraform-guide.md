@@ -46,9 +46,8 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 
 ### 알아두기
 
-* **아래 예시의 모든 데이터는 실제 정보가 아닙니다. 반드시 정확한 정보로 수정하여 사용합니다.**
-* **아래 모든 예시는 Terraform 0.12.24를 이용했습니다.**
-
+* **아래 예시에 사용된 Terraform 버전은 0.15.0입니다.**
+* **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
 
 ## Terraform 설치
 [Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
@@ -56,11 +55,11 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 다음은 설치 예시입니다.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-$ unzip terraform_0.12.24_linux_amd64.zip
+$ wget https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip
+$ unzip terraform_0.15.0_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.12.24
+Terraform v0.15.0
 ```
 
 
@@ -72,11 +71,11 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 ```
 # Define required providers
 terraform {
-required_version = ">= 0.14.0" # 최신 terraform 버전 명시
+required_version = ">= 0.15.0"
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.40.0"  # 최신 openstack provider 버전 명시
+      version = "~> 1.40.0"
     }
   }
 }
