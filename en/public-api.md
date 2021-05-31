@@ -1202,7 +1202,6 @@ NHN Cloud provides the following features regarding instance control with additi
 * Start, Close, and Restart Instance 
 * Change Instance Type
 * Create Instance Image
-* Attach/Detach Floating IP
 * Add/Delete Security Group 
 
 ### Start Instance
