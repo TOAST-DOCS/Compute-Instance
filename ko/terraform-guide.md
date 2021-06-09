@@ -46,7 +46,7 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 
 ### 알아두기
 
-* **아래 예시에 사용된 Terraform 버전은 0.15.0입니다.**
+* **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
 * **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
 
 ## Terraform 설치
@@ -55,11 +55,11 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 다음은 설치 예시입니다.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip
-$ unzip terraform_0.15.0_linux_amd64.zip
+$ wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+$ unzip terraform_1.0.0_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.15.0
+Terraform v1.0.0
 ```
 
 
@@ -71,11 +71,11 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 ```
 # Define required providers
 terraform {
-required_version = ">= 0.15.0"
+required_version = ">= 1.0.0"
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.40.0"
+      version = "~> 1.42.0"
     }
   }
 }
@@ -188,12 +188,11 @@ $ terraform apply
 ...
 openstack_compute_instance_v2.terraform-instance-01: Creating...
 openstack_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [50s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Creation complete after 53s [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
+openstack_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-...
 ```
 
 `apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 현재 디렉토리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
@@ -227,17 +226,16 @@ Terraform will perform the following actions:
         id                  = "1e846787-04e9-4701-957c-78001b4b7257"
         name                = "terraform-instance-01"
       ~ security_groups     = [
-          + "http",
+          + "terraform-sg",
             # (1 unchanged element hidden)
         ]
-        # (12 unchanged attributes hidden)
+        # (13 unchanged attributes hidden)
 
 
         # (2 unchanged blocks hidden)
     }
 
 Plan: 0 to add, 1 to change, 0 to destroy.
-...
 ```
 
 플랜을 적용하면 인스턴스에 새로운 보안 그룹이 추가됩니다.
@@ -263,14 +261,14 @@ $ rm instance.tf
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
 
 Terraform will perform the following actions:
 
-  - openstack_compute_instance_v2.terraform-test-01
-
+  # openstack_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "openstack_compute_instance_v2" "terraform-instance-01" {
+...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
 ...
@@ -281,11 +279,11 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-test-01: Refreshing state... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Still destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1, 10s elapsed)
-openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
-...
+openstack_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+openstack_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
+
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
 ## Data sources
@@ -461,8 +459,8 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.centos_78_20210223.id
-  flavor_id = data.openstack_compute_flavor_v2.u2c1m2.id
+  image_id = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.openstack_compute_flavor_v2.u2c2m4.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
 
@@ -472,7 +470,7 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   }
 
   block_device {
-    uuid = data.openstack_images_image_v2.centos_78_20210223.id
+    uuid = data.openstack_images_image_v2.ubuntu_2004_20201222.id
     source_type = "image"
     destination_type = "local"
     boot_index = 0
@@ -500,7 +498,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.centos_78_20210223.id
+    uuid                  = data.openstack_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -618,7 +616,7 @@ resource "openstack_blockstorage_volume_v2" "volume_06" {
 }
 ```
 
-`terraform import openstack_blockstorage_volume_v2.{name} {block storage id}` 명령으로 블록 스토리지를 불러옵니다.
+`terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}` 명령으로 블록 스토리지를 불러옵니다.
 
 ```
 $ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
