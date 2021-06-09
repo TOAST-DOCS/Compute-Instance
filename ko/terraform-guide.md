@@ -46,7 +46,7 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 
 ### 알아두기
 
-* **아래 예시에 사용된 Terraform 버전은 0.15.0입니다.**
+* **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
 * **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
 
 ## Terraform 설치
@@ -55,11 +55,11 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
 다음은 설치 예시입니다.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip
-$ unzip terraform_0.15.0_linux_amd64.zip
+$ wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+$ unzip terraform_1.0.0_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.15.0
+Terraform v1.0.0
 ```
 
 
@@ -71,11 +71,11 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 ```
 # Define required providers
 terraform {
-required_version = ">= 0.15.0"
+required_version = ">= 1.0.0"
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.40.0"
+      version = "~> 1.42.0"
     }
   }
 }
@@ -263,14 +263,14 @@ $ rm instance.tf
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
 
 Terraform will perform the following actions:
 
-  - openstack_compute_instance_v2.terraform-test-01
-
+  # openstack_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "openstack_compute_instance_v2" "terraform-instance-01" {
+...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
 ...
