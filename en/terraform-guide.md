@@ -46,8 +46,8 @@ NHN Cloud supports data sources and resources described as below with Terraform 
 
 ### Note
 
-* **All data in the below example are not real. Replace them with precise data before application.**
-* **All examples below are made with Terraform 0.12.24.**
+* **The version of the Terraform used in the example below is 1.0.0.**
+* **Check the name and number of the components, including the version before using as they may be changed.**
 
 
 ## Terraform Installation 
@@ -277,7 +277,7 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 ## Data Sources
 
-You can find Instance Type ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. 
+You can find Instance Type ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. Image names may be different from the ones shown here because NHN Cloud will update them on a regular basis. Refer to console and specify the exact name of the image to use. 
 
 Get a reference of data sources in `{data sources type}.{data source name}`. In the below example, refer to the image information imported to `openstack_images_image_v2.ubuntu_1804_20200218`.
 
