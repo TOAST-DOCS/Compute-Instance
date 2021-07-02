@@ -80,7 +80,7 @@ provider "openstack" {
 }
 ```
 * **user_name**
-    * TOAST ID를 사용합니다.
+    * NHN Cloud ID를 사용합니다.
 * **tenant_id**
     * NHN Cloud 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 테넌트 ID를 확인합니다.
 * **password**
