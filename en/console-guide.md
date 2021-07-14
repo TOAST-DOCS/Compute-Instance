@@ -42,7 +42,7 @@ Default disk size depends on the instance flavors.
 | Flavors | Supportive Device Size |
 | ----------------| -------------------------- |
 | Type u2 | Fixed at 20 ~ 100GB: vary by flavors    |
-| Types t2, m2, c2, r2, and x1 | 20 ~ 1000 GB               |
+| Types t2, m2, c2, r2, and x1 | 20 ~ 2000GB               |
 
 >[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
 
