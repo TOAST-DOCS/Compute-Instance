@@ -836,7 +836,7 @@ For Window instances, follow the restrictions as below for stable operations:
 * Default disk must be larger than 50GB. 
 * U2-type instances cannot use Windows images.  
 
-The default disk size can be specified from 10GB for Linux and 50GB for Windows.
+The minimum default disk size is 10GB for Linux and 50GB for Windows.
 
 
 ```

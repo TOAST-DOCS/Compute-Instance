@@ -824,7 +824,7 @@ X-Auth-Token: {tokenId}
 * 50GB以上の基本ディスクが必要です。
 * U2タイプはWindowsイメージを使用できません。
 
-基本ディスクサイズはLinuxは10GB、Windowsは50GBから1TBまで指定できます。
+基本ディスクの大きさはLinuxで10GB、Windowsでは50GBから指定できます。
 
 
 ```
