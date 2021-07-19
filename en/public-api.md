@@ -1239,9 +1239,9 @@ X-Auth-Token: {tokenId}
 #### Response
 This API does not return a response body.  
 
-### Close Instance
+### Suspend Instance
 
-Close instance and change its status to **SHUTOFF**. To call this API, the instance must be either **ACTIVE** or **ERROR**. 
+Stop instance and change its status to **SHUTOFF**. To call this API, the instance must be either **ACTIVE** or **ERROR**. 
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1254,7 +1254,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | Tenant ID |
 | serverId | URL | UUID | O | Instance ID to change |
 | tokenId | Header | String | O | Token ID |
-| os-stop | Body | none | O | Request of closing instance |
+| os-stop | Body | none | O | Request to suspend instance |
 
 <details><summary>Example</summary>
 <p>
