@@ -2,6 +2,8 @@
 
 ## Create Instances
 
+You can create instances using the below settings or Instance Template. To create instances using Instance Template, go to Create Instance screen and select ***\*Use Instance Template\****. To learn how to create an instance template, see [Instance Template Console Guide](/Compute/Intance%20Template/ko/console-guide/).
+
 ### Image
 
 Select an image with the operating system you need: select either from public images of NHN Cloud, user images, or shared images.  
