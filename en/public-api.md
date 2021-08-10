@@ -437,11 +437,11 @@ Instances exist in various statuses, and each status defines operations. See the
 |--|--|
 | `ACTIVE` | Instance is activated |
 | `BUILDING` | Instance is under buildup |
-| `STOPPED`| Instance is closed |
+| `STOPPED`| Instance is stopped |
 | `DELETED`| Instance is deleted |
 | `REBOOT`| Instance is rebooted |
 | `HARD_REBOOT`| Instance is forced for a reboot <br>Operates the same as turning off and turning on the physical server again |
-| `RESIZED`| Instance type is changed or instance is moved to another host <br>Instance is closed and restarted |
+| `RESIZED`| Instance type is changed or instance is moved to another host <br>Instance is stopped and restarted |
 | `REVERT_RESIZE`| Instance is restored to the original status, when it failed to change instance type or move to another host |
 | `VERIFY_RESIZE`| Instance is waiting to be approved after its type is changed or it is moved to another host <br>The status is automatically changed to `ACTIVE`. |
 | `ERROR`| Operation on the previous instance has failed |
@@ -1199,14 +1199,14 @@ This API does not return a response body.
 ## Additional Features 
 NHN Cloud provides the following features regarding instance control with additional features: 
 
-* Start, Close, and Restart Instance 
+* Start, Stop, and Restart Instance
 * Change Instance Type
 * Create Instance Image
 * Add/Delete Security Group 
 
 ### Start Instance
 
-Restart a closed instance and change the status into **ACTIVE**. To call this API, the instance status must be **SHUTOFF**. 
+Restart a stopped instance and change the status into **ACTIVE**. To call this API, the instance status must be **SHUTOFF**. 
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1239,7 +1239,7 @@ X-Auth-Token: {tokenId}
 #### Response
 This API does not return a response body.  
 
-### Suspend Instance
+### Stop Instance
 
 Stop instance and change its status to **SHUTOFF**. To call this API, the instance must be either **ACTIVE** or **ERROR**. 
 
@@ -1254,7 +1254,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | Tenant ID |
 | serverId | URL | UUID | O | Instance ID to change |
 | tokenId | Header | String | O | Token ID |
-| os-stop | Body | none | O | Request to suspend instance |
+| os-stop | Body | none | O | Request to stop instance |
 
 <details><summary>Example</summary>
 <p>
@@ -1278,8 +1278,8 @@ This API does not return a response body.
 
 Restart an instance, by using **SOFT** or **HARD** method. 
 
-* **SOFT**: With **"Graceful Shutdown"**, close the instance and restart it. The instance must be **ACTIVE**. 
-* **HARD**: Force to close the instance and restart it. It works the same way as turning off and on again a physical server. Forced closure is available only on the following statuses: 
+* **SOFT**: With **"Graceful Shutdown"**, stop the instance and restart it. The instance must be **ACTIVE**.
+* **HARD**: Forcefully stop the instance and restart it. It works the same way as turning off and on again a physical server. Forced stop is available only on the following statuses:
     * **ACTIVE**
     * **ERROR**
     * **HARD_REBOOT**
@@ -1324,7 +1324,7 @@ This API does not return a response body.
 
 ### Change Instance Type 
 
-Change the type of an instance. Types can be changed only for **ACTIVE** or **SHUTOFF** instances. When the instance is **ACTIVE**, the instance is closed and restarted while the type is changed.
+Change the type of an instance. Types can be changed only for **ACTIVE** or **SHUTOFF** instances. When the instance is **ACTIVE**, the instance is stopped and restarted while the type is changed.
 
 Type change may be restricted depending on the image or instance type. For more details, see Console User Guide. 
 
@@ -1369,7 +1369,7 @@ This API does not return a response body.
 
 Create an image from instance. Only `U2`-type instance images can be created via this API. To create images of other types of instances, see [Block Storage API](/Storage/Block Storage/ko/public-api/#_22). 
 
-Images can be created only when the instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to close instances before creating images so as to ensure data integrity. 
+Images can be created only when the instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to stop instances before creating images so as to ensure data integrity.
 
 When an image is successfully created, the image status is turned to `active`. To check if an image is fully created, use Query Image API to find status steadily.  
 
