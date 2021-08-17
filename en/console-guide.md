@@ -2,7 +2,7 @@
 
 ## Create Instances
 
-You can create instances using the below settings or Instance Template. To create instances using Instance Template, go to Create Instance screen and select ***\*Use Instance Template\****. To learn how to create an instance template, see [Instance Template Console Guide](/Compute/Intance%20Template/ko/console-guide/).
+You can create instances using the below settings or Instance Template. To create instances using Instance Template, go to Create Instance screen and select **Use Instance Template**. To learn how to create an instance template, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
 
 ### Image
 
