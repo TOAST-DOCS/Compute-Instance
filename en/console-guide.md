@@ -2,6 +2,8 @@
 
 ## Create Instances
 
+You can create instances using the below settings or Instance Template. To create instances using Instance Template, go to Create Instance screen and select **Use Instance Template**. To learn how to create an instance template, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
+
 ### Image
 
 Select an image with the operating system you need: select either from public images of NHN Cloud, user images, or shared images.  
@@ -42,7 +44,7 @@ Default disk size depends on the instance flavors.
 | Flavors | Supportive Device Size |
 | ----------------| -------------------------- |
 | Type u2 | Fixed at 20 ~ 100GB: vary by flavors    |
-| Types t2, m2, c2, r2, and x1 | 20 ~ 1000 GB               |
+| Types t2, m2, c2, r2, and x1 | 20 ~ 2000GB               |
 
 >[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
 
