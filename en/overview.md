@@ -178,7 +178,7 @@ Now click **Open** to access to instance.
 
 ### How to Access Windows Instances 
 
-To access a Windows server, select a Windows instance to access from NHN Cloud console. Click **Check Password** in the **Instance Access** tab from screen details at the bottom to check password set in the Windows server. 
+To access a Windows server, select a Windows instance to access from NHN Cloud console. Click **Check Password** in the **Access Information** tab from screen details at the bottom to check password set in the Windows server.
 
 ![Access to Windows Instance](http://static.toastoven.net/prod_instance/windows-login-en.png)
 

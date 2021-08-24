@@ -188,7 +188,7 @@ Debian
 
 ### 如何访问Windows实例
 
-如果要连接到Windows服务器，请从NHN Cloud控制台中选择要连接的Windows实例。在如下详细页面的**实例连接**(实例连接)标签中，单击**确认密码**按钮，以确认在Windows服务器上设置的密码。
+如果要连接到Windows服务器，请从NHN Cloud控制台中选择要连接的Windows实例。在如下详细页面的**连接信息**标签中，单击**确认密码**按钮，以确认在Windows服务器上设置的密码。
 
 ![访问Windows实例](http://static.toastoven.net/prod_instance/windows-login-zh.png)
 
