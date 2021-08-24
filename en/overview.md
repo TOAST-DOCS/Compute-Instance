@@ -71,7 +71,7 @@ Instance shall be charged as follows:
 
 * Charging instances begin from the moment they are created.
 * Default instance disk is charged by the block storage charging criteria,
-* Closed instances are charged by default instance disk and block storage.
+* Stopped instances are charged by default instance disk and block storage.
 
 
 ## How to Access Instances 

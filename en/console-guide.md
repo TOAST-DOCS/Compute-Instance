@@ -147,7 +147,7 @@ For more details regarding scheduled scripts, see guides for [cloud-init](https:
 
 ### Create Image 
 
-Create an image from default disk of an instance. It is recommended to close instances before creating an image, so as to ensure data integrity. 
+Create an image from default disk of an instance. It is recommended to stop instances before creating an image, so as to ensure data integrity.
 
 Even when a default disk has no additional space, image can be created but normal usage is impossible as initialization to use the image in other instances is unavailable. Before creating an image, empty at least 100KB of space.   
 
@@ -171,7 +171,7 @@ Network interfaces may be added or deleted, regardless of instance status. When 
 
 ### Change Instance Flavors 
 
-Change of instance flavors is enabled when an instance is closed. If an instance is currently executed, click **Close Instances** in **Further Functions** and close the instance.   
+Change of instance flavors is enabled when an instance is stopped. If an instance is currently executed, click **Stop Instances** in **Further Functions** and stop the instance.
 
 Instance flavors are allowed to change, depending on the current flavors.  
 
