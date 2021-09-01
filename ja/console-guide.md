@@ -169,9 +169,9 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 インスタンスの状態に関わらず、インスタンスのネットワークインターフェイスを追加または削除できます。ネットワークインターフェイスを削除する時、インターフェイスにFloating IPが接続されている場合は、Floating IPも一緒に接続が解除されます。一度接続が解除されたFloating IPは同じネットワークインターフェイスを再度追加しても自動的に接続されません。ネットワークインターフェイス追加後に再度、希望するFloating IPを接続する必要があります。
 
-### インスタンスタイプ変更
+### サブネット変更
 
-インスタンスの仕様は、インスタンスを終了した後に変更できます。インスタンスが実行中の場合は**追加機能**の**インスタンス終了**をクリックしてインスタンスを終了します。
+インスタンスのネットワークサブネットはインスタンスが停止した状態でのみ変更できます。サブネットを追加すると、自動的にインスタンスに該当サブネットに接続されるネットワークインターフェイスが作成されます。この時、一度に複数のサブネットを追加するとインスタンスに新たに作成されるネットワークインターフェイスの順序は任意で指定されます。サブネットをインスタンスから削除すると作成されていたネットワークインターフェイスも自動的に削除されます。
 
 現在の仕様に応じて、変更できるインスタンスの仕様が異なります。
 
@@ -327,23 +327,23 @@ NHN CloudのWindowsで、システムロケールを変更する方法は次の�
 
 * **スタート > コントロールパネル > 時計、言語、および地域**を選択します。
 
-![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
+![画像1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
 * **地域と言語**を選択します。
 
-![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
+![画像1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
 * **管理**タブで**システムロケール変更**をクリックします。
 
-![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
+![画像1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
 * 変更するシステムロケールを選択します。
 
-![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
+![画像1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
 * 適用するにはシステムを再起動します。
 
-![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+![画像1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 ## 付録4. ハイパーバイザーのメンテナンスのためのインスタンス再起動ガイド
 NHN Cloudは周期的にハイパーバイザーのソフトウェアをアップデートして、基本インフラサービスのセキュリティと安定性を向上させています。
@@ -381,5 +381,3 @@ NHN Cloudは周期的にハイパーバイザーのソフトウェアをアッ�
 
 インスタンスの再起動中は、該当インスタンスを一切操作できません。
 インスタンスの再起動が正常に完了しない場合は、自動的に管理者に報告され、NHN Cloudから別途連絡いたします。
-
-
