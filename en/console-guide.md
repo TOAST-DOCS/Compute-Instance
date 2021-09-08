@@ -2,117 +2,116 @@
 
 ## Create Instances
 
-You can create instances using the below settings or Instance Template. To create instances using Instance Template, go to Create Instance screen and select **Use Instance Template**. To learn how to create an instance template, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
+You can create instances either by using the settings below or by using instance templates. To create instances via instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
 
 ### Image
 
-Select an image with the operating system you need: select either from public images of NHN Cloud, user images, or shared images.  
+Select the image that contains the operating system you need. You can choose between public images provided by NHN Cloud, images you've previously created, or shared images.
 
-Instance flavors vary depending on the image you choose, so it is recommended to choose an image first before creating an instance. 
+The list of available instance flavors vary depending on the image you choose, so we recommended choosing an image first when creating an instance. 
 
-| OS                               | Disk      | Memory   |
-| -------------------------------- | --------- | -------- |
-| Linux <br>CentOS, Ubuntu, Debian | Over 20GB | Over 1GB |
-| Windows                          | Over 50GB | Over 2GB |
- 
+| OS                               | Disk          | Memory       |
+| -------------------------------- | ------------- | ------------ |
+| Linux <br>CentOS, Ubuntu, Debian | At least 20GB | At least 1GB |
+| Windows                          | At least 50GB | At least 2GB |
 
 ### Availability Zone 
 
-Unless specified, the availability zone shall be set randomly. Depending on the availability zone, the block storage is determined that the instance can use. If the block storage exists in a particular availability zone, then choose the zone.  
+If an availability zone is not specified, a random zone is selected. An instance can only use a block storage if they both exist in the same availability zone. If the block storage you wish to use exists in a particular availability zone, then select that zone.
 
 > [Note] VPC resources are available in all availability zones.
 
-For more details of Availability Zone, refer to [Availibility Zone of Overview of Instance](./overview/#availability-zone).
+For more details on availability zones, see [Instance Overview Availability Zone](./overview/#availability-zone).
 
-### Flavors 
+### Flavor
 
-Flavors can be selected depending on virtual hardware performance. Nevertheless, such selection may be limited depending on the performance that image requires. For more details, refer to [Overview of Instances](./overview). 
+You can select various flavors depending on virtual hardware performance specifications. However, the choice of some flavors may be limited depending on the virtual hardware performance that your image requires. For more details, see [Instance Overview](./overview). 
 
-Instance flavors may be changed in the NHN Cloud console after created: from higher to lower specs, or vice versa. Some flavors cannot be changed, so refer to [Change of Instance Flavors](./console-guide/#change-instance-flavors)
+Instance flavors can be changed, from higher to lower specs and vice versa, in the NHN Cloud console even after instance creation. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
 
-> [Caution] Default instance disk cannot be changed with Change of Instance Flavors. 
+> [Caution] An instance's default disk cannot be changed by changing instance flavors.
 
-### Device Size 
+### Device Size
 
-Determines default disk size of an instance. 
+Determines the default disk size of an instance. 
 
-- Size of a default disk cannot change once an instance is created. When there's a shortage of volume, add block storages for further usage. 
-- Device size must be larger than the minimum requirement of an image. 
+- The size of the default disk cannot be changed after an instance has been created. If you require more disk space, you must use additional block storages.
+- The device size must be at least the minimum size required by the image. 
 
-Default disk size depends on the instance flavors. 
+The default disk size varies depending on instance flavor.
 
-| Flavors | Supportive Device Size |
+| Flavors | Supported Device Size |
 | ----------------| -------------------------- |
-| Type u2 | Fixed at 20 ~ 100GB: vary by flavors    |
-| Types t2, m2, c2, r2, and x1 | 20 ~ 2000GB               |
+| u2 flavors | 20 ~ 100 GB (varies by flavor) |
+| t2, m2, c2, r2, and x1 flavors | 20 ~ 2000 GB             |
 
->[Note] As it is charged by the size of a device, making a large size regardless of usage may be inefficient. It is recommended to add block storages, depending on further needs. 
+>[Note] Creating a default disk with the largest possible size is not always efficient since you are charged by device size. We recommend you add block storages as they become necessary.
 
 
 ### Volume Type
-Determines default disk type of an instance.
+Determines the default disk type of an instance.
 
-- Chooose one of **HDD** or **SSD** based on your performance requirement. This changes the price of the instance.
-- Can not change the volume type of the instance once created.
+- Chooose either **HDD** or **SSD**. The choice of volume type affects pricing and performance.
+- You cannot change the volume type once the instance is created.
 
-### Number of Instances 
+### Number of Instances
 
-This feature applies when creating many instances with the same image, availability zone, flavors, device size, key pair, and network setting. Instance name is created with numbers attached to each name, like `-1`, and `-2`. For instance, creating two instances named `my-instance` shall result in  `my-instance-1 `and `my-instance-2`. 
+You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, device size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` shall result in  `my-instance-1 ` and `my-instance-2`. The maximum number of instances you can create at once is 10.
 
-When many instances are created for a random availability zone, each instance shall be created in a random availability zone. For instance, if two instances are created with a random availability zone, two may be created in the same zone, or in different zones. In case all instances need to be created in a same zone, select a particular zone before creation. 
+When you create multiple instances without specifying an availability zone, each instance shall be created in a randomly selected availability zone. For example, if two instances are created without specifying an availability zone, they may be created in the same zone or they may be created in different zones. If all instances need to be created in the same availability zone, select a particular zone.
 
 ### Key Pair
 
-Use an old key pair or create a new key pair. To register old key pairs,refer to [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users. 
-
-### Security Group
-
-Specify a security group where an instance is to be included. One instance can be included to many security groups, and in such case: 
-
-- Can communicate via network with all instances included to each security group. Take cautious approach when specifying a security group for an instance with sensitive data from which unintentional access from other instances should be prevented. 
-- Rules of each security group are combined and applied for the instance's external communication. 
-
-For more details, refer to [Overview of VPC](/Network/VPC/en/overview/)
+Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users.
 
 ### Network 
 
-Select a subnet to be connected to an instance, among those defined in VPC. Every time a subnet is selected, a network interface is created to be connected to the subnet. The order of selected subnets may be changed to alter network interfaces, in which case, the first network interface  (`eth0`) shall be set as the default gateway. 
+Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface  (`eth0`) shall be set as the default gateway.
 
-For more details on creating and managing network, refer to [Overview of VPC](/Network/VPC/en/overview/).
+For more details on creating and managing networks, refer to [VPC Overview](/Network/VPC/en/overview/).
 
 ### Floating IP
 
-After instance is created, specify whether to use floating IP. When it is enabled, create and associate a new floating IP to the first network interface. Note that the first network interface must be connected to a subnet where Internet gateway is configured.
+Select whether you will use a floating IP after instance creation. If you enable this option, a new floating IP is created and connected to the first network interface. Note that the first network interface must be connected to a subnet where an internet gateway is configured.
 
-Floating IP can be managed under Instance > Management, or Instance > Floating IP. For more floating IP details, see [VPC Console Guide](/Network/VPC/ko/console-guide/).
+Floating IP can be managed from Instance > Management, or Instance > Floating IP. For more details on floating IP, see [VPC Console Guide](/Network/VPC/en/console-guide/).
+
+### Security Group
+
+Select security groups that the instance will be included in. One instance can be included in multiple security groups, in which case,
+
+- The instance can communicate over the network with all other instances included in each security group. When you are dealing with an instance with sensitive data that is not meant to be accessible by other instances, you must carefully select security groups.
+- The rules of each security group are aggregated and applied to the instance's external network traffic.
+
+For more details on security groups, see [VPC Console Guide](/Network/VPC/en/console-guide/).
 
 ### Additional Block Storage
 
-After instance is created, specify whether to attach block storage. When it is enabled, create a new block storage, apart from a basic disk, and attach it to an instance. Name, storage type, and size of it can be specified, like in a basic disk.
+Select whether you will attach an additional block storage after instance creation. If you enable this option, a new block storage separate from the default disk is created and attached to the instance. As with the default disk, you can specify the name, storage type, and size of the additional disk you create.
 
-Leave the basic disk only for OS purposes, and use additional disk to store frequently-used application programs or data. Then, it gets easier to migrate or copy, by attaching/detaching block storage or via snapshots. In addition, when an instance has faults, detach the additional disk and associate it to another instance, so as to recover service easily.
+By using the default disk only for the OS and storing your frequently used applications and data on the additional disk, you can easily migrate or copy your applications and data using the block storage attach/detach and snapshot features. In addition, when an instance fails, you can easily recover your services by simply detaching the additional disk and attaching it to another instance.
 
-Block storage can be managed under Instances > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/ko/overview/).
+Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
 ### Scheduled Script
 
-After instance is created, specify a script to execute. Scheduled script is executed, after instance is first booted, followed by the initiazliation process, including network configuration. NHN Cloud Scheduled Script is executed by automated tools, such as cloud-init (Linux), Cloudbase-init (Windows), which are embedded in official images.
+You can specify a script to be executed after instance creation. The scheduled script is executed following the instance's initial boot and after the initialization process including network configuration has completed. Scheduled scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
 
 > [Caution]
-> Scheduled script is executed at the user's authority for root (Linux)/Administrator (Windows).
+> Scheduled scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
 #### Linux
-The first line of a scheduled script must start with  `#!`.
+The first line of a scheduled script must begin with  `#!`.
 ```
 #!/bin/bash
 ...
 ```
 
-To properly run a scheduled script, check log files within an instance. Find log outputs from standard output/error device of a script on `/var/log/cloud-init-output.log`.
+For a scheduled script to run successfully, log files in the instance must be checked. You can check output logs printed by the script's standard output/error in `/var/log/cloud-init-output.log`.
 
 #### Windows
 
-Windows images support both Batch and Powershell, for the scheduled script type. Each type is delimited by specified indicator of the first line.
+Windows images support both Batch and Powershell formats for scheduled scripts. The format is determined by an indicator specified in the first line.
 
 * Batch Script
 ```
@@ -126,7 +125,7 @@ rem cmd
 ...
 ```
 
-To use both Batch and Powershell script, describe as below:
+To use both Batch and Powershell in your script, use the following format.
 
 * EC2 format
 ```
@@ -138,96 +137,101 @@ To use both Batch and Powershell script, describe as below:
 </powershell>
 ```
 
-Find logs of a scheduled script at `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
+Logs from scheduled scripts can be found in `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
 
-For more details regarding scheduled scripts, see guides for [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html).
+For more details regarding scheduled scripts, see the [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) guides.
 
 
-## Further Functions of Instances 
+## Additional Instance Features
 
-### Create Image 
+### Create Image
 
-Create an image from default disk of an instance. It is recommended to stop instances before creating an image, so as to ensure data integrity.
 
-Even when a default disk has no additional space, image can be created but normal usage is impossible as initialization to use the image in other instances is unavailable. Before creating an image, empty at least 100KB of space.   
+Create an image from an instance's default disk. It is recommended to stop instances before creating an image in order to ensure data integrity.
 
-Image, once created, is registered as Private Image at Compute > Image. The image can be used to create an instance which has the same disk as the original instance. 
+While it is possible to create an image from an instance that has no available free space in its default disk, those images are unusable by other instances because they cannot be properly initialized. Before creating an image, ensure that your instance has at least 100KB of free space.
+
+Created images are registered as private images in **Compute > Image**. You can use the registered image to create an instance with a disk identical to that of the original instance.
 
 ### Associate/Disassociate Floating IP
 
-Floating IP can be associated or disassociated, regardless of the instance status. When there is no available floating IP, create one by clicking **Create**. Or go to **Network > VPC > Floating IP** to create a floating IP.  
+Floating IP can be associated with or disassociated from an instance, regardless of the instance's status. If you have no available floating IP or if the floating IP you want is not available, you can create one by clicking **Create**. Alternatively, floating IP can also be created from **Network > VPC > Floating IP**.
 
-For more details, refer to [Overview of VPC](/Network/VPC/en/overview/). 
+For more details on floating IP, see [VPC Overview](/Network/VPC/en/overview/).
 
 ### Modify Security Group
 
-Security groups of an instance can be modified, regardless of instance status: modified security groups are immediately applied. 
+An instance's security groups can be modified regardless of the instance's status. Modified security groups are applied immediately.
 
-For more details, refer to [Security Group](./console-guide/#_8) and [Overview of VPC](/Network/VPC/en/overview/). 
+For more details on security groups, see [Security Group](./console-guide/#security-group) and [VPC Overview](/Network/VPC/en/overview/). 
 
 ### Modify Network Interface 
 
 Network interfaces may be added or deleted, regardless of instance status. When a network interface is associated with a floating IP, the floating IP is disassociated along with interface deleted. Once disassociated, a floating IP cannot be automatically associated even by adding the same network interface again: add network interface first and associate the the floating IP again.  
 
-### Change Instance Flavors 
+### Modify Flavor 
 
-Change of instance flavors is enabled when an instance is stopped. If an instance is currently executed, click **Stop Instances** in **Further Functions** and stop the instance.
 
-Instance flavors are allowed to change, depending on the current flavors.  
+Instance flavors can be changed once an instance has been stopped. If an instance is running, click **Stop Instance** in **Additional Features** to stop the instance.
 
-* Instances with types m2, c2, r2, t2, and x1 can be changed to have flavors of types m2, c2, r2, t2, and x1. 
-* Instances with types m2, c2, r2, t2, and x1 cannot be changed to have flavors of type u2. 
-* Type u2 cannot change flavors after created: not even to those of the same u2 type. 
+You can only change an instance to another flavor that is compatible with its current flavor.
 
-If an instance changes its flavors, Change and Confirm Change are followed. When all tasks are completed, the VM status changes into **Shutoff**, and you can start an instance by clicking **Start Instance** in **Further Functions**. 
+* m2, c2, r2, t2, x1 flavor instances can be changed to m2, c2, r2, t2, x1 flavors.
+* m2, c2, r2, t2, x1 flavor instances cannot be changed to u2 flavors. 
+* u2 flavor instances cannot be changed to other flavors once they have been created, not even to those of the same u2 flavor.
 
-> [Note] Default disk size of an instance cannot be changed. If an instance has no sufficient disk space, add a block storage: for detailed method, refer to [Overview of Block Storage](/Storage/Block%20Storage/en/overview/). 
+When you modify flavors, instance resize and resize confirmation tasks proceed. When all tasks are completed, the VM changes its status to **Shutoff**. You can start the instance by clicking **Start Instance** in **Additional Features**.
 
-Instances shall be charged by changed flavors, as of the time of change. 
+> [Note] The instance's default disk size cannot be modified. If an instance requires additional disk space, attach a block storage. For details on how to attach block storage, see [Block Storage Overview](/Storage/Block%20Storage/en/overview/).
 
-## Key Pair
+Instances will be charged using the new flavor from the moment the modification completes.
+
+## Key Pairs
 
 ### Import Key Pairs (Windows)
 
-To create key pair, use Puttygen, which is installed along with PuTTY ssh client, and register it to NHN Cloud. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
+You can use puttygen, which is installed when you install the PuTTY SSH client, to create a key pair and register it with NHN Cloud.
+
+Make sure you have [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) installed.
 
 Run puttygen. 
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
-Select RSA (or SSH-2 RSA in the older version of puttygen) in **Parameters**. Press **Generate**, in **Actions**. To create a key, continue to move the mouse in an empty space.  
+Select **RSA** (or SSH-2 RSA in older versions of puttygen) under **Parameters**. Click **Generate** under **Actions**. Continuously move your mouse in the empty space in order to generate the key.
 
-When a key is created, public key file shows as below. Copy and paste the whole content of public key to **Public Key of Import Key Pairs:** register key pair. 
+After the key is generated, the public key file contents will be visible as shown below. Paste the contents of the public key into the **Public Key** field in **Get Key Pair** in order to register the key pair.
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-002-en.png)
-Click **Save private key** of **Actions** and save the private key. Try saving private key with Encrypted Phrases empty, and a message will show, "*Want to save this key without protected by encrypted phrases?"*. To save more safely, set an encrypted phrase before saving.
+Click **Save private key** under **Actions** to save the private key. If you save the private key leaving the **Key passphrase** field blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to use your converted private key more securely, set a passphrase before saving.
 
 > [Caution]
-To set automatic login to an instance, encrypted phrases should not be used. When encrypted phrases are in use, directly enter password to a private key to login. 
+>
+> If you wish to be able to automatically login to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [Overview of Instances](./overview/#how-to-access-instances). 
+The registered key pair can be used to create instances, and the key pair's private key must be used when accessing instances. For more details on how to access instances, see [Instance Overview](./overview/#how-to-access-instances).
 
-Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Just as with key pairs created from NHN Cloud, imported key pairs also need to be managed cautiously since exposed private keys can be abused by anyone to access instances.
 
 
 
 ### Import Key Pairs (Mac and Linux)
 
-Key pairs created by `ssh-keygen` of Mac or Linux can be registered for usage. Key pair is created with the following command:
+Key pairs created using `ssh-keygen` in Mac or Linux can be registered with NHN Cloud. Use the following command to create a key pair.
 
 	$ ssh-keygen -t rsa -f my_key.key
 
-Passwords for key pair may or may not be set, although it is recommended to set passwords for high-level of security. Inside the file with  `.pub` added in the key pair name, lies a key pair public key. 
+You can choose to set a passphrase for the key pair, although it is not required. If you wish to use your key pair more securely, we recommend setting a passphrase. The file with `.pub` appended to the specified key pair name contains the public key.
 
 	$ cat my_key.key.pub
 	ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnnUAe36txQqk8J7VzbNuYKVQQ3gbNoClndHMX49OD+1Rw5xrDFLUKQqxbBDtlNMoA9tKBZNrQBpKr1kFEtvMIj1HPkH9ocb4MbuoVVjpkIhixbKMMJPDQ4JQJxaifsjR59YsZyDAp0aXZp+o+OB97P3S4AKPY2kQR0JdSr30+6Av6smf+3mZceAE4abzklfbyWT5slP1im/wfYEPO3QBEDl/0JbmTjKWPYI6QnbwnPRHS63SJ+Kd2QeYQYJCadv7X4mXnw81qEIWq/dx1SQkGDTNgR7lnN2ApFlU5EZcow69z6tiCr0hlyigwjGooMg3wTZvcSlYcVeTzZ755RArd ...
 
-Copy the whole content to **Open Key** of **Import Key Pairs:** to register a key pair. 
+Paste the contents of the public key into the **Public Key** field in **Get Key Pair** in order to register the key pair.
 
-Key pair, once registered, can be used to create an instance, and its private key is required to access an instance. On how to access instances, refer to [How to Access Instances](./overview/#how-to-access-instances).   
+The registered key pair can be used to create instances, and the key pair's private key must be used when accessing instances. For more details on how to access instances, see [How to Access Instances](./overview/#how-to-access-instances).
 
-Like key pairs created from NHN Cloud, these key pairs need to be cautiously managed as their private keys, when exposed, may be abused by anyone to access instances. 
+Just as with key pairs created from NHN Cloud, imported key pairs also need to be managed cautiously since exposed private keys can be abused by anyone to access instances.
 
-## Appendix 1. Change of Windows Language Packs 
+## Appendix 1. Change Language Packs in Windows
 
-NHN Cloud primarily supports English for Windows display. You may change your language preference, as follows:  
+NHN Cloud provides Windows images with English as the primary language. You may change your language preferences with the following steps.
 
 1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
 
@@ -241,11 +245,11 @@ NHN Cloud primarily supports English for Windows display. You may change your la
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
 
-4. Check the language pack just added. 
+4. Check the language pack just added.
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
 
-5. Download and install the language pack. 
+5. Download and install the language pack.
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
 
@@ -253,7 +257,7 @@ NHN Cloud primarily supports English for Windows display. You may change your la
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
 
-7. To change the installed language pack, double-click the selected language or select **Options**.
+7. To change to the installed language pack, double-click the selected language or select **Options**.
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
 
@@ -261,117 +265,120 @@ NHN Cloud primarily supports English for Windows display. You may change your la
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
 
-9. To apply the change of primary language, click **Log off now**.
+9. To apply the changes, click **Log off now**.
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
 
-10. Log in again, and you can see Windows is displayed by the language pack of your choice.
+10. Log in again, and you can see Windows is displayed using the language pack of your choice.
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
 
-## Appendix 2. Change of Windows Routing 
+## Appendix 2. Change Routing in Windows
 
-Windows routing for NHN Cloud can be changed as follows:  
+Routing in NHN Cloud Windows instances can be changed as follows.
 
 
-* Press **Windows key + R** to open an execution window, and enter`cmd` and execute to open a command prompt window.  
-  Enter route command.  
+* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.
 * Print current configuration: route print
-* Add: route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
-* Change: route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
-* Delete: route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
-  * Option : -p (specify as permanent route)
+* Add : route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Change : route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
+* Delete : route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
+* Option : -p (specify as persistent route)
 
 Description
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
 
-* Metric Value: The lower, the higher on the priority
-* Interface Number: Available on route print (in the red box above)
-* Permanent Route: Use the -p option, because otherwise, route configuration returns to default at the system reboot (in the blue box above)
+* Metric Value: A lower value indicates higher priority
+* Interface Number: This value can be obtained from route print (red box above)
+* Persistent Route: Use the -p option to avoid the configured routes being reset across system reboots (blue box above)
 
-Example 1 - Setting external communication for particular interfaces only 
-* Use command for route change to modify metrics on interface route to which external communication is not wanted, or not enter default gateway information on the fixed IP setting. 
+Example 1 - Restricting external communication for particular interfaces
+* You can restrict an interface from communicating externally by using the route change command to change its route metric or by leaving the default gateway field blank when configuring fixed IP settings.
 
-* How to Modify Metric
-  * Increase metrics of an interface 
-
+* How to Modify Metrics
+  
+  * Increase interface metric value
+  
   $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
-  ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
-  How to Set Fixed IP
+    ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
 
-  * Enter ipconfig /all to find IP information.
+* How to Set Fixed IP
+
+  * Use the ipconfig /all command to view IP information.
     ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
-  * Enter IP information, excluding default gateway, on the window for IP settings. 
+  * Enter the corresponding IP information, leaving the default gateway field blank, in the IP Properties window. 
     ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
-  * Check route print.
+  * Check the results using the route print command.
     ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
-    Example 2 - Setting route for a particular bandwidth
-  * Command route add to set route for a particular bandwidth.
 
-  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
-  ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
-  Example 3 - Removing a particular route 
+Example 2 - Setting routes for a particular address range
+* Use the route add command to set routes for a particular address range.
 
-  * Remove specified route, by using route delete. 
+$ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+Example 3 - Removing a particular route 
 
-  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
-  ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+* Use the route delete command to remove specified routes. 
 
-## Appendix 3. Change of System Locale 
+$ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
-You can change system locale  for NHN Cloud on Windows as follows. 
+## Appendix 3. Change System Locale
 
-* Go to **Windows Key > Control Panel > Clock and Country**.
+System locale in NHN Cloud Windows instances can be changed as follows. 
+
+* Go to **Windows Key > Control Panel > Clock, Language, and Region**.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
-* Select the **Country or Region** item. 
+* Select **Region**. 
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
-* On the **Administrative Option** tab, click **Change System Locale**.
+* From the **Administrative** tab, click **Change system locale**.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
-* Select a system locale to change. 
+* Select a system locale to use.
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
-* Restart the system to apply the change. 
+* Restart the system to apply the changes. 
 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
-## Appendix 4. Guide for Restarting Instances for Hypervisor Maintenance 
-NHN Cloud updates hypervisor software on a regualr basis to enhance security and stability of its infrastructure services. 
-Instances that are running on a target hypervisor for maintenance must be restarted and migrated to a hypervisor which is completed with maintenance. 
+## Appendix 4. Restarting Instances for Hypervisor Maintenance 
+NHN Cloud updates hypervisor software on a regular basis to enhance the security and stability of infrastructure services that we provide.
+Instances running on a hypervisor that requires maintenance must be restarted and migrated to a hypervisor which has completed maintenance.
 
-To restart an instance, use the **! Restart** button which is created next to each instance name on console.  `Rebooting instances on console or restarting an operating system does not lead into migrating instances to another hypervisor.`
-Follow the guide as below to use the restarting feature on console. 
+To restart an instance, use the **! Restart** button that has been created next to the instance name in the console.
+`Using the "Restart Instances" button in the console or rebooting the operating system will not migrate an instance to another hypervisor.`
+Follow the guide below to use the restart feature in the console.
 
-Go to the project where your instance specified as maintenance target is located.  
+Go to the project where your instance requiring maintenance is located.
 
-**1. Check if your instance is the target of maintenance.**
+**1. Check if your instance requires maintenance.**
 
-Any instance that has the **! Restart** button before its name requires maintenance. 
-Put the mouse cursor on the  **! Restart** button to find maintenance schedule details. 
+Any instance that has the **! Restart** button before its name requires maintenance.
+Put the mouse cursor over the **! Restart** button to find maintenance schedule details.
 ![Instance Maintenance Image 1](http://static.toastoven.net/prod_instance/instance_p_migration_en_1.png)    
 
-**2. Disable or close application programs that are running on the target instance for maintenance.**
+**2. Deactivate or stop application programs running on an instance which requires maintenance.**
 
-Any application programs running on target instances for maintenance must be disabled or closed so as not to impact the service. 
-If impact on service is inevitable, please contact NHN Cloud Customer Center and be guided with appropriate measures. 
+Any application programs running on an instance which requires maintenance must be deactivated or stopped in order not to impact your service.
+If there is no way to do so without impacting your service, please contact NHN Cloud Customer Center and we will provide you with guidance on appropriate measures to take.
 
 **3. Click the [! Restart] button created next to the name of the target instance.**
 
 ![Instance Maintenance Image 2](http://static.toastoven.net/prod_instance/instance_p_migration_en_2.png)
 
-**4. Click [OK] onto the window asking of restarting instance.**
+**4. Click [Confirm] in the Restart Instances confirmation window.**
 
 ![Instance Maintenance Image3](http://static.toastoven.net/prod_instance/instance_p_migration_en_3.png)
 
 **5. Wait until the instance status turns green and the [! Restart] button disappers.**
 
-If the status does not change, or the **! Restart** button is not disabled, press 'Refresh'.
+If the status does not change or the **! Restart** button is not disabled, try refreshing the page.
 
-The instance becomes inoperable while restarting is underway. 
-Unless restarting instance is normally completed, it shall be automatically reported to the administrator, and you'll be contacted by NHN Cloud.  
+You cannot operate or modify the instance while a restart is underway.
+If an instance restart does not complete successfully, the administrator will automatically be notified and you'll also be contacted by NHN Cloud.
