@@ -70,6 +70,7 @@ An instance must be connected to at least one network defined in the VPC in orde
 
 Instances are charged using the following criteria.
 
+
 * Instances are charged from the moment they are created.
 * Instance default disks are charged separately according to the block storage pricing policy.
 * Stopped instances are charged only for their default disk and block storage.
@@ -181,10 +182,8 @@ Now click **Open** to access your instance.
 
 ### How to Access Windows Instances
 
-To access your Windows server, select a Windows instance to access from the NHN Cloud console. In the instance details page under the **Access Instances** tab, click **Check Password** to check the password set in the Windows server.
+To access your Windows server, select a Windows instance to access from the NHN Cloud console. In the instance details page under the **Access Information** tab, click **Confirm Password** to check the password set in the Windows server.
 
-![Access to Windows Instance](http://static.toastoven.net/prod_instance/windows-login-en.png)
+Your key pair's private key that you input in **Confirm Password** is not sent to the server, but is instead only used in your browser to decrypt the password.
 
-Your key pair's private key that you input in **Check Password** is not sent to the server, but is instead only used in your browser to decrypt the password.
-
-Click **Connect** next to **Check Password** to receive the rdp file configured for remote desktop access and run it to access your Windows server. Use `Administrator` for your Windows server ID, and use the password that you checked from the NHN Cloud console.
+Click **Connect** next to **Confirm Password** to receive the rdp file configured for remote desktop access and run it to access your Windows server. Use `Administrator` for your Windows server ID, and use the password that you checked from the NHN Cloud console.

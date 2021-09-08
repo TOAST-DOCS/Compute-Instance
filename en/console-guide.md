@@ -146,6 +146,7 @@ For more details regarding scheduled scripts, see the [cloud-init](https://cloud
 
 ### Create Image
 
+
 Create an image from an instance's default disk. It is recommended to stop instances before creating an image in order to ensure data integrity.
 
 While it is possible to create an image from an instance that has no available free space in its default disk, those images are unusable by other instances because they cannot be properly initialized. Before creating an image, ensure that your instance has at least 100KB of free space.
@@ -169,6 +170,7 @@ For more details on security groups, see [Security Group](./console-guide/#secur
 Network interfaces may be added or deleted, regardless of instance status. When a network interface is associated with a floating IP, the floating IP is disassociated along with interface deleted. Once disassociated, a floating IP cannot be automatically associated even by adding the same network interface again: add network interface first and associate the the floating IP again.  
 
 ### Modify Flavor 
+
 
 Instance flavors can be changed once an instance has been stopped. If an instance is running, click **Stop Instance** in **Additional Features** to stop the instance.
 
