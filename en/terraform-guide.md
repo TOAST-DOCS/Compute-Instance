@@ -56,11 +56,11 @@ Go to [Download Terraform](https://www.terraform.io/downloads.html) and download
 See the following example for installation.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-$ unzip terraform_0.12.24_linux_amd64.zip
+$ wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+$ unzip terraform_1.0.0_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.12.24
+Terraform v1.0.0
 ```
 
 
@@ -70,9 +70,20 @@ Before using Terraform, create supplier configuration files like below.
 Name of the supplier file can be randomly configured, which is set as `provider.tf` in this example.    
 
 ```
+# Define required providers
+terraform {
+required_version = ">= 1.0.0"
+  required_providers {
+    openstack = {
+      source  = "terraform-provider-openstack/openstack"
+      version = "~> 1.42.0"
+    }
+  }
+}
+
 # Configure the OpenStack Provider
 provider "openstack" {
-  user_name   = "terraform-guide@nhnent.com"
+  user_name   = "terraform-guide@nhn.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
   auth_url    = "https://api-identity.infrastructure.cloud.toast.com/v2.0"
@@ -107,7 +118,7 @@ $ terraform init
 
 Infrastructure buildup with Terraform has the following life cycle: 
 
-1. Create TF Files
+1. Create tf Files
 2. Confirm Buildup Plan 
 3. Create Resources
 4. Modify Resources
@@ -127,7 +138,7 @@ $ terraform apply
 
 See the following section to learn more details on each phase with examples. 
 
-### Create TF Files 
+### Create tf Files 
 
 Create a tf file to the path with supplier configuration files. You may collect many resource settings for a single tf file, or write for each tf file per resource. Terraform reads the entire tf files all at once to set up a buildup plan.  
 
@@ -178,12 +189,11 @@ $ terraform apply
 ...
 openstack_compute_instance_v2.terraform-instance-01: Creating...
 openstack_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [50s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Creation complete after 53s [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
+openstack_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-...
 ```
 
 After the `apply` command is executed, the database file (terraform.tfstate) recording the history of plan changes is created in the current directory. Take cautions for not deleting this file.  
@@ -207,32 +217,34 @@ Check the buildup plan, and the changed security group information comes as an o
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   ~ update in-place
 
 Terraform will perform the following actions:
 
-  ~ openstack_compute_instance_v2.terraform-instance-01
-      security_groups.#:          "1" => "2"
-      security_groups.3814588639: "default" => "default"
-      security_groups.4051241745: "" => "terraform-sg"
+  # openstack_compute_instance_v2.terraform-instance-01 will be updated in-place
+  ~ resource "openstack_compute_instance_v2" "terraform-instance-01" {
+        id                  = "1e846787-04e9-4701-957c-78001b4b7257"
+        name                = "terraform-instance-01"
+      ~ security_groups     = [
+          + "terraform-sg",
+            # (1 unchanged element hidden)
+        ]
+        # (13 unchanged attributes hidden)
 
+
+        # (2 unchanged blocks hidden)
+    }
 
 Plan: 0 to add, 1 to change, 0 to destroy.
-...
 ```
 
 With the plan applied, a new security group is added to instance. 
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Refreshing state... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-instance-01: Modifying... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-  security_groups.#:          "1" => "2"
-  security_groups.3814588639: "default" => "default"
-  security_groups.4051241745: "" => "terraform-sg"
-openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 1s (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
+openstack_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -250,14 +262,14 @@ In the buildup plan, confirm the resources have been deleted.
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
 
 Terraform will perform the following actions:
 
-  - openstack_compute_instance_v2.terraform-test-01
-
+  # openstack_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "openstack_compute_instance_v2" "terraform-instance-01" {
+...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
 ...
@@ -268,11 +280,11 @@ With the `apply` command, created instances are deleted.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-test-01: Refreshing state... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Still destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1, 10s elapsed)
-openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
-...
+openstack_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+openstack_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
+openstack_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
+
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
 ## Data Sources
@@ -282,8 +294,8 @@ You can find Instance Type ID or Image ID required to create tf files on the con
 Get a reference of data sources in `{data sources type}.{data source name}`. In the below example, refer to the image information imported to `openstack_images_image_v2.ubuntu_1804_20200218`.
 
 ```
-data "openstack_images_image_v2" "ubuntu_1804_20200218" {
-  name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
+data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 ```
@@ -314,14 +326,14 @@ The next section describes how to import NHN Cloud resources to data resources.
 Imports image information. NHN Cloud common images as well as personal images are supported.  
 
 ```
-data "openstack_images_image_v2" "ubuntu_1804_20200218" {
-  name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
+data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # Query the oldest image from same-name images 
 data "openstack_images_image_v2" "windows2016_20200218" {
-  name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO"
+  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
   owner = "c289b99209ca4e189095cdecebbd092d"
@@ -448,8 +460,8 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.centos_610_20200218.id
-  flavor_id = data.openstack_compute_flavor_v2.u2c1m2.id
+  image_id = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.openstack_compute_flavor_v2.u2c2m4.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
 
@@ -459,7 +471,7 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   }
 
   block_device {
-    uuid = data.openstack_images_image_v2.centos_610_20200218.id
+    uuid = data.openstack_images_image_v2.ubuntu_2004_20201222.id
     source_type = "image"
     destination_type = "local"
     boot_index = 0
@@ -487,7 +499,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.centos_610_20200218.id
+    uuid                  = data.openstack_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -544,6 +556,9 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
 resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = openstack_compute_instance_v2.tf_instance_02.id
   volume_id = openstack_blockstorage_volume_v2.volume_01.id
+  vendor_options {
+    ignore_volume_confirmation = true
+  }
 }
 ```
 | Name | Type | Required | Description |
@@ -603,7 +618,7 @@ resource "openstack_blockstorage_volume_v2" "volume_06" {
 }
 ```
 
-With the command of `terraform import openstack_blockstorage_volume_v2.{name} {block storage id}`, import block storage. 
+With the command of `terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}`, import block storage. 
 
 ```
 $ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a

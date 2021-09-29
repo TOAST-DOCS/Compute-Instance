@@ -29,9 +29,7 @@ To get root authority from CentOS instance, use the 'sudo' command like follows.
 
 You shall encounter with such error, when an image is created with instance using two or more block storages and instance is created and booted with such image. 
 
-For instances that use more than two block storages, set disks other than default disk in the `/etc/fstab` file. Since the file is to be replicated as well, when image is created, error occurs in mounting
-due to lack of a block storage referenced by the`/etc/fstab` file.  
-
+For instances that use more than two block storages, set disks other than default disk in the `/etc/fstab` file. Since the file is to be replicated as well, when image is created, error occurs in mounting due to lack of a block storage referenced by the`/etc/fstab` file.
 
 To resolve this issue, set block storage of the `/etc/fstab` file, except default disk, as footnote, before creating an image. 
 <br>

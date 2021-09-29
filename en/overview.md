@@ -78,6 +78,10 @@ Instances are charged using the following criteria.
 
 ## How to Access Instances 
 
+<!-- Video guide is not provided in the translated document -->
+
+<!-- Dummy comment for a video link -->
+
 ### How to Access Linux Instances 
 
 You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.

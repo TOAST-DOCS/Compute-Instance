@@ -1,5 +1,9 @@
 ## Compute > Instance > Console Guide
 
+<!-- Video guide is not provided in the translated document -->
+
+<!-- Dummy comment for a video link -->
+
 ## Create Instances
 
 You can create instances either by using the settings below or by using instance templates. To create instances via instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
@@ -278,7 +282,8 @@ NHN Cloud provides Windows images with English as the primary language. You may 
 Routing in NHN Cloud Windows instances can be changed as follows.
 
 
-* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.
+* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.  
+Route commands
 * Print current configuration: route print
 * Add : route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
 * Change : route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
