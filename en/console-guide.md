@@ -167,12 +167,11 @@ An instance's security groups can be modified regardless of the instance's statu
 
 For more details on security groups, see [Security Group](./console-guide/#security-group) and [VPC Overview](/Network/VPC/en/overview/). 
 
-### Modify Network Interface 
+### Change Network Subnet
 
-Network interfaces may be added or deleted, regardless of instance status. When a network interface is associated with a floating IP, the floating IP is disassociated along with interface deleted. Once disassociated, a floating IP cannot be automatically associated even by adding the same network interface again: add network interface first and associate the the floating IP again.  
+An instance's network subnet can only be changed while the instance is stopped. When you add a subnet, a network interface that will be connected to that subnet is automatically created on your instance. If you add multiple subnets at once, the order of the newly created network interfaces on the instance is set randomly. Deleting a subnet from an instance automatically deletes the network interface that was created along with the subnet. 
 
-### Modify Flavor 
-
+### Modify Flavor
 
 Instance flavors can be changed once an instance has been stopped. If an instance is running, click **Stop Instance** in **Additional Features** to stop the instance.
 
