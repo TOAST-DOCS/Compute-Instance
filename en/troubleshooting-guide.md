@@ -1,6 +1,6 @@
 ## Compute > Instance > Troubleshooting Guide 
 
-The document describes how to resolve issues you may encouter while using NHN Cloud. 
+The document describes how to resolve issues you may encounter while using NHN Cloud. 
 
 <h3> I want to use a different version, other than the default OS version of NHN Cloud. Can I upload my personal images? </h3>
 
@@ -41,13 +41,13 @@ It happens when DNS is blocked at the receiving part of the security group to wh
 
 <h3> I find "Could not resolve the host" and cannot use yum. </h3>
 
-It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receivie DNS. 
+It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receive DNS. 
 <br>
 
-<h3>CentOS 6.x 인스턴스에서 패키지 업데이트에 실패합니다.</h3>
+<h3> Package update fails on CentOS 6.x instance. </h3>
 
-다음과 같이 `yum repository` 파일을 수정하여 사용합니다.
-공식 지원이 종료된 OS는 추가 업데이트가 지원되지 않으므로, 상위 버전의 OS 사용을 권장합니다.
+Use the `yum repository` file after modifying the file as follows.
+Additional updates are not supported for OS for which official support has ended, so it is recommended that you use a higher version of the OS.
 ```
 $ sudo vi /etc/yum.repos.d/CentOS-Base.repo
 ...

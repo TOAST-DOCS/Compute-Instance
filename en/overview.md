@@ -17,9 +17,9 @@ Instance properties and usage change depending on these components. While settin
 
 ### Image 
 
-An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more details on the operating system versions we support, see [NHN Cloud Service](https://toast.com/service/compute/instance).
+An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service](https://toast.com/service/compute/instance).
 
-All images are configured to be run optimally with an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
+All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
 
 
 ### Flavor
@@ -28,32 +28,32 @@ NHN Cloud provides various instance flavors to support a wide range of use cases
 
 | Type   | Description                              |
 | ------ | ---------------------------------------- |
-| m2 | Balanced flavor between CPU and memory. Recommended when performance requirements of a service or an application are not clear. |
-| c2 | Flavor optimized for high CPU performance. Recommended for web application servers or analysis systems which require high-performance computations. |
-| r2 | Flavor optimized for high memory utilization. Recommended for in-memory databases or cache servers. |
-| t2 | Low-cost instance. Recommended for servers with low workloads. |
-| u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor provide no I/O performance guarantees. |
-| x1 | Flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
+| m2 | A flavor with a balanced setting between CPU and memory. Recommended when performance requirements of a service or an application are not clear. |
+| c2 | A flavor optimized for high CPU performance. Recommended for web application servers or analytics systems that require high-performance computations. |
+| r2 | A flavor optimized for high memory utilization. Recommended for in-memory databases or cache servers. |
+| t2 | A low-cost instance. Recommended for servers with low workloads. |
+| u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
+| x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
 
 ### Availability Zone 
 
-NHN Cloud has divided the entire system into multiple availability zones to prepare against potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. Failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
+NHN Cloud has divided the entire system into multiple availability zones to prepare for potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. A failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
 
 The following properties hold across different availability zones.
 
-- Instances dispersed across different availibility zones can communicate with each other over the network without incurring additional network usage costs.
+- Instances dispersed across different availability zones can communicate with each other over the network without incurring additional network usage costs.
 - Block storage can be shared between instances created within the same availability zone, but not between instances in different availability zones.
 - Floating IP can be shared across different availability zones. If one availability zone experiences a failure, floating IP can quickly be relocated to another availability zone in order to minimize downtime.
 
 
 ### Key Pair 
 
-A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based public and private SSH keys. To access an instance created in NHN Cloud, a key pair is required instead of keyboard-inputted ID/PW authentication which is vulnerable to security attacks. You can safely access an instance once you have been authenticated after sending the instance your login information encoded by your keypair's private key. For more details on how to access instances using key pairs, see [How to Access Instances](#how-to-access-instances).
+A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based public and private SSH keys. To access an instance created in NHN Cloud, a key pair is required instead of keyboard-inputted ID/PW authentication which is vulnerable to security attacks. You can safely access an instance once you have been authenticated after sending the instance your login information encoded by your key pair's private key. For more details on how to access instances using key pairs, see [How to Access Instances](#how-to-access-instances).
 
 Key pairs can be newly generated from the NHN Cloud console during instance creation, or you can register your own existing key pairs. For more details on how to register key pairs, see [Import Key Pairs in the Console Guide](./console-guide/#key-pairs).
 
 > [Caution]
-> When a key pair is newly generated, its private key is downloaded. As private keys are only issued once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.  
+> When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
 
 ### Security Group 
 
@@ -88,7 +88,7 @@ You can access your Linux instances using an SSH client. An instance cannot be a
 
 #### How to Access Linux Instances from Mac or Linux Using an SSH Client
 
-Generally, Mac and Linux have SSH clients installed by default. Use a keypair's private key to access an instance from an SSH client as shown below.
+Generally, Mac and Linux have SSH clients installed by default. Use a key pair's private key to access an instance from an SSH client as shown below.
 
 CentOS instances
 
@@ -115,18 +115,18 @@ Follow these three steps in order to access Linux instances from Windows using t
 
 ##### 1. Convert Your Key Pair’s Private Key to a PuTTY-Compatible Private Key
 
-In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed  together with PuTTY.
+In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed along with PuTTY.
 
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
-At the bottom of the **PuTTY Key Generator** window under **Parameters**, select **RSA** for the **Type of key to generate**, and enter the default value '2048' bits for the **Number of bits in a generated key**. Under **Actions**, click **Load** next to **Load an existing private key file** to import your keypair's private key file.
+At the bottom of the **PuTTY Key Generator** window under **Parameters**, select **RSA** for the **Type of key to generate**, and enter the default value '2048' bits for the **Number of bits in a generated key**. Under **Actions**, click **Load** next to **Load an existing private key file** to import your key pair's private key file.
 
 ![이미지2](http://static.toastoven.net/prod_instance/putty002-en.png)
 
 Under **Actions**, click **Save private key** next to **Save the generated key** to save the converted PuTTY-compatible private key. If you save the private key leaving the **Key passphrase** blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to save your converted private key more securely, set a passphrase before saving.
 
 > [Caution]
-> If you wish to be able to automatically login to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
+> If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
 ##### 2. Register Your PuTTY-Compatible Private Key With Putty
 
@@ -179,7 +179,7 @@ Debian
 
 Select 22, the default SSH port, for the **Port**, and **SSH** for the **Connection type**. 
 
-If all of the information is correct, save the session. Under **Load, save or delete a stored session**, enter the name of the session to save in **Saved Sessions** and click **Save** to save the session. If you do not save the session, your private key settings configured in 2-A are also not preserved.
+If all of the information is correct, save the session. Under **Load, save or delete a stored session**, enter the name of the session to save in **Saved Sessions** and click **Save** to save the session. If you do not save the session, your private key settings registered in 2-A are also not preserved.
 
 Now click **Open** to access your instance.
 
