@@ -121,7 +121,7 @@ X-Auth-Token: {tokenId}
 | flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부 |
 | flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기(GB) |
-| flavors.disk | Body | Integer | 기본 블록 스토리지 크기(GB) |
+| flavors.disk | Body | Integer | 기본 디스크 크기(GB) |
 
 <details><summary>예시</summary>
 <p>
@@ -825,10 +825,10 @@ X-Auth-Token: {tokenId}
 Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
 
 * RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
-* 50GB 이상의 기본 블록 스토리지가 필요합니다.
+* 50GB 이상의 기본 디스크가 필요합니다.
 * U2 타입은 Windows 이미지를 사용할 수 없습니다.
 
-기본 블록 스토리지 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
+기본 디스크 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
 
 
 ```
