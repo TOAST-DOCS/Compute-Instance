@@ -524,7 +524,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | block_device.destination_type | String | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
 | block_device.boot_index | Integer | - | 지정한 볼륨의 부팅 순서<br>0 이면 루트 볼륨<br>그 외는 추가 볼륨<br>숫자가 클 수록 부팅 순서는 낮아짐<br> |
 | block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 블록 스토리지 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고 |
-| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 크바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음 |
+| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음 |
 
 ### 블록 스토리지 연결
 ```
