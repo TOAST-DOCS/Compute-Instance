@@ -896,10 +896,10 @@ X-Auth-Token: {tokenID}
 |  Name | In | Type | Description |
 |--|--|--|--|
 | Disabled | Body | Boolean | 인스턴스 타입 비활성화 여부. |
-| Ephermeral | Body | Integer | 임시 디스크 크기(GB). |
+| Ephermeral | Body | Integer | 임시 블록 스토리지 크기(GB). |
 | Type | Body | String | 인스턴스 타입 최적화 특성에 따라 구분되는 Type값.<br>"general, "compute", "memory" 중의 하나. |
-| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 디스크 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 타입의 경우에만 이 값이 전달됩니다. |
-| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 디스크 크기(GB). |
+| Volume Size | Body | Integer | 인스턴스 생성 시 기본 디스크 장치로 만들어지는 블록 스토리지 크기(GB).<br>기본 디스크가 고정된 크기로 만들어지는 u2 타입의 경우에만 이 값이 전달됩니다. |
+| Max Volume Size | Body | Integer | 기본 디스크 장치로 만들 수 있는 최대 블록 스토리지 크기(GB). |
 | Flavor ID | Body | String | 인스턴스 타입 ID. |
 | Flavor Name | Body | String | 인스턴스 타입 이름. |
 | Is Public | Body | Boolean | 공용 인스턴스 타입 여부. |
