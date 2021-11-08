@@ -1,33 +1,37 @@
 ## Compute > Instance > Console Guide
 
+<!-- Video guide is not provided in the translated document -->
+
+<!-- Dummy comment for a video link -->
+
 ## Create Instances
 
-You can create instances either by using the settings below or by using instance templates. To create instances via instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
+You can create instances either by using the settings below or by using instance templates. To create instances using instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
 
 ### Image
 
 Select the image that contains the operating system you need. You can choose between public images provided by NHN Cloud, images you've previously created, or shared images.
 
-The list of available instance flavors vary depending on the image you choose, so we recommended choosing an image first when creating an instance. 
+The available instance flavors vary depending on the image you choose, so we recommended you choose an image first when creating an instance. 
 
 | OS                               | Disk          | Memory       |
 | -------------------------------- | ------------- | ------------ |
-| Linux <br>CentOS, Ubuntu, Debian | At least 20GB | At least 1GB |
-| Windows                          | At least 50GB | At least 2GB |
+| Linux <br>CentOS, Ubuntu, Debian | 20GB or more  | 1GB or more  |
+| Windows                          | 50GB or more  | 2GB or more  |
 
 ### Availability Zone 
 
-If an availability zone is not specified, a random zone is selected. An instance can only use a block storage if they both exist in the same availability zone. If the block storage you wish to use exists in a particular availability zone, then select that zone.
+If an availability zone is not specified, a random zone is selected. An instance can use a block storage only if they both exist in the same availability zone. If the block storage you wish to use exists in a particular availability zone, then select that zone.
 
 > [Note] VPC resources are available in all availability zones.
 
-For more details on availability zones, see [Instance Overview Availability Zone](./overview/#availability-zone).
+For more details on availability zones, see [Availability Zone in Instance Overview](./overview/#availability-zone).
 
 ### Flavor
 
 You can select various flavors depending on virtual hardware performance specifications. However, the choice of some flavors may be limited depending on the virtual hardware performance that your image requires. For more details, see [Instance Overview](./overview). 
 
-Instance flavors can be changed, from higher to lower specs and vice versa, in the NHN Cloud console even after instance creation. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
+Instance flavors can be changed in the NHN Cloud console even after instance creation, from higher to lower specs and vice versa. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
 
 > [Caution] An instance's default disk cannot be changed by changing instance flavors.
 
@@ -47,18 +51,18 @@ The default disk size varies depending on instance flavor.
 
 >[Note] Creating a default disk with the largest possible size is not always efficient since you are charged by device size. We recommend you add block storages as they become necessary.
 
-
 ### Volume Type
+
 Determines the default disk type of an instance.
 
-- Chooose either **HDD** or **SSD**. The choice of volume type affects pricing and performance.
+- Choose either **HDD** or **SSD**. The choice of volume type affects pricing and performance.
 - You cannot change the volume type once the instance is created.
 
 ### Number of Instances
 
-You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, device size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` shall result in  `my-instance-1 ` and `my-instance-2`. The maximum number of instances you can create at once is 10.
+You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, device size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` will result in `my-instance-1` and `my-instance-2`. The maximum number of instances you can create at once is 10.
 
-When you create multiple instances without specifying an availability zone, each instance shall be created in a randomly selected availability zone. For example, if two instances are created without specifying an availability zone, they may be created in the same zone or they may be created in different zones. If all instances need to be created in the same availability zone, select a particular zone.
+When you create multiple instances without specifying an availability zone, each instance will be created in a randomly selected availability zone. For example, if two instances are created without specifying an availability zone, they may be created in the same zone or they may be created in different zones. If all instances need to be created in the same availability zone, select a particular zone.
 
 ### Key Pair
 
@@ -66,7 +70,7 @@ Use an existing key pair or create a new key pair. To register an existing key p
 
 ### Network 
 
-Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface  (`eth0`) shall be set as the default gateway.
+Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface (`eth0`) will be set as the default gateway.
 
 For more details on creating and managing networks, refer to [VPC Overview](/Network/VPC/en/overview/).
 
@@ -81,7 +85,7 @@ Floating IP can be managed from Instance > Management, or Instance > Floating IP
 Select security groups that the instance will be included in. One instance can be included in multiple security groups, in which case,
 
 - The instance can communicate over the network with all other instances included in each security group. When you are dealing with an instance with sensitive data that is not meant to be accessible by other instances, you must carefully select security groups.
-- The rules of each security group are aggregated and applied to the instance's external network traffic.
+- The rules of each security group are aggregated and applied to the instance's external network communication.
 
 For more details on security groups, see [VPC Console Guide](/Network/VPC/en/console-guide/).
 
@@ -89,7 +93,7 @@ For more details on security groups, see [VPC Console Guide](/Network/VPC/en/con
 
 Select whether you will attach an additional block storage after instance creation. If you enable this option, a new block storage separate from the default disk is created and attached to the instance. As with the default disk, you can specify the name, storage type, and size of the additional disk you create.
 
-By using the default disk only for the OS and storing your frequently used applications and data on the additional disk, you can easily migrate or copy your applications and data using the block storage attach/detach and snapshot features. In addition, when an instance fails, you can easily recover your services by simply detaching the additional disk and attaching it to another instance.
+By using the default disk only for the OS and storing your frequently used applications and data on the additional disk, you can easily migrate or copy your applications and data using the block storage attach/detach and snapshot features. In addition, when an instance failure occurs, you can easily recover your services by simply detaching the additional disk and attaching it to another instance.
 
 Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
@@ -101,17 +105,17 @@ You can specify a script to be executed after instance creation. The scheduled s
 > Scheduled scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
 #### Linux
-The first line of a scheduled script must begin with  `#!`.
+The first line of a scheduled script must begin with `#!`.
 ```
 #!/bin/bash
 ...
 ```
 
-For a scheduled script to run successfully, log files in the instance must be checked. You can check output logs printed by the script's standard output/error in `/var/log/cloud-init-output.log`.
+For a scheduled script to run successfully, log files in the instance must be checked. You can check output logs printed by standard output/error from the script in `/var/log/cloud-init-output.log`.
 
 #### Windows
 
-Windows images support both Batch and Powershell formats for scheduled scripts. The format is determined by an indicator specified in the first line.
+Windows images support both Batch and PowerShell formats for scheduled scripts. The format is determined by an indicator specified in the first line.
 
 * Batch Script
 ```
@@ -125,7 +129,7 @@ rem cmd
 ...
 ```
 
-To use both Batch and Powershell in your script, use the following format.
+To use both Batch and PowerShell in your script, use the following format.
 
 * EC2 format
 ```
@@ -141,11 +145,9 @@ Logs from scheduled scripts can be found in `C:\Program Files\Cloudbase Solution
 
 For more details regarding scheduled scripts, see the [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) guides.
 
-
 ## Additional Instance Features
 
 ### Create Image
-
 
 Create an image from an instance's default disk. It is recommended to stop instances before creating an image in order to ensure data integrity.
 
@@ -165,12 +167,11 @@ An instance's security groups can be modified regardless of the instance's statu
 
 For more details on security groups, see [Security Group](./console-guide/#security-group) and [VPC Overview](/Network/VPC/en/overview/). 
 
-### Modify Network Interface 
+### Change Network Subnet
 
-Network interfaces may be added or deleted, regardless of instance status. When a network interface is associated with a floating IP, the floating IP is disassociated along with interface deleted. Once disassociated, a floating IP cannot be automatically associated even by adding the same network interface again: add network interface first and associate the the floating IP again.  
+An instance's network subnet can only be changed while the instance is stopped. When you add a subnet, a network interface that will be connected to that subnet is automatically created on your instance. If you add multiple subnets at once, the order of the newly created network interfaces on the instance is set randomly. Deleting a subnet from an instance automatically deletes the network interface that was created along with the subnet. 
 
-### Modify Flavor 
-
+### Modify Flavor
 
 Instance flavors can be changed once an instance has been stopped. If an instance is running, click **Stop Instance** in **Additional Features** to stop the instance.
 
@@ -194,16 +195,19 @@ You can use puttygen, which is installed when you install the PuTTY SSH client, 
 
 Make sure you have [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) installed.
 
-Run puttygen. 
+Run puttygen.
+
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+
 Select **RSA** (or SSH-2 RSA in older versions of puttygen) under **Parameters**. Click **Generate** under **Actions**. Continuously move your mouse in the empty space in order to generate the key.
 
 After the key is generated, the public key file contents will be visible as shown below. Paste the contents of the public key into the **Public Key** field in **Get Key Pair** in order to register the key pair.
+
 ![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-002-en.png)
+
 Click **Save private key** under **Actions** to save the private key. If you save the private key leaving the **Key passphrase** field blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to use your converted private key more securely, set a passphrase before saving.
 
 > [Caution]
->
 > If you wish to be able to automatically login to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
 The registered key pair can be used to create instances, and the key pair's private key must be used when accessing instances. For more details on how to access instances, see [Instance Overview](./overview/#how-to-access-instances).
@@ -278,7 +282,8 @@ NHN Cloud provides Windows images with English as the primary language. You may 
 Routing in NHN Cloud Windows instances can be changed as follows.
 
 
-* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.
+* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.  
+Route commands
 * Print current configuration: route print
 * Add : route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
 * Change : route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
