@@ -1320,7 +1320,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | トークンID |
 | resize | Body | Object | O | インスタンスタイプ変更リクエスト |
 | resize.flavorRef | Body | UUID | O | 変更するインスタンスタイプID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
+| resize.OS-DCF:diskConfig | Body | Enum | - | タイプ変更後、基本ディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用せずに残す。
 
 <details><summary>例</summary>
 <p>
