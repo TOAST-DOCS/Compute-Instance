@@ -17,7 +17,7 @@ Instance properties and usage change depending on these components. While settin
 
 ### Image 
 
-An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service](https://toast.com/service/compute/instance).
+An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
 
 All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
 
@@ -73,7 +73,7 @@ Instances are charged using the following criteria.
 
 * Instances are charged from the moment they are created.
 * Instance default disks are charged separately according to the block storage pricing policy.
-* Stopped instances are charged only for their default disk and block storage.
+* Stopped instances are charged only for their default disk and additional block storage (if any block storage has been added).
 
 
 ## How to Access Instances 

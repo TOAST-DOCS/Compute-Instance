@@ -14,7 +14,7 @@ Select the image that contains the operating system you need. You can choose bet
 
 The available instance flavors vary depending on the image you choose, so we recommended you choose an image first when creating an instance. 
 
-| OS                               | Disk          | Memory       |
+| OS                               | Block Storage          | Memory       |
 | -------------------------------- | ------------- | ------------ |
 | Linux <br>CentOS, Ubuntu, Debian | 20GB or more  | 1GB or more  |
 | Windows                          | 50GB or more  | 2GB or more  |
@@ -35,32 +35,32 @@ Instance flavors can be changed in the NHN Cloud console even after instance cre
 
 > [Caution] An instance's default disk cannot be changed by changing instance flavors.
 
-### Device Size
+### Block Storage Size
 
 Determines the default disk size of an instance. 
 
 - The size of the default disk cannot be changed after an instance has been created. If you require more disk space, you must use additional block storages.
-- The device size must be at least the minimum size required by the image. 
+- The block storage size must be at least the minimum size required by the image. 
 
 The default disk size varies depending on instance flavor.
 
-| Flavors | Supported Device Size |
+| Flavors | Supported Block Storage Size |
 | ----------------| -------------------------- |
 | u2 flavors | 20 ~ 100 GB (varies by flavor) |
 | t2, m2, c2, r2, and x1 flavors | 20 ~ 2000 GB             |
 
->[Note] Creating a default disk with the largest possible size is not always efficient since you are charged by device size. We recommend you add block storages as they become necessary.
+>[Note] Creating a default block storage with the largest possible size is not always efficient since you are charged by block storage size. We recommend you add block storages as they become necessary.
 
-### Volume Type
+### Block Storage Type
 
-Determines the default disk type of an instance.
+Determines the default block storage type of an instance.
 
-- Choose either **HDD** or **SSD**. The choice of volume type affects pricing and performance.
-- You cannot change the volume type once the instance is created.
+- Choose either **HDD** or **SSD**. The choice of block storage type affects pricing and performance.
+- You cannot change the block storage type once the instance is created.
 
 ### Number of Instances
 
-You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, device size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` will result in `my-instance-1` and `my-instance-2`. The maximum number of instances you can create at once is 10.
+You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, block storage size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` will result in `my-instance-1` and `my-instance-2`. The maximum number of instances you can create at once is 10.
 
 When you create multiple instances without specifying an availability zone, each instance will be created in a randomly selected availability zone. For example, if two instances are created without specifying an availability zone, they may be created in the same zone or they may be created in different zones. If all instances need to be created in the same availability zone, select a particular zone.
 
@@ -91,9 +91,9 @@ For more details on security groups, see [VPC Console Guide](/Network/VPC/en/con
 
 ### Additional Block Storage
 
-Select whether you will attach an additional block storage after instance creation. If you enable this option, a new block storage separate from the default disk is created and attached to the instance. As with the default disk, you can specify the name, storage type, and size of the additional disk you create.
+Select whether you will attach an additional block storage after instance creation. If you enable this option, a new block storage separate from the default disk is created and attached to the instance. As with the default disk, you can specify the name, storage type, and size of the additional block storage you create.
 
-By using the default disk only for the OS and storing your frequently used applications and data on the additional disk, you can easily migrate or copy your applications and data using the block storage attach/detach and snapshot features. In addition, when an instance failure occurs, you can easily recover your services by simply detaching the additional disk and attaching it to another instance.
+By using the default disk only for the OS and storing your frequently used applications and data on the additional block storage, you can easily migrate or copy your applications and data using the block storage attach/detach and snapshot features. In addition, when an instance failure occurs, you can easily recover your services by simply detaching the additional block storage and attaching it to another instance.
 
 Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
@@ -153,7 +153,7 @@ Create an image from an instance's default disk. It is recommended to stop insta
 
 While it is possible to create an image from an instance that has no available free space in its default disk, those images are unusable by other instances because they cannot be properly initialized. Before creating an image, ensure that your instance has at least 100KB of free space.
 
-Created images are registered as private images in **Compute > Image**. You can use the registered image to create an instance with a disk identical to that of the original instance.
+Created images are registered as private images in **Compute > Image**. You can use the registered image to create an instance with a block storage identical to that of the original instance.
 
 ### Associate/Disassociate Floating IP
 
@@ -183,7 +183,7 @@ You can only change an instance to another flavor that is compatible with its cu
 
 When you modify flavors, instance resize and resize confirmation tasks proceed. When all tasks are completed, the VM changes its status to **Shutoff**. You can start the instance by clicking **Start Instance** in **Additional Features**.
 
-> [Note] The instance's default disk size cannot be modified. If an instance requires additional disk space, attach a block storage. For details on how to attach block storage, see [Block Storage Overview](/Storage/Block%20Storage/en/overview/).
+> [Note] The instance's default disk size cannot be modified. If an instance requires additional block storage space, attach a block storage. For details on how to attach block storage, see [Block Storage Overview](/Storage/Block%20Storage/en/overview/).
 
 Instances will be charged using the new flavor from the moment the modification completes.
 

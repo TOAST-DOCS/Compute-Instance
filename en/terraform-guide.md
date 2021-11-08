@@ -537,7 +537,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | block_device.source_type | String | O | Type of original block storage to create<br>`image`: Use an image to create a block storage <br>`volume`: Use an existing volume, with the destination_type set to volume <br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
 | block_device.destination_type | String | - | Requires different settings depending on the location of instance volume or flavor <br>`local`: For U2 flavor <br>`volume`: For flavors other than U2 |
 | block_device.boot_index | Integer | - | Booting order of the specified volume<br>0: Root volume<br>Other values: Additional volumes<br>The higher the number, the lower the booting priority<br> |
-| block_device.volume_size | Integer | - | Disk size for instance to create <br>Available from 20GB to 2,000GB (required if the flavor is U2) <br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide` |
+| block_device.volume_size | Integer | - | Block storage size for instance to create <br>Available from 20GB to 2,000GB (required if the flavor is U2) <br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide` |
 | block_device.delete_on_termination | Boolean | - | `true`: When deleting an instance, delete a block device <br>`false`: When deleting an instance, do not delete a block device |
 
 ### Attach Block Storage
