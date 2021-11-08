@@ -526,7 +526,7 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 | block_device.source_type | String | O | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたボリュームで使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
 | block_device.destination_type | String | - | インスタンスボリュームの位置、インスタンスタイプに応じて設定必要<br>`local`：U2インスタンスタイプを利用する場合<br>`volume`：U2以外のインスタンスタイプを利用する場合 |
 | block_device.boot_index | Integer | - | 指定したボリュームの起動順序<br>0の場合、ルートボリューム<br>それ以外は追加ボリューム<br>数字が大きいほど起動順序が下がる<br> |
-| block_device.volume_size | Integer | - | 作成するインスタンスで使用するディスクサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照 |
+| block_device.volume_size | Integer | - | 作成するインスタンスで使用するブロックストレージサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照 |
 | block_device.delete_on_termination | Boolean | - | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない |
 
 ### ブロックストレージ接続
