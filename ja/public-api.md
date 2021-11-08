@@ -27,7 +27,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
-| minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
+| minDisk | Query | Integer | - | 最小ブロックストレージサイズ(GB)<br>指定したサイズよりブロックストレージサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
 
 #### レスポンス
@@ -98,7 +98,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
-| minDisk | Query | Integer | - | 最小ディスクサイズ(GB)<br>指定したサイズよりディスクサイズが大きいタイプのみ返す |
+| minDisk | Query | Integer | - | 最小ブロックストレージサイズ(GB)<br>指定したサイズよりブロックストレージサイズが大きいタイプのみ返す |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズよりRAMサイズが大きいタイプのみ返す |
 
 #### レスポンス
@@ -551,7 +551,7 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | インスタンスを作成したユーザーID |
 | servers.created | Body | Datetime | インスタンス作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | servers.tenant_id | Body | String | インスタンスが属しているテナントID |
-| servers.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用しないまま残す。NHN Cloudは`MANUAL`を使用 |
+| servers.OS-DCF:diskConfig | Body | Enum | インスタンスブロックストレージパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ブロックストレージを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用しないまま残す。NHN Cloudは`MANUAL`を使用 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | servers.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
@@ -706,7 +706,7 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | インスタンスを作成したユーザーID |
 | server.created | Body | Datetime | インスタンスの作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | server.tenant_id | Body | String | インスタンスが属しているテナントID |
-| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。NHN Cloudは`MANUAL`を使用 |
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用せずに残す。NHN Cloudは`MANUAL`を使用 |
 | server.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | server.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
@@ -903,7 +903,7 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
 | server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名 |
-| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりディスクのサイズが大きい場合、使用せずに残す。
+| server.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。 `MANUAL`または`AUTO`のいずれか。NHN Cloudでは`MANUAL`に設定されている。<br>**AUTO**：自動的にディスク全体を1つのパーティションに設定<br>**MANUAL**：イメージに指定されたとおりにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用せずに残す。
 | server.id | Body | UUID | 作成したインスタンスのID |
 
 <details><summary>例</summary>
