@@ -551,7 +551,7 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | インスタンスを作成したユーザーID |
 | servers.created | Body | Datetime | インスタンス作成日時。`YYYY-MM-DDThh:mm:ssZ`形式 |
 | servers.tenant_id | Body | String | インスタンスが属しているテナントID |
-| servers.OS-DCF:diskConfig | Body | Enum | インスタンスブロックストレージパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用しないまま残す。NHN Cloudは`MANUAL`を使用 |
+| servers.OS-DCF:diskConfig | Body | Enum | インスタンスディスクパーティション方式。`MANUAL`または`AUTO`のいずれか1つ。<br>**AUTO**：自動的に全ディスクを1つのパーティションに設定<br>**MANUAL**：イメージに指定された通りにパーティションを設定。イメージで設定されたサイズよりブロックストレージのサイズが大きい場合、使用しないまま残す。NHN Cloudは`MANUAL`を使用 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | インスタンスに接続された追加ボリュームリストオブジェクト |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ボリュームID |
 | servers.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off |
