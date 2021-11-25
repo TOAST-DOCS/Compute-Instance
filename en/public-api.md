@@ -27,7 +27,7 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| minDisk | Query | Integer | - | Minimum Disk Size (GB)<br>Returns only flavors with disk sizes greater than specified value |
+| minDisk | Query | Integer | - | Minimum block storage size (GB)<br>Returns only flavors with block storage sizes greater than specified value |
 | minRam | Query | Integer | - | Minimum RAM Size (MB)<br>Returns only flavors with RAM sizes greater than specified value |
 
 #### Response
@@ -98,7 +98,7 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| minDisk | Query | Integer | - | Minimum Disk Size (GB)<br/>Returns only flavors with disk sizes greater than specified value |
+| minDisk | Query | Integer | - | Minimum block storage size (GB)<br/>Returns only flavors with block storage sizes greater than specified value |
 | minRam | Query | Integer | - | Minimum RAM Size (MB)<br/>Returns only flavors with RAM sizes greater than specified value |
 
 #### Response
@@ -558,7 +558,7 @@ The request format is the same as List Instances.
 | servers.user_id | Body | String | ID of user creating instance |
 | servers.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format |
 | servers.tenant_id | Body | String | Tenant ID that instance belongs to |
-| servers.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br>**AUTO**: Automatically sets the entire disk as one partition <br>**MANUAL**: Sets partition as specified in the image. If the disk size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
+| servers.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br>**AUTO**: Automatically sets the entire disk as one partition <br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to instance |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
@@ -714,7 +714,7 @@ This API does not require a request body.
 | server.user_id | Body | String | ID of user creating instance |
 | server.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format |
 | server.tenant_id | Body | String | Tenant ID that instance belongs to |
-| server.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br/>**AUTO**: Automatically sets the entire disk as one partition<br/>**MANUAL**: Sets partition as specified in the image. If the disk size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
+| server.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br/>**AUTO**: Automatically sets the entire disk as one partition<br/>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | server.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to instance       |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
@@ -913,7 +913,7 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Description |
 |---|---|---|---|
 | server.security_groups.name | Body | String | Security group name of created instance |
-| server.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`. <br/>**AUTO**: Automatically sets the entire disk as one partition<br/>**MANUAL**: Sets partition as specified in the image. If the disk size is larger than the size specified in the image, leave that portion unused. |
+| server.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`. <br/>**AUTO**: Automatically sets the entire disk as one partition<br/>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 | server.id | Body | UUID | Created instance ID |
 
 <details><summary>Example</summary>
@@ -1339,7 +1339,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | Token ID |
 | resize | Body | Object | O | Instance flavor change request |
 | resize.flavorRef | Body | UUID | O | New instance flavor ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | Disk partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`. <br/>**AUTO**: Automatically sets the entire disk as one partition <br/>**MANUAL**: Sets partition as specified in the image. If the disk size is larger than the size specified in the image, leave that portion unused. |
+| resize.OS-DCF:diskConfig | Body | Enum | - | Disk partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`. <br/>**AUTO**: Automatically sets the entire disk as one partition <br/>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 
 <details><summary>Example</summary>
 <p>
