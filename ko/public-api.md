@@ -711,6 +711,7 @@ X-Auth-Token: {tokenId}
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
 | server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | 인스턴스에 연결된 추가 로컬 블록 스토리지 크기 |
 
 <details><summary>예시</summary>
 <p>
