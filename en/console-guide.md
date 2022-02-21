@@ -97,25 +97,25 @@ By using the default disk only for the OS and storing your frequently used appli
 
 Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
-### Scheduled Script
+### User Script
 
-You can specify a script to be executed after instance creation. The scheduled script is executed following the instance's initial boot and after the initialization process including network configuration has completed. Scheduled scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
+You can specify a script to be executed after instance creation. The user script is executed following the instance's initial boot and after the initialization process including network configuration has completed. User scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
 
 > [Caution]
-> Scheduled scripts are executed with root (Linux)/Administrator (Windows) privileges.
+> User scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
 #### Linux
-The first line of a scheduled script must begin with `#!`.
+The first line of a user script must begin with `#!`.
 ```
 #!/bin/bash
 ...
 ```
 
-For a scheduled script to run successfully, log files in the instance must be checked. You can check output logs printed by standard output/error from the script in `/var/log/cloud-init-output.log`.
+For a user script to run successfully, log files in the instance must be checked. You can check output logs printed by standard output/error from the script in `/var/log/cloud-init-output.log`.
 
 #### Windows
 
-Windows images support both Batch and PowerShell formats for scheduled scripts. The format is determined by an indicator specified in the first line.
+Windows images support both Batch and PowerShell formats for user scripts. The format is determined by an indicator specified in the first line.
 
 * Batch Script
 ```
@@ -141,9 +141,9 @@ To use both Batch and PowerShell in your script, use the following format.
 </powershell>
 ```
 
-Logs from scheduled scripts can be found in `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
+Logs from user scripts can be found in `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`.
 
-For more details regarding scheduled scripts, see the [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) guides.
+For more details regarding user scripts, see the [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) guides.
 
 ## Additional Instance Features
 

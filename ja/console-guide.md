@@ -94,25 +94,25 @@ Floating IP管理は、Instance > 管理ページまたはInstance > Floating IP
 
 ブロックストレージ管理は、Instance > Block Storageページでもできます。ブロックストレージの詳細は[ブロックストレージガイド](/Storage/Block%20Storage/ja/overview/)を参照してください。
 
-### 予約スクリプト
+### ユーザースクリプト
 
-インスタンス作成後に実行するスクリプトを指定します。予約スクリプトは、インスタンスの最初の起動が完了した後、ネットワーク設定などの初期化プロセスが終わった後に実行されます。NHN Cloudの予約スクリプトは公式イメージに含まれているcloud-init (Linux)、Cloudbase-init (Windows)などの自動化ツールにより実行されます。
+インスタンス作成後に実行するスクリプトを指定します。ユーザースクリプトは、インスタンスの最初の起動が完了した後、ネットワーク設定などの初期化プロセスが終わった後に実行されます。NHN Cloudのユーザースクリプトは公式イメージに含まれているcloud-init (Linux)、Cloudbase-init (Windows)などの自動化ツールにより実行されます。
 
 > [注意]
-> 予約スクリプトはroot (Linux)/Administrator (Windows)ユーザー権限で実行されます。
+> ユーザースクリプトはroot (Linux)/Administrator (Windows)ユーザー権限で実行されます。
 
 #### Linux
-予約スクリプトの最初の行は必ず`#!`で始まる必要があります。
+ユーザースクリプトの最初の行は必ず`#!`で始まる必要があります。
 ```
 #!/bin/bash
 ...
 ```
 
-予約スクリプトが正常に動作するには、インスタンス内部のログファイルを確認する必要があります。スクリプトで標準出力/エラー装置に出力したログは`/var/log/cloud-init-output.log`で確認できます。
+ユーザースクリプトが正常に動作するには、インスタンス内部のログファイルを確認する必要があります。スクリプトで標準出力/エラー装置に出力したログは`/var/log/cloud-init-output.log`で確認できます。
 
 #### Windows
 
-Windowsイメージでは予約スクリプト形式にBatchスクリプト形式、 Powershellスクリプト形式をすべてサポートします。各形式は最初の行に明示する表示子により区別されます。
+Windowsイメージではユーザースクリプト形式にBatchスクリプト形式、 Powershellスクリプト形式をすべてサポートします。各形式は最初の行に明示する表示子により区別されます。
 
 * Batchスクリプト
 ```
@@ -138,9 +138,9 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 </powershell>
 ```
 
-予約スクリプトのログは、`C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`で確認できます。
+ユーザースクリプトのログは、`C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`で確認できます。
 
-予約スクリプト関連の詳細は、[cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html)または[Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html)ガイドを参照してください。
+ユーザースクリプト関連の詳細は、[cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html)または[Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html)ガイドを参照してください。
 
 
 ## インスタンス追加機能
