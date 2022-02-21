@@ -98,25 +98,25 @@ VPC에서 정의된 서브넷 중에서 인스턴스에 연결할 서브넷을 �
 
 블록 스토리지 관리는 인스턴스 > 블록 스토리지 페이지에서도 할 수 있습니다. 블록 스토리지에 대한 보다 자세한 설명은 [블록 스토리지 가이드](/Storage/Block%20Storage/ko/overview/)를 참고합니다.
 
-### 예약 스크립트
+### 사용자 스크립트
 
-인스턴스 생성 후 실행할 스크립트를 지정합니다. 예약 스크립트는 인스턴스의 첫 번째 부팅이 완료된 후 네트워크 설정 등 초기화 과정이 끝나고 난 뒤 실행됩니다. NHN Cloud의 예약 스크립트는 공식 이미지에 내장된 cloud-init (Linux), Cloudbase-init (Windows) 과 같은 자동화 도구에 의해서 실행됩니다.
+인스턴스 생성 후 실행할 스크립트를 지정합니다. 사용자 스크립트는 인스턴스의 첫 번째 부팅이 완료된 후 네트워크 설정 등 초기화 과정이 끝나고 난 뒤 실행됩니다. NHN Cloud의 사용자 스크립트는 공식 이미지에 내장된 cloud-init (Linux), Cloudbase-init (Windows)과 같은 자동화 도구에 의해서 실행됩니다.
 
 > [주의]
-> 예약 스크립트는 root (Linux)/Administrator (Windows) 사용자 권한으로 실행됩니다.
+> 사용자 스크립트는 root (Linux)/Administrator (Windows) 사용자 권한으로 실행됩니다.
 
 #### Linux
-예약 스크립트의 첫번째 줄은 반드시 `#!` 으로 시작해야 합니다.
+사용자 스크립트의 첫 번째 줄은 반드시 `#!`으로 시작해야 합니다.
 ```
 #!/bin/bash
 ...
 ```
 
-예약 스크립트가 정상적으로 동작하기 위해서는 인스턴스 내부의 로그 파일을 확인해야 합니다. 스크립트에서 표준 출력/에러 장치로 출력한 로그는 `/var/log/cloud-init-output.log`에서 확인할 수 있습니다.
+사용자 스크립트가 정상적으로 동작하기 위해서는 인스턴스 내부의 로그 파일을 확인해야 합니다. 스크립트에서 표준 출력/에러 장치로 출력한 로그는 `/var/log/cloud-init-output.log`에서 확인할 수 있습니다.
 
 #### Windows
 
-Windows 이미지에서는 예약 스크립트 형식으로 Batch 스크립트 형식, Powershell 스크립트 형식을 모두 지원합니다. 각 형식들은 첫 번째 줄에 명시하는 지시자에 의해 구분됩니다.
+Windows 이미지에서는 사용자 스크립트 형식으로 Batch 스크립트 형식, Powershell 스크립트 형식을 모두 지원합니다. 각 형식들은 첫 번째 줄에 명시하는 지시자에 의해 구분됩니다.
 
 * Batch 스크립트
 ```
@@ -142,9 +142,9 @@ rem cmd
 </powershell>
 ```
 
-예약 스크립트의 로그는 `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init` 에서 확인할 수 있습니다.
+사용자 스크립트의 로그는 `C:\Program Files\Cloudbase Solutions\Cloudbase-Init\log\cloudbase-init`에서 확인할 수 있습니다.
 
-예약 스크립트와 관련하여 보다 자세한 설명은 [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) 또는 [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) 가이드를 참고합니다.
+사용자 스크립트와 관련하여 보다 자세한 설명은 [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) 또는 [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) 가이드를 참고합니다.
 
 ## 인스턴스 추가 기능
 

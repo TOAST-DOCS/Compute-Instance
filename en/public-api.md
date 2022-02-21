@@ -114,7 +114,7 @@ This API does not require a request body.
 | flavors.vcpus | Body | Integer | Number of vCPUs |
 | flavors.extra_specs | Body | Object | Extra specifications object |
 | flavors.swap | Body | Integer | Swap space size (GB) |
-| flavors.os-flavor-access:is_public | Body | Boolean | Indicates whether the flavor is publically visible |
+| flavors.os-flavor-access:is_public | Body | Boolean | Indicates whether the flavor is publicly visible |
 | flavors.rxtx_factor | Body | Float | Network transmission packet rate |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Ephemeral volume size (GB) |
 | flavors.disk | Body | Integer | Default disk size (GB) |
@@ -559,8 +559,8 @@ The request format is the same as List Instances.
 | servers.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format |
 | servers.tenant_id | Body | String | Tenant ID that instance belongs to |
 | servers.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br>**AUTO**: Automatically sets the entire disk as one partition <br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
-| servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to instance |
-| servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
+| servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to the instance |
+| servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to the instance |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
 | servers.metadata | Body | Object | Instance metadata object<br>Stores instance metadata as key-value pairs |
 
@@ -715,10 +715,11 @@ This API does not require a request body.
 | server.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format |
 | server.tenant_id | Body | String | Tenant ID that instance belongs to |
 | server.OS-DCF:diskConfig | Body | Enum | Disk partition method used by instance, either `MANUAL` or `AUTO` <br/>**AUTO**: Automatically sets the entire disk as one partition<br/>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
-| server.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to instance       |
-| server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to instance |
+| server.os-extended-volumes:volumes_attached | Body | Object | List object of additional volumes attached to the instance       |
+| server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional volume attached to the instance |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off |
 | server.metadata | Body | Object | Instance metadata object<br/>Stores instance metadata as key-value pairs |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | Size of an additional local block storage attached to the instance |
 
 <details><summary>Example</summary>
 <p>
@@ -1275,7 +1276,7 @@ This API does not return a response body.
 
 Restart an instance. An instance can be restarted using either a **SOFT** restart or a **HARD** restart.
 
-* **SOFT**: An instance is stopped via **"Graceful Shutdown"** and restarted. The instance must be in **ACTIVE **status.
+* **SOFT**: An instance is stopped via **"Graceful Shutdown"** and restarted. The instance must be in **ACTIVE** status.
 * **HARD**: Forcefully stop the instance and restart it. This works the same way as turning the power switch of a physical server off and on again. An instance can only be forcefully stopped when it is in one of these statuses.
     * **ACTIVE**
     * **ERROR**
