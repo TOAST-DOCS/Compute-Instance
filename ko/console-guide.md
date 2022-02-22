@@ -238,44 +238,34 @@ NHN Cloud에서 생성한 키페어와 마찬가지로 이렇게 만든 키페�
 
 NHN Cloud Windows 이미지는 영문판을 기본으로 제공하고 있습니다. 다른 언어를 기본으로 사용하기 원하는 사용자는 다음의 방법에 따라 사용이 가능합니다.
 
-* START -> Control Panel -> Clock, Language, and Region -> Add a language
-
+1. START -> Control Panel -> Clock, Language, and Region -> Add a language
 ![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
 
-* 언어 기본 설정 변경 -> 언어 추가
-
+2. 언어 기본 설정 변경 -> 언어 추가
 ![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
 
-* 언어 추가 -> 사용하려는 언어 선택 -> 추가
-
+3. 언어 추가 -> 사용하려는 언어 선택 -> 추가
 ![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
 
-* 추가된 언어팩 확인
-
+4. 추가된 언어팩 확인
 ![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
 
-* 추가된 언어팩 다운로드 및 설치
-
+5. 추가된 언어팩 다운로드 및 설치
 ![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
 
-* 업데이트 다운로드 및 설치
-
+6. 업데이트 다운로드 및 설치
 ![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
 
-* 설치된 언어팩 변경을 위해 선택언어 더블클릭 또는 옵션 선택
-
+7. 설치된 언어팩 변경을 위해 선택언어 더블클릭 또는 옵션 선택
 ![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
 
-* 언어 옵션에서 기본 언어로 설정 선택
-
+8. 언어 옵션에서 기본 언어로 설정 선택
 ![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
 
-* 기본 언어로 설정후 적용되기 위해서 로그오프
-
+9. 기본 언어로 설정후 적용되기 위해서 로그오프
 ![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
 
-* 다시 로그인 하시면 사용자가 선택한 언어팩으로 변경 되어있는것을 볼수있습니다.
-
+10. 다시 로그인 하시면 사용자가 선택한 언어팩으로 변경 되어있는것을 볼수있습니다.
 ![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
 
 ## 부록 2. Windows 라우팅 변경
