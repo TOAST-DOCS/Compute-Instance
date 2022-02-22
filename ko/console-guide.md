@@ -284,43 +284,60 @@ NHN Cloud Windows 에서 라우팅을 변경하는 방법은 다음과 같은 �
 
 
 * START -> Run -> cmd
+
+
 Route 커맨드
+
 * 현재 설정 출력 : route print
 * 추가 : route add "목적지" mask "subnet" "gateway" metric "Metric 값" if "Interface 번호"
 * 변경 : route change "목적지" mask "subnet" "gateway" metric "Metric 값" if "Interface 번호"
 * 삭제 : route delete "목적지" mask "목적지 subnet" "gateway" metric "Metric 값" if "Interface 번호"
-  * 옵션 : -p (영구 경로 지정)
+* 옵션 : -p (영구 경로 지정)
+
+
   
 설명
+
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+
 * Metric 값 : 값이 낮을 수록 우선 순위 높음
-* Interface 번호 : route print에서 확인 가능(빨간색 테두리)
+* Interface 번호 : route print에서 확인 가능 (빨간색 테두리)
 * 영구 경로 : -p 옵션을 사용하지 않는 경우 시스템 재시작 시에 설정한 경로가 초기화 되기 때문에 사용 (파란색 테두리)
 
 Case 1 - 특정 인터페이스만 외부 통신 설정
+
 * route change 커맨드를 통해 외부 통신을 원치 않는 인터페이스 경로의 metric을 수정하거나 고정 IP 설정에서 기본 게이트웨이 정보를 입력하지 않는 방법 등이 있습니다.
-
 * Metric 수정 방법
-  * 인터페이스의 metric 증가
+    * 인터페이스의 metric 증가
 
-	$ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+            $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
-고정 IP 설정 방법
-  * ipconfig /all을 통해 IP정보 확인
+
+* 고정 IP 설정 방법
+    * ipconfig /all을 통해 IP정보 확인
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
-  * 확인된 IP정보를 이용하여 IP설정 창에서 기본 게이트웨이를 제외하고 입력
+    * 확인된 IP정보를 이용하여 IP설정 창에서 기본 게이트웨이를 제외하고 입력
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
-  * route print를 통해 확인
+    * route print를 통해 확인
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+
 Case 2 - 특정 대역에 대한 경로 설정
-  * route add 커맨드를 통해 특정 대역에 대한 경로를 설정합니다.
 
-	$ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+* route add 커맨드를 통해 특정 대역에 대한 경로를 설정합니다.
+
+        $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
-Case 3 - 특정 경로 제거
-  * route delete를 통해 지정된 경로를 제거합니다.
 
-	$ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+
+Case 3 - 특정 경로 제거
+
+* route delete를 통해 지정된 경로를 제거합니다.
+
+        $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
 
