@@ -306,11 +306,11 @@ Case 1 - 특정 인터페이스만 외부 통신 설정
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
 
 * 고정 IP 설정 방법
-    * ipconfig /all을 통해 IP정보 확인
+    1. ipconfig /all을 통해 IP정보 확인
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
-    * 확인된 IP정보를 이용하여 IP설정 창에서 기본 게이트웨이를 제외하고 입력
+    2. 확인된 IP정보를 이용하여 IP설정 창에서 기본 게이트웨이를 제외하고 입력
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
-    * route print를 통해 확인
+    3. route print를 통해 확인
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
 
 Case 2 - 특정 대역에 대한 경로 설정
@@ -335,24 +335,19 @@ Case 3 - 특정 경로 제거
 
 NHN Cloud Windows에서 시스템 로캘을 변경하는 방법은 다음과 같습니다.
 
-* **Windows 키 > 제어판 > 시계 및 국가**를 선택합니다.
-
+1. **Windows 키 > 제어판 > 시계 및 국가**를 선택합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
-* **국가 또는 지역**을 선택합니다.
-
+2. **국가 또는 지역**을 선택합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
-* **관리자 옵션** 탭에서 **시스템 로캘 변경**을 클릭합니다.
-
+3. **관리자 옵션** 탭에서 **시스템 로캘 변경**을 클릭합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
-* 변경할 시스템 로캘을 선택합니다.
-
+4. 변경할 시스템 로캘을 선택합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
-* 적용하려면 시스템을 재시작합니다.
-
+5. 적용하려면 시스템을 재시작합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 
