@@ -238,43 +238,33 @@ Just as with key pairs created from NHN Cloud, imported key pairs also need to b
 NHN Cloud provides Windows images with English as the primary language. You may change your language preferences with the following steps.
 
 1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
 
 2. Select **Change your language preferences > Add a language**.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
 
 3. Choose a language in **Add a language** and click **Add**.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
 
 4. Check the language pack just added.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
 
 5. Download and install the language pack.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
 
 6. Download and install updates. 
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
 
 7. To change to the installed language pack, double-click the selected language or select **Options**.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
 
 8. Choose **Make this the primary language** for Windows display language.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
 
 9. To apply the changes, click **Log off now**.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
 
 10. Log in again, and you can see Windows is displayed using the language pack of your choice.
-
 ![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
 
 ## Appendix 2. Change Routing in Windows
@@ -282,8 +272,11 @@ NHN Cloud provides Windows images with English as the primary language. You may 
 Routing in NHN Cloud Windows instances can be changed as follows.
 
 
-* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.  
+* Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.
+
+
 Route commands
+
 * Print current configuration: route print
 * Add : route add "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
 * Change : route change "Destination" mask "subnet" "gateway" metric "Metric value" if "Interface number"
@@ -291,6 +284,8 @@ Route commands
 * Option : -p (specify as persistent route)
 
 Description
+
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
 
 * Metric Value: A lower value indicates higher priority
@@ -298,58 +293,56 @@ Description
 * Persistent Route: Use the -p option to avoid the configured routes being reset across system reboots (blue box above)
 
 Example 1 - Restricting external communication for particular interfaces
-* You can restrict an interface from communicating externally by using the route change command to change its route metric or by leaving the default gateway field blank when configuring fixed IP settings.
 
+* You can restrict an interface from communicating externally by using the route change command to change its route metric or by leaving the default gateway field blank when configuring fixed IP settings.
 * How to Modify Metrics
+    * Increase interface metric value
   
-  * Increase interface metric value
-  
-  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
-    ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
+            $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
+
+![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
 
 * How to Set Fixed IP
-
-  * Use the ipconfig /all command to view IP information.
-    ![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
-  * Enter the corresponding IP information, leaving the default gateway field blank, in the IP Properties window. 
-    ![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
-  * Check the results using the route print command.
-    ![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
+    1. Use the ipconfig /all command to view IP information.
+![이미지1](http://static.toastoven.net/prod_instance/windows_route3.png)
+    2. Enter the corresponding IP information, leaving the default gateway field blank, in the IP Properties window. 
+![이미지1](http://static.toastoven.net/prod_instance/windows_route4.png)
+    3. Check the results using the route print command.
+![이미지1](http://static.toastoven.net/prod_instance/windows_route5.png)
 
 Example 2 - Setting routes for a particular address range
+
 * Use the route add command to set routes for a particular address range.
 
-$ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+        $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
+
 Example 3 - Removing a particular route 
 
 * Use the route delete command to remove specified routes. 
 
-$ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+        $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
 ## Appendix 3. Change System Locale
 
 System locale in NHN Cloud Windows instances can be changed as follows. 
 
-* Go to **Windows Key > Control Panel > Clock, Language, and Region**.
-
+1. Go to **Windows Key > Control Panel > Clock, Language, and Region**.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
-* Select **Region**. 
-
+2. Select **Region**. 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
-* From the **Administrative** tab, click **Change system locale**.
-
+3. From the **Administrative** tab, click **Change system locale**.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
-* Select a system locale to use.
-
+4. Select a system locale to use.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
-* Restart the system to apply the changes. 
-
+5. Restart the system to apply the changes. 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 ## Appendix 4. Restarting Instances for Hypervisor Maintenance 

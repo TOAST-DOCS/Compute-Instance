@@ -236,43 +236,33 @@ NHN Cloudで生成したキーペア同様、このように作成されたキ�
 NHN CloudのWindowsイメージは、英語版が基本設定になっています。他の言語を基本設定にする方法は次のとおりです。
 
 1. **START > Control Panel > Clock, Language, and Region > Add a language**を選択します。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows1.png)
 
 2. **言語基本設定変更 > 言語追加**を選択します。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows2.png)
 
 3. **言語追加(Add a language)**で使用したい言語を選択し、**追加(Add)**をクリックします。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows3.png)
 
 4. 追加された言語パックを確認します。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows4.png)
 
 5. 追加された言語パックをダウンロードし、インストールします。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows5.png)
 
 6. アップデートをダウンロードし、インストールします。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows6.png)
 
 7. インストールされた言語パックを変更するには、選択した言語をダブルクリックするか、**オプション(Options)**を選択します。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows7.png)
 
 8. 言語オプションで、**基本言語に設定**を選択します。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows8.png)
 
 9. 基本言語設定を適用するには、**いまログオフ(Log off now)**をクリックします。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows9.png)
 
 10. 再度ログインすると、ユーザーが選択した言語パックへの変更を確認できます。
-
 ![イメージ1](http://static.toastoven.net/prod_instance/windows10.png)
 
 ## 付録2. Windowsルーティングの変更
@@ -281,68 +271,79 @@ NHN CloudWindowsでルーティングを変更する方法は次のとおりで�
 
 
 * **Windowsキー + R**を押すと「ファイル名を指定して実行」ダイアログが表示されるので、名前に`cmd`と入力してOKボタンをクリックし、コマンドプロンプトウィンドウを開きます。
+
+
   Routeコマンドを入力します。
+
 * 現在設定の出力：route print
 * 追加：route add "宛先" mask "subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
 * 変更：route change "宛先" mask "subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
 * 削除：route delete "宛先" mask "宛先subnet" "gateway" metric "メトリック値" if "インターフェイス番号"
-  * オプション：-p (永久ルート指定)
+* オプション：-p (永久ルート指定)
+
 
 説明
+
+
 ![イメージ1](http://static.toastoven.net/prod_instance/windows_route1.png)
+
 * メトリック値：値が小さいほど優先順位が高い
 * インターフェイス番号：route printで確認可能(上の図で赤色の枠)
 * 永久ルート：-pオプションを使用しない場合、システム再起動時に、設定したルートが初期化されるため使用(上の図で青色の枠)
 
 事例1 - 特定インターフェイスのみ外部通信設定
+
 * route changeコマンドを使用し、外部通信をしたくないインターフェイスルートのmetricを修正するか、固定IP設定でデフォルトゲートウェイ情報を入力しない方法などがあります。
 
 * Metricの修正方法
-  * インターフェイスのmetric増加
+    * インターフェイスのmetric増加
 
-  $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
-  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route2.png)
- 固定IPの設定方法
-  * ipconfig /allを入力し、IP情報を確認します。
-    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route3.png)
-  * 確認したIP情報を利用し、IP設定ウィンドウでデフォルトゲートウェイを除いて入力します。
-    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route4.png)
-  * route printで確認します。
-    ![イメージ1](http://static.toastoven.net/prod_instance/windows_route5.png)
-   事例2 - 特定帯域に対するルート設定
-  * route addコマンドで、特定帯域に対するルートを設定します。
+            $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
 
-  $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
-  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route6.png)
- 事例3 - 特定ルートの除去
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route2.png)
 
-  * route deleteを使用し、指定したルートを除去します。
+* 固定IPの設定方法
+    1. ipconfig /allを入力し、IP情報を確認します。
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route3.png)
+    2. 確認したIP情報を利用し、IP設定ウィンドウでデフォルトゲートウェイを除いて入力します。
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route4.png)
+    3. route printで確認します。
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route5.png)
 
-  $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
-  ![イメージ1](http://static.toastoven.net/prod_instance/windows_route7.png)
+事例2 - 特定帯域に対するルート設定
+
+* route addコマンドで、特定帯域に対するルートを設定します。
+
+        $ route add 172.16.0.0 mask 255.255.0.0 172.16.5.1 metric 1 if 14 -p
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route6.png)
+
+
+事例3 - 特定ルートの除去
+
+* route deleteを使用し、指定したルートを除去します。
+
+        $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
+
+![イメージ1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
 ## 付録3. システムロケールの変更
 
 NHN CloudのWindowsで、システムロケールを変更する方法は次の通りです。
 
-* **スタート > コントロールパネル > 時計、言語、および地域**を選択します。
-
+1. **スタート > コントロールパネル > 時計、言語、および地域**を選択します。
 ![画像1](http://static.toastoven.net/prod_instance/win_locale1.png)
 
-* **地域と言語**を選択します。
-
+2. **地域と言語**を選択します。
 ![画像1](http://static.toastoven.net/prod_instance/win_locale2.png)
 
-* **管理**タブで**システムロケール変更**をクリックします。
-
+3. **管理**タブで**システムロケール変更**をクリックします。
 ![画像1](http://static.toastoven.net/prod_instance/win_locale3.png)
 
-* 変更するシステムロケールを選択します。
-
+4. 変更するシステムロケールを選択します。
 ![画像1](http://static.toastoven.net/prod_instance/win_locale4.png)
 
-* 適用するにはシステムを再起動します。
-
+5. 適用するにはシステムを再起動します。
 ![画像1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 ## 付録4. ハイパーバイザーのメンテナンスのためのインスタンス再起動ガイド
