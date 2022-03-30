@@ -82,7 +82,7 @@ required_version = ">= 1.0.0"
 
 # Configure the OpenStack Provider
 provider "openstack" {
-  user_name   = "terraform-guide@nhn.com"
+  user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
   auth_url    = "https://api-identity.infrastructure.cloud.toast.com/v2.0"
