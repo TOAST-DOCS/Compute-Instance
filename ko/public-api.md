@@ -117,7 +117,7 @@ X-Auth-Token: {tokenId}
 | flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부 |
 | flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기(GB) |
-| flavors.disk | Body | Integer | 기본 디스크 크기(GB) |
+| flavors.disk | Body | Integer | 루트 볼륨 크기(GB) |
 
 <details><summary>예시</summary>
 <p>
@@ -822,10 +822,10 @@ X-Auth-Token: {tokenId}
 Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
 
 * RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
-* 50GB 이상의 기본 디스크가 필요합니다.
+* 50GB 이상의 루트 볼륨이 필요합니다.
 * U2 타입은 Windows 이미지를 사용할 수 없습니다.
 
-기본 디스크 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
+루트 볼륨 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
 
 
 ```
@@ -1321,7 +1321,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청 |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 루트 볼륨 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
 
 <details><summary>예시</summary>
 <p>
