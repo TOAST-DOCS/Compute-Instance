@@ -363,7 +363,68 @@ CUBRID 매니저 설정 파일로, 운영하려는 매니저 서버 프로세스
 
 
 ## MariaDB Instance
+### MariaDB 시작/정지 방법
 
+``` sh
+# MariaDB 서비스 시작
+shell> sudo systemctl start mariadb.service
+
+# MariaDB 서비스 종료
+shell> sudo systemctl stop mariadb.service
+
+# MariaDB 서비스 재시작
+shell> sudo systemctl restart mariadb.service
+```
+
+### MariaDB 접속
+
+이미지 생성 후 초기에는 아래와 같이 접속합니다.
+
+``` sh
+shell> mysql -u root
+```
+
+패스워드 변경 후에는 아래와 같이 접속합니다.
+
+``` sh
+shell> mysql -u root -p
+Enter password:
+```
+
+### MariaDB 인스턴스 생성 후 초기 설정
+
+#### 1\. 비밀번호 설정
+
+초기 설치 후 MariaDB root 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 비밀번호를 설정해야 합니다.
+
+```
+SET PASSWORD [FOR user] = password_option
+
+MariaDB> SET PASSWORD = PASSWORD('비밀번호');
+```
+
+#### 2\. 포트\(port\) 변경
+
+초기 설치 후 포트는 MariaDB의 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
+
+##### 1) `/etc/my.cnf.d/server.cnf` 파일 수정
+
+`/etc/my.cnf.d/server.cnf` 파일을 열어서 [mariadb] 밑에 아래와 같이 변경할 포트 주소를 입력합니다.
+
+```
+shell> sudo vi /etc/my.cnf.d/server.cnf
+```
+
+```
+[mariadb]
+port=[변경할 port 주소]
+```
+
+##### 2) 인스턴스 재시작
+포트 변경이 적용되도록 인스턴스를 재시작합니다.
+```
+sudo systemctl restart mariadb.service
+```
 ## Tibero Instance
 
 ## JEUS Instance
