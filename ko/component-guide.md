@@ -119,14 +119,6 @@ SQL Server 구성관리자의  SQL Server 구성관리자(로컬) > SQL Server �
 ## PostgreSQL Instance
 
 ## CUBRID Instance
-### 인스턴스 접근 
-인스턴스 생성 완료 후 SSH를 사용하여 인스턴스에 접근합니다.
-인스턴스에 Floating IP가 연결되어 있어야 하며 보안 그룹에서 TCP 포트 22(SSH)가 허용되어야 합니다.
-
-![cubrid_instance_image_3.jpg](http://static.toastoven.net/prod_cubrid_instance/cubrid_instance_image_3.jpg)
-
-SSH 클라이언트와 설정한 키페어를 이용해 인스턴스에 접속합니다.
-SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](https://docs.toast.com/ko/Compute/Instance/ko/overview/#linux)를 참고하시기 바랍니다.
 
 ### CUBRID 서비스 시작/정지 방법
 
