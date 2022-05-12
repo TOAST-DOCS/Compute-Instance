@@ -223,13 +223,13 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 
 ```
 #postgresql 서비스 시작
-shell> systemctl start postgresql-13
+shell> sudo systemctl start postgresql-13
 
 #postgresql 서비스 중지
-shell> systemctl stop postgresql-13
+shell> sudo systemctl stop postgresql-13
 
 #postgresql 서비스 재시작
-shell> systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-13
 ```
 
 ### PostgreSQL 접속
@@ -238,7 +238,7 @@ shell> systemctl restart postgresql-13
 <br>
 ```
 #postgres로 계정 전환 후 접속
-shell> su - postgres
+shell> sudo su - postgres
 shell> psql
 ```
 
@@ -262,7 +262,7 @@ port =사용하고자 하는 포트명
 
 #postgresql 서비스 재시작
 
-shell> systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-13
 
 
 #변경된 포트로 아래와 같이 접속
@@ -288,7 +288,7 @@ log_timezone =사용하고자 하는 타임 존
 
 #postgresql 서비스 재시작
 
-shell> systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-13
 
 
 #postgresql 접속
@@ -352,7 +352,7 @@ host    허용DB           허용유저          허용주소                   
 
 #postgresql 서비스 재시작
 
-shell> systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-13
 ```
 
 ### PostgreSQL 디렉터리 설명
