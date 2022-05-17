@@ -50,218 +50,221 @@ Specifies the NAT instance as a route gateway. The packets delivered to the NAT 
 
 
 ## MS-SQL Instance
-创建实例完成后，利用RDP（Remote Desktop Protocol）访问实例。
-Floating IP应连接至实例，安全组中应允许使用TCP端口3389（RDP）。
-单击**+确认密码**按钮创建实例时，使用设置的密钥对确认密码。
+After instance is created, access the instance by using Remote Desktop Protocol (RDP). 
+To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group. 
 
-![mssqlinstance_02_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_02_201812.png)
+![mssqlinstance_02_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_02_201812_en.png)
 
-单击**连接**按钮，下载.rdp文件后，利用获得的密码连接到实例。
+Click **+ Check Password** to check password by using key pair configured along with instance creation. 
+Click **Associate** and download .rdp file, to access the instance by using the acquired password. 
 
-### 创建MS-SQL镜像后进行初始设置
+### Initial Settings after Microsoft SQL Image is Created  
 
-#### 1.设置SQL验证模式
+#### 1. Set SQL Certification Mode  
 
-服务器的默认验证模式为“Windows验证模式”。 
-为使用MS-SQL的数据库账户，需要更改为SQL验证模式。 
+The default certification mode of the server is set with"**Windows Certification Mode**". 
+To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode. 
 
-执行Microsoft SQL Server Management Studio，通过实例名连接到对象。
+Execute Microsoft SQL Server Management Studio and associate to an object under the instance name. 
 
-![mssqlinstance_03_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_03_201812.png)
+![mssqlinstance_03_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_03_201812_en.png)
 
-1.右击对象。
-2.在菜单中选择**属性**。
-3.在服务器属性窗口中选择**安全**菜单。
-4.将**服务器验证**方式更改为“SQL Server及Windows验证模式”。
+1. Select an object, right-click it, and choose **Attributes**. 
+2. On **Server Attributes** , click **Security**. 
+3. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
 
-※ 设置SQL验证模式后，为进行应用，应重启MS-SQL服务。 
+※ To apply the changed SQL certification mode, restart Microsoft SQL. 
 
-#### 2.更改MS-SQL服务端口
+#### 2. Change Microsoft SQL Service Port 
 
-MS-SQL的默认服务端口1433是广为人知的端口，所以有可能成为安全漏洞。
-建议更改为其他端口。
-※ Express的情况无法指定默认端口。 
+The default port 1433 for Microsoft SQL is widely known and might serve as a security vulnerability.   
+A change is recommended to another port. 
+※ For Express, no default port is specified. 
 
-运行SQL Server配置管理器。
+Execute SQL Server configuration manager as below. 
 
-![mssqlinstance_04_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_04_201812.png)
+![mssqlinstance_04_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_04_201812_en.png)
 
-1.在左侧面板中选择**SQL Server网络配置**的下级项目**MSSQLSERVER相关协议**。
-2.右击协议名中的**TCP/IP**。
-3.在菜单中选择**属性**。
-4.单击**IP地址**标签。
-5.在下拉菜单中选择**IP ALL**后，更改为其他端口号。
+1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left. 
+2. Click **TCP/IP** for **Protocol Name** and right click it. When the menu shows, select **Attributes**.  
+3. Select the **IP Address** tab. 
+4. Select **IP ALL** on the list and change the port number to another.  
 
-※ 更改MS-SQL服务端口后，为进行应用，应重启MS-SQL服务。 
+※ To apply the changed service port, restart Microsoft SQL. 
 
-#### 3.设置允许从外部连接MS-SQL数据库
+#### 3. Allow External Access to Microsoft SQL Database 
 
-为从外部连接MS-SQL数据库，应在**Network > Security Group**中将MS-SQL服务端口添加到Security Group。 
-添加Security Group时，注册允许连接的MS-SQL服务端口（默认端口：1433）及远程IP。 
+To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules. 
+Also, register Microsoft SQL service port (default port: 1433) to allow access, as well as remote IP.  
 
-### 分配数据卷
+### Data Volume Assignment  
 
-MS-SQL的数据/日志文件（MDF/LDF）、备份文件建议使用另外的Block Storage。
-若欲创建Block Storage，在**Compute > Instance > Block Storage**标签中单击+创建Block Storage按钮。
+Microsoft SQL data/log files (MDF/LDF) and backup files are recommended to be applied with separate block storages.  
 
-![mssqlinstance_05_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_05_201812.png)
+![mssqlinstance_05_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_05_201812_en.png)
 
-创建Block Storage时，为保证性能，Volume类型推荐“通用SSD”。
+Go to **Compute > Instance > Block Storage** and create a block storage.  
+**Universal SSD** is a recommended volume type for improved performance.
 
-![mssqlinstance_06_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_06_201812.png)
+After a block storage is created, select the storage and click **Association Management** and associate it to an instance.  
 
-完成创建Block Storage并选择Storage后，单击**连接管理**按钮，连接到实例。
+![mssqlinstance_06_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_06_201812_en.png)
 
 <br/>
 
-使用RDP连接到实例，执行**计算机管理**，跳转至**存储位置>磁盘管理**。
+Access instance with RDP and execute **Computer Management**, and go to **Storage>Disk Management**. 
 
-![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812.png)
+![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812_en.png)
 
-可以确认是否检测到已连接的Block Storage。为进行使用，应先对磁盘执行初始化。
-1.右击**磁盘1**块后，单击**初始化磁盘**。
-2.选择分区格式后，单击**确定**按钮。
-
-<br/>
-
-初始化完成后，创建磁盘卷。
-
-![mssqlinstance_08_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_08_201812.png)
-
-右击未分配的磁盘后，单击**新建简单卷**，运行新建简单卷程序。
+You can find the associated block storage is detected. To use it, initialize disk first. 
+1. Right-click the **Disk 1** block and click **Initialize Disk**. 
+2. Select a partition type and click **OK**. 
 
 <br/>
 
-在Microsoft SQL Server Management Studio服务器属性的数据库设置中，将数据库默认位置更改为创建的卷的目录。
+After initialization is completed, create disk volume. 
 
-![mssqlinstance_09_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_09_201812.png)
+![mssqlinstance_08_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_08_201812_en.png)
 
-※ 更改MS-SQL数据库默认位置后，为进行应用，应重启MS-SQL服务。 
+Click unassigned disk and right-click it. Select **New Simple Volume** and proceed with wizard for new simple volume. 
 
-### 重启MS-SQL服务
-更改MS-SQL设置时，有时需要重启MS-SQL服务。
-为应用更改的设置，重启MS-SQL服务。 
+<br/>
 
-选择SQL Server配置管理器的**SQL Server配置管理器（本地）>SQL Server服务>SQL Server（MSSQLSERVER）**后，右击，在显示的菜单中选择“重启”重启MS-SQL服务。
+In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created. 
 
-![mssqlinstance_10_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_10_201812.png)
+![mssqlinstance_09_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_09_201812_en.png)
 
-### 确认/设置自动执行MS-SQL服务
-确认MS-SQL的服务是否设置为OS驱动时自动启动。 
+※ To apply the changed default database location, restart Microsoft SQL. 
 
-在SQL Server配置管理器的SQL Server配置管理器（本地）>SQL Server服务中可确认“启动模式”。 
+### Restart Microsoft SQL 
+Change of Microsoft SQL settings sometimes requires a restart of the service.  
+To apply changed settings, restart Microsoft SQL.   
 
-![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812.png)
+From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows, click **Restart** to restart the service. 
 
-**SQL SERVER (MSSSQLSERVER)**及**SQL Server代理程序（MSSQLSERVER）**等的服务启动模式不是**自动**时：
-1.右击相应服务后，选择**属性**。
-2.在**服务**标签中将**General>启动模式**更改为**自动**。
+![mssqlinstance_10_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_10_201812_en.png)
 
-> 【参考】
-> MS-SQL Instance的发布现状请参考【实例发布说明】(/Compute/Compute/ko/release-notes/)。
+### Check/Set Automatic Microsoft SQL  Service Execution
+Check if Microsoft SQL is set for automatic start with OS running.  
+
+Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Server Configuration Manager to find **Start Mode**.  
+
+![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
+
+When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings: 
+
+1. Click the service and right-click it. Select **Attributes** on the menu. 
+2. Change **Service** on **General > Start Mode** to **Automatic**.
+
+> [Note]
+> For the release status of Microsoft SQL Instance, see [Instance Release Note](/Compute/Compute/ko/release-notes/).
 
 ## MySQL Instance
-### 如何启动/停止MySQL
+### Starting/Stopping MySQL 
 
 ```
-#启动mysql服务
+#Start mysql Service 
 shell> service mysqld start
 
-#停止mysql服务
+#Stop mysql Service 
 shell> service mysqld stop
 
-#重启mysql服务
+#Restart mysql Service 
 shell> service mysqld restart
 ```
 
-### 访问MySQL
+### Connecting to MySQL 
 
-镜像创建初始，请按照以下方式访问。
+For initial connection, connect to MySQL with default user name. 
 
 ```
 shell> mysql -uroot
 ```
 
-### MySQL镜像创建后的初始设置
+### Initial Settings for MySQL Instance
 
-#### 1\. 更改密码
+#### 1\. Setting Password
 
-初始安装后MySQL ROOT账号密码未被指定。因此，安装后必须及时更改密码。
+There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.  
 
-* MySQL 5.6版本更改密码
+* Set Password for MySQL Version 5.6  
 
 ```
 SET PASSWORD [FOR user] = password_option
 
-mysql> set password=password('密码');
+mysql> set password=password('password');
 ```
 
-* MySQL 5.7版本更改密码
+* Set Password for MySQL Version 5.7  
 
 ```
 ALTER USER USER() IDENTIFIED BY 'auth_string';
 
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '新密码';
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'New Password';
 ```
 
-MySQL默认validate\_password\_policy如下。\.
+Default MySQL validate_password_policy is as below:
 
 * validate\_password\_policy=MEDIUM
-* 必须包含**至少8个字符、数字、小写，大写文字、特殊符号**
+* Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
-#### 2\. 更改端口(port)
+#### 2\. Changing Port Number
 
-所提供的镜像端口为MySQL默认端口3306。出于安全性的考虑，我们建议您更改端口。
+The default MySQL port number is 3306. It is recommended to change the port number for security reasons. 
 
 ```
 shell> vi /etc/my.cnf
 
 
-#在my.cnf文件中指定要使用的端口。
+# Specify a port to use in the my.cnf file. 
 
-port = 端口号
-
-
-#vi 保存编辑器
+port = Port name to use 
 
 
-#重启mysql服务
+# Save vi editor Save editor 
+
+
+# Restart mysql service  
 
 
 shell> service mysqld restart
 
 
-#请按照以下方式连接变更后的端口
+#Connect with the changed port number
 
 
-shell> mysql -uroot -P[变更后的端口号]
+shell> mysql -uroot -P[changed port number]
 ```
 
-### my.cnf描述
+### Description of my.cnf 
 
-my.cnf的默认路径为/etc/my.cnf，并设置有NHN Cloud推荐变量(variable)，内容如下。
+The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below: 
 
-| 名称 | 描述 |
+| Name | Description |
 | --- | --- |
-| default\_storage\_engine | 指定默认储存引擎(stroage engine)。 它被指定为InnoDB，可以使用Online-DDL和事务(transaction)。|
-| expire\_logs\_days | 为binlog堆积日志设置日志保存时间。默认设置为3天。 |
-| innodb\_log\_file\_size | 指定存储事务(transaction)的redo log的日志文件大小。 <br><br>在实际运营环境中,建议使用256MB以上，当前设置为512MB。如果要更改设置，需重启DB。|
-| innodb\_file\_per\_table | 当表被删除或TRUNCATE时，空间将被释放到OS。|
-| innodb\_log\_files\_in\_group | 设置innodb\_log\_file文件数，并循环\(circular\)使用。\. 至少由2个构成。\. |
-| log_timestamps | MySQL 5.7的默认日志时间以UTC显示。因此，需将日志时间更改为SYSTEM本地时间。|
-| slow\_query\_log | 使用slow\_query log选项\. 基于long\_query\_time的默认10秒以上的查询将被记录到slow\_query\_log中。\. |
-| sysdate-is-now | sysdate使用sysdate()和now()函数，因为在replication中使用sysdate()的SQL语句时，主服务器与从服务器之间的时间不同。|
+| default\_storage\_engine | Specify a default storage engine: Default is InnoDB with Online-DDL and transactions available. |
+| expire\_logs\_days | Set log expiration period for logs provided by binlog settings. Default is three days. |
+| innodb\_log\_file\_size | Specify the size of log files which save redo logs of transactions. <br>Recommended size is 256MB or higher in actual environment, and it is set as 512MB by default. In order for the changes to take effect, please restart the database. |
+| innodb\_file\_per\_table | When a table is deleted or truncated, the table space is immediately returned to the OS. |
+| innodb\_log\_files\_in\_group | Set the number of innodb\_log\_file files and use them in circular fashion: requires at least two. |
+| log_timestamps | Default log time of MySQL 5.7 is displayed in UTC time format; therefore, change log time to system local time. |
+| slow\_query\_log | Enable the slow\_query log option. Queries taking more than 10 seconds in accordance with long_query_time will be logged to the slow_query_log. |
+| sysdate-is-now | For sysdate, SQL with sysdate() used for replication results in discrepant time between Master and Slave, so sysdate() and now() functions will behave the same. |
 
-### MySQL列表描述
+### Description of MySQL Directory 
 
-MySQL列表和文件描述如下所示。
+Directory and file description of MySQL are as below: 
 
-| 名称 | 描述 |
+| Name | Description |
 | --- | --- |
 | my.cnf | /etc/my.cnf |
-| DATADIR | MySQL数据文件路径 - /var/lib/mysql/ |
-| ERROR_LOG | MySQL error_log文件路径 - /var/log/mysqld.log |
-| SLOW_LOG | MySQL Slow Query文件路径 -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+| DATADIR | Path for MySQL Data File  - /var/lib/mysql/ |
+| ERROR_LOG | Path for MySQL error_log File  - /var/log/mysqld.log |
+| SLOW_LOG | Path for MySQL Slow Query File -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
+
+
+> For detailed release status of MySQL Instance, please refer to [Instance Release Notes](/Compute/Compute/en/release-notes/).
+
 
 ## PostgreSQL Instance
 ### How to start/stop PostgreSQL
@@ -415,6 +418,7 @@ PostgreSQL directory and file description is as follows:
 | initdb.log     | PostgreSQL database cluster creation log - /var/lib/pgsql/{version}/initdb.log |
 | DATADIR        | PostgreSQL data file path - /var/lib/pgsql/{version}/data/   |
 | LOG            | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
+
 ## CUBRID Instance
 ### How to Start/Stop the CUBRID service
 
@@ -552,7 +556,6 @@ A CUBRID manager configuration file that allows you to set the port used by the 
 | cm\_process\_monitor\_interval | A cycle for monitoring information collection. |
 | support\_mon\_statistic | A parameter to set whether to use cumulative monitoring. |
 | server\_long\_query\_time | A parameter that specifies the threshold (in seconds) for a late query when the slow\_query item among the server's diagnostic items is set. |
-
 
 
 ## MariaDB Instance
