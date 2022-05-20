@@ -12,7 +12,7 @@
 
 | 운영체제                         | 블록 스토리지     | 메모리   |
 | -------------------------------- | ---------- | -------- |
-| Linux<br>CentOS, Ubuntu, Debian | 20GB 이상  | 1GB 이상 |
+| Linux<br>CentOS, Ubuntu, Debian, Rocky | 20GB 이상  | 1GB 이상 |
 | Windows                           | 50GB 이상  | 2GB 이상 |
 
 
