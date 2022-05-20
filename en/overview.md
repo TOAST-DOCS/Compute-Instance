@@ -17,7 +17,7 @@ Instance properties and usage change depending on these components. While settin
 
 ### Image 
 
-An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
+An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
 
 All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
 
@@ -102,6 +102,10 @@ Debian instances
 
 	$ ssh -i my_private_key.pem debian@<instance IP>
 
+Rocky instances
+
+	$ ssh -i my_private_key.pem rocky@<instance IP>
+
 #### How to Access Linux Instances from Windows Using PuTTY SSH Client
 
 PuTTY SSH client is a widely used SSH client program for Windows. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) before proceeding to the next steps.
@@ -176,6 +180,10 @@ Ubuntu
 Debian
 
 	debian@<Instance IP>
+
+Rocky
+
+	rocky@<Instance IP>
 
 Select 22, the default SSH port, for the **Port**, and **SSH** for the **Connection type**. 
 
