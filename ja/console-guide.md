@@ -12,7 +12,7 @@
 
 | オペレーションシステム                  | ブロックストレージ    | メモリ  |
 | ---------------------------------------- | ---------- | -------- |
-| Linux<br>CentOS、Ubuntu、Debian | 20GB以上  | 1GB以上 |
+| Linux<br>CentOS、Ubuntu、Debian、Rocky | 20GB以上  | 1GB以上 |
 | Windows                           | 50GB以上  | 2GB以上 |
 
 
