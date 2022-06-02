@@ -36,7 +36,7 @@ NHN Cloud는 고객의 사용 용도에 맞는 다양한 인스턴스 타입을 
 | x1 | 고사양의 CPU와 메모리를 지원하는 타입입니다. 높은 성능이 필요한 서비스나 애플리케이션에 사용합니다. |
 
 > [참고]
-> 1 vCPU는 한 개의 Thread와 한 개의 Core로 구성된 Socket 한 개를 의미하며, 하나의 Socket 당 Thread 수와 Core 수는 한 개로 일정합니다.
+> 1 vCPU는 Thread 하나와 Core 하나로 구성된 Socket 한 개를 의미하며, Socket 한 개당 Thread 수와 Core 수는 한 개로 일정합니다.
 
 ### 가용성 영역(Availability zone)
 
