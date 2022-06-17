@@ -1,8 +1,8 @@
-## Third Party User Guide > Terraform User Guide 
-This document describes how to use NHN Cloud with Terraform. 
+## Third Party User Guide > Terraform User Guide
+This document describes how to use NHN Cloud with Terraform.
 
 ## Terraform
-Terraform is an open-source tool that lets you easily build and safely change infrastructure, and also efficiently manage configuration of infrastructure. The main features of Terraform are as follows:  
+Terraform is an open-source tool that lets you easily build and safely change infrastructure, and also efficiently manage configuration of infrastructure. The main features of Terraform are as follows:
 
 * **Infrastructure as Code**
     * You can increase the productivity and transparency by defining infrastructure as code.
@@ -10,7 +10,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * **Execution Plan**
     * By separating change planning and change execution, you can reduce the potential for mistakes when making changes.
 * **Resource Graph**
-    * You can see in advance how minor changes will affect the entire infrastructure. 
+    * You can see in advance how minor changes will affect the entire infrastructure.
     * By creating a dependency graph, you can make a plan based on the graph and see how your infrastructure changes when you apply the plan.
 * **Change Automation**
     * You can automate the process so that infrastructure with the same configuration can be built and changed in multiple locations.
@@ -18,7 +18,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
 
 NHN Cloud supports resources and data sources listed below among those available in Terraform OpenStack Provider. For more details regarding Terraform OpenStack Provider and features supported by Terraform, see [OpenStack Provider in Terraform website](https://www.terraform.io/docs/providers/openstack/index.html)
 
-#### Supported Resources 
+#### Supported Resources
 
 * Compute
     * openstack_compute_instance_v2
@@ -35,7 +35,7 @@ NHN Cloud supports resources and data sources listed below among those available
 * Storage
     * openstack_blockstorage_volume_v2
 
-#### Supported Data Sources 
+#### Supported Data Sources
 
 * openstack_images_image_v2
 * openstack_blockstorage_volume_v2
@@ -49,9 +49,8 @@ NHN Cloud supports resources and data sources listed below among those available
 * **The version of the Terraform used in the examples below is 1.0.0.**
 * **The name and number of the components including the version can be changed, so make sure you check the information before use.**
 
-
-## Terraform Installation 
-Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.  
+## Terraform Installation
+Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.
 
 See the following example for installation.
 
@@ -64,8 +63,8 @@ Terraform v1.0.0
 ```
 
 
-## Terraform Initialization 
-Before using Terraform, create a provider configuration file like below. 
+## Terraform Initialization
+Before using Terraform, create a provider configuration file like below.
 
 The name of the provider file can be set randomly. This example uses `provider.tf` as the filename.
 
@@ -91,20 +90,20 @@ provider "openstack" {
 }
 ```
 * **user_name**
-    * Use the NHN Cloud ID. 
+    * Use the NHN Cloud ID.
 * **tenant_id**
     * From **Compute > Instance > Management** on NHN Cloud console, click **Set API Endpoint** to check the Tenant ID.
 * **password**
     * Use **API Password** that you saved in **Set API Endpoint**.
     * Regarding how to set API passwords, see **User Guide > Compute > Instance > API Preparations**.
 * **auth_url**
-    * Specify the address of the NHN Cloud identification service.  
-    * From **Compute > Instance > Management** on NHN Cloud console, click **Set API Endpoint** to check Identity URL.  
+    * Specify the address of the NHN Cloud identification service.
+    * From **Compute > Instance > Management** on NHN Cloud console, click **Set API Endpoint** to check Identity URL.
 * **region**
     * Enter the region to manage NHN Cloud resources.
-    * **KR1**: Korea (Pangyo) Region 
-    * **KR2**: Korea (Pyeongchon) Region 
-    * **JP1**: Japan (Tokyo) Region 
+    * **KR1**: Korea (Pangyo) Region
+    * **KR2**: Korea (Pyeongchon) Region
+    * **JP1**: Japan (Tokyo) Region
 
 On the path where the provider configuration file is located, use the `init` command to initialize Terraform.
 
@@ -114,12 +113,12 @@ provider.tf
 $ terraform init
 ```
 
-## Terraform Usage 
+## Terraform Usage
 
-Building infrastructure with Terraform has the following life cycle: 
+Building infrastructure with Terraform has the following life cycle:
 
 1. Create tf Files
-2. Check the Execution plan 
+2. Check the Execution plan
 3. Create Resources
 4. Modify Resources
 5. Delete Resources
@@ -130,17 +129,17 @@ First, write the configuration of infrastructure to build on a tf file. To check
 $ terraform plan
 ```
 
-If the execution plan is confirmed, use the `apply` command to create, modify, or delete resources. 
+If the execution plan is confirmed, use the `apply` command to create, modify, or delete resources.
 
 ```
 $ terraform apply
 ```
 
-The following sections describe these steps in more details with examples. 
+The following sections describe these steps in more details with examples.
 
-### Create tf Files 
+### Create tf Files
 
-Create a tf file in the path including the provider configuration file. You can aggregate multiple resource settings in a single tf file, or create separate tf files for each resource. Terraform reads the entire tf files all at once to set up an execution plan.  
+Create a tf file in the path including the provider configuration file. You can aggregate multiple resource settings in a single tf file, or create separate tf files for each resource. Terraform reads the entire tf files all at once to set up an execution plan.
 
 The following example shows an `instance.tf` file that defines a resource creating an instance.
 
@@ -178,11 +177,11 @@ $ terraform plan
 
 If the created plan requires modification, correct tf files and execute the `plan` command again. The `plan` command does not change the actual NHN Cloud resources, so you can check the infrastructure changes without any burden.
 
-### Create Resources 
+### Create Resources
 
-After creating tf files with the plan you need, create resources with the `apply` command. 
+After creating tf files with the plan you need, create resources with the `apply` command.
 
-The following example shows the result of executing the `apply` command using the `instance.tf` file created above.  
+The following example shows the result of executing the `apply` command using the `instance.tf` file created above.
 
 ```
 $ terraform apply
@@ -198,7 +197,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 After the `apply` command is executed, Terraform's own database file (terraform.tfstate) that records the history of plan changes is created in the current directory. Be careful not to delete this file.
 
-### Modify Resources 
+### Modify Resources
 
 Open the `.tf` file in which resources to change are defined, modify information, and apply the plan. Specification changes are restricted only to some attributes. If there is a change in an attribute which cannot be changed, the resource is deleted and newly created.
 
@@ -212,7 +211,7 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
-Check the execution plan, and the changed security group information is printed out in an organized form. 
+Check the execution plan, and the changed security group information is printed out in an organized form.
 
 ```
 $ terraform plan
@@ -239,7 +238,7 @@ Terraform will perform the following actions:
 Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 
-When you apply the plan, a new security group is added to the instance. 
+When you apply the plan, a new security group is added to the instance.
 ```
 $ terraform apply
 ...
@@ -251,13 +250,13 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 
 ### Delete Resources
 
-To delete a resource created with Terraform, delete the corresponding `.tf`  file. 
+To delete a resource created with Terraform, delete the corresponding `.tf`  file.
 
 ```
 $ rm instance.tf
 ```
 
-In the execution plan, you can see that the resources will be deleted. 
+In the execution plan, you can see that the resources will be deleted.
 
 ```
 $ terraform plan
@@ -319,11 +318,11 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 For more details on how to use data sources, see `Data Sources` in the [Terraform Website](https://www.terraform.io/docs/providers/openstack/index.html).
 
 
-The following sections describe how to import various resources provided by NHN Cloud by using the data resources feature.  
+The following sections describe how to import various resources provided by NHN Cloud by using the data resources feature.
 
 ### Image
 
-Imports image information. NHN Cloud's public images as well as private images are supported.  
+Imports image information. NHN Cloud's public images as well as private images are supported.
 
 ```
 data "openstack_images_image_v2" "ubuntu_2004_20201222" {
@@ -371,7 +370,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 
 ### Instance Flavor
 
-To check name of a flavor, go to **Compute > Instance** on NHN Cloud console and click **Create Instance > Select Flavor**. 
+To check name of a flavor, go to **Compute > Instance** on NHN Cloud console and click **Create Instance > Select Flavor**.
 
 ```
 data "openstack_compute_flavor_v2" "u2c2m4"{
@@ -405,7 +404,7 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 
 ### VPC
 
-To check UUID of VPC network, go to NHN Cloud console and select VPC from **Network > VPC**. 
+To check UUID of VPC network, go to NHN Cloud console and select VPC from **Network > VPC**.
 
 ```
 data "openstack_networking_network_v2" "default_network" {
@@ -422,7 +421,7 @@ data "openstack_networking_network_v2" "default_network" {
 
 ### Subnet
 
-To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**. 
+To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**.
 
 ```
 data "openstack_networking_subnet_v2" "default_subnet" {
@@ -442,17 +441,17 @@ data "openstack_networking_subnet_v2" "default_subnet" {
 
 You can create, modify, or delete resources with Terraform resources. NHN Cloud supports management of the following resources using Terraform:
 
-* Instance 
+* Instance
 * Block storage
-* Floating IP 
+* Floating IP
 * Network port
 * Load balancer
 
-The following sections describe how to use each resource.  
+The following sections describe how to use each resource.
 
 ## Resources - Instance
 
-### Create Instance 
+### Create Instance
 
 ```
 # Create u2 Instance
@@ -480,8 +479,8 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
   }
 }
 
-# Flavors other than u2 
-# Create instance with network and block storage added 
+# Flavors other than u2
+# Create instance with network and block storage added
 resource "openstack_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
   region    = "KR1"
@@ -552,7 +551,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
   ...
 }
 
-# Attach Block Storage 
+# Attach Block Storage
 resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = openstack_compute_instance_v2.tf_instance_02.id
   volume_id = openstack_blockstorage_volume_v2.volume_01.id
@@ -571,7 +570,7 @@ resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
 
 ### Create Block Storage
 ```
-# Create HDD-type Empty Block Storage 
+# Create HDD-type Empty Block Storage
 resource "openstack_blockstorage_volume_v2" "volume_01" {
   name = "tf_volume_01"
   size = 10
@@ -579,7 +578,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
   volume_type = "General HDD"
 }
 
-# Create SSD-type Empty Block Storage 
+# Create SSD-type Empty Block Storage
 resource "openstack_blockstorage_volume_v2" "volume_02" {
   name = "tf_volume_02"
   size = 10
@@ -587,7 +586,7 @@ resource "openstack_blockstorage_volume_v2" "volume_02" {
   volume_type = "General SSD"
 }
 
-# Create Block Storage with Snapshot 
+# Create Block Storage with Snapshot
 resource "openstack_blockstorage_volume_v2" "volume_03" {
   name = "tf_volume_03"
   description = "terraform create volume with snapshot test"
@@ -609,8 +608,7 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 
 You can import a block storage created on console or via API to Terraform and manage the block storage.
 
-On the `.tf` file, write the information of block storage to import. 
-
+On the `.tf` file, write the information of block storage to import.
 ```
 resource "openstack_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"
@@ -618,7 +616,7 @@ resource "openstack_blockstorage_volume_v2" "volume_06" {
 }
 ```
 
-Import the block storage with the command `terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}`. 
+Import the block storage with the command `terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}`.
 
 ```
 $ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
@@ -635,12 +633,12 @@ Import successful!
 
 ## Resources - VPC
 
-NHN Cloud supports creation of the following resources with Terraform: 
+NHN Cloud supports creation of the following resources with Terraform:
 
-* Floating IP 
-* Network port 
+* Floating IP
+* Network port
 
-Other VPC resources must be created on console. 
+Other VPC resources must be created on console.
 
 ### Create Floating IP
 
@@ -707,7 +705,7 @@ resource "openstack_networking_port_v2" "port_1" {
 
 
 
-## Resources - Load Balancer 
+## Resources - Load Balancer
 ### Create Load Balancer
 
 ```
@@ -715,7 +713,7 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   name = "tf_loadbalancer_01"
   description = "create loadbalancer by terraform."
   vip_subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
-  vip_address = "192.168.0.10"  
+  vip_address = "192.168.0.10"
   admin_state_up = true
 }
 ```
@@ -730,7 +728,7 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 
 
-### Create Listener 
+### Create Listener
 
 ```
 # HTTP Listener
@@ -816,7 +814,7 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 
 
-### Create Health Monitor 
+### Create Health Monitor
 
 ```
 resource "openstack_lb_monitor_v2" "tf_monitor_01"{
@@ -871,5 +869,5 @@ resource "openstack_lb_member_v2" "tf_member_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 
 
-## Reference 
+## Reference
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
