@@ -50,6 +50,8 @@ Specifies the NAT instance as a route gateway. The packets delivered to the NAT 
 
 
 ## MS-SQL Instance
+
+### Allow Security Group TCP Port 3389 (RDP)
 After instance is created, access the instance by using Remote Desktop Protocol (RDP). 
 To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group. 
 
@@ -69,9 +71,10 @@ Execute Microsoft SQL Server Management Studio and associate to an object under 
 
 ![mssqlinstance_03_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_03_201812_en.png)
 
-1. Select an object, right-click it, and choose **Attributes**. 
-2. On **Server Attributes** , click **Security**. 
-3. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
+1. Right-click on an object.
+2. Choose **Properties** on the menu. 
+3. On **Server Properties** , click **Security**. 
+4. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
 
 ※ To apply the changed SQL certification mode, restart Microsoft SQL. 
 
@@ -86,9 +89,10 @@ Execute SQL Server configuration manager as below.
 ![mssqlinstance_04_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_04_201812_en.png)
 
 1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left. 
-2. Click **TCP/IP** for **Protocol Name** and right click it. When the menu shows, select **Attributes**.  
-3. Select the **IP Address** tab. 
-4. Select **IP ALL** on the list and change the port number to another.  
+2. Right-click **TCP/IP** among protocol names.
+3. When the menu shows up, select **Properties**.  
+4. Select the **IP Address** tab. 
+5. Select **IP ALL** on the list and change the port number to another.  
 
 ※ To apply the changed service port, restart Microsoft SQL. 
 
@@ -106,9 +110,9 @@ Microsoft SQL data/log files (MDF/LDF) and backup files are recommended to be ap
 Go to **Compute > Instance > Block Storage** and create a block storage.  
 **Universal SSD** is a recommended volume type for improved performance.
 
-After a block storage is created, select the storage and click **Association Management** and associate it to an instance.  
-
 ![mssqlinstance_06_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_06_201812_en.png)
+
+After a block storage is created, select the storage and click **Association Management** and associate it to an instance.  
 
 <br/>
 
@@ -130,7 +134,7 @@ Click unassigned disk and right-click it. Select **New Simple Volume** and proce
 
 <br/>
 
-In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created. 
+In the **Database Setting** of **Server Properties** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created. 
 
 ![mssqlinstance_09_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_09_201812_en.png)
 
@@ -140,7 +144,7 @@ In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Man
 Change of Microsoft SQL settings sometimes requires a restart of the service.  
 To apply changed settings, restart Microsoft SQL.   
 
-From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows, click **Restart** to restart the service. 
+From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows up, click **Restart** to restart the service. 
 
 ![mssqlinstance_10_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_10_201812_en.png)
 
@@ -153,7 +157,7 @@ Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Serve
 
 When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings: 
 
-1. Click the service and right-click it. Select **Attributes** on the menu. 
+1. Click the service and right-click it. Select **Properties** on the menu. 
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
 > [Note]
@@ -265,8 +269,8 @@ Directory and file description of MySQL are as below:
 
 > For detailed release status of MySQL Instance, please refer to [Instance Release Notes](/Compute/Compute/en/release-notes/).
 
-
 ## PostgreSQL Instance
+
 ### How to start/stop PostgreSQL
 
 ```
@@ -284,7 +288,6 @@ shell> sudo systemctl restart postgresql-13
 
 In the beginning after creating an image, log in as shown below.
 <br>
-
 ```
 #Switch account to postgres and log in
 shell> sudo su - postgres
@@ -297,7 +300,6 @@ shell> psql
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -324,7 +326,6 @@ shell> psql -p[changed port number]
 
 The default timezone recorded in the server log is set to UTC. It is recommended to change it to match the local time of the SYSTEM.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -356,7 +357,6 @@ postgres=# SHOW log_timezone;
 
 Since all users are provided with CREATE and USAGE permissions for public schema by default, users who can log in to the DB can create objects in public schema. It is recommended to cancel the permissions so that no users can create objects in public schema.
 <br>
-
 ```
 #Log in to postgresql
 
@@ -372,7 +372,6 @@ postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 
 To allow logins other than local host, you need to change the listen_addresses variable and client authentication setup file.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -420,6 +419,7 @@ PostgreSQL directory and file description is as follows:
 | LOG            | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
 
 ## CUBRID Instance
+
 ### How to Start/Stop the CUBRID service
 
 You can start or stop the CUBRID service as follows by logging in with the “cubrid” Linux account.
@@ -802,9 +802,12 @@ The default accounts provided by Tibero are as follows.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
 
+
 ## JEUS Instance
 
-The images provided by default include CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) and CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22). To install Domain Administrator Server, use CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) image. To install Managed Server, use the CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22) image.
+The images provided by default include CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) and CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22).
+To install Domain Administrator Server, use CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) image.
+To install Managed Server, use the CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22) image.
 
 JEUS is installed in `~/apps/jeus8`.
 
@@ -851,11 +854,11 @@ Run WebAdmin as follows:
 3. If you connect to in http://{floatingIP}:9736/webadmin in a web browser, you can see the WebAdmin screen.
 
 
+
 ## WebtoB Instance
 
 The image provided by default is CentOS 7.8 with WebtoB5Fix4 (2022.03.22).
 WebtoB is installed in `~/apps/webtob`.
-
 
 ### Check the Startup
 
