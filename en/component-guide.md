@@ -64,7 +64,7 @@ Click **Associate** and download .rdp file, to access the instance by using the 
 
 #### 1. Set SQL Certification Mode
 
-The default certification mode of the server is set with"**Windows Certification Mode**".
+The default certification mode of the server is set with "**Windows Certification Mode**".
 To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode.
 
 Execute Microsoft SQL Server Management Studio and associate to an object under the instance name.
