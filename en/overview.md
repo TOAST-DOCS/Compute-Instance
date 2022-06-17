@@ -1,11 +1,11 @@
-## Compute > Instance > Overview 
+## Compute > Instance > Overview
 
 
 An instance is a virtual server composed of virtual CPUs, memory, and default disk. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
 
-## Components  
+## Components
 
-An instance consists of the following components: 
+An instance consists of the following components:
 
 - **Image**: Virtual disk that contains the operating system of an instance
 - **Flavor**: Virtual hardware performance specifications of an instance
@@ -16,7 +16,7 @@ An instance consists of the following components:
 
 Instance properties and usage change depending on these components. While settings for these components, with the exception of image and availability zone, can be modified after the creation of an instance, some flavors cannot be modified after an instance has been created. For more details on modifying instance flavors, see [Modify Flavor in the Console Guide](./console-guide/#modify-flavor).
 
-### Image 
+### Image
 
 An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
 
@@ -35,7 +35,7 @@ NHN Cloud provides various instance flavors to support a wide range of use cases
 | u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
 | x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
 
-### Availability Zone 
+### Availability Zone
 
 NHN Cloud has divided the entire system into multiple availability zones to prepare for potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. A failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
 
@@ -46,7 +46,7 @@ The following properties hold across different availability zones.
 - Floating IP can be shared across different availability zones. If one availability zone experiences a failure, floating IP can quickly be relocated to another availability zone in order to minimize downtime.
 
 
-### Key Pair 
+### Key Pair
 
 A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based public and private SSH keys. To access an instance created in NHN Cloud, a key pair is required instead of keyboard-inputted ID/PW authentication which is vulnerable to security attacks. You can safely access an instance once you have been authenticated after sending the instance your login information encoded by your key pair's private key. For more details on how to access instances using key pairs, see [How to Access Instances](#how-to-access-instances).
 
@@ -55,16 +55,16 @@ Key pairs can be newly generated from the NHN Cloud console during instance crea
 > [Caution]
 > When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
 
-### Security Group 
+### Security Group
 
-A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/). 
+A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
 
 > [Note]
 > The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
 
-### Network 
+### Network
 
-An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview/). 
+An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview/).
 
 ## Pricing
 
@@ -75,9 +75,9 @@ Instances are charged using the following criteria.
 * Stopped instances are charged only for their default disk and additional block storage (if any block storage has been added).
 
 
-## How to Access Instances 
+## How to Access Instances
 
-### How to Access Linux Instances 
+### How to Access Linux Instances
 
 You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.
 
@@ -151,7 +151,7 @@ When you run pageant, which is installed along with PuTTY, the icon shown below 
 
 ![이미지4](http://static.toastoven.net/prod_instance/putty006.png)
 
-To confirm that your private key has been added, select **View Keys**. If successful, the added key is displayed as below. 
+To confirm that your private key has been added, select **View Keys**. If successful, the added key is displayed as below.
 
 ![이미지5](http://static.toastoven.net/prod_instance/putty008-en.png)
 
@@ -159,7 +159,7 @@ Once you run pageant, it remains running in the Windows tray, so there is no nee
 
 ##### 3. Access Instances With PuTTY
 
-Now that the PuTTY-compatible private key has been successfully registered, run PuTTY. 
+Now that the PuTTY-compatible private key has been successfully registered, run PuTTY.
 
 ![이미지6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
@@ -181,7 +181,7 @@ Rocky
 
 	rocky@<Instance IP>
 
-Select 22, the default SSH port, for the **Port**, and **SSH** for the **Connection type**. 
+Select 22, the default SSH port, for the **Port**, and **SSH** for the **Connection type**.
 
 If all of the information is correct, save the session. Under **Load, save or delete a stored session**, enter the name of the session to save in **Saved Sessions** and click **Save** to save the session. If you do not save the session, your private key settings registered in 2-A are also not preserved.
 
