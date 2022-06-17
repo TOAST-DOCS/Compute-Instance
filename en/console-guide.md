@@ -1,9 +1,5 @@
 ## Compute > Instance > Console Guide
 
-<!-- Video guide is not provided in the translated document -->
-
-<!-- Dummy comment for a video link -->
-
 ## Create Instances
 
 You can create instances either by using the settings below or by using instance templates. To create instances using instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
@@ -18,6 +14,7 @@ The available instance flavors vary depending on the image you choose, so we rec
 | -------------------------------- | ------------- | ------------ |
 | Linux <br>CentOS, Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more  |
 | Windows                          | 50GB or more  | 2GB or more  |
+
 
 ### Availability Zone 
 
@@ -283,6 +280,8 @@ Route commands
 * Delete : route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
 * Option : -p (specify as persistent route)
 
+
+
 Description
 
 
@@ -297,7 +296,7 @@ Example 1 - Restricting external communication for particular interfaces
 * You can restrict an interface from communicating externally by using the route change command to change its route metric or by leaving the default gateway field blank when configuring fixed IP settings.
 * How to Modify Metrics
     * Increase interface metric value
-  
+
             $ route change 0.0.0.0 mask 0.0.0.0 172.16.5.1 metric 10 if 14 -p
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route2.png)
@@ -318,6 +317,7 @@ Example 2 - Setting routes for a particular address range
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route6.png)
 
+
 Example 3 - Removing a particular route 
 
 * Use the route delete command to remove specified routes. 
@@ -325,6 +325,7 @@ Example 3 - Removing a particular route
         $ route delete 172.16.0.0 mask 255.255.0.0 172.16.5.1
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
+
 
 ## Appendix 3. Change System Locale
 
@@ -344,6 +345,7 @@ System locale in NHN Cloud Windows instances can be changed as follows.
 
 5. Restart the system to apply the changes. 
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
+
 
 ## Appendix 4. Restarting Instances for Hypervisor Maintenance 
 NHN Cloud updates hypervisor software on a regular basis to enhance the security and stability of infrastructure services that we provide.
@@ -377,6 +379,7 @@ If there is no way to do so without impacting your service, please contact NHN C
 **5. Wait until the instance status turns green and the [! Restart] button disappers.**
 
 If the status does not change or the **! Restart** button is not disabled, try refreshing the page.
+
 
 You cannot operate or modify the instance while a restart is underway.
 If an instance restart does not complete successfully, the administrator will automatically be notified and you'll also be contacted by NHN Cloud.

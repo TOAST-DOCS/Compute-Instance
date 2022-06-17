@@ -1,5 +1,6 @@
 ## Compute > Instance > Overview 
 
+
 An instance is a virtual server composed of virtual CPUs, memory, and default disk. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
 
 ## Components  
@@ -20,7 +21,6 @@ Instance properties and usage change depending on these components. While settin
 An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
 
 All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
-
 
 ### Flavor
 
@@ -70,17 +70,12 @@ An instance must be connected to at least one network defined in the VPC in orde
 
 Instances are charged using the following criteria.
 
-
 * Instances are charged from the moment they are created.
 * Instance default disks are charged separately according to the block storage pricing policy.
 * Stopped instances are charged only for their default disk and additional block storage (if any block storage has been added).
 
 
 ## How to Access Instances 
-
-<!-- Video guide is not provided in the translated document -->
-
-<!-- Dummy comment for a video link -->
 
 ### How to Access Linux Instances 
 
@@ -147,6 +142,7 @@ Run PuTTY and select **Connection > SSH > Auth** from the **Category** on the le
 ![이미지3](http://static.toastoven.net/prod_instance/putty005-en.png)
 
 Once you register your private key, you do not have to re-register your private key file each time you access your instance if you save your access information. For details on how to save your access information, see the section below on accessing instances.
+
 
 **B. Registering a Private Key File for Authentication in pageant (PuTTY's Authentication Agent)**
 
