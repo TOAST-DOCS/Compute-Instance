@@ -49,7 +49,6 @@ NHN Cloud supports resources and data sources listed below among those available
 * **The version of the Terraform used in the examples below is 1.0.0.**
 * **The name and number of the components including the version can be changed, so make sure you check the information before use.**
 
-
 ## Terraform Installation 
 Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.  
 
@@ -610,7 +609,6 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 You can import a block storage created on console or via API to Terraform and manage the block storage.
 
 On the `.tf` file, write the information of block storage to import. 
-
 ```
 resource "openstack_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"

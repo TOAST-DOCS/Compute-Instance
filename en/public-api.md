@@ -39,9 +39,9 @@ This API does not require a request body.
 | flavors.links | Body | Object | Instance flavor path object |
 | flavors.name | Body | String | Instance flavor name |
 
+
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -121,7 +121,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -213,7 +212,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "availabilityZoneInfo": [
@@ -267,7 +265,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "keypairs": [
@@ -320,7 +317,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "keypair": {
@@ -362,7 +358,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "keypair": {
@@ -388,7 +383,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -485,7 +479,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "servers": [
@@ -566,7 +559,6 @@ The request format is the same as List Instances.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -724,7 +716,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "server": {
@@ -876,7 +867,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "server": {
@@ -919,7 +909,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -970,7 +959,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1041,7 +1029,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volumeAttachments": [
@@ -1095,7 +1082,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volumeAttachment": {
@@ -1131,7 +1117,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "volumeAttachment": {
@@ -1155,7 +1140,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1222,7 +1206,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "os-start" : null
@@ -1256,7 +1239,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1303,7 +1285,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "reboot" : {
@@ -1344,7 +1325,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1387,7 +1367,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1435,7 +1414,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "addSecurityGroup": {
@@ -1473,7 +1451,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
