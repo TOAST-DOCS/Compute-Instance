@@ -35,6 +35,9 @@ NHN Cloud provides various instance flavors to support a wide range of use cases
 | u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
 | x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
 
+> [Note]
+> 1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
+
 ### Availability Zone
 
 NHN Cloud has divided the entire system into multiple availability zones to prepare for potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. A failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
