@@ -50,132 +50,136 @@ Specifies the NAT instance as a route gateway. The packets delivered to the NAT 
 
 
 ## MS-SQL Instance
-After instance is created, access the instance by using Remote Desktop Protocol (RDP). 
-To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group. 
+
+### Allow Security Group TCP Port 3389 (RDP)
+After instance is created, access the instance by using Remote Desktop Protocol (RDP).
+To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group.
 
 ![mssqlinstance_02_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_02_201812_en.png)
 
-Click **+ Check Password** to check password by using key pair configured along with instance creation. 
-Click **Associate** and download .rdp file, to access the instance by using the acquired password. 
+Click **+ Check Password** to check password by using key pair configured along with instance creation.
+Click **Associate** and download .rdp file, to access the instance by using the acquired password.
 
-### Initial Settings after Microsoft SQL Image is Created  
+### Initial Settings after Microsoft SQL Image is Created
 
-#### 1. Set SQL Certification Mode  
+#### 1. Set SQL Certification Mode
 
-The default certification mode of the server is set with"**Windows Certification Mode**". 
-To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode. 
+The default certification mode of the server is set with "**Windows Certification Mode**".
+To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode.
 
-Execute Microsoft SQL Server Management Studio and associate to an object under the instance name. 
+Execute Microsoft SQL Server Management Studio and associate to an object under the instance name.
 
 ![mssqlinstance_03_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_03_201812_en.png)
 
-1. Select an object, right-click it, and choose **Attributes**. 
-2. On **Server Attributes** , click **Security**. 
-3. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
+1. Right-click on an object.
+2. Choose **Properties** on the menu.
+3. On **Server Properties** , click **Security**.
+4. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
 
-※ To apply the changed SQL certification mode, restart Microsoft SQL. 
+※ To apply the changed SQL certification mode, restart Microsoft SQL.
 
-#### 2. Change Microsoft SQL Service Port 
+#### 2. Change Microsoft SQL Service Port
 
-The default port 1433 for Microsoft SQL is widely known and might serve as a security vulnerability.   
-A change is recommended to another port. 
-※ For Express, no default port is specified. 
+The default port 1433 for Microsoft SQL is widely known and might serve as a security vulnerability.
+A change is recommended to another port.
+※ For Express, no default port is specified.
 
-Execute SQL Server configuration manager as below. 
+Execute SQL Server configuration manager as below.
 
 ![mssqlinstance_04_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_04_201812_en.png)
 
-1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left. 
-2. Click **TCP/IP** for **Protocol Name** and right click it. When the menu shows, select **Attributes**.  
-3. Select the **IP Address** tab. 
-4. Select **IP ALL** on the list and change the port number to another.  
+1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left.
+2. Right-click **TCP/IP** among protocol names.
+3. When the menu shows up, select **Properties**.
+4. Select the **IP Address** tab.
+5. Select **IP ALL** on the list and change the port number to another.
 
-※ To apply the changed service port, restart Microsoft SQL. 
+※ To apply the changed service port, restart Microsoft SQL.
 
-#### 3. Allow External Access to Microsoft SQL Database 
+#### 3. Allow External Access to Microsoft SQL Database
 
-To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules. 
-Also, register Microsoft SQL service port (default port: 1433) to allow access, as well as remote IP.  
+To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules.
+Also, register Microsoft SQL service port (default port: 1433) to allow access, as well as remote IP.
 
-### Data Volume Assignment  
+### Data Volume Assignment
 
-Microsoft SQL data/log files (MDF/LDF) and backup files are recommended to be applied with separate block storages.  
+Microsoft SQL data/log files (MDF/LDF) and backup files are recommended to be applied with separate block storages.
 
 ![mssqlinstance_05_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_05_201812_en.png)
 
-Go to **Compute > Instance > Block Storage** and create a block storage.  
+Go to **Compute > Instance > Block Storage** and create a block storage.
 **Universal SSD** is a recommended volume type for improved performance.
-
-After a block storage is created, select the storage and click **Association Management** and associate it to an instance.  
 
 ![mssqlinstance_06_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_06_201812_en.png)
 
+After a block storage is created, select the storage and click **Association Management** and associate it to an instance.
+
 <br/>
 
-Access instance with RDP and execute **Computer Management**, and go to **Storage>Disk Management**. 
+Access instance with RDP and execute **Computer Management**, and go to **Storage>Disk Management**.
 
 ![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812_en.png)
 
-You can find the associated block storage is detected. To use it, initialize disk first. 
-1. Right-click the **Disk 1** block and click **Initialize Disk**. 
-2. Select a partition type and click **OK**. 
+You can find the associated block storage is detected. To use it, initialize disk first.
+1. Right-click the **Disk 1** block and click **Initialize Disk**.
+2. Select a partition type and click **OK**.
 
 <br/>
 
-After initialization is completed, create disk volume. 
+After initialization is completed, create disk volume.
 
 ![mssqlinstance_08_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_08_201812_en.png)
 
-Click unassigned disk and right-click it. Select **New Simple Volume** and proceed with wizard for new simple volume. 
+Click unassigned disk and right-click it. Select **New Simple Volume** and proceed with wizard for new simple volume.
 
 <br/>
 
-In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created. 
+In the **Database Setting** of **Server Properties** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created.
 
 ![mssqlinstance_09_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_09_201812_en.png)
 
-※ To apply the changed default database location, restart Microsoft SQL. 
+※ To apply the changed default database location, restart Microsoft SQL.
 
-### Restart Microsoft SQL 
-Change of Microsoft SQL settings sometimes requires a restart of the service.  
-To apply changed settings, restart Microsoft SQL.   
+### Restart Microsoft SQL
+Change of Microsoft SQL settings sometimes requires a restart of the service.
+To apply changed settings, restart Microsoft SQL.
 
-From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows, click **Restart** to restart the service. 
+From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows up, click **Restart** to restart the service.
 
 ![mssqlinstance_10_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_10_201812_en.png)
 
 ### Check/Set Automatic Microsoft SQL  Service Execution
-Check if Microsoft SQL is set for automatic start with OS running.  
+Check if Microsoft SQL is set for automatic start with OS running.
 
-Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Server Configuration Manager to find **Start Mode**.  
+Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Server Configuration Manager to find **Start Mode**.
 
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
-When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings: 
+When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings:
 
-1. Click the service and right-click it. Select **Attributes** on the menu. 
+1. Click the service and right-click it. Select **Properties** on the menu.
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
 > [Note]
 > For the release status of Microsoft SQL Instance, see [Instance Release Note](/Compute/Compute/ko/release-notes/).
 
 ## MySQL Instance
-### Starting/Stopping MySQL 
+### Starting/Stopping MySQL
 
 ```
-#Start mysql Service 
+#Start mysql Service
 shell> service mysqld start
 
-#Stop mysql Service 
+#Stop mysql Service
 shell> service mysqld stop
 
-#Restart mysql Service 
+#Restart mysql Service
 shell> service mysqld restart
 ```
 
-### Connecting to MySQL 
+### Connecting to MySQL
 
-For initial connection, connect to MySQL with default user name. 
+For initial connection, connect to MySQL with default user name.
 
 ```
 shell> mysql -uroot
@@ -185,9 +189,9 @@ shell> mysql -uroot
 
 #### 1\. Setting Password
 
-There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.  
+There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.
 
-* Set Password for MySQL Version 5.6  
+* Set Password for MySQL Version 5.6
 
 ```
 SET PASSWORD [FOR user] = password_option
@@ -195,7 +199,7 @@ SET PASSWORD [FOR user] = password_option
 mysql> set password=password('password');
 ```
 
-* Set Password for MySQL Version 5.7  
+* Set Password for MySQL Version 5.7
 
 ```
 ALTER USER USER() IDENTIFIED BY 'auth_string';
@@ -210,21 +214,21 @@ Default MySQL validate_password_policy is as below:
 
 #### 2\. Changing Port Number
 
-The default MySQL port number is 3306. It is recommended to change the port number for security reasons. 
+The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
 
 ```
 shell> vi /etc/my.cnf
 
 
-# Specify a port to use in the my.cnf file. 
+# Specify a port to use in the my.cnf file.
 
-port = Port name to use 
-
-
-# Save vi editor Save editor 
+port = Port name to use
 
 
-# Restart mysql service  
+# Save vi editor Save editor
+
+
+# Restart mysql service
 
 
 shell> service mysqld restart
@@ -236,9 +240,9 @@ shell> service mysqld restart
 shell> mysql -uroot -P[changed port number]
 ```
 
-### Description of my.cnf 
+### Description of my.cnf
 
-The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below: 
+The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below:
 
 | Name | Description |
 | --- | --- |
@@ -251,9 +255,9 @@ The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables a
 | slow\_query\_log | Enable the slow\_query log option. Queries taking more than 10 seconds in accordance with long_query_time will be logged to the slow_query_log. |
 | sysdate-is-now | For sysdate, SQL with sysdate() used for replication results in discrepant time between Master and Slave, so sysdate() and now() functions will behave the same. |
 
-### Description of MySQL Directory 
+### Description of MySQL Directory
 
-Directory and file description of MySQL are as below: 
+Directory and file description of MySQL are as below:
 
 | Name | Description |
 | --- | --- |
@@ -265,8 +269,8 @@ Directory and file description of MySQL are as below:
 
 > For detailed release status of MySQL Instance, please refer to [Instance Release Notes](/Compute/Compute/en/release-notes/).
 
-
 ## PostgreSQL Instance
+
 ### How to start/stop PostgreSQL
 
 ```
@@ -284,7 +288,6 @@ shell> sudo systemctl restart postgresql-13
 
 In the beginning after creating an image, log in as shown below.
 <br>
-
 ```
 #Switch account to postgres and log in
 shell> sudo su - postgres
@@ -297,7 +300,6 @@ shell> psql
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -324,7 +326,6 @@ shell> psql -p[changed port number]
 
 The default timezone recorded in the server log is set to UTC. It is recommended to change it to match the local time of the SYSTEM.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -356,7 +357,6 @@ postgres=# SHOW log_timezone;
 
 Since all users are provided with CREATE and USAGE permissions for public schema by default, users who can log in to the DB can create objects in public schema. It is recommended to cancel the permissions so that no users can create objects in public schema.
 <br>
-
 ```
 #Log in to postgresql
 
@@ -372,7 +372,6 @@ postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 
 To allow logins other than local host, you need to change the listen_addresses variable and client authentication setup file.
 <br>
-
 ```
 shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
@@ -420,24 +419,25 @@ PostgreSQL directory and file description is as follows:
 | LOG            | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
 
 ## CUBRID Instance
+
 ### How to Start/Stop the CUBRID service
 
 You can start or stop the CUBRID service as follows by logging in with the “cubrid” Linux account.
 ```
 # Start the CUBRID service/server
 shell> sudo su - cubrid
-shell> cubrid service start 
+shell> cubrid service start
 shell> cubrid server start demodb
 
 # Stop the CUBRID service/server
 shell> sudo su - cubrid
 shell> cubrid server stop demodb
-shell> cubrid service stop 
+shell> cubrid service stop
 
 # Restart the CUBRID service/server
 shell> sudo su - cubrid
 shell> cubrid server restart demodb
-shell> cubrid service restart 
+shell> cubrid service restart
 
 # Start/stop/restart the CUBRID broker
 shell> sudo su - cubrid
@@ -802,9 +802,12 @@ The default accounts provided by Tibero are as follows.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
 
+
 ## JEUS Instance
 
-The images provided by default include CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) and CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22). To install Domain Administrator Server, use CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) image. To install Managed Server, use the CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22) image.
+The images provided by default include CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) and CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22).
+To install Domain Administrator Server, use CentOS 7.8 with JEUS8Fix1 (Domain Administrator Server 2022.03.22) image.
+To install Managed Server, use the CentOS 7.8 with JEUS8Fix1 (Managed Server 2022.03.22) image.
 
 JEUS is installed in `~/apps/jeus8`.
 
@@ -851,11 +854,11 @@ Run WebAdmin as follows:
 3. If you connect to in http://{floatingIP}:9736/webadmin in a web browser, you can see the WebAdmin screen.
 
 
+
 ## WebtoB Instance
 
 The image provided by default is CentOS 7.8 with WebtoB5Fix4 (2022.03.22).
 WebtoB is installed in `~/apps/webtob`.
-
 
 ### Check the Startup
 

@@ -21,7 +21,7 @@ X-Auth-Token: {tokenId}
 
 #### Request
 
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -39,9 +39,9 @@ This API does not require a request body.
 | flavors.links | Body | Object | Instance flavor path object |
 | flavors.name | Body | String | Instance flavor name |
 
+
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -83,14 +83,14 @@ This API does not require a request body.
 
 ---
 
-### List Flavors with Details 
+### List Flavors with Details
 
 ```
 GET /v2/{tenantId}/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### Request	
+#### Request
 
 This API does not require a request body.
 
@@ -121,7 +121,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -195,7 +194,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -212,7 +211,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -247,7 +245,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -266,7 +264,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -294,7 +291,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -302,7 +299,7 @@ This API does not require a request body.
 | keypairName | URL | String | O | Key pair Name |
 | tokenId | Header | String | O | Token ID |
 
-#### Response	
+#### Response
 
 | Name | Type | Format | Description |
 |---|---|---|---|
@@ -319,7 +316,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -349,7 +345,7 @@ POST /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
-#### Request		
+#### Request
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -361,7 +357,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -388,7 +383,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -422,7 +416,7 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 
 ## Instance
@@ -458,7 +452,7 @@ X-Auth-Token: {tokenId}
 
 #### Request
 
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -484,7 +478,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -512,9 +505,9 @@ This API does not require a request body.
 
 ---
 
-### List Instances with Details 
+### List Instances with Details
 
-Return the list of instances created in the current tenant, same as List Instances. However, detailed instance information is returned. 
+Return the list of instances created in the current tenant, same as List Instances. However, detailed instance information is returned.
 
 ```
 GET /v2/{tenantId}/servers/detail
@@ -523,7 +516,7 @@ X-Auth-Token: {tokenId}
 
 #### Request
 
-The request format is the same as List Instances. 
+The request format is the same as List Instances.
 
 #### Response
 
@@ -566,7 +559,6 @@ The request format is the same as List Instances.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -673,7 +665,7 @@ X-Auth-Token: {tokenId}
 
 #### Request
 
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -723,7 +715,6 @@ This API does not require a request body.
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -825,12 +816,12 @@ Create an instance.
 
 After calling the Create Instance API, query the instance and check its status.
 
-* If the status becomes **ACTIVE**, the instance has been created successfully. 
-* If the status remains in **BUILDING** for a long time or becomes **ERROR**, check parameters used for instance creation and try creating again. 
+* If the status becomes **ACTIVE**, the instance has been created successfully.
+* If the status remains in **BUILDING** for a long time or becomes **ERROR**, check parameters used for instance creation and try creating again.
 
 Windows instances have the following additional restrictions that apply to facilitate stable usage.
 
-* Use an instance flavor with at least 2GB RAM capacity.  
+* Use an instance flavor with at least 2GB RAM capacity.
 * Default disk size must be at least 50GB.
 * U2 flavor instances cannot use Windows images.
 
@@ -876,7 +867,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "server": {
@@ -920,7 +910,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "server": {
@@ -950,7 +939,7 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### Modify Instance 
+### Modify Instance
 Modify created instance. Only some attributes are allowed to be modified.
 
 ```
@@ -971,7 +960,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "server": {
@@ -988,8 +976,8 @@ Same as Get Instance.
 
 ---
 
-### Delete Instance 
-Delete a created instance. 
+### Delete Instance
+Delete a created instance.
 
 ```
 DELETE /v2/{tenantId}/servers/{serverId}
@@ -997,7 +985,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1006,7 +994,7 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
@@ -1041,7 +1029,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volumeAttachments": [
@@ -1073,7 +1060,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1095,7 +1082,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volumeAttachment": {
@@ -1112,7 +1098,7 @@ This API does not require a request body.
 
 ---
 
-### Attach Additional Volumes to Instance 
+### Attach Additional Volumes to Instance
 ```
 POST /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
@@ -1130,7 +1116,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -1156,7 +1141,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volumeAttachment": {
@@ -1180,7 +1164,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1190,17 +1174,17 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
-## Additional Instance Features 
+## Additional Instance Features
 NHN Cloud provides the following additional features to handle instances.
 
 * Start, Stop, and Restart Instance
 * Change Instance Flavor
 * Create Instance Image
-* Add/Delete Security Group 
+* Add/Delete Security Group
 
 ### Start Instance
 
@@ -1222,7 +1206,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "os-start" : null
@@ -1235,11 +1218,11 @@ X-Auth-Token: {tokenId}
 ---
 
 #### Response
-This API does not return a response body.  
+This API does not return a response body.
 
 ### Stop Instance
 
-Stop instance and change its status to **SHUTOFF**. To call this API, the instance status must be either **ACTIVE** or **ERROR**. 
+Stop instance and change its status to **SHUTOFF**. To call this API, the instance status must be either **ACTIVE** or **ERROR**.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1257,7 +1240,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "os-stop" : null
@@ -1268,7 +1250,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
@@ -1303,7 +1285,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "reboot" : {
@@ -1316,7 +1297,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
@@ -1324,7 +1305,7 @@ This API does not return a response body.
 
 Change the flavor of an instance. Flavors can only be changed when an instance is **ACTIVE** or **SHUTOFF**. If an instance is **ACTIVE**, the instance is stopped and restarted while changing flavors.
 
-Depending on the current image and flavor you are using, you may be restricted from changing to some flavors. For more details, see the Console Guide. 
+Depending on the current image and flavor you are using, you may be restricted from changing to some flavors. For more details, see the Console Guide.
 
 
 ```
@@ -1345,7 +1326,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "resize" : {
@@ -1358,7 +1338,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
@@ -1388,7 +1368,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "createImage" : {
@@ -1406,7 +1385,7 @@ X-Auth-Token: {tokenId}
 
 #### Response
 
-This API does not return a response body. Check the `Location` response header for the created image.  
+This API does not return a response body. Check the `Location` response header for the created image.
 
 | Name | Type | Format | Description |
 |--|--|--|--|
@@ -1435,7 +1414,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "addSecurityGroup": {
@@ -1449,13 +1427,13 @@ X-Auth-Token: {tokenId}
 
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
 
 ---
 
 ### Delete Security Group
 
-Delete a security group from an instance. The specified security group is deleted from all ports of the instance. 
+Delete a security group from an instance. The specified security group is deleted from all ports of the instance.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
@@ -1474,7 +1452,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "removeSecurityGroup": {
@@ -1488,4 +1465,4 @@ X-Auth-Token: {tokenId}
 
 
 #### Response
-This API does not return a response body. 
+This API does not return a response body.
