@@ -28,6 +28,9 @@ For more details on availability zones, see [Availability Zone in Instance Overv
 
 You can select various flavors depending on virtual hardware performance specifications. However, the choice of some flavors may be limited depending on the virtual hardware performance that your image requires. For more details, see [Instance Overview](./overview).
 
+> [Note]
+> 1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
+
 Instance flavors can be changed in the NHN Cloud console even after instance creation, from higher to lower specs and vice versa. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
 
 > [Caution] An instance's default disk cannot be changed by changing instance flavors.
