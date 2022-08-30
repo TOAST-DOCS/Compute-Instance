@@ -35,8 +35,6 @@ NHN Cloud provides various instance flavors to support a wide range of use cases
 | u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
 | x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
 
-> [Note]
-> 1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
 
 ### Availability Zone
 
