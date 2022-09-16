@@ -73,8 +73,9 @@ Instances are charged using the following criteria.
 
 * Instances are charged from the moment they are created.
 * Instance default disks are charged separately according to the block storage pricing policy.
-* Stopped instances are charged only for their default disk and additional block storage (if any block storage has been added).
+* When instances are stopped, a 90% discount is applied to the prices on website for 90 days. After the 90 days have passed, the instances will remain as stopped and be charged at the normal rate.
 
+For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
 
 ## How to Access Instances
 
