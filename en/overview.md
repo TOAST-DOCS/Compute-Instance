@@ -75,7 +75,7 @@ Instances are charged using the following criteria.
 * Instance default disks are charged separately according to the block storage pricing policy.
 * When instances are stopped, a 90% discount is applied to the prices on website for 90 days. After the 90 days have passed, the instances will remain as stopped and be charged at the normal rate.
 
-For more details on pricing, see [Pricing](https://gov.toast.com/kr/service/compute/instance#price).
+For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
 
 ## How to Access Instances
 
