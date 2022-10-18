@@ -188,28 +188,15 @@ shell> mysql -uroot
 
 #### 1\. 비밀번호 설정
 
-초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번호를 설정해야 합니다.
-
-* MySQL 5.6 버전 비밀번호 설정
-
+초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번호를 설정해야 합니다. 비밀번호는 아래와 같이 변경할 수 있습니다.
 ```
-SET PASSWORD [FOR user] = password_option
-
-mysql> set password=password('비밀번호');
+mysql> ALTER USER USER() IDENTIFIED BY '새로운 비밀번호';
 ```
 
-* MySQL 5.7 버전 비밀번호 설정
-
-```
-ALTER USER USER() IDENTIFIED BY 'auth_string';
-
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '새로운 비밀번호';
-```
-
-MySQL 기본 validate\_password\_policy는 아래와 같습니다\.
+MySQL의 기본 validate\_password\_policy는 아래와 같습니다.
 
 * validate\_password\_policy=MEDIUM
-* 기**본 8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
+* 기본 **8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
 
 #### 2\. 포트(port) 변경
 
