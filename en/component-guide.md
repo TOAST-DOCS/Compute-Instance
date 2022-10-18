@@ -191,20 +191,8 @@ shell> mysql -uroot
 
 There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.
 
-* Set Password for MySQL Version 5.6
-
 ```
-SET PASSWORD [FOR user] = password_option
-
-mysql> set password=password('password');
-```
-
-* Set Password for MySQL Version 5.7
-
-```
-ALTER USER USER() IDENTIFIED BY 'auth_string';
-
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'New Password';
+mysql> ALTER USER USER() IDENTIFIED BY 'NEW PASSWORD';
 ```
 
 Default MySQL validate_password_policy is as below:
