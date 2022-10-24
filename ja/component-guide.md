@@ -189,26 +189,14 @@ shell> mysql -uroot
 
 初期インストール後、MySQL ROOTアカウントパスワードは指定されていません。したがってインストール後、すぐにパスワードを設定する必要があります。
 
-* MySQL 5.6バージョンパスワード設定
-
 ```
-SET PASSWORD [FOR user] = password_option
-
-mysql> set password=password('パスワード');
-```
-
-* MySQL 5.7バージョンパスワード設定
-
-```
-ALTER USER USER() IDENTIFIED BY 'auth_string';
-
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '新しいパスワード';
+mysql> ALTER USER USER() IDENTIFIED BY '新しいパスワード';
 ```
 
 MySQL基本validate\_password\_policyは下記の通りです。
 
 * validate\_password\_policy=MEDIUM
-* 基**本8文字以上、数字、大文字、小文字、特殊文字**を含める必要がある
+* 基本**8文字以上、数字、大文字、小文字、特殊文字**を含める必要がある
 
 #### 2\.ポート(port)変更
 
