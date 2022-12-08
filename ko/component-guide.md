@@ -787,8 +787,7 @@ Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 * OUTLN: 동일한 SQL 수행 시 항상 같은 플랜으로 수행될 수 있게 관련 힌트를 저장하는 등의 태스크를 수행합니다.
 * TIBERO/TIBERO1: example user이며 DBA 권한을 가지고 있습니다.
 
-
-## Kafka
+## Kafka Instance
 > [참고]
 > 본 가이드는 Kafka 3.3.1 버전을 기준으로 작성되었습니다.
 > 다른 버전을 사용하시는 경우 해당 버전에 맞게 변경해 주십시오.
@@ -948,7 +947,7 @@ shell> /home/centos/kafka/bin/kafka-console-producer.sh --broker-list [인스턴
 shell> /home/centos/kafka/bin/kafka-console-consumer.sh --bootstrap-server [인스턴스IP]:[카프카PORT] --from-beginning --topic kafka
 ```
 
-## Redis
+## Redis Instance
 
 ### Redis 시작/정지
 ```

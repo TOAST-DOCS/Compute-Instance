@@ -790,8 +790,7 @@ The default accounts provided by Tibero are as follows.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
 
-
-## Kafka
+## Kafka Instance
 > [Note]
 > This guide is created based on Kafka version 3.3.1.
 > If you are using a different version, please makes changes accordingly.
@@ -878,7 +877,6 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ##### Cluster Installation Complete #####
 ```
 
-
 ### Initial Setup After Creating Kafka Instance
 #### Change the Port
 After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
@@ -951,7 +949,7 @@ shell> /home/centos/kafka/bin/kafka-console-producer.sh --broker-list  [Instance
 shell> /home/centos/kafka/bin/kafka-console-consumer.sh --bootstrap-server [Instance IP]:[Kafka PORT] --from-beginning --topic kafka
 ```
 
-## Redis
+## Redis Instance
 
 ### Start/Stop Redis
 ```
@@ -1093,7 +1091,6 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
-
 
 ## JEUS Instance
 
