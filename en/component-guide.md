@@ -790,8 +790,7 @@ The default accounts provided by Tibero are as follows.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
 
-
-## Kafka
+## Kafka Instance
 > [Note]
 > This guide is created based on Kafka version 3.3.1.
 > If you are using a different version, please makes changes accordingly.
@@ -951,7 +950,7 @@ shell> /home/centos/kafka/bin/kafka-console-producer.sh --broker-list  [Instance
 shell> /home/centos/kafka/bin/kafka-console-consumer.sh --bootstrap-server [Instance IP]:[Kafka PORT] --from-beginning --topic kafka
 ```
 
-## Redis
+## Redis Instance
 
 ### Start/Stop Redis
 ```
