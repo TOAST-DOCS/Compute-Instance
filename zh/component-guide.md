@@ -50,51 +50,51 @@ Specifies the NAT instance as a route gateway. The packets delivered to the NAT 
 
 
 ## MS-SQL Instance
-After instance is created, access the instance by using Remote Desktop Protocol (RDP). 
-To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group. 
+After instance is created, access the instance by using Remote Desktop Protocol (RDP).
+To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group.
 
 ![mssqlinstance_02_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_02_201812_en.png)
 
-Click **+ Check Password** to check password by using key pair configured along with instance creation. 
-Click **Associate** and download .rdp file, to access the instance by using the acquired password. 
+Click **+ Check Password** to check password by using key pair configured along with instance creation.
+Click **Associate** and download .rdp file, to access the instance by using the acquired password.
 
 ### Initial Settings after Microsoft SQL Image is Created  
 
 #### 1. Set SQL Certification Mode  
 
-The default certification mode of the server is set with"**Windows Certification Mode**". 
-To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode. 
+The default certification mode of the server is set with"**Windows Certification Mode**".
+To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode.
 
-Execute Microsoft SQL Server Management Studio and associate to an object under the instance name. 
+Execute Microsoft SQL Server Management Studio and associate to an object under the instance name.
 
 ![mssqlinstance_03_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_03_201812_en.png)
 
-1. Select an object, right-click it, and choose **Attributes**. 
-2. On **Server Attributes** , click **Security**. 
+1. Select an object, right-click it, and choose **Attributes**.
+2. On **Server Attributes** , click **Security**.
 3. Change the **Server Certification** type into **SQL Server and Windows Certification Mode**.
 
-※ To apply the changed SQL certification mode, restart Microsoft SQL. 
+※ To apply the changed SQL certification mode, restart Microsoft SQL.
 
-#### 2. Change Microsoft SQL Service Port 
+#### 2. Change Microsoft SQL Service Port
 
 The default port 1433 for Microsoft SQL is widely known and might serve as a security vulnerability.   
-A change is recommended to another port. 
-※ For Express, no default port is specified. 
+A change is recommended to another port.
+※ For Express, no default port is specified.
 
-Execute SQL Server configuration manager as below. 
+Execute SQL Server configuration manager as below.
 
 ![mssqlinstance_04_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_04_201812_en.png)
 
-1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left. 
+1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left.
 2. Click **TCP/IP** for **Protocol Name** and right click it. When the menu shows, select **Attributes**.  
-3. Select the **IP Address** tab. 
+3. Select the **IP Address** tab.
 4. Select **IP ALL** on the list and change the port number to another.  
 
-※ To apply the changed service port, restart Microsoft SQL. 
+※ To apply the changed service port, restart Microsoft SQL.
 
-#### 3. Allow External Access to Microsoft SQL Database 
+#### 3. Allow External Access to Microsoft SQL Database
 
-To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules. 
+To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules.
 Also, register Microsoft SQL service port (default port: 1433) to allow access, as well as remote IP.  
 
 ### Data Volume Assignment  
@@ -112,35 +112,35 @@ After a block storage is created, select the storage and click **Association Man
 
 <br/>
 
-Access instance with RDP and execute **Computer Management**, and go to **Storage>Disk Management**. 
+Access instance with RDP and execute **Computer Management**, and go to **Storage>Disk Management**.
 
 ![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812_en.png)
 
-You can find the associated block storage is detected. To use it, initialize disk first. 
-1. Right-click the **Disk 1** block and click **Initialize Disk**. 
-2. Select a partition type and click **OK**. 
+You can find the associated block storage is detected. To use it, initialize disk first.
+1. Right-click the **Disk 1** block and click **Initialize Disk**.
+2. Select a partition type and click **OK**.
 
 <br/>
 
-After initialization is completed, create disk volume. 
+After initialization is completed, create disk volume.
 
 ![mssqlinstance_08_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_08_201812_en.png)
 
-Click unassigned disk and right-click it. Select **New Simple Volume** and proceed with wizard for new simple volume. 
+Click unassigned disk and right-click it. Select **New Simple Volume** and proceed with wizard for new simple volume.
 
 <br/>
 
-In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created. 
+In the **Database Setting** of **Server Attributes** of Microsoft SQL Server Management Studio,  change **Default Database Location** into the directory where the volume has been created.
 
 ![mssqlinstance_09_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_09_201812_en.png)
 
-※ To apply the changed default database location, restart Microsoft SQL. 
+※ To apply the changed default database location, restart Microsoft SQL.
 
-### Restart Microsoft SQL 
+### Restart Microsoft SQL
 Change of Microsoft SQL settings sometimes requires a restart of the service.  
 To apply changed settings, restart Microsoft SQL.   
 
-From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows, click **Restart** to restart the service. 
+From SQL Server Configuration Manager, go to **SQL Server Configuration Manager (local) > SQL Server Service > SQL Server (MSSQLSERVER)** and right click it. When the menu shows, click **Restart** to restart the service.
 
 ![mssqlinstance_10_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_10_201812_en.png)
 
@@ -151,31 +151,31 @@ Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Serve
 
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
-When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings: 
+When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings:
 
-1. Click the service and right-click it. Select **Attributes** on the menu. 
+1. Click the service and right-click it. Select **Attributes** on the menu.
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
 > [Note]
 > For the release status of Microsoft SQL Instance, see [Instance Release Note](/Compute/Compute/ko/release-notes/).
 
 ## MySQL Instance
-### Starting/Stopping MySQL 
+### Starting/Stopping MySQL
 
 ```
-#Start mysql Service 
+#Start mysql Service
 shell> service mysqld start
 
-#Stop mysql Service 
+#Stop mysql Service
 shell> service mysqld stop
 
-#Restart mysql Service 
+#Restart mysql Service
 shell> service mysqld restart
 ```
 
-### Connecting to MySQL 
+### Connecting to MySQL
 
-For initial connection, connect to MySQL with default user name. 
+For initial connection, connect to MySQL with default user name.
 
 ```
 shell> mysql -uroot
@@ -198,18 +198,18 @@ Default MySQL validate_password_policy is as below:
 
 #### 2\. Changing Port Number
 
-The default MySQL port number is 3306. It is recommended to change the port number for security reasons. 
+The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
 
 ```
 shell> vi /etc/my.cnf
 
 
-# Specify a port to use in the my.cnf file. 
+# Specify a port to use in the my.cnf file.
 
-port = Port name to use 
+port = Port name to use
 
 
-# Save vi editor Save editor 
+# Save vi editor Save editor
 
 
 # Restart mysql service  
@@ -224,9 +224,9 @@ shell> service mysqld restart
 shell> mysql -uroot -P[changed port number]
 ```
 
-### Description of my.cnf 
+### Description of my.cnf
 
-The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below: 
+The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below:
 
 | Name | Description |
 | --- | --- |
@@ -239,9 +239,9 @@ The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables a
 | slow\_query\_log | Enable the slow\_query log option. Queries taking more than 10 seconds in accordance with long_query_time will be logged to the slow_query_log. |
 | sysdate-is-now | For sysdate, SQL with sysdate() used for replication results in discrepant time between Master and Slave, so sysdate() and now() functions will behave the same. |
 
-### Description of MySQL Directory 
+### Description of MySQL Directory
 
-Directory and file description of MySQL are as below: 
+Directory and file description of MySQL are as below:
 
 | Name | Description |
 | --- | --- |
@@ -414,18 +414,18 @@ You can start or stop the CUBRID service as follows by logging in with the “cu
 ```
 # Start the CUBRID service/server
 shell> sudo su - cubrid
-shell> cubrid service start 
+shell> cubrid service start
 shell> cubrid server start demodb
 
 # Stop the CUBRID service/server
 shell> sudo su - cubrid
 shell> cubrid server stop demodb
-shell> cubrid service stop 
+shell> cubrid service stop
 
 # Restart the CUBRID service/server
 shell> sudo su - cubrid
 shell> cubrid server restart demodb
-shell> cubrid service restart 
+shell> cubrid service restart
 
 # Start/stop/restart the CUBRID broker
 shell> sudo su - cubrid
@@ -789,6 +789,311 @@ The default accounts provided by Tibero are as follows.
 * SYSGIS: Creates GIS-related tables and performs GIS-related tasks.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
+
+
+## Kafka
+> [Note]
+> This guide is created based on Kafka version 3.3.1.
+> If you are using a different version, please makes changes accordingly.
+> For the instance flavor, please choose c1m2 (CPU 1core,  Memory 2GB) or higher specifications.
+
+### Start and Stop Zookeeper, Kafka broker
+```
+# Start Zookeeper, Kafka broker (Zookeeper first)
+shell> sudo systemctl start zookeeper.service
+shell> sudo systemctl start kafka.service
+
+# Stop Zookeeper, Kafka broker (Kafka broker first)
+shell> sudo systemctl stop kafka.service
+shell> sudo systemctl stop zookeeper.service
+
+# Restart Zookeeper, Kafka broker
+shell> sudo systemctl restart zookeeper.service
+shell> sudo systemctl restart kafka.service
+```
+
+### Install Kafka Cluster
+- Must install in a new instance.
+- An odd number of instances (3 or more) are required, and the installation script is executed in the instance.
+- An instance consists of of one kafka broker and one zookeeper node.
+- The key pair (PEM file) required to connect to another instance must be located at the /home/centos/ path of the instance running the installation script. The key pair of cluster instances must be the same.
+- Only default port installation is supported. If you need to change the port, change the port by referring to the initial settings guide after completing cluster installation.
+- For Kafka-related port communication between instances, set security group as follows.
+
+Set security group
+```
+Direction: Inbound
+IP protocol: TCP
+Port: 22, 9092, 2181, 2888, 3888
+```
+How to check Hostname and IP
+```
+# Check Hostname
+shell> hostname
+# Check IP
+Console screen
+or shell> hostname -i
+```
+Example of executing the cluster installation script (enter the hostname and IP checked above)
+```
+shell> sh /home/centos/.kafka_make_cluster.sh
+
+Enter Cluster Node Count: 3
+### 3 is odd number.
+Enter Cluster's IP ( Cluster 1 ) : 10.0.0.1
+Enter Cluster's HOST_NAME ( Cluster 1 ) : kafka1.novalocal
+Enter Cluster's IP ( Cluster 2 ) : 10.0.0.2
+Enter Cluster's HOST_NAME ( Cluster 2 ) : kafka2.novalocal
+Enter Cluster's IP ( Cluster 3 ) : 10.0.0.3
+Enter Cluster's HOST_NAME ( Cluster 3 ) : kafka3.novalocal
+10.0.0.1 kafka1.novalocal
+10.0.0.2 kafka2.novalocal
+10.0.0.3 kafka3.novalocal
+Check Cluster Node Info (y/n) y
+Enter Pemkey's name: kafka.pem
+ls: cannot access /tmp/kafka-logs: No such file or directory
+ls: cannot access /tmp/zookeeper: No such file or directory
+### kafka1.novalocal ( 10.0.0.1 ), Check if kafka is being used
+### kafka1.novalocal ( 10.0.0.1 ), Store node information in the /etc/hosts directory.
+### kafka1.novalocal ( 10.0.0.1 ), Modify zookeeper.properties.
+### kafka1.novalocal ( 10.0.0.1 ), Modify server.properties.
+ls: cannot access /tmp/kafka-logs: No such file or directory
+ls: cannot access /tmp/zookeeper: No such file or directory
+### kafka2.novalocal ( 10.0.0.2 ), Check if kafka is being used
+### kafka2.novalocal ( 10.0.0.2 ), Store node information in the /etc/hosts directory.
+### kafka2.novalocal ( 10.0.0.2 ), Modify zookeeper.properties.
+### kafka2.novalocal ( 10.0.0.2 ), Modify server.properties.
+ls: cannot access /tmp/kafka-logs: No such file or directory
+ls: cannot access /tmp/zookeeper: No such file or directory
+### kafka3.novalocal ( 10.0.0.3 ), Check if kafka is being used
+### kafka3.novalocal ( 10.0.0.3 ), Store node information in the /etc/hosts directory.
+### kafka3.novalocal ( 10.0.0.3 ), Modify zookeeper.properties.
+### kafka3.novalocal ( 10.0.0.3 ), Modify server.properties.
+### kafka1.novalocal ( 10.0.0.1 ), Start Zookeeper, Kafka.
+### Zookeeper, Kafka process is running.
+### kafka2.novalocal ( 10.0.0.2 ), Start Zookeeper, Kafka.
+### Zookeeper, Kafka process is running.
+### kafka3.novalocal ( 10.0.0.3 ), Start Zookeeper, Kafka.
+### Zookeeper, Kafka process is running.
+##### Cluster Installation Complete #####
+```
+
+
+### Initial Setup After Creating Kafka Instance
+#### Change the Port
+After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
+
+##### 1) Modify the /home/centos/kafka/config/zookeeper.properties file
+Open the /home/centos/kafka/config/zookeeper.properties file and enter the Zookeeper port to change in clientPort.
+```
+shell> vi /home/centos/kafka/config/zookeeper.properties
+
+clientPort=zookeeper port to change
+```
+##### 2) Modify the /home/centos/kafka/config/server.properties file
+Open the /home/centos/kafka/config/server.properties file and enter the Kafka port to change in listeners.
+
+How to check Instance IP
+```
+Private IP on the console screen
+or shell> hostname -i
+```
+```
+shell> vi /home/centos/kafka/config/server.properties
+
+# Uncomment
+listeners=PLAINTEXT://Instance IP:kafka port to change
+
+# Change Zookeeper port
+zookeeper.connect=Instance IP:zookeeper port to change
+---> If it is a cluster, change Zookeeper port of each instance IP
+```
+
+##### 3) Restart Zookeeper, Kafka broker
+Restart the zookeeper and the kafka for the port change to take effect.
+```
+shell> sudo systemctl stop kafka.service
+shell> sudo systemctl stop zookeeper.service
+
+shell> sudo systemctl start zookeeper.service
+shell> sudo systemctl start kafka.service
+```
+
+##### 4) Check Zookeeper, Kafka Port Change
+Check if the changed port is in use.
+```
+shell> netstat -ntl | grep [Kafka port]
+shell> netstat -ntl | grep [Zookeeper port]
+```
+### Create and Use Kafka Topic and Data
+
+Create and query a topic
+```
+# Instance IP = Private IP / Kafka default port = 9092
+# Create a topic
+shell> /home/centos/kafka/bin/kafka-topics.sh --create --bootstrap-server [Instance IP]:[Kafka PORT] --topic kafka
+
+# Query a topic list
+shell> /home/centos/kafka/bin/kafka-topics.sh --list --bootstrap-server [Instance IP]:[Kafka PORT]
+
+# Check the details of the topic
+shell> /home/centos/kafka/bin/kafka-topics.sh --describe --bootstrap-server [Instance IP]:[Kafka PORT] --topic kafka
+
+# Delete a topic
+shell> /home/centos/kafka/bin/kafka-topics.sh --delete --bootstrap-server [Instance IP]:[Kafka PORT] --topic kafka
+```
+Create and use data
+```
+# Start producer
+shell> /home/centos/kafka/bin/kafka-console-producer.sh --broker-list  [Instance IP]:[Kafka PORT] --topic kafka
+
+# Start consumer
+shell> /home/centos/kafka/bin/kafka-console-consumer.sh --bootstrap-server [Instance IP]:[Kafka PORT] --from-beginning --topic kafka
+```
+
+## Redis
+
+### Start/Stop Redis
+```
+# Start Redis
+shell> sudo systemctl start redis
+
+# Stop Redis
+shell> sudo systemctl stop redis
+
+# Restart Redis
+shell> sudo systemctl restart redis
+```
+
+### Connect to Redis
+Connect to a Redis instance by using the `redis-cli` command.
+```
+shell> redis-cli
+```
+
+### Initial Setup After Creating a Redis Instance
+The default configuration file for a Redis instance is the `/home/centos/redis/redis.conf` file. The description for the parameters to be changed is as follows.
+
+#### Bind
+- Default value: `127.0.0.1 -::1`
+- Changed value: `<private ip> 127.0.0.1 -::1`
+
+Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
+
+#### Port
+- Default value: `6379`
+
+Port is 6379, a default value for Redis. It is recommended to change the port for security reasons. After changing the port, you can connect to Redis with the following command.
+
+```
+shell> redis-cli -p <new port>
+```
+
+#### Requirepass/masterauth
+- Default value: `nhncloud`
+
+The default password is `nhncloud`. For security reasons, it is recommended to change the password. If you are using replication connection, you must change the `requirepass` and `masterauth` values at the same time.
+
+### Automatic HA Configuration Script
+A Redis instance of NHN Cloud provides a script that automatically configures an HA environment. You can use the script only for **a new instance immediately after installation**, and cannot use after changing the set values from redis.conf.
+
+To use the script, the following settings are required.
+
+##### Copy key pair
+The instance running the installation script must have a key pair (PEM file) required to connect to other instances. The key pair can be copied as follows.
+
+```
+local> scp -i <key pair>.pem <key pair>.pem centos@<floating ip>:/home/centos/
+```
+
+The key pairs for created instances must be the same.
+
+##### Set security group
+You must set a security group (**Network** > **Security Groups**) for communication between Redis instances. Create a security group with the following rules and apply it to a Redis instance.
+
+| Direction | IP protocol | Port range| Ether| Remote|
+| --- | --- | --- | --- | --- |
+| Inbound |TCP | 6379| IPv4| Instance IP(CIDR)|
+| Inbound |TCP | 16379| IPv4| Instance IP(CIDR)|
+| Inbound |TCP | 26379| IPv4| Instance IP(CIDR)|
+
+#### Sentinel Automatic Configuration
+You will need 3 Redis instances to configure Sentinel. After copying the key pair to the instance used as the master, run the script as follows.
+
+```
+shell> sh .redis_make_sentinel.sh
+```
+
+Enter the private IPs of the master and replica in turn. You can check the private IP of each instance with the `hostname -I` command.
+
+```
+shell> sh .redis_make_sentinel.sh
+Enter Master's IP: 192.168.0.33
+Enter Replica-1's IP: 192.168.0.27
+Enter Replica-2's IP: 192.168.0.97
+```
+
+Enter the file name of the copied key pair.
+```
+shell> Enter Pemkey's name: <key pair>.pem
+```
+
+#### Cluster Automatic Configuration
+6 Redis instances are required for Cluster configuration. After copying the key pair to the instance used as the master, run the script as follows.
+
+```
+shell> sh .redis_make_cluster.sh
+```
+
+Enter the private IPs of Redis instances used for a cluster in turn. You can check the private IP of each instance with the `hostname -I` command.
+
+```
+shell> sh .redis_make_cluster.sh
+Enter cluster-1'IP:  192.168.0.79
+Enter cluster-2'IP: 192.168.0.10
+Enter cluster-3'IP: 192.168.0.33
+Enter cluster-4'IP:  192.168.0.116
+Enter cluster-5'IP:  192.168.0.91
+Enter cluster-6'IP:  192.168.0.32
+```
+
+Enter the file name of the copied key pair.
+
+```
+shell> Enter Pemkey's name: <key pair>.pem
+```
+
+Enter `yes` to complete cluster configuration.
+```
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.168.0.91:6379 to 192.168.0.79:6379
+Adding replica 192.168.0.32:6379 to 192.168.0.10:6379
+Adding replica 192.168.0.116:6379 to 192.168.0.33:6379
+M: 0a6ee5bf24141f0058c403d8cc42b349cdc09752 192.168.0.79:6379
+   slots:[0-5460] (5461 slots) master
+M: b5d078bd7b30ddef650d9a7fa9735e7648efc86f 192.168.0.10:6379
+   slots:[5461-10922] (5462 slots) master
+M: 0da9b78108b6581bdb90002cbdde3506e9173dd8 192.168.0.33:6379
+   slots:[10923-16383] (5461 slots) master
+S: 078b4ce014a52588e23577b3fc2dabf408723d68 192.168.0.116:6379
+   replicates 0da9b78108b6581bdb90002cbdde3506e9173dd8
+S: caaae4ebd3584c0481205e472d6bd0f9dc5c574e 192.168.0.91:6379
+   replicates 0a6ee5bf24141f0058c403d8cc42b349cdc09752
+S: ab2aa9e37cee48ef8e4237fd63e8301d81193818 192.168.0.32:6379
+   replicates b5d078bd7b30ddef650d9a7fa9735e7648efc86f
+Can I set the above configuration? (type 'yes' to accept):
+```
+
+```
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+```
+
 
 ## JEUS Instance
 
