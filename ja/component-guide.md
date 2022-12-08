@@ -787,8 +787,7 @@ Tiberoで提供する基本アカウントは次のとおりです。
 * OUTLN：同じSQLを実行するときに常に同じプランで実行できるように関連ヒントを保存するなどのタスクを実行します。
 * TIBERO/TIBERO1：example userであり、DBA権限を持っています。
 
-
-## Kafka
+## Kafka Instance
 > [参考]
 > このガイドはKafka 3.3.1バージョンを基準に作成されました。
 > 他のバージョンを使用する場合は、該当のバージョンに合わせて変更してください。
@@ -938,7 +937,7 @@ shell> /home/centos/kafka/bin/kafka-console-producer.sh --broker-list [インス
 shell> /home/centos/kafka/bin/kafka-console-consumer.sh --bootstrap-server [インスタンスIP]:[Kafka PORT] --from-beginning --topic kafka
 ```
 
-## Redis
+## Redis Instance
 
 ### Redis起動/停止
 ```
@@ -1080,7 +1079,6 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
-
 
 ## JEUS Instance
 
