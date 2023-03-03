@@ -90,7 +90,7 @@ provider "openstack" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
-  auth_url    = "https://api-identity.infrastructure.cloud.toast.com/v2.0"
+  auth_url    = "https://api-identity-infrastructure.nhncloudservice.com/v2.0"
   region      = "KR1"
 }
 ```
@@ -778,7 +778,7 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
   timeout_member_connect = 5000
   timeout_member_data = 5000
   timeout_tcp_inspect = 5000
-  default_tls_container_ref = "https://kr1-api-key-manager.infrastructure.cloud.toast.com/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
+  default_tls_container_ref = "https://kr1-api-key-manager-infrastructure.nhncloudservice.com/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
   sni_container_refs = null
   admin_state_up = true
 }
