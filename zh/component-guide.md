@@ -17,6 +17,7 @@ This feature is available only in the Pyeongchon region, Korea.
 * Redundancy not supported.
 * The option of checking network source/target must be disabled in the Network Interface settings for the NAT instance to work.
 * If a private image is created with NAT instance, the function might not work normally.
+* The NAT instance provides The NAT feature only for one network interface.
 
 > [Note] Difference with NAT gateway
 >
@@ -35,6 +36,7 @@ For the NAT instance to work normally, the option of checking network source/tar
 Specifies the NAT instance as a route gateway. The packets delivered to the NAT instance are delivered according to the routing setting of the routing table connected to the subnet of NAT instance.
 
 ### Caution on settings
+* Using only one network interface for a NAT instance is recommended. Even if you connect multiple network interfaces to a NAT instance, the NAT feature is only available for one interface (eth0).
 * Do not add a routing setting that specifies the NAT instance as a gateway in the routing table connected to the subnet of the NAT instance.
 * It is strongly recommended to separate the NAT instance subnet from the subnet of an instance that is going to use the NAT instance as a gateway and use a different routing table.
 * If the NAT instance subnet and the subnet of an instance that is going to use the NAT instance as a gateway are the same or they are connected to the same routing table, and you have to add a routing setting that specifies the NAT instance as a gateway, then a floating IP must be set for the NAT instance. Also, the target CIDR must be set to IP Prefix 0 (/0). Any other settings will only cause the communication to fail, and might impact the communication of all instances that use the routing table.
