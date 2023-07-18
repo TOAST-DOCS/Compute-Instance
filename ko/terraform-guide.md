@@ -43,8 +43,6 @@ NHN Cloud는 아래 기술된 data sources와 resources를 지원합니다. 아�
 * nhncloud_blockstorage_volume_v2
 * nhncloud_compute_flavor_v2
 * nhncloud_blockstorage_snapshot_v2
-* nhncloud_networking_network_v2
-* nhncloud_networking_subnet_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
 
@@ -401,38 +399,6 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 | volume_id | String | - | 조회할 스냅숏의 원본 블록 스토리지 ID |
 | status | String | - | 조회할 스냅숏의 상태 |
 | most_recent | Boolean | - | `true`: 조회한 스냅숏 목록 중 가장 최근에 만들어진 스냅숏 선택<br>`false`: 조회된 순서로 스냅숏 선택 |
-
-
-### 네트워크
-
-```
-data "nhncloud_networking_network_v2" "default_network" {
-  name = "Default Network"
-  network_id = "00d5b852-cb77-4307-b6be-d81dad24eec1"
-}
-```
-
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 VPC 네트워크 이름 |
-| network_id | String | - | 조회할 VPC 네트워크 UUID |
-
-
-### 서브넷
-
-```
-data "nhncloud_networking_subnet_v2" "default_subnet" {
-  name = "Default Network"
-  subnet_id = "756af037-54f3-4aa2-8c22-56c9da055553"
-  network_id = data.nhncloud_networking_network_v2.default_network.network_id
-}
-```
-
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 서브넷의 이름 |
-| subnet_id | String | - | 조회할 서브넷의 UUID |
-| network_id | String | - | 조회할 서브넷이 속한 네트워크 UUID |
 
 
 ### VPC
