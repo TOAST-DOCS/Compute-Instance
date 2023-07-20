@@ -64,6 +64,23 @@ $ terraform -v
 Terraform v1.0.0
 ```
 
+## Terraform NHN Cloud provider 제공
+
+Terraform NHN Cloud provider는 다음과 같은 운영 체제/아키텍처 호환성을 제공하며, 링크을 통해 다운로드 받을 수 있습니다.
+
+* [Darwin / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [Darwin / ARMv8](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+
+
+다운로드 받은 바이너리 파일을 Terraform provider plugin 경로에 추가합니다. plugin 경로는 바이너리 버전과 운영 체제/아키텍쳐에 따라 다를 수 있습니다.
+
+다음은 `Darwin_ARMv8` plugin 경로 예시입니다.
+
+```
+~/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+```
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
