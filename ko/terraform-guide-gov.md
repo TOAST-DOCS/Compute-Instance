@@ -66,7 +66,7 @@ Terraform v1.0.0
 
 ## Terraform NHN Cloud provider 제공
 
-Terraform NHN Cloud provider는 다음과 같은 운영 체제/아키텍처 호환성을 제공하며, 링크을 통해 다운로드 받을 수 있습니다.
+Terraform NHN Cloud provider는 다음과 같은 운영 체제/아키텍처 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드 받을 수 있습니다.
 
 * [Darwin / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
 * [Darwin / ARMv8](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
