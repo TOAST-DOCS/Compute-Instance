@@ -16,7 +16,6 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
     * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
-NHN Cloud는 아래 기술된 data sources와 resources를 지원합니다. 아래 목록 이외의 기능 사용 시 NHN Cloud는 정상 동작을 보장하지 않습니다.
 
 #### Resources 지원
 
@@ -68,15 +67,15 @@ Terraform v1.0.0
 
 Terraform NHN Cloud provider는 다음과 같은 운영 체제/아키텍처 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드 받을 수 있습니다.
 
-* [Darwin / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-* [Darwin / ARMv8](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [MacOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [MacOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
 * [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
 * [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
 
 
 다운로드 받은 바이너리 파일을 Terraform provider plugin 경로에 추가합니다. plugin 경로는 바이너리 버전과 운영 체제/아키텍쳐에 따라 다를 수 있습니다.
 
-다음은 `Darwin_ARMv8` plugin 경로 예시입니다.
+다음은 `MacOS / Apple silicon` plugin 경로 예시입니다.
 
 ```
 ~/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
