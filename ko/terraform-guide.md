@@ -65,7 +65,7 @@ Terraform v1.0.0
 
 ## Terraform NHN Cloud provider 제공
 
-Terraform NHN Cloud provider는 다음과 같은 `운영 체제/아키텍처` 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드 받을 수 있습니다.
+Terraform NHN Cloud provider는 다음과 같은 **운영 체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드 받을 수 있습니다.
 
 * [MacOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
 * [MacOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
@@ -74,25 +74,67 @@ Terraform NHN Cloud provider는 다음과 같은 `운영 체제/아키텍처` �
 
 ### Local provider 설정
 
-Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다. 
+Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
 
-Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로드 받은 바이너리 파일을 추가합니다.
+Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로드 받은 바이너리 파일을 플러그인 경로에 추가합니다.
 
 다음은 운영 체제에 따른 플러그인 기본 경로입니다.
 
-- **MacOS / Linux** : `$HOME/.terraform.d/plugins`
-- **Windows** : `%APPDATA%/terraform.d/plugins`
+* **MacOS / Linux** : `${HOME}/.terraform.d/plugins/${hostname}/${namespace}/${type}/${version}/${platforms}`
+* **Windows** : `%APPDATA%/terraform.d/plugins/${hostname}/${namespace}/${type}/${version}/${platforms}`
 
-`MacOS / Linux` 플러그인 경로 예시입니다.
+플러그인 기본 경로 구성 규칙에 대한 설명입니다.
+
+* **HOME, %APPDATA%**
+    * provider가 설치 및 실행되는 환경의 home 디렉토리입니다.
+* **hostname**
+    * provider가 시작된 것으로 간주되는 레지스트리 호스트이며, Terraform이 provider에 대한 정보를 참조하는 기본 위치입니다.
+* **namespace**
+    * provider를 패키징하고 배포하는 고유한 네임스페이스 이름이며, provider 를 하나 이상 포함할 수 있습니다.
+* **type**
+    * provider의 유형이며, 특정 호스트 이름과 네임스페이스 내에서 고유합니다.
+    * Terraform NHN Cloud provider 는 `nhncloud` 유형을 사용합니다.
+* **version**
+    * provider의 버전입니다. 
+* **platforms**
+    * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영 체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
+    * **darwin_adm64** : MacOS / AMD64
+    * **darwin_arm64** : MacOS / Apple silicon
+    * **linux_amd64** : Linux / AMD64
+    * **windows_amd64** : Windows / AMD64
+
+
+다음은 바이너리 다운로드 후 **운영 체제/아키텍처**에 따른 플러그인 설정 예시입니다.
+
+* **아래 예시에 사용된 Terraform NHN Cloud provider 버전은 1.0.0 입니다.**
+* **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
+
+`MacOS / AMD64` 플러그인 설정 예시입니다.
 
 ```
-$HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 ```
 
-`Windows` 플러그인 경로 예시입니다.
+`MacOS / Apple silicon` 플러그인 설정 예시입니다.
 
 ```
-%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64/terraform-provider-nhncloud_v1.0.0
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+```
+
+`Linux / AMD64` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+```
+
+`Windows / AMD64` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraform 초기화
