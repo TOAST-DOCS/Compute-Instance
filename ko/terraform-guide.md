@@ -79,24 +79,16 @@ Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 �
 
 Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로드 받은 바이너리 파일을 플러그인 경로에 추가합니다.
 
-다음은 운영 체제에 따른 플러그인 기본 경로입니다.
+다음은 운영 체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
+` 항목을 참고합니다.
 
-* **MacOS / Linux** : `${HOME}/.terraform.d/plugins/${hostname}/${namespace}/${type}/${version}/${platforms}`
-* **Windows** : `%APPDATA%/terraform.d/plugins/${hostname}/${namespace}/${type}/${version}/${platforms}`
+* **Linux / MacOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
 
 플러그인 기본 경로 구성 규칙에 대한 설명입니다.
 
-* **HOME, %APPDATA%**
-    * provider가 설치 및 실행되는 환경의 home 디렉토리입니다.
-* **hostname**
-    * provider가 시작된 것으로 간주되는 레지스트리 호스트이며, Terraform이 provider에 대한 정보를 참조하는 기본 위치입니다.
-* **namespace**
-    * provider를 패키징하고 배포하는 고유한 네임스페이스 이름이며, provider 를 하나 이상 포함할 수 있습니다.
-* **type**
-    * provider의 유형이며, 특정 호스트 이름과 네임스페이스 내에서 고유합니다.
-    * Terraform NHN Cloud provider 는 `nhncloud` 유형을 사용합니다.
 * **version**
-    * provider의 버전입니다. 
+    * provider의 버전입니다.
 * **platforms**
     * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영 체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
     * **darwin_adm64** : MacOS / AMD64
@@ -105,10 +97,9 @@ Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로�
     * **windows_amd64** : Windows / AMD64
 
 
-다음은 바이너리 다운로드 후 **운영 체제/아키텍처**에 따른 플러그인 설정 예시입니다.
+다음은 바이너리 다운로드 후 **운영 체제/아키텍처**에 따른 플러그인 설정 예시입니다. 
 
-* **아래 예시에 사용된 Terraform NHN Cloud provider 버전은 1.0.0 입니다.**
-* **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
+**플러그인 설정 시 1.0.0 버전 사용을 권장합니다.**
 
 `MacOS / AMD64` 플러그인 설정 예시입니다.
 
