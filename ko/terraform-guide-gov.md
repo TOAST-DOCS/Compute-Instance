@@ -65,11 +65,11 @@ Terraform v1.0.0
 
 ## Terraform NHN Cloud provider 제공
 
-Terraform NHN Cloud provider는 다음과 같은 **운영 체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드 받을 수 있습니다.
+Terraform NHN Cloud provider는 다음과 같은 **운영 체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드할 수 있습니다.
 현재 제공하는 Terraform NHN Cloud provider 버전은 **1.0.0** 입니다.
 
-* [MacOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-* [MacOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
 * [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
 * [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
 
@@ -77,12 +77,12 @@ Terraform NHN Cloud provider는 다음과 같은 **운영 체제/아키텍처** 
 
 Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
 
-Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로드 받은 바이너리 파일을 플러그인 경로에 추가합니다.
+Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로드 한 바이너리 파일을 플러그인 경로에 추가합니다.
 
 다음은 운영 체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
 ` 항목을 참고합니다.
 
-* **Linux / MacOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
 * **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
 
 플러그인 기본 경로 구성 규칙에 대한 설명입니다.
@@ -91,24 +91,23 @@ Local provider를 찾기 위한 디렉토리 구조를 생성한 후 다운로�
     * provider의 버전입니다.
 * **platforms**
     * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영 체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
-    * **darwin_adm64** : MacOS / AMD64
-    * **darwin_arm64** : MacOS / Apple silicon
+    * **darwin_adm64** : macOS / AMD64
+    * **darwin_arm64** : macOS / Apple silicon
     * **linux_amd64** : Linux / AMD64
     * **windows_amd64** : Windows / AMD64
-
 
 다음은 바이너리 다운로드 후 **운영 체제/아키텍처**에 따른 플러그인 설정 예시입니다. 
 
 **플러그인 설정 시 1.0.0 버전 사용을 권장합니다.**
 
-`MacOS / AMD64` 플러그인 설정 예시입니다.
+`macOS / AMD64` 플러그인 설정 예시입니다.
 
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 ```
 
-`MacOS / Apple silicon` 플러그인 설정 예시입니다.
+`macOS / Apple silicon` 플러그인 설정 예시입니다.
 
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
@@ -128,7 +127,6 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
-
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
@@ -732,7 +730,7 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 
 ### VPC 서브넷 생성 및 라우팅 테이블 연결
 
-지정한 VPC에 특정 IP 대역으로 서브넷을 생성하며, 생성한 서브넷에 기존 라우팅 테이블을 연결합니다.
+지정한 VPC에 사용자가 지정한 IP 대역으로 서브넷을 생성하며, 생성한 서브넷에 기존 라우팅 테이블을 연결합니다.
 라우팅 테이블은 NHN Cloud 콘솔에서 생성할 수 있습니다.
 
 ```
