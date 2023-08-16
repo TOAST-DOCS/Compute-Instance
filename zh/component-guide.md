@@ -2,7 +2,7 @@
 
 ## NAT Instance
 NAT instance is an instance that allows you to access internet over a specific IP address band in the private network instance.
-This feature is available only in the Pyeongchon region, Korea.
+This feature is only available in the Korea (Pangyo) and Korea (Pyeongchon) regions.
 
 ### Key Features
 * The instance of a private network not connect with an internet gateway can access the internet via the NAT instance.
