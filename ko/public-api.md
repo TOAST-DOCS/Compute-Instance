@@ -520,42 +520,42 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                       |
-|---|---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| servers | body | Object | 인스턴스 목록 객체                                                                                                                                                                                               |
-| status | body | Enum | 인스턴스 상태                                                                                                                                                                                                  |
-| servers.id | Body | UUID | 인스턴스 ID                                                                                                                                                                                                  |
-| servers.name | Body | String | 인스턴스 이름, 최대 255자                                                                                                                                                                                         |
-| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                 |
-| servers.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID                                                                                                                                                                                       |
-| servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨.                                                                                                                                                            |
-| servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보                                                                                                                                                                                 |
-| servers.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소                                                                                                                                                                                     |
-| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원                                                                                                                                                               |
-| servers.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소                                                                                                                                                                                      |
-| servers.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나                                                                                                                                                               |
-| servers.links | Body | Object | 인스턴스 경로 객체                                                                                                                                                                                               |
-| servers.key_name | Body | String | 인스턴스 키페어 이름                                                                                                                                                                                              |
-| servers.image | Body | Object | 인스턴스 이미지 객체                                                                                                                                                                                              |
-| servers.image.id | Body | UUID | 인스턴스 이미지 ID                                                                                                                                                                                              |
-| servers.image.links | Body | Object | 인스턴스 이미지 경로 객체                                                                                                                                                                                           |
-| servers.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알려줌                                                                                                                                                              |
-| servers.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태                                                                                                                                                                                               |
-| servers.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식                                                                                                                                                        |
-| servers.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                  |
-| servers.flavor | Body | Object | 인스턴스 타입 정보 객체                                                                                                                                                                                            |
-| servers.flavor.id | Body | UUID | 인스턴스 타입 ID                                                                                                                                                                                               |
-| servers.flavor.links | Body | Object | 인스턴스 타입 경로 객체                                                                                                                                                                                            |
-| servers.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체                                                                                                                                                                                    |
-| servers.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름                                                                                                                                                                                       |
-| servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                         |
-| servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                    |
-| servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                          |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
-| servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                               |
-| servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                       |
-| servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
-| servers.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관                                                                                                                                                                  |
+| 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                        |
+|---|---|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| servers | body | Object | 인스턴스 목록 객체                                                                                                                                                                                                |
+| status | body | Enum | 인스턴스 상태                                                                                                                                                                                                   |
+| servers.id | Body | UUID | 인스턴스 ID                                                                                                                                                                                                   |
+| servers.name | Body | String | 인스턴스 이름, 최대 255자                                                                                                                                                                                          |
+| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                  |
+| servers.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID                                                                                                                                                                                        |
+| servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨.                                                                                                                                                             |
+| servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보                                                                                                                                                                                  |
+| servers.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소                                                                                                                                                                                      |
+| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원                                                                                                                                                                |
+| servers.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소                                                                                                                                                                                       |
+| servers.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나                                                                                                                                                                |
+| servers.links | Body | Object | 인스턴스 경로 객체                                                                                                                                                                                                |
+| servers.key_name | Body | String | 인스턴스 키페어 이름                                                                                                                                                                                               |
+| servers.image | Body | Object | 인스턴스 이미지 객체                                                                                                                                                                                               |
+| servers.image.id | Body | UUID | 인스턴스 이미지 ID                                                                                                                                                                                               |
+| servers.image.links | Body | Object | 인스턴스 이미지 경로 객체                                                                                                                                                                                            |
+| servers.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알려줌                                                                                                                                                               |
+| servers.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태                                                                                                                                                                                                |
+| servers.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식                                                                                                                                                         |
+| servers.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                   |
+| servers.flavor | Body | Object | 인스턴스 타입 정보 객체                                                                                                                                                                                             |
+| servers.flavor.id | Body | UUID | 인스턴스 타입 ID                                                                                                                                                                                                |
+| servers.flavor.links | Body | Object | 인스턴스 타입 경로 객체                                                                                                                                                                                             |
+| servers.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체                                                                                                                                                                                     |
+| servers.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름                                                                                                                                                                                        |
+| servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                          |
+| servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                     |
+| servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                           |
+| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
+| servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                                |
+| servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                   |
+| servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
+| servers.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관                                                                                                                                                                   |
 
 <details><summary>예시</summary>
 <p>
@@ -675,43 +675,43 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| server | body | Object | 인스턴스 객체 |
-| status | body | Enum | 인스턴스 상태 |
-| server.id | Body | UUID | 인스턴스 ID |
-| server.name | Body | String | 인스턴스 이름, 최대 255자 |
-| server.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨 |
-| server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
-| server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원 |
-| server.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
-| server.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
-| server.links | Body | Object | 인스턴스 경로 객체 |
-| server.key_name | Body | String | 인스턴스 키페어 이름 |
-| server.image | Body | Object | 인스턴스 이미지 객체 |
-| server.image.id | Body | UUID | 인스턴스 이미지 ID |
-| server.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알림 |
-| server.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
-| server.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
-| server.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.flavor | Body | Object | 인스턴스 타입 정보 객체 |
-| server.flavor.id | Body | UUID | 인스턴스 타입 ID |
-| server.flavor.links | Body | Object | 인스턴스 타입 경로 객체 |
-| server.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
-| server.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
-| server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
-| server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체 |
-| server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID |
-| server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
-| server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
-| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | 인스턴스에 연결된 추가 로컬 블록 스토리지 크기 |
+| 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                       |
+|---|---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server | body | Object | 인스턴스 객체                                                                                                                                                                                                  |
+| status | body | Enum | 인스턴스 상태                                                                                                                                                                                                  |
+| server.id | Body | UUID | 인스턴스 ID                                                                                                                                                                                                  |
+| server.name | Body | String | 인스턴스 이름, 최대 255자                                                                                                                                                                                         |
+| server.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                 |
+| server.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID                                                                                                                                                                                       |
+| server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨                                                                                                                                                              |
+| server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보                                                                                                                                                                                 |
+| server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소                                                                                                                                                                                     |
+| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원                                                                                                                                                               |
+| server.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소                                                                                                                                                                                      |
+| server.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나                                                                                                                                                               |
+| server.links | Body | Object | 인스턴스 경로 객체                                                                                                                                                                                               |
+| server.key_name | Body | String | 인스턴스 키페어 이름                                                                                                                                                                                              |
+| server.image | Body | Object | 인스턴스 이미지 객체                                                                                                                                                                                              |
+| server.image.id | Body | UUID | 인스턴스 이미지 ID                                                                                                                                                                                              |
+| server.image.links | Body | Object | 인스턴스 이미지 경로 객체                                                                                                                                                                                           |
+| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알림                                                                                                                                                               |
+| server.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태                                                                                                                                                                                               |
+| server.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식                                                                                                                                                        |
+| server.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                  |
+| server.flavor | Body | Object | 인스턴스 타입 정보 객체                                                                                                                                                                                            |
+| server.flavor.id | Body | UUID | 인스턴스 타입 ID                                                                                                                                                                                               |
+| server.flavor.links | Body | Object | 인스턴스 타입 경로 객체                                                                                                                                                                                            |
+| server.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체                                                                                                                                                                                    |
+| server.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름                                                                                                                                                                                       |
+| server.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                         |
+| server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                    |
+| server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                          |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
+| server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                               |
+| server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                  |
+| server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
+| server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | 인스턴스에 연결된 추가 로컬 블록 스토리지 크기                                                                                                                                                                               |
 
 <details><summary>예시</summary>
 <p>
@@ -901,11 +901,11 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                          |
-|---|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름                                                                                                                                                                                          |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
-| server.id | Body | UUID | 생성한 인스턴스의 ID                                                                                                                                                                                                |
+| 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                           |
+|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름                                                                                                                                                                                           |
+| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
+| server.id | Body | UUID | 생성한 인스턴스의 ID                                                                                                                                                                                                 |
 
 <details><summary>예시</summary>
 <p>
@@ -1314,14 +1314,14 @@ X-Auth-Token: {tokenId}
 ```
 
 #### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                         |
-|---|---|---|---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| tenantId | URL | String | O | 테넌트 ID                                                                                                                                                                                                     |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID                                                                                                                                                                                                |
-| tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                                      |
-| resize | Body | Object | O | 인스턴스 타입 변경 요청                                                                                                                                                                                              |
-| resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID                                                                                                                                                                                             |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 루트 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+| 이름 | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                                 |
+|---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                                                                                                                                                                                             |
+| serverId | URL | UUID | O | 변경할 인스턴스 ID                                                                                                                                                                                                        |
+| tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                                              |
+| resize | Body | Object | O | 인스턴스 타입 변경 요청                                                                                                                                                                                                      |
+| resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID                                                                                                                                                                                                     |
+| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 루트 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
 
 <details><summary>예시</summary>
 <p>
