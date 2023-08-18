@@ -515,29 +515,29 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| Name | Format | Required | Description |
-| ------ | ---- | ---- | --------- |
-| name | String | O | Name of instance to create |
-| region | String | - | Region of instance to create <br>The default is the region configured in provider.tf |
-| flavor_name | String | - | Flavor name of instance to create <br>Required if flavor_id is empty |
-| flavor_id | String | - | Flavor ID of instance to create <br>Required if flavor_name is empty |
-| image_name | String | - | Image name to use for creating an instance <br>Required if image_id is empty <br>Available only when the flavor is U2 |
-| image_id | String | - | Image ID to use for creating an instance <br>Required if image_name is empty <br>Available only when the flavor is U2 |
-| key_pair | String | - | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console, <br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details |
-| availability_zone | String | - | Availability zone of an instance to create |
-| network | Object | - | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management**  on the console, select VPC to be attached, and check the network name and UUID at the bottom. |
-| network.name | String | - | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified. |
-| network.uuid | String | - | ID of VPC network |
-| network.port | String | - | ID of a port to be attached to VPC network |
-| security_groups | Array | - | List of the security group names for instance  <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page. |
-| user_data | String | - | Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes <br> |
-| block_device | Object | - | Information object of image or block storage to be used for an instance |
-| block_device.uuid | String | - | ID of original block storage <br>For a root volume, this must be a bootable original. You cannot use a volume or snapshot whose original is WAF or MS-SQL image from which image cannot be created.<br>The original other than `image` must have the same availability zone for the instance to create.|
-| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Use an image to create a block storage <br>`volume`: Use an existing volume, with the destination_type set to volume <br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
-| block_device.destination_type | String | - | Requires different settings depending on the location of instance volume or flavor <br>`local`: For U2 flavor <br>`volume`: For flavors other than U2 |
-| block_device.boot_index | Integer | - | Booting order of the specified volume<br>0: Root volume<br>Other values: Additional volumes<br>The higher the number, the lower the booting priority<br> |
-| block_device.volume_size | Integer | - | Block storage size for instance to create <br>Available from 20GB to 2,000GB (required if the flavor is U2) <br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide` |
-| block_device.delete_on_termination | Boolean | - | `true`: When deleting an instance, delete a block device <br>`false`: When deleting an instance, do not delete a block device |
+| Name    | Format | Required  | Description                                                                                                                                                                                           |
+| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name | String | O | Name of instance to create                                                                                                                                                                                 |
+| region | String | - | Region of instance to create<br>The default is the region configured in provider.tf                                                                                                                                                     |
+| flavor_name | String | - | Flavor name of instance to create<br>Required if flavor_id is empty                                                                                                                                                |
+| flavor_id | String | - | Flavor ID of instance to create<br>Required if flavor_name is empty                                                                                                                                              |
+| image_name | String | - | Image name to use for creating an instance<br>Required if image_id is empty<br>Available only when the flavor is U2                                                                                                                        |
+| image_id | String | - | Image ID to use for creating an instance<br>Required if image_name is empty<br>Available only when the flavor is U2                                                                                                                      |
+| key_pair | String | - | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console,<br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details            |
+| availability_zone | String | - | Availability zone of an instance to create                                                                                                                                                                             |
+| network | Object | - | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management**  on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
+| network.name | String | - | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified.                                                                                                                        |
+| network.uuid | String | - | ID of VPC network                                                                                                                                                                                  |
+| network.port | String | - | ID of a port to be attached to VPC network                                                                                                                                                                         |
+| security_groups | Array | - | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
+| user_data | String | - | 	Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
+| block_device | Object | - | Information object of image or block storage to be used for an instance                                                                                                                                                               |
+| block_device.uuid | String | - | ID of original block storage <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL images as the source, cannot be used.<br> The original other than `image` must have the same availability zone for the instance to create.                            |
+| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Use an image to create a block storage<br>`volume`: Use the existing block storage, with the destination_type set to volume<br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
+| block_device.destination_type | String | - | Requires different settings depending on the location of instance’s block storage or flavor<br>`local`: For U2 flavor<br>`volume`: For flavors other than U2                                                                                  |
+| block_device.boot_index | Integer | - | Order to boot the specified block storage<br>- If , root block storage<br>- If not, additional block storage<br>The higher the number, the lower the booting priority<br>                                                                                                            |
+| block_device.volume_size | Integer | - | Block storage size for instance to create<br>Available from 20GB to 2,000GB (required if the flavor is U2)<br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide`                        |
+| block_device.delete_on_termination | Boolean | - | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
 
 ### Attach Block Storage
 ```
