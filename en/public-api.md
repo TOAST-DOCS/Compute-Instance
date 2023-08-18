@@ -98,8 +98,8 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| minDisk | Query | Integer | - | Minimum block storage size (GB)<br>Returns only flavors with block storage sizes greater than specified value |
-| minRam | Query | Integer | - | Minimum RAM Size (MB)<br>Returns only flavors with RAM sizes greater than specified value |
+| minDisk | Query | Integer | - | Minimum block storage size (GB)<br/>Returns only flavors with block storage sizes greater than specified value |
+| minRam | Query | Integer | - | Minimum RAM Size (MB)<br/>Returns only flavors with RAM sizes greater than specified value |
 
 #### Response
 
@@ -304,7 +304,7 @@ This API does not require a request body.
 | Name | Type | Format | Description |
 |---|---|---|---|
 | keypair | Body | Object | List of key pair objects |
-| keypair.public_key | Body | String | Pubic key |
+| keypair.public_key | Body | String | Pulbic key |
 | keypair.user_id | Body | String | Key pair owner ID |
 | keypair.name | Body | String | Key pair name |
 | keypair.deleted | Body | Boolean | Indicates whether the key pair has been deleted |
@@ -375,7 +375,7 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Description |
 |---|---|---|---|
 | keypair | Body | Object | Key pair object |
-| keypair.public_key | Body | String | Pubic key |
+| keypair.public_key | Body | String | Public key |
 | keypair.private_key | Body | String | Private key. Visible if a key pair has been newly generated. |
 | keypair.user_id | Body | String | Key pair owner ID |
 | keypair.name | Body | String | Key pair name |
@@ -463,9 +463,9 @@ This API does not require a request body.
 | image | Query | UUID | - | Image ID<br>Return list of instances with specified image |
 | flavor | Query | UUID | - | Instance flavor ID<br>Return list of instances with specified flavor |
 | name | Query | String | - | Instance name<br>Return list of instances with specified name, regex is supported |
-| status | Query | Enum | - | Instance Status<br>Return list of instances with specified status |
+| status | Query | Enum | - | Instance status<br>Return list of instances with specified status |
 | limit | Query | Integer | - | Number of instances to query<br>Return list with up to specified number of instances |
-| marker | Query | UUID | - | UUID of first instance in the list<br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
+| marker | Query | UUID | - | UUID of first instance in the list <br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
 
 #### Response
 

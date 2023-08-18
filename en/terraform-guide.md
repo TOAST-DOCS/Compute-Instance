@@ -339,19 +339,19 @@ data "openstack_images_image_v2" "windows2016_20200218" {
   tag = "_AVAILABLE_"
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of image to query<br>To check the image name, go to **Compute > Instance** on NHN Cloud console and click **Create Instance**. The information can be found on the list of images provided by NHN Cloud.<br>The image name must be entered as **<Image Description>** which shows up on NHN Cloud console.<br>If the Language item exists, follow the format **"<Image Description> <Language>"** like the above example. |
 | size_min | Integer | - | Minimum size of image to query (bytes) |
 | size_max | Integer | - | Maximum size of image to query (bytes) |
 | properties | Object | - | Attributes of image to query<br>Images that match all attributes are queried. |
-| sort_key | String | - | Sort the list of images queried by particular attributes<br>The default is `name` |
+| sort_key | String | - | Sort the list of images queried by particular attributes <br>The default is `name` |
 | sort_direction | String | - | Sorting order of the list of queried images <br>`asc`: Ascending order (Default) <br>`desc`: Descending order |
 | owner | String | - | ID of tenant which includes the image to query |
 | tag | String | - | Search images with a particular tag |
-| visibility | String | - | Visibility of image to query<br>Select only one among public, private, and shared<br>If omitted, the list with all types of images is returned |
-| most_recent | Boolean | - | `true`: Select the most recently created image from the list of queried images<br>`false`: Select images in the queried order |
-| member_status | String | - | Status of image member to query <br>One among `accepted`,`pending`, `rejected`, and `all`|
+| visibility | String | - | Visibility of image to query <br>Select only one among public, private, and shared <br>If omitted, the list with all types of images is returned |
+| most_recent | Boolean | - | `true`: Select the most recently created image from the list of queried images <br>`false`: Select images in the queried order |
+| member_status | String | - | Status of image member to query <br>One among `accepted`,`pending`, `rejected`, and `all` |
 
 ### Block Storage
 
@@ -362,7 +362,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of block storage to query |
 | status | String | - | Status of block storage to query |
@@ -378,7 +378,7 @@ data "openstack_compute_flavor_v2" "u2c2m4"{
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of flavor to query |
 
@@ -394,12 +394,12 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of snapshot to query |
 | volume_id | String | - | ID of original block storage of snapshot to query |
 | status | String | - | Status of snapshot to query |
-| most_recent | Boolean | - | `true`: Select the most recently created snapshot from the queried snapshot list<br>`false`: Select snapshots in the queried order |
+| most_recent | Boolean | - | `true`: Select the most recently created snapshot from the queried snapshot list <br>`false`: Select snapshots in the queried order |
 
 
 ### VPC
@@ -413,7 +413,7 @@ data "openstack_networking_network_v2" "default_network" {
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of VPC network to query |
 | network_id | String | - | UUID of VPC network to query |
@@ -430,7 +430,7 @@ data "openstack_networking_subnet_v2" "default_subnet" {
   network_id = data.openstack_networking_network_v2.default_network.network_id
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of subnet to query |
 | subnet_id | String | - | UUID of subnet to query |
@@ -442,7 +442,7 @@ data "openstack_networking_subnet_v2" "default_subnet" {
 You can create, modify, or delete resources with Terraform resources. NHN Cloud supports management of the following resources using Terraform:
 
 * Instance
-* Block Storage
+* Block storage
 * Floating IP
 * Network port
 * Load balancer
@@ -560,7 +560,7 @@ resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
   }
 }
 ```
-| Name    | Type | Required  | Description       |
+| Name | Type | Required | Description |
 | ------ | --- |---- | --------- |
 | instance_id | String | - | Target instance to attach the block storage |
 | volume_id | String | - | UUID of block storage to be attached |
@@ -595,13 +595,13 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| Name    | Type | Required  | Description       |
+| Name | Type | Required | Description |
 | ------ | --- |---- | --------- |
 | name | String | O | Name of block storage to create |
 | description | String | - | Description of block storage |
 | size | Integer | - | Size of block storage to create (GB) |
-| availability_zone | String | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used.<br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
-| volume_type | String | - | Type of block storage<br>`General HDD`: HDD block storage (default)<br>`General SSD`: SSD block storage |
+| availability_zone | String | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
+| volume_type | String | - | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
 
 
 ### Import Block Storage
@@ -648,9 +648,9 @@ resource "openstack_compute_floatingip_v2" "fip_01" {
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | --- |---- | --------- |
-| pool | String | O | IP pool to create a floating IP<br>From `Network > Floating IP` on console, click `Create Floating IP` and check the IP pool. |
+| pool | String | O | IP pool to create a floating IP <br>From `Network > Floating IP` on console, click `Create Floating IP` and check the IP pool. |
 
 
 ### Associate Floating IP
@@ -672,12 +672,12 @@ resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
 }
 
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | --- |---- | --------- |
 | floating_ip | String | O | Floating IP to associate |
 | instance_id | String | O | UUID of the target instance to be associated with floating IP |
 | fixed_ip | String | - | Fixed IP of the target to be associated with floating IP |
-| wait_until_associated | Boolean | - | `true`: Poll the target instance until floating IP is associated<br>`false`: Do not wait until floating IP is associated (default) |
+| wait_until_associated | Boolean | - | `true`: Poll the target instance until floating IP is associated <br>`false`: Do not wait until floating IP is associated (default) |
 
 ### Create Network Port
 
@@ -689,18 +689,18 @@ resource "openstack_networking_port_v2" "port_1" {
 }
 ```
 
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | O | Name of port to create |
 | description | String | O | Description of port |
 | network_id | String | O | Network ID of VPC to create a port |
 | tenant_id | String | O | Tenant ID of port to create |
 | device_id | String | - | ID of device to attach a created port |
-| fixed_ip | Object | - | Setting information of fixed IP of a port to create<br>Must not include the `no_fixed_ip` attribute |
+| fixed_ip | Object | - | Setting information of fixed IP of a port to create <br>Must not include the `no_fixed_ip` attribute |
 | fixed_ip.subent_id | String | O | Subnet ID of fixed IP |
 | fixed_ip.ip_address | String | - | Address of fixed IP to configure |
 | no_fixed_ip | Boolean | - | `true`: Port without fixed IP<br>Must not include the `fixed_ip` attribute |
-| admin_state_up | Boolean | - | Administrator control status<br> `true`: Running<br>`false`: Suspended |
+| admin_state_up | Boolean | - | Administrator control status <br> `true`: Running <br>`false`: Suspended |
 
 
 
@@ -717,14 +717,14 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   admin_state_up = true
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of load balancer |
 | description | String | - | Description of load balancer |
 | tenant_id | String | - | Tenant ID to which load balancer is to be created |
 | vip_subnet_id | String | O | Subnet UUID to be used by load balancer |
 | vip_address | String | - | IP address of load balancer |
-| security_group_ids | Object | - | List of security group IDs to be applied for load balancer<br>**Security groups must be specified by ID, not by name** |
+| security_group_ids | Object | - | List of security group IDs to be applied for load balancer <br>**Security groups must be specified by ID, not by name** |
 | admin_state_up | Boolean | - | Administrator control status |
 
 
@@ -765,11 +765,11 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
   admin_state_up = true
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of listener to create |
 | description  | String | - | Description of listener |
-| protocol | String | O | Protocol of listener to create<br>One among `TCP`, `HTTP,HTTPS`, and `TERMINATED_HTTPS` |
+| protocol | String | O | Protocol of listener to create <br>One among `TCP`, `HTTP,HTTPS`, and `TERMINATED_HTTPS` |
 | protocol_port | Integer | O | Port of listener to create |
 | loadbalancer_id | String | O | ID of load balancer to be connected with listener to create |
 | default_pool_id | String | - | ID of the default pool to be connected with listener to create |
@@ -801,16 +801,16 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
   admin_state_up = true
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | Name of load balancer |
+| name | String | - | Load balancer name |
 | description | String | - | Pool description |
-| protocol | String | O | Protocol<br>One among `TCP`, `HTTP`, `HTTPS`, and `PROXY` |
+| protocol | String | O | Protocol <br>One among `TCP`, `HTTP`, `HTTPS`, and `PROXY` |
 | listener_id | String | O | ID of listener with which a pool to create is associated |
-| lb_method | String | O | Load balancing method to distribute pool traffic to members<br>One among `ROUND_ROBIN`,`LEAST_CONNECTIONS`, and `SOURCE_IP` |
+| lb_method | String | O | Load balancing method to distribute pool traffic to members <br>One among `ROUND_ROBIN`,`LEAST_CONNECTIONS`, and `SOURCE_IP` |
 | persistence | Object | - | Session persistence of a pool to create |
-| persistence.type | String | O | Session persistence type<br>One among `SOURCE_IP`, `HTTP_COOKIE`, and `APP_COOKIE`<br>Unavailable if the load balancing method is `SOURCE_IP`<br>HTTP_COOKIE and APP_COOKIE are unavailable if the protocol is `HTTPS` or `TCP` |
-| persistence.cookie_name | String | - | Name of cookie<br>persistence.cookie_name is available only when the session persistence type is APP_COOKIE |
+| persistence.type | String | O | Session persistence type<br>One among `SOURCE_IP`, `HTTP_COOKIE`, and `APP_COOKIE` <br>Unavailable if the load balancing method is `SOURCE_IP`<br>HTTP_COOKIE and APP_COOKIE are unavailable if the protocol is `HTTPS` or `TCP` |
+| persistence.cookie_name | String | - | Name of cookie <br>persistence.cookie_name is available only when the session persistence type is APP_COOKIE |
 | admin_state_up | Boolean | - | Administrator control status |
 
 
@@ -830,23 +830,23 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
   admin_state_up = true
 }
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of health monitor to create |
 | pool_id | String | O | ID of pool to be connected with health monitor to create |
 | type | String | O | Support `TCP`, `HTTP`, and `HTTPS` only |
 | delay | Integer | O | Interval of status check |
-| timeout | Integer | O | Timeout for status check (seconds)<br> Timeout must have smaller value than delay |
+| timeout | Integer | O | Timeout for status check (seconds)<br>Timeout must have smaller value than delay |
 | max_retries | Integer | O | Number of maximum retries, between 1 and 10 |
 | url_path | String | - | Request URL for status check |
-| http_method | String | - | HTTP method to use for status check<br>The default is GET|
-| expected_codes | String | - | HTTP(S) response code of members to be considered as normal status<br>expected_codes can be set as list (`200,201,202`) or range (`200-202`) |
+| http_method | String | - | HTTP method to use for status check<br>The default is GET |
+| expected_codes | String | - | HTTP(S) response code of members to be considered as normal status <br/>expected_codes can be set as list (`200,201,202`) or range (`200-202`) |
 | admin_state_up | Boolean | - | Administrator control status |
 
 
 ### Create Member
 
-<font color='red'>\*\*(Caution) `subnet_id` must be specified when you create a member in NHN Cloud. Also note that `name` is not supported. \*\*</font>
+<font color='red'>**(Caution) `subnet_id` must be specified when you create a member in NHN Cloud. Also note that `name` is not supported. **</font>
 
 ```
 resource "openstack_lb_member_v2" "tf_member_01"{
@@ -859,13 +859,13 @@ resource "openstack_lb_member_v2" "tf_member_01"{
 }
 
 ```
-| Name    | Format | Required  | Description       |
+| Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | pool_id | String | O | ID of pool including member to create |
 | subnet_id | String | O | Subnet ID of member to create |
 | address | String | O | IP address of member to receive traffic from load balancer |
 | protocol_port | Integer | O | Port of member to receive traffic |
-| weight | Integer | - | Weight of traffic to receive from the pool<br>The higher the weight, the more traffic you receive. |
+| weight | Integer | - | Weight of traffic to receive from the pool <br>The higher the weight, the more traffic you receive. |
 | admin_state_up | Boolean | - | Administrator control status |
 
 

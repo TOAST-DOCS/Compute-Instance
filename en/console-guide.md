@@ -29,7 +29,7 @@ For more details on availability zones, see [Availability Zone in Instance Overv
 You can select various flavors depending on virtual hardware performance specifications. However, the choice of some flavors may be limited depending on the virtual hardware performance that your image requires. For more details, see [Instance Overview](./overview).
 
 > [Note] 
-1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
+> 1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
 
 Instance flavors can be changed in the NHN Cloud console even after instance creation, from higher to lower specs and vice versa. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
 
@@ -102,7 +102,7 @@ Block storage can also be managed from Instance > Block Storage. For more detail
 You can specify a script to be executed after instance creation. The user script is executed following the instance's initial boot and after the initialization process including network configuration has completed. User scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
 
 > [Caution]
-User scripts are executed with root (Linux)/Administrator (Windows) privileges.
+> User scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
 #### Linux
 The first line of a user script must begin with `#!`.
@@ -187,7 +187,7 @@ When you modify flavors, instance resize and resize confirmation tasks proceed. 
 
 Instances will be charged using the new flavor from the moment the modification completes.
 
-## Key Pair
+## Key Pairs
 
 ### Import Key Pairs (Windows)
 
@@ -197,18 +197,18 @@ Make sure you have [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/la
 
 Run puttygen.
 
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+![Image1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
 Select **RSA** (or SSH-2 RSA in older versions of puttygen) under **Parameters**. Click **Generate** under **Actions**. Continuously move your mouse in the empty space in order to generate the key.
 
 After the key is generated, the public key file contents will be visible as shown below. Paste the contents of the public key into the **Public Key** field in **Get Key Pair** in order to register the key pair.
 
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-002.png)
+![Image1](http://static.toastoven.net/prod_instance/putty-ssh-002-en.png)
 
 Click **Save private key** under **Actions** to save the private key. If you save the private key leaving the **Key passphrase** field blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to use your converted private key more securely, set a passphrase before saving.
 
 > [Caution]
-If you wish to be able to automatically login to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
+> If you wish to be able to automatically login to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
 The registered key pair can be used to create instances, and the key pair's private key must be used when accessing instances. For more details on how to access instances, see [Instance Overview](./overview/#how-to-access-instances).
 
@@ -238,34 +238,34 @@ Just as with key pairs created from NHN Cloud, imported key pairs also need to b
 NHN Cloud provides Windows images with English as the primary language. You may change your language preferences with the following steps.
 
 1. Go to **START > Control Panel > Clock, Language, and Region > Add a language**.
-![이미지1](http://static.toastoven.net/prod_instance/windows1.png)
+![Image1](http://static.toastoven.net/prod_instance/windows1.png)
 
 2. Select **Change your language preferences > Add a language**.
-![이미지1](http://static.toastoven.net/prod_instance/windows2.png)
+![Image1](http://static.toastoven.net/prod_instance/windows2.png)
 
 3. Choose a language in **Add a language** and click **Add**.
-![이미지1](http://static.toastoven.net/prod_instance/windows3.png)
+![Image1](http://static.toastoven.net/prod_instance/windows3.png)
 
 4. Check the language pack just added.
-![이미지1](http://static.toastoven.net/prod_instance/windows4.png)
+![Image1](http://static.toastoven.net/prod_instance/windows4.png)
 
 5. Download and install the language pack.
-![이미지1](http://static.toastoven.net/prod_instance/windows5.png)
+![Image1](http://static.toastoven.net/prod_instance/windows5.png)
 
 6. Download and install updates.
-![이미지1](http://static.toastoven.net/prod_instance/windows6.png)
+![Image1](http://static.toastoven.net/prod_instance/windows6.png)
 
 7. To change to the installed language pack, double-click the selected language or select **Options**.
-![이미지1](http://static.toastoven.net/prod_instance/windows7.png)
+![Image1](http://static.toastoven.net/prod_instance/windows7.png)
 
 8. Choose **Make this the primary language** for Windows display language.
-![이미지1](http://static.toastoven.net/prod_instance/windows8.png)
+![Image1](http://static.toastoven.net/prod_instance/windows8.png)
 
 9. To apply the changes, click **Log off now**.
-![이미지1](http://static.toastoven.net/prod_instance/windows9.png)
+![Image1](http://static.toastoven.net/prod_instance/windows9.png)
 
 10. Log in again, and you can see Windows is displayed using the language pack of your choice.
-![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
+![Image1](http://static.toastoven.net/prod_instance/windows10.png)
 
 ## Appendix 2. Change Routing in Windows
 
@@ -288,7 +288,7 @@ Route commands
 Description
 
 
-![이미지1](http://static.toastoven.net/prod_instance/windows_route1.png)
+![Image1](http://static.toastoven.net/prod_instance/windows_route1.png)
 
 * Metric Value: A lower value indicates higher priority
 * Interface Number: This value can be obtained from route print (red box above)
