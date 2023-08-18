@@ -28,8 +28,8 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_lb_pool_v2
     * nhncloud_lb_member_v2
     * nhncloud_lb_monitor_v2
-    * nhncloud_compute_floatingip_v2
-    * nhncloud_compute_floatingip_associate_v2
+    * nhncloud_networking_floatingip_v2
+    * nhncloud_networking_floatingip_associate_v2
     * nhncloud_networking_port_v2
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
@@ -759,7 +759,7 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 ### 플로팅 IP 생성
 
 ```
-resource "nhncloud_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   pool = "Public Network"
 }
 ```
@@ -777,13 +777,13 @@ resource "nhncloud_compute_instance_v2" "tf_instance_01" {
 }
 
 # 플로팅 IP 생성
-resource "nhncloud_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   ...
 }
 
 # 플로팅 IP 연결
-resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
-  floating_ip = nhncloud_compute_floatingip_v2.fip_01.address
+resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
+  floating_ip = nhncloud_networking_floatingip_v2.fip_01.address
   instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
 }
 
