@@ -504,30 +504,30 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| 名前 | 形式 | 必須 | 説明 |
-| ------ | ---- | ---- | --------- |
-| name | String | O | 作成するインスタンスの名前 |
-| region | String | - | 作成するインスタンスのリージョン<br>デフォルト値はprovider.tfに設定されたregion |
-| flavor_name | String | - | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須 |
-| flavor_id | String | - | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須 |
-| image_name | String | - | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可能 |
-| image_id | String | - | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可能 |
-| key_pair | String | - | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。 |
-| availability_zone | String | - | 作成するインスタンスのアベイラビリティゾーン |
-| network | Object | - | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可能。 |
-| network.name | String | - | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示 |
-| network.uuid | String | - | VPCネットワークID |
-| network.port | String | - | VPCネットワークに接続するポートのID |
-| security_groups | Array | - | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可能 |
-| user_data | String | - | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br> |
-| block_device | Object | - | インスタンスに使用するイメージまたはブロックストレージ情報オブジェクト |
-| block_device.uuid | String | - | 作成するブロックストレージの原本のID |
-| block_device.uuid | String | - | ブロックストレージの原本ID <br>ルートボリュームの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある |
-| block_device.source_type | String | O | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたボリュームで使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
-| block_device.destination_type | String | - | インスタンスボリュームの位置、インスタンスタイプに応じて設定必要<br>`local`：U2インスタンスタイプを利用する場合<br>`volume`：U2以外のインスタンスタイプを利用する場合 |
-| block_device.boot_index | Integer | - | 指定したボリュームの起動順序<br>0の場合、ルートボリューム<br>それ以外は追加ボリューム<br>数字が大きいほど起動順序が下がる<br> |
-| block_device.volume_size | Integer | - | 作成するインスタンスで使用するブロックストレージサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照 |
-| block_device.delete_on_termination | Boolean | - | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない |
+| 名前   | 形式 | 必須 | 説明                                                                                                                                                                                          |
+| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name | String | O | 作成するインスタンスの名前                                                                                                                                                                                |
+| region | String | - | 作成するインスタンスのリージョン<br>デフォルト値はprovider.tfに設定されたリージョン                                                                                                                                                    |
+| flavor_name | String | - | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須                                                                                                                                               |
+| flavor_id | String | - | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須                                                                                                                                             |
+| image_name | String | - | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                       |
+| image_id | String | - | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                     |
+| key_pair | String | - | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。           |
+| availability_zone | String | - | 作成するインスタンスのアベイラビリティゾーン                                                                                                                                                                            |
+| network | Object | - | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
+| network.name | String | - | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示                                                                                                                       |
+| network.uuid | String | - | VPCネットワークID                                                                                                                                                                                  |
+| network.port | String | - | VPCネットワークに接続するポートのID                                                                                                                                                                         |
+| security_groups | Array | - | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
+| user_data | String | - | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br>                                                                                                                              |
+| block_device | Object | - | インスタンスに使用するイメージまたはブロックストレージ情報オブジェクト                                                                                                                                                              |
+| block_device.uuid | String | - | ブロックストレージの原本ID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある                            |
+| block_device.source_type | String | O | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたブロックストレージで使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
+| block_device.destination_type | String | - | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>`local`：U2インスタンスタイプを利用する場合<br>`volume`：U2以外のインスタンスタイプを利用する場合                                                                                 |
+| block_device.boot_index | Integer | - | 指定したブロックストレージの起動順序<br>0の場合、ルートブロックストレージ<br>それ以外は追加ブロックストレージ<br>数字が大きいほど起動順序が下がる<br>                                                                                                            |
+| block_device.volume_size | Integer | - | 作成するインスタンスで使用するブロックストレージサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照                       |
+| block_device.delete_on_termination | Boolean | - | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
+
 
 ### ブロックストレージ接続
 ```
