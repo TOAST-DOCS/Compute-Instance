@@ -764,9 +764,9 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 }
 ```
 
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| pool | String | O | 플로팅 IP를 생성할 IP 풀<br>콘솔 `Network > Floating IP`에서 `플로팅 IP 생성` 버튼을 클릭해서 표시되는 IP 풀에서 확인할 수 있습니다. |
+| 이름    | 형식 | 필수  | 설명                                        |
+| ------ | --- |---- |-------------------------------------------|
+| pool | String | O | 플로팅 IP를 생성할 IP 풀<br>기본값은 `Public Network` |
 
 
 ### 플로팅 IP 연결
