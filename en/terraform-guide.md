@@ -16,33 +16,34 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * You can automate the process so that infrastructure with the same configuration can be built and changed in multiple locations.
     * You can save time to build infrastructure and reduce mistakes.
 
-NHN Cloud supports resources and data sources listed below among those available in Terraform OpenStack Provider. For more details regarding Terraform OpenStack Provider and features supported by Terraform, see [OpenStack Provider in Terraform website](https://www.terraform.io/docs/providers/openstack/index.html)
 
 #### Supported Resources
 
 * Compute
-    * openstack_compute_instance_v2
-    * openstack_compute_volume_attach_v2
+    * nhncloud_compute_instance_v2
+    * nhncloud_compute_volume_attach_v2
 * Network
-    * openstack_lb_loadbalancer_v2
-    * openstack_lb_listener_v2
-    * openstack_lb_pool_v2
-    * openstack_lb_member_v2
-    * openstack_lb_monitor_v2
-    * openstack_compute_floatingip_v2
-    * openstack_compute_floatingip_associate_v2
-    * openstack_networking_port_v2
+    * nhncloud_lb_loadbalancer_v2
+    * nhncloud_lb_listener_v2
+    * nhncloud_lb_pool_v2
+    * nhncloud_lb_member_v2
+    * nhncloud_lb_monitor_v2
+    * nhncloud_networking_floatingip_v2
+    * nhncloud_networking_floatingip_associate_v2
+    * nhncloud_networking_port_v2
+    * nhncloud_networking_vpc_v2
+    * nhncloud_networking_vpcsubnet_v2
 * Storage
-    * openstack_blockstorage_volume_v2
+    * nhncloud_blockstorage_volume_v2
 
-#### Supported Data Sources
+#### Data sources 지원
 
-* openstack_images_image_v2
-* openstack_blockstorage_volume_v2
-* openstack_compute_flavor_v2
-* openstack_blockstorage_snapshot_v2
-* openstack_networking_network_v2
-* openstack_networking_subnet_v2
+* nhncloud_images_image_v2
+* nhncloud_blockstorage_volume_v2
+* nhncloud_compute_flavor_v2
+* nhncloud_blockstorage_snapshot_v2
+* nhncloud_networking_vpc_v2
+* nhncloud_networking_vpcsubnet_v2
 
 ### Note
 
@@ -62,9 +63,73 @@ $ terraform -v
 Terraform v1.0.0
 ```
 
+## Terraform NHN Cloud provider provided
+
+Terraform NHN Cloud provider provides the following **operating system/architecture** compatibility, and you can download the binary file through the link.
+Terraform NHN Cloud provider version currently provided is **1.0.0**.
+
+* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+
+### Local provider setup
+
+Terraform NHN Cloud provider can be used through local provider setting.
+
+After creating a directory structure to find a local provider, add the downloaded binary file to the plugin path.
+
+The following is the default plugin path according to the operating system. For more information on default routes, see `Implied Local Mirror Directories` on 
+the [Terraform site](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation).
+
+* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+
+Describes path configuration rules for default plugin path.
+
+* **version**
+    * The version of the provider.
+* **platforms**
+    * An array of objects describing the platform containing the package, consisting of an operating system identifying keyword and a CPU architecture identifying keyword.
+    * **darwin_adm64** : macOS / AMD64
+    * **darwin_arm64** : macOS / Apple silicon
+    * **linux_amd64** : Linux / AMD64
+    * **windows_amd64** : Windows / AMD64
+
+The following is an example of plugin setting based on **operating system/architecture** after binary download. 
+
+**It is recommended to use version 1.0.0 when configuring the plugin.**
+
+This is an example of `macOS / AMD64` plugin settings.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+```
+
+This is an example of `macOS / Apple silicon` plugin settings.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+```
+
+This is an example of `Linux / AMD64` plugin settings.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+```
+
+This is an example of `Windows / AMD64` plugin settings.
+
+```
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+```
 
 ## Terraform Initialization
-Before using Terraform, create a provider configuration file like below.
+Before using Terraform, create a provider configuration file as follows.
 
 The name of the provider file can be set randomly. This example uses `provider.tf` as the filename.
 
@@ -73,15 +138,15 @@ The name of the provider file can be set randomly. This example uses `provider.t
 terraform {
 required_version = ">= 1.0.0"
   required_providers {
-    openstack = {
-      source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.42.0"
+    nhncloud = {
+      source  = "terraform.local/local/nhncloud"
+      version = "1.0.0"
     }
   }
 }
 
-# Configure the OpenStack Provider
-provider "openstack" {
+# Configure the nhncloud Provider
+provider "nhncloud" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
@@ -147,7 +212,7 @@ The following example shows an `instance.tf` file that defines a resource creati
 $ ls
 instance.tf provider.tf
 $ cat instance.tf
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   name      = "terraform-instance-01"
   region    = "KR1"
   flavor_id = "da74152c-0167-4ce9-b391-8a88a8ff2754"
@@ -186,11 +251,11 @@ The following example shows the result of executing the `apply` command using th
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Creating...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Creating...
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
@@ -204,7 +269,7 @@ Open the `.tf` file in which resources to change are defined, modify information
 The following shows an example of adding one more `terraform-sg` security group to an instance, where the `instance.tf` file created above is modified as follows.
 
 ```
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   ...
   security_groups = ["default", "terraform-sg"]
   ...
@@ -221,8 +286,8 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # openstack_compute_instance_v2.terraform-instance-01 will be updated in-place
-  ~ resource "openstack_compute_instance_v2" "terraform-instance-01" {
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be updated in-place
+  ~ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
         id                  = "1e846787-04e9-4701-957c-78001b4b7257"
         name                = "terraform-instance-01"
       ~ security_groups     = [
@@ -242,8 +307,8 @@ When you apply the plan, a new security group is added to the instance.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
-openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -266,8 +331,8 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # openstack_compute_instance_v2.terraform-instance-01 will be destroyed
-  - resource "openstack_compute_instance_v2" "terraform-instance-01" {
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 ...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
@@ -279,9 +344,9 @@ Running the `apply` command deletes the created instance.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
-openstack_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
+nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
 
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
@@ -290,10 +355,10 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 You can find Flavor ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. Image names are subject to change because NHN Cloud updates them on a regular basis. Refer to console and specify the exact name of the image to use.
 
-Data sources are referenced as `{data sources type}.{data source name}`. In the below example, the imported image information is referenced with `openstack_images_image_v2.ubuntu_2004_20201222`.
+Data sources are referenced as `{data sources type}.{data source name}`. In the below example, the imported image information is referenced with `nhncloud_images_image_v2.ubuntu_2004_20201222`.
 
 ```
-data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
   name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
@@ -302,21 +367,18 @@ data "openstack_images_image_v2" "ubuntu_2004_20201222" {
 It is possible to reference another data source within data sources.
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00"{
+data "nhncloud_blockstorage_volume_v2" "volume_00"{
   name = "ssd_volume1"
   status = "available"
 }
 
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
 ```
-
-For more details on how to use data sources, see `Data Sources` in the [Terraform Website](https://www.terraform.io/docs/providers/openstack/index.html).
-
 
 The following sections describe how to import various resources provided by NHN Cloud by using the data resources feature.
 
@@ -325,13 +387,13 @@ The following sections describe how to import various resources provided by NHN 
 Imports image information. NHN Cloud's public images as well as private images are supported.
 
 ```
-data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
   name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # Query the oldest image from images with the same name
-data "openstack_images_image_v2" "windows2016_20200218" {
+data "nhncloud_images_image_v2" "windows2016_20200218" {
   name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
@@ -356,7 +418,7 @@ data "openstack_images_image_v2" "windows2016_20200218" {
 ### Block Storage
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00" {
+data "nhncloud_blockstorage_volume_v2" "volume_00" {
   name = "ssd_volume1"
   status = "available"
 }
@@ -373,7 +435,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 To check name of a flavor, go to **Compute > Instance** on NHN Cloud console and click **Create Instance > Select Flavor**.
 
 ```
-data "openstack_compute_flavor_v2" "u2c2m4"{
+data "nhncloud_compute_flavor_v2" "u2c2m4"{
   name = "u2.c2m4"
 }
 ```
@@ -386,9 +448,9 @@ data "openstack_compute_flavor_v2" "u2c2m4"{
 ### Snapshot
 
 ```
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
@@ -407,35 +469,42 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 To check UUID of VPC network, go to NHN Cloud console and select VPC from **Network > VPC**.
 
 ```
-data "openstack_networking_network_v2" "default_network" {
-  name="Default Network"
-  network_id = "00d5b852-cb77-4307-b6be-d81dad24eec1"
+data "nhncloud_networking_vpc_v2" "default_network" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "e34fc878-89f6-4d17-a039-3830a0b78346"
+  name = "Default Network"
 }
 ```
 
 | Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of VPC network to query |
-| network_id | String | - | UUID of VPC network to query |
+| tenant\_id | String | - | Tenant ID that VPC to query belongs to |
+| id | String | - | VPC ID to query |
+| name | String | - | VPC name to query |
 
-
-### Subnet
+### VPC Subnet
 
 To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**.
 
 ```
-data "openstack_networking_subnet_v2" "default_subnet" {
+data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "05f6fdc3-641f-48df-b986-773b6489654f"
   name = "Default Network"
-  subnet_id = "756af037-54f3-4aa2-8c22-56c9da055553"
-  network_id = data.openstack_networking_network_v2.default_network.network_id
+  shared = true
 }
 ```
-| Name | Format | Required | Description |
-| ------ | ---- | ---- | --------- |
-| name | String | - | Name of subnet to query |
-| subnet_id | String | - | UUID of subnet to query |
-| network_id | String | - | UUID of network in which subnet to query is included |
 
+| Name | Type | Required | Description         |
+| --- | --- |---|------------|
+| region | String | - | Region name that subnet to query belongs to |
+| tenant\_id | String | - | Tenant ID that subnet to query belongs to |
+| id | String | - | Subnet ID to query |
+| name | String | - | Subnet name to query |
+| shared | Bool | - | Whether to share subnet to query |
 
 ## Resources
 
@@ -443,6 +512,7 @@ You can create, modify, or delete resources with Terraform resources. NHN Cloud 
 
 * Instance
 * Block storage
+* VPC
 * Floating IP
 * Network port
 * Load balancer
@@ -455,22 +525,22 @@ The following sections describe how to use each resource.
 
 ```
 # Create u2 Instance
-resource "openstack_compute_instance_v2" "tf_instance_01"{
+resource "nhncloud_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.ubuntu_2004_20201222.id
-  flavor_id = data.openstack_compute_flavor_v2.u2c2m4.id
+  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_network_v2.default_network.name
+    uuid = data.nhncloud_networking_network_v2.default_network.id
   }
 
   block_device {
-    uuid = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type = "image"
     destination_type = "local"
     boot_index = 0
@@ -481,24 +551,24 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
 
 # Flavors other than u2
 # Create instance with network and block storage added
-resource "openstack_compute_instance_v2" "tf_instance_02" {
+resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  flavor_id = data.openstack_compute_flavor_v2.m2c1m2.id
+  flavor_id = data.nhncloud_compute_flavor_v2.m2c1m2.id
   security_groups = ["default","web"]
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_network_v2.default_network.name
+    uuid = data.nhncloud_networking_network_v2.default_network.id
   }
 
   network {
-    port = openstack_networking_port_v2.port_1.id
+    port = nhncloud_networking_port_v2.port_1.id
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -542,19 +612,19 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 ### Attach Block Storage
 ```
 # Create Instance
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # Create Block Storage
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   ...
 }
 
 # Attach Block Storage
-resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
-  instance_id = openstack_compute_instance_v2.tf_instance_02.id
-  volume_id = openstack_blockstorage_volume_v2.volume_01.id
+resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
+  instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
+  volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
   vendor_options {
     ignore_volume_confirmation = true
   }
@@ -571,7 +641,7 @@ resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
 ### Create Block Storage
 ```
 # Create HDD-type Empty Block Storage
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   name = "tf_volume_01"
   size = 10
   availability_zone = "kr-pub-a"
@@ -579,7 +649,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
 }
 
 # Create SSD-type Empty Block Storage
-resource "openstack_blockstorage_volume_v2" "volume_02" {
+resource "nhncloud_blockstorage_volume_v2" "volume_02" {
   name = "tf_volume_02"
   size = 10
   availability_zone = "kr-pub-b"
@@ -587,10 +657,10 @@ resource "openstack_blockstorage_volume_v2" "volume_02" {
 }
 
 # Create Block Storage with Snapshot
-resource "openstack_blockstorage_volume_v2" "volume_03" {
+resource "nhncloud_blockstorage_volume_v2" "volume_03" {
   name = "tf_volume_03"
   description = "terraform create volume with snapshot test"
-  snapshot_id = data.openstack_blockstorage_snapshot_v2.snapshot_01.id
+  snapshot_id = data.nhncloud_blockstorage_snapshot_v2.snapshot_01.id
   size = 30
 }
 ```
@@ -610,21 +680,21 @@ You can import a block storage created on console or via API to Terraform and ma
 
 On the `.tf` file, write the information of block storage to import.
 ```
-resource "openstack_blockstorage_volume_v2" "volume_06" {
+resource "nhncloud_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"
   size = 10
 }
 ```
 
-Import the block storage with the command `terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}`.
+Import the block storage with the command `terraform import nhncloud_blockstorage_volume_v2.{name} {block_storage_id}`.
 
 ```
-$ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
+$ terraform import nhncloud_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
 ...
-openstack_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
-openstack_blockstorage_volume_v2.volume_06: Import prepared!
-  Prepared openstack_blockstorage_volume_v2 for import
-openstack_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
+nhncloud_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
+nhncloud_blockstorage_volume_v2.volume_06: Import prepared!
+  Prepared nhncloud_blockstorage_volume_v2 for import
+nhncloud_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
 
 Import successful!
 ...
@@ -635,15 +705,61 @@ Import successful!
 
 NHN Cloud supports creation of the following resources with Terraform:
 
+* VPC
+* VPC Subnet
 * Floating IP
-* Network port
+* Network Port
 
-Other VPC resources must be created on console.
+Other VPC resources must be created in the console.
+
+### Create VPC
+
+Create a VPC with the specified IP range.
+
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  name = "tf-vpc-01"
+  cidrv4 = "10.0.0.0/8"
+}
+```
+
+| Name | Type | Required | Description     |
+| --- | --- |---|--------|
+| name | String | O | VPC name |
+| cidrv4 | String | O | VPC IP range |
+| region | String | - | VPC region name |
+| tenant\_id | String | - | VPC tenant ID |
+
+
+
+### Create VPC Subnet and Attach Routing Table
+
+Create a subnet with the specified IP range in the specified VPC, and attach the existing routing table to the created subnet.
+Routing tables can only be created in the NHN Cloud console.
+
+```
+resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
+  name      = "tf-vpcsubnet-01"
+  vpc_id    = "def56b5e-0f1d-4a31-8005-4d716127f177"
+  cidr      = "10.10.10.0/24"
+  routingtable_id = "c3ed678d-de8b-4bf7-abea-b7c1118f0828"
+}
+```
+
+| Name | Type | Required | Description         |
+| --- | --- |---|------------|
+| vpc\_id | String | O | VPC ID to which subnet is assigned |
+| cidr | String | O | IP range of subnet |
+| name | String | O | Name of subnet    |
+| region | String | - | Name of region to which subnet is assigned |
+| tenant\_id | String | - | Tenant ID to which subnet is assigned |
+| routingtable\_id | String | - | Routing table ID |
+
 
 ### Create Floating IP
 
 ```
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   pool = "Public Network"
 }
 ```
@@ -656,19 +772,19 @@ resource "openstack_compute_floatingip_v2" "fip_01" {
 ### Associate Floating IP
 ```
 # Create Instance
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # Create Floating IP
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   ...
 }
 
 # Associate Floating IP
-resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
-  floating_ip = openstack_compute_floatingip_v2.fip_01.address
-  instance_id = openstack_compute_instance_v2.tf_instance_01.id
+resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
+  floating_ip = nhncloud_networking_floatingip_v2.fip_01.address
+  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
 }
 
 ```
@@ -682,9 +798,9 @@ resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
 ### Create Network Port
 
 ```
-resource "openstack_networking_port_v2" "port_1" {
+resource "nhncloud_networking_port_v2" "port_1" {
   name = "tf_port_1"
-  network_id = data.openstack_networking_network_v2.default_network.id
+  network_id = data.nhncloud_networking_network_v2.default_network.id
   admin_state_up = "true"
 }
 ```
@@ -709,11 +825,11 @@ resource "openstack_networking_port_v2" "port_1" {
 ### Create Load Balancer
 
 ```
-resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
+resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   name = "tf_loadbalancer_01"
   description = "create loadbalancer by terraform."
-  vip_subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
-  vip_address = "192.168.0.10"
+  vip_subnet_id = data.nhncloud_networking_subnet_v2.default_subnet.id
+  vip_address = "192.168.0.10"  
   admin_state_up = true
 }
 ```
@@ -732,12 +848,12 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 
 ```
 # HTTP Listener
-resource "openstack_lb_listener_v2" "tf_listener_http_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_http_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "HTTP"
   protocol_port = 80
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -748,12 +864,12 @@ resource "openstack_lb_listener_v2" "tf_listener_http_01"{
 }
 
 # Terminated HTTPS Listener
-resource "openstack_lb_listener_v2" "tf_listener_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "TERMINATED_HTTPS"
   protocol_port = 443
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -788,11 +904,11 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
 <font color='red'>**(Caution) NHN Cloud does not support specifying `loadbalancer_id` when creating a pool.**</font>
 
 ```
-resource "openstack_lb_pool_v2" "tf_pool_01"{
+resource "nhncloud_lb_pool_v2" "tf_pool_01"{
   name = "tf_pool_01"
   description = "create pool by terraform."
   protocol = "HTTP"
-  listener_id = openstack_lb_listener_v2.tf_listener_01.id
+  listener_id = nhncloud_lb_listener_v2.tf_listener_01.id
   lb_method = "LEAST_CONNECTIONS"
   persistence{
     type = "APP_COOKIE"
@@ -817,9 +933,9 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
 ### Create Health Monitor
 
 ```
-resource "openstack_lb_monitor_v2" "tf_monitor_01"{
+resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
   name = "tf_monitor_01"
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
   type = "HTTP"
   delay = 20
   timeout = 10
@@ -849,10 +965,10 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
 <font color='red'>**(Caution) `subnet_id` must be specified when you create a member in NHN Cloud. Also note that `name` is not supported. **</font>
 
 ```
-resource "openstack_lb_member_v2" "tf_member_01"{
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
-  subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
-  address = openstack_compute_instance_v2.tf_instance_01.access_ip_v4
+resource "nhncloud_lb_member_v2" "tf_member_01"{
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
+  subnet_id = data.nhncloud_networking_subnet_v2.default_subnet.id
+  address = nhncloud_compute_instance_v2.tf_instance_01.access_ip_v4
   protocol_port = 8080
   weight = 4
   admin_state_up = true
