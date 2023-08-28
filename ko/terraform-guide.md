@@ -16,33 +16,34 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * 여러 장소에 같은 구성의 인프라를 구축하고 변경할 수 있도록 자동화할 수 있습니다.
     * 인프라를 구축하는 데 드는 시간을 절약할 수 있고, 실수도 줄일 수 있습니다.
 
-NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와 resources를 지원합니다. 더 자세한 Terraform OpenStack Provider와 Terraform이 지원하는 기능은 [Terraform 사이트의 OpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html) 페이지를 참고합니다. 아래 목록 이외의 기능 사용 시 NHN Cloud는 정상 동작을 보장하지 않습니다.
 
 #### Resources 지원
 
 * Compute
-    * openstack_compute_instance_v2
-    * openstack_compute_volume_attach_v2
+    * nhncloud_compute_instance_v2
+    * nhncloud_compute_volume_attach_v2
 * Network
-    * openstack_lb_loadbalancer_v2
-    * openstack_lb_listener_v2
-    * openstack_lb_pool_v2
-    * openstack_lb_member_v2
-    * openstack_lb_monitor_v2
-    * openstack_compute_floatingip_v2
-    * openstack_compute_floatingip_associate_v2
-    * openstack_networking_port_v2
+    * nhncloud_lb_loadbalancer_v2
+    * nhncloud_lb_listener_v2
+    * nhncloud_lb_pool_v2
+    * nhncloud_lb_member_v2
+    * nhncloud_lb_monitor_v2
+    * nhncloud_networking_floatingip_v2
+    * nhncloud_networking_floatingip_associate_v2
+    * nhncloud_networking_port_v2
+    * nhncloud_networking_vpc_v2
+    * nhncloud_networking_vpcsubnet_v2
 * Storage
-    * openstack_blockstorage_volume_v2
+    * nhncloud_blockstorage_volume_v2
 
 #### Data sources 지원
 
-* openstack_images_image_v2
-* openstack_blockstorage_volume_v2
-* openstack_compute_flavor_v2
-* openstack_blockstorage_snapshot_v2
-* openstack_networking_network_v2
-* openstack_networking_subnet_v2
+* nhncloud_images_image_v2
+* nhncloud_blockstorage_volume_v2
+* nhncloud_compute_flavor_v2
+* nhncloud_blockstorage_snapshot_v2
+* nhncloud_networking_vpc_v2
+* nhncloud_networking_vpcsubnet_v2
 
 ### 알아두기
 
@@ -62,6 +63,70 @@ $ terraform -v
 Terraform v1.0.0
 ```
 
+## Terraform NHN Cloud provider 제공
+
+Terraform NHN Cloud provider는 다음과 같은 **운영체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드할 수 있습니다.
+현재 제공하는 Terraform NHN Cloud provider 버전은 **1.0.0** 입니다.
+
+* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+
+### Local provider 설정
+
+Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
+
+Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로드한 바이너리 파일을 플러그인 경로에 추가합니다.
+
+다음은 운영체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
+` 항목을 참고합니다.
+
+* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+
+플러그인 기본 경로 구성 규칙에 대한 설명입니다.
+
+* **version**
+    * provider의 버전입니다.
+* **platforms**
+    * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
+    * **darwin_adm64** : macOS / AMD64
+    * **darwin_arm64** : macOS / Apple silicon
+    * **linux_amd64** : Linux / AMD64
+    * **windows_amd64** : Windows / AMD64
+
+다음은 바이너리 다운로드 후 **운영체제/아키텍처**에 따른 플러그인 설정 예시입니다. 
+
+**플러그인 설정 시 1.0.0 버전 사용을 권장합니다.**
+
+`macOS / AMD64` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+```
+
+`macOS / Apple silicon` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+```
+
+`Linux / AMD64` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+```
+
+`Windows / AMD64` 플러그인 설정 예시입니다.
+
+```
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+```
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
@@ -73,15 +138,15 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 terraform {
 required_version = ">= 1.0.0"
   required_providers {
-    openstack = {
-      source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.42.0"
+    nhncloud = {
+      source  = "terraform.local/local/nhncloud"
+      version = "1.0.0"
     }
   }
 }
 
-# Configure the OpenStack Provider
-provider "openstack" {
+# Configure the nhncloud Provider
+provider "nhncloud" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
@@ -147,7 +212,7 @@ $ terraform apply
 $ ls
 instance.tf provider.tf
 $ cat instance.tf
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   name      = "terraform-instance-01"
   region    = "KR1"
   flavor_id = "da74152c-0167-4ce9-b391-8a88a8ff2754"
@@ -186,11 +251,11 @@ $ terraform plan
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Creating...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Creating...
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
@@ -204,7 +269,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 다음은 인스턴스에 `terraform-sg` 보안 그룹을 하나 더 추가하는 예시입니다. 위에서 작성한 `instance.tf` 파일을 아래와 같이 수정합니다.
 
 ```
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   ...
   security_groups = ["default", "terraform-sg"]
   ...
@@ -221,8 +286,8 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # openstack_compute_instance_v2.terraform-instance-01 will be updated in-place
-  ~ resource "openstack_compute_instance_v2" "terraform-instance-01" {
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be updated in-place
+  ~ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
         id                  = "1e846787-04e9-4701-957c-78001b4b7257"
         name                = "terraform-instance-01"
       ~ security_groups     = [
@@ -242,8 +307,8 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
-openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -266,8 +331,8 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # openstack_compute_instance_v2.terraform-instance-01 will be destroyed
-  - resource "openstack_compute_instance_v2" "terraform-instance-01" {
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 ...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
@@ -279,9 +344,9 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
-openstack_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
+nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
 
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
@@ -290,10 +355,10 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
-Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `openstack_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
+Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
 
 ```
-data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
   name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
@@ -302,21 +367,18 @@ data "openstack_images_image_v2" "ubuntu_2004_20201222" {
 Data sources 안에서 다른 data source를 참조할 수 있습니다.
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00"{
+data "nhncloud_blockstorage_volume_v2" "volume_00"{
   name = "ssd_volume1"
   status = "available"
 }
 
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
 ```
-
-더 자세한 data sources 사용법은 [Terraform 사이트](https://www.terraform.io/docs/providers/openstack/index.html)의 `Data Sources` 항목을 참고합니다.
-
 
 다음 섹션에서는 NHN Cloud가 제공하는 각종 리소스를 data sources 기능으로 가져오는 방법을 설명합니다.
 
@@ -325,13 +387,13 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 이미지 정보를 가져옵니다. NHN Cloud가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
 
 ```
-data "openstack_images_image_v2" "ubuntu_2004_20201222" {
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
   name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # 같은 이름의 이미지 중 가장 오래된 이미지 조회
-data "openstack_images_image_v2" "windows2016_20200218" {
+data "nhncloud_images_image_v2" "windows2016_20200218" {
   name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
@@ -356,7 +418,7 @@ data "openstack_images_image_v2" "windows2016_20200218" {
 ### 블록 스토리지
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00" {
+data "nhncloud_blockstorage_volume_v2" "volume_00" {
   name = "ssd_volume1"
   status = "available"
 }
@@ -373,7 +435,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 인스턴스 타입 이름은 NHN Cloud 콘솔 **Compute > Instance**에서 **인스턴스 생성 > 인스턴스 타입 선택** 버튼을 클릭해 확인할 수 있습니다.
 
 ```
-data "openstack_compute_flavor_v2" "u2c2m4"{
+data "nhncloud_compute_flavor_v2" "u2c2m4"{
   name = "u2.c2m4"
 }
 ```
@@ -386,9 +448,9 @@ data "openstack_compute_flavor_v2" "u2c2m4"{
 ### 스냅숏
 
 ```
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
@@ -407,35 +469,42 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 VPC 네트워크의 UUID는 NHN Cloud 콘솔 **Network > VPC**에서 VPC를 선택하여 확인 가능합니다.
 
 ```
-data "openstack_networking_network_v2" "default_network" {
-  name="Default Network"
-  network_id = "00d5b852-cb77-4307-b6be-d81dad24eec1"
-}
-```
-
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 VPC 네트워크 이름 |
-| network_id | String | - | 조회할 VPC 네트워크 UUID |
-
-
-### 서브넷
-
-서브넷 ID는 NHN Cloud 콘솔 **Network > VPC > 서브넷**에서 서브넷을 선택하여 확인 가능합니다.
-
-```
-data "openstack_networking_subnet_v2" "default_subnet" {
+data "nhncloud_networking_vpc_v2" "default_network" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "e34fc878-89f6-4d17-a039-3830a0b78346"
   name = "Default Network"
-  subnet_id = "756af037-54f3-4aa2-8c22-56c9da055553"
-  network_id = data.openstack_networking_network_v2.default_network.network_id
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 조회할 서브넷의 이름 |
-| subnet_id | String | - | 조회할 서브넷의 UUID |
-| network_id | String | - | 조회할 서브넷이 속한 네트워크 UUID |
 
+| 이름 | 타입 | 필수 | 설명         |
+| --- | --- |---|------------|
+| region | String | - | 조회할 VPC가 속한 리전 이름 |
+| tenant\_id | String | - | 조회할 VPC가 속한 테넌트 ID |
+| id | String | - | 조회할 VPC의 ID |
+| name | String | - | 조회할 VPC 이름 |
+
+### VPC 서브넷
+
+서브넷 ID는 NHN Cloud 콘솔 **Network > 서브넷**에서 서브넷을 선택하여 확인 가능합니다.
+
+```
+data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "05f6fdc3-641f-48df-b986-773b6489654f"
+  name = "Default Network"
+  shared = true
+}
+```
+
+| 이름 | 타입 | 필수 | 설명         |
+| --- | --- |---|------------|
+| region | String | - | 조회할 서브넷이 속한 리전 이름 |
+| tenant\_id | String | - | 조회할 서브넷이 속한 테넌트 ID |
+| id | String | - | 조회할 서브넷 ID |
+| name | String | - | 조회할 서브넷 이름 |
+| shared | Bool | - | 조회할 서브넷의 공유 여부 |
 
 ## Resources
 
@@ -443,6 +512,7 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 
 * 인스턴스
 * 블록 스토리지
+* VPC
 * 플로팅 IP
 * 네트워크 포트
 * 로드 밸런서
@@ -455,22 +525,22 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 
 ```
 # u2 인스턴스 생성
-resource "openstack_compute_instance_v2" "tf_instance_01"{
+resource "nhncloud_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.ubuntu_2004_20201222.id
-  flavor_id = data.openstack_compute_flavor_v2.u2c2m4.id
+  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   block_device {
-    uuid = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type = "image"
     destination_type = "local"
     boot_index = 0
@@ -481,24 +551,24 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
 
 # u2 외의 인스턴스 타입
 # 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
-resource "openstack_compute_instance_v2" "tf_instance_02" {
+resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  flavor_id = data.openstack_compute_flavor_v2.m2c1m2.id
+  flavor_id = data.nhncloud_compute_flavor_v2.m2c1m2.id
   security_groups = ["default","web"]
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   network {
-    port = openstack_networking_port_v2.port_1.id
+    port = nhncloud_networking_port_v2.port_1.id
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.ubuntu_2004_20201222.id
+    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -515,46 +585,46 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | O | 생성할 인스턴스의 이름 |
-| region | String | - | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전 |
-| flavor_name | String | - | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수 |
-| flavor_id | String | - | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수 |
-| image_name | String | - | 인스턴스 생성 시 사용할 이미지 이름<br>image_id가 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능 |
-| image_id | String | - | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능 |
-| key_pair | String | - | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고 |
-| availability_zone | String | - | 생성할 인스턴스의 가용성 영역 |
-| network | Object | - | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면, 하단 상세 정보 화면에서 네트워크 이름과 uuid를 확인 가능 |
-| network.name | String | - | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 꼭 명시 |
-| network.uuid | String | - | VPC 네트워크 ID |
-| network.port | String | - | VPC 네트워크에 연결할 포트의 ID |
-| security_groups | Array | - | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
-| user_data | String | - | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br> |
-| block_device | Object | - | 인스턴스에 사용할 이미지 또는 블록 스토리지 정보 객체 |
-| block_device.uuid | String | - | 블록 스토리지의 원본 ID <br>루트 볼륨인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함 |
-| block_device.source_type | String | O | 생성할 블록 스토리지 원본의 타입<br>`image`: 이미지를 이용해 블록 스토리지 생성<br>`volume`: 기존에 생성된 볼륨으로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅숏을 이용해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
-| block_device.destination_type | String | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
-| block_device.boot_index | Integer | - | 지정한 볼륨의 부팅 순서<br>0 이면 루트 볼륨<br>그 외는 추가 볼륨<br>숫자가 클 수록 부팅 순서는 낮아짐<br> |
-| block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 블록 스토리지 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고 |
-| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음 |
+| 이름    | 형식 | 필수  | 설명                                                                                                                                                                                           |
+| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name | String | O | 생성할 인스턴스의 이름                                                                                                                                                                                 |
+| region | String | - | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전                                                                                                                                                     |
+| flavor_name | String | - | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수                                                                                                                                                |
+| flavor_id | String | - | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수                                                                                                                                              |
+| image_name | String | - | 인스턴스 생성 시 사용할 이미지 이름<br>image_id가 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                        |
+| image_id | String | - | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                      |
+| key_pair | String | - | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고            |
+| availability_zone | String | - | 생성할 인스턴스의 가용성 영역                                                                                                                                                                             |
+| network | Object | - | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 uuid를 확인 가능                                                                       |
+| network.name | String | - | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 반드시 명시                                                                                                                        |
+| network.uuid | String | - | VPC 네트워크 ID                                                                                                                                                                                  |
+| network.port | String | - | VPC 네트워크에 연결할 포트의 ID                                                                                                                                                                         |
+| security_groups | Array | - | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능                                                                             |
+| user_data | String | - | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br>                                                                                                                              |
+| block_device | Object | - | 인스턴스에 사용할 이미지 또는 블록 스토리지 정보 객체                                                                                                                                                               |
+| block_device.uuid | String | - | 블록 스토리지의 원본 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함                            |
+| block_device.source_type | String | O | 생성할 블록 스토리지 원본의 타입<br>`image`: 이미지를 이용해 블록 스토리지 생성<br>`volume`: 기존에 생성된 블록 스토리지로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅숏을 이용해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
+| block_device.destination_type | String | - | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                                  |
+| block_device.boot_index | Integer | - | 지정한 블록 스토리지의 부팅 순서<br>0이면 루트 블록 스토리지<br>그 외는 추가 블록 스토리지<br>숫자가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
+| block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 블록 스토리지 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일 시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고                        |
+| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
 
 ### 블록 스토리지 연결
 ```
 # 인스턴스 생성
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # 블록 스토리지 생성
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   ...
 }
 
 # 블록 스토리지 연결
-resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
-  instance_id = openstack_compute_instance_v2.tf_instance_02.id
-  volume_id = openstack_blockstorage_volume_v2.volume_01.id
+resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
+  instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
+  volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
   vendor_options {
     ignore_volume_confirmation = true
   }
@@ -571,7 +641,7 @@ resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
 ### 블록 스토리지 생성
 ```
 # HDD 타입의 빈 블록 스토리지 생성
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   name = "tf_volume_01"
   size = 10
   availability_zone = "kr-pub-a"
@@ -579,7 +649,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
 }
 
 # SSD 타입의 빈 블록 스토리지 생성
-resource "openstack_blockstorage_volume_v2" "volume_02" {
+resource "nhncloud_blockstorage_volume_v2" "volume_02" {
   name = "tf_volume_02"
   size = 10
   availability_zone = "kr-pub-b"
@@ -587,10 +657,10 @@ resource "openstack_blockstorage_volume_v2" "volume_02" {
 }
 
 # 스냅숏으로 블록 스토리지 생성
-resource "openstack_blockstorage_volume_v2" "volume_03" {
+resource "nhncloud_blockstorage_volume_v2" "volume_03" {
   name = "tf_volume_03"
   description = "terraform create volume with snapshot test"
-  snapshot_id = data.openstack_blockstorage_snapshot_v2.snapshot_01.id
+  snapshot_id = data.nhncloud_blockstorage_snapshot_v2.snapshot_01.id
   size = 30
 }
 ```
@@ -610,21 +680,21 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 
 `.tf` 파일에 불러올 블록 스토리지 정보를 작성합니다.
 ```
-resource "openstack_blockstorage_volume_v2" "volume_06" {
+resource "nhncloud_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"
   size = 10
 }
 ```
 
-`terraform import openstack_blockstorage_volume_v2.{name} {block_storage_id}` 명령으로 블록 스토리지를 불러옵니다.
+`terraform import nhncloud_blockstorage_volume_v2.{name} {block_storage_id}` 명령으로 블록 스토리지를 불러옵니다.
 
 ```
-$ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
+$ terraform import nhncloud_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
 ...
-openstack_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
-openstack_blockstorage_volume_v2.volume_06: Import prepared!
-  Prepared openstack_blockstorage_volume_v2 for import
-openstack_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
+nhncloud_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
+nhncloud_blockstorage_volume_v2.volume_06: Import prepared!
+  Prepared nhncloud_blockstorage_volume_v2 for import
+nhncloud_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
 
 Import successful!
 ...
@@ -635,40 +705,86 @@ Import successful!
 
 NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 
+* VPC
+* VPC 서브넷
 * 플로팅 IP
 * 네트워크 포트
 
 이외의 VPC 자원은 콘솔에서 생성해야 합니다.
 
+### VPC 생성
+
+지정한 IP 대역의 VPC를 생성합니다.
+
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  name = "tf-vpc-01"
+  cidrv4 = "10.0.0.0/8"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명     |
+| --- | --- |---|--------|
+| name | String | O | VPC 이름 |
+| cidrv4 | String | O | VPC IP 대역 |
+| region | String | - | VPC의 리전 이름 |
+| tenant\_id | String | - | VPC의 tenant ID |
+
+
+
+### VPC 서브넷 생성 및 라우팅 테이블 연결
+
+지정한 VPC에 사용자가 지정한 IP 대역으로 서브넷을 생성하며, 생성한 서브넷에 기존 라우팅 테이블을 연결합니다.
+라우팅 테이블은 NHN Cloud 콘솔에서 생성할 수 있습니다.
+
+```
+resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
+  name      = "tf-vpcsubnet-01"
+  vpc_id    = "def56b5e-0f1d-4a31-8005-4d716127f177"
+  cidr      = "10.10.10.0/24"
+  routingtable_id = "c3ed678d-de8b-4bf7-abea-b7c1118f0828"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명         |
+| --- | --- |---|------------|
+| vpc\_id | String | O | 서브넷이 할당될 VPC ID |
+| cidr | String | O | 서브넷의 IP 대역 |
+| name | String | O | 서브넷의 이름    |
+| region | String | - | 서브넷이 할당될 리전 이름 |
+| tenant\_id | String | - | 서브넷이 할당될 테넌트 ID |
+| routingtable\_id | String | - | 라우팅 테이블 ID |
+
+
 ### 플로팅 IP 생성
 
 ```
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   pool = "Public Network"
 }
 ```
 
 | 이름    | 형식 | 필수  | 설명       |
 | ------ | --- |---- | --------- |
-| pool | String | O | 플로팅 IP를 생성할 IP 풀<br>콘솔 `Network > Floating IP`에서 `플로팅 IP 생성` 버튼을 클릭해서 표시되는 IP 풀에서 확인할 수 있습니다. |
+| pool | String | O | 플로팅 IP를 생성할 IP 풀<br>기본값은 `Public Network` |
 
 
 ### 플로팅 IP 연결
 ```
 # 인스턴스 생성
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # 플로팅 IP 생성
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_networking_floatingip_v2" "fip_01" {
   ...
 }
 
 # 플로팅 IP 연결
-resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
-  floating_ip = openstack_compute_floatingip_v2.fip_01.address
-  instance_id = openstack_compute_instance_v2.tf_instance_01.id
+resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
+  floating_ip = nhncloud_networking_floatingip_v2.fip_01.address
+  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
 }
 
 ```
@@ -682,9 +798,9 @@ resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
 ### 네트워크 포트 생성
 
 ```
-resource "openstack_networking_port_v2" "port_1" {
+resource "nhncloud_networking_port_v2" "port_1" {
   name = "tf_port_1"
-  network_id = data.openstack_networking_network_v2.default_network.id
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
   admin_state_up = "true"
 }
 ```
@@ -709,10 +825,10 @@ resource "openstack_networking_port_v2" "port_1" {
 ### 로드 밸런서 생성
 
 ```
-resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
+resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   name = "tf_loadbalancer_01"
   description = "create loadbalancer by terraform."
-  vip_subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
+  vip_subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
   vip_address = "192.168.0.10"  
   admin_state_up = true
 }
@@ -732,12 +848,12 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 
 ```
 # HTTP 리스너
-resource "openstack_lb_listener_v2" "tf_listener_http_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_http_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "HTTP"
   protocol_port = 80
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -748,12 +864,12 @@ resource "openstack_lb_listener_v2" "tf_listener_http_01"{
 }
 
 # Terminated HTTPS 리스너
-resource "openstack_lb_listener_v2" "tf_listener_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "TERMINATED_HTTPS"
   protocol_port = 443
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -788,11 +904,11 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
 <font color='red'>**(주의) NHN Cloud는 풀 생성 시에 `loadbalancer_id` 지정을 지원하지 않습니다.**</font>
 
 ```
-resource "openstack_lb_pool_v2" "tf_pool_01"{
+resource "nhncloud_lb_pool_v2" "tf_pool_01"{
   name = "tf_pool_01"
   description = "create pool by terraform."
   protocol = "HTTP"
-  listener_id = openstack_lb_listener_v2.tf_listener_01.id
+  listener_id = nhncloud_lb_listener_v2.tf_listener_01.id
   lb_method = "LEAST_CONNECTIONS"
   persistence{
     type = "APP_COOKIE"
@@ -817,9 +933,9 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
 ### 헬스 모니터 생성
 
 ```
-resource "openstack_lb_monitor_v2" "tf_monitor_01"{
+resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
   name = "tf_monitor_01"
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
   type = "HTTP"
   delay = 20
   timeout = 10
@@ -849,10 +965,10 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
 <font color='red'>**(주의) NHN Cloud에서 멤버 생성 시에 `subnet_id`를 필수로 지정합니다. 또한 `name`은 지원하지 않습니다.**</font>
 
 ```
-resource "openstack_lb_member_v2" "tf_member_01"{
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
-  subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
-  address = openstack_compute_instance_v2.tf_instance_01.access_ip_v4
+resource "nhncloud_lb_member_v2" "tf_member_01"{
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
+  subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
+  address = nhncloud_compute_instance_v2.tf_instance_01.access_ip_v4
   protocol_port = 8080
   weight = 4
   admin_state_up = true

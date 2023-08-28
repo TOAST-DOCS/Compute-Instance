@@ -1,7 +1,7 @@
 ## Compute > Instance > Overview
 
 
-An instance is a virtual server composed of virtual CPUs, memory, and default disk. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
+An instance is a virtual server composed of virtual CPUs, memory, and root block storage. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
 
 ## Components
 
@@ -26,14 +26,14 @@ All images are configured to run optimally on an instance's virtual hardware and
 
 NHN Cloud provides various instance flavors to support a wide range of use cases. Instances can be created with flavors that best match the requirements of your services or applications. Flavors can be easily modified from the web console, even after an instance has been created.
 
-| Type   | Description                              |
-| ------ | ---------------------------------------- |
-| m2 | A flavor with a balanced setting between CPU and memory. Recommended when performance requirements of a service or an application are not clear. |
-| c2 | A flavor optimized for high CPU performance. Recommended for web application servers or analytics systems that require high-performance computations. |
-| r2 | A flavor optimized for high memory utilization. Recommended for in-memory databases or cache servers. |
-| t2 | A low-cost instance. Recommended for servers with low workloads. |
-| u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
-| x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
+| Type    | Description                                                                                                                                               |
+| ------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
+| m2 | A flavor with a balanced setting between CPU and memory. Recommended when performance requirements of a service or an application are not clear.                                                                               |
+| c2 | A flavor optimized for high CPU performance. Recommended for web application servers or analytics systems that require high-performance computations.                                                                           |
+| r2 | A flavor optimized for high memory utilization. Recommended for in-memory databases or cache servers.                                                                               |
+| t2 | A low-cost instance. Recommended for servers with low workloads.                                                                                                          |
+| u2 | The cheapest instance. Recommended for servers with low workloads.<br>This flavor utilizes local block storage, which makes it a less stable but more affordable option compared to other flavors.<br>Instances of this flavor do not guarantee I/O performance. |
+| x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance.                                                                                        |
 
 
 ### Availability Zone
@@ -54,14 +54,14 @@ A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastru
 Key pairs can be newly generated from the NHN Cloud console during instance creation, or you can register your own existing key pairs. For more details on how to register key pairs, see [Import Key Pairs in the Console Guide](./console-guide/#key-pairs).
 
 > [Caution]
-> When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
+When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
 
 ### Security Group
 
 A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
 
 > [Note]
-> The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
+The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
 
 ### Network
 
@@ -72,10 +72,10 @@ An instance must be connected to at least one network defined in the VPC in orde
 Instances are charged using the following criteria.
 
 * Instances are charged from the moment they are created.
-* Instance default disks are charged separately according to the block storage pricing policy.
-* When instances are stopped, a 90% discount is applied to the prices on website for 90 days. After the 90 days have passed, the instances will remain as stopped and be charged at the normal rate.
+* Instance root block storage are charged separately according to the block storage pricing policy.
+* When an instance is stopped, a 90% discount based on the website rate is applied for 90 days. If your suspension exceeds 90 days, you will revert to normal rates while maintaining your suspension.
 
-For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
+For more details on pricing, see [](https://www.toast.com/kr/service/compute/instance#price)Pricing[](https://www.toast.com/kr/service/compute/instance#price).
 
 ## How to Access Instances
 
@@ -118,16 +118,16 @@ Follow these three steps in order to access Linux instances from Windows using t
 
 In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed along with PuTTY.
 
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+![Image1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
 
 At the bottom of the **PuTTY Key Generator** window under **Parameters**, select **RSA** for the **Type of key to generate**, and enter the default value '2048' bits for the **Number of bits in a generated key**. Under **Actions**, click **Load** next to **Load an existing private key file** to import your key pair's private key file.
 
-![이미지2](http://static.toastoven.net/prod_instance/putty002-en.png)
+![Image2](http://static.toastoven.net/prod_instance/putty002-en.png)
 
 Under **Actions**, click **Save private key** next to **Save the generated key** to save the converted PuTTY-compatible private key. If you save the private key leaving the **Key passphrase** blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to save your converted private key more securely, set a passphrase before saving.
 
 > [Caution]
-> If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
+If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
 ##### 2. Register Your PuTTY-Compatible Private Key With Putty
 
@@ -141,7 +141,7 @@ Your PuTTY-compatible private key generated in the previous step can be register
 
 Run PuTTY and select **Connection > SSH > Auth** from the **Category** on the left. Under **Authentication parameters** on the right, register your PuTTY-compatible private key in **Private key file for authentication**.
 
-![이미지3](http://static.toastoven.net/prod_instance/putty005-en.png)
+![Image3](http://static.toastoven.net/prod_instance/putty005-en.png)
 
 Once you register your private key, you do not have to re-register your private key file each time you access your instance if you save your access information. For details on how to save your access information, see the section below on accessing instances.
 
@@ -151,11 +151,11 @@ Once you register your private key, you do not have to re-register your private 
 
 When you run pageant, which is installed along with PuTTY, the icon shown below appears in the Windows tray. Right-click the pageant icon and select **Add Key** to add your PuTTY-compatible private key.
 
-![이미지4](http://static.toastoven.net/prod_instance/putty006.png)
+![Image4](http://static.toastoven.net/prod_instance/putty006.png)
 
 To confirm that your private key has been added, select **View Keys**. If successful, the added key is displayed as below.
 
-![이미지5](http://static.toastoven.net/prod_instance/putty008-en.png)
+![Image5](http://static.toastoven.net/prod_instance/putty008-en.png)
 
 Once you run pageant, it remains running in the Windows tray, so there is no need for you to rerun it every time you access an instance. However, you must run pageant again when you restart Windows.
 
@@ -163,7 +163,7 @@ Once you run pageant, it remains running in the Windows tray, so there is no nee
 
 Now that the PuTTY-compatible private key has been successfully registered, run PuTTY.
 
-![이미지6](http://static.toastoven.net/prod_instance/putty009-en.png)
+![Image6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
 Set the **Host Name** as the following.
 
