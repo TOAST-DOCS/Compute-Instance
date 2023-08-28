@@ -16,33 +16,34 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * 複数の場所に同じ構成のインフラを構築し、変更できるように自動化できます。
     * インフラを構築するのにかかる時間を節約することができ、失敗も減らすことができます。
 
-NHN CloudはTerraform OpenStack providerに記載された下記のdata sourcesとresourcesをサポートします。Terraform OpenStack providerとTerraformがサポートするより詳しい機能は[TerraformサイトのOpenStack Provider](https://www.terraform.io/docs/providers/openstack/index.html)ページを参照します。下記のリスト以外の機能を使用した場合、NHN Cloudは正常に動作することを保障しません。
 
 #### Resourcesサポート
 
 * Compute
-    * openstack_compute_instance_v2
-    * openstack_compute_volume_attach_v2
+    * nhncloud_compute_instance_v2
+    * nhncloud_compute_volume_attach_v2
 * Network
-    * openstack_lb_loadbalancer_v2
-    * openstack_lb_listener_v2
-    * openstack_lb_pool_v2
-    * openstack_lb_member_v2
-    * openstack_lb_monitor_v2
-    * openstack_compute_floatingip_v2
-    * openstack_compute_floatingip_associate_v2
-    * openstack_networking_port_v2
+    * nhncloud_lb_loadbalancer_v2
+    * nhncloud_lb_listener_v2
+    * nhncloud_lb_pool_v2
+    * nhncloud_lb_member_v2
+    * nhncloud_lb_monitor_v2
+    * nhncloud_networking_floatingip_v2
+    * nhncloud_networking_floatingip_associate_v2
+    * nhncloud_networking_port_v2
+    * nhncloud_networking_vpc_v2
+    * nhncloud_networking_vpcsubnet_v2
 * Storage
-    * openstack_blockstorage_volume_v2
+    * nhncloud_blockstorage_volume_v2
 
 #### Data sourcesサポート
 
-* openstack_images_image_v2
-* openstack_blockstorage_volume_v2
-* openstack_compute_flavor_v2
-* openstack_blockstorage_snapshot_v2
-* openstack_networking_network_v2
-* openstack_networking_subnet_v2
+* nhncloud_images_image_v2
+* nhncloud_blockstorage_volume_v2
+* nhncloud_compute_flavor_v2
+* nhncloud_blockstorage_snapshot_v2
+* nhncloud_networking_vpc_v2
+* nhncloud_networking_vpcsubnet_v2
 
 ### 注意
 
@@ -60,9 +61,73 @@ $ wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_
 $ unzip terraform_0.12.24_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v0.12.24
+Terraform v1.0.0
 ```
 
+## Terraform NHN Cloud provider提供
+
+Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互換性を提供し、リンクからバイナリファイルをダウンロードできます。
+現在提供するTerraform NHN Cloud providerのバージョンは**1.0.0**です。
+
+* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+
+### Local provider設定
+
+Local provider設定を通じてTerraform NHN Cloud providerを使用できます。
+
+Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。
+
+以下はOSごとのプラグイン基本パスです。より詳しい基本パスの説明は[Terraformサイト](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)の`Implied Local Mirror Directories
+`項目を参照してください。
+
+* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
+
+プラグイン基本パス構成ルールについての説明です。
+
+* **version**
+    * providerのバージョンです。
+* **platforms**
+    * パッケージがあるプラットフォームを説明するオブジェクトの配列で、OS識別キーワードとCPUアーキテクチャ識別キーワードで構成されています。
+    * **darwin_adm64** : macOS / AMD64
+    * **darwin_arm64** : macOS / Apple silicon
+    * **linux_amd64** : Linux / AMD64
+    * **windows_amd64** : Windows / AMD64
+
+以下は、バイナリダウンロード後、**OS/アーキテクチャ**ごとのプラグイン設定例です。 
+
+**プラグインを設定する際は1.0.0バージョンを使用することを推奨します。**
+
+`macOS / AMD64`プラグインの設定例です。
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+```
+
+`macOS / Apple silicon`プラグインの設定例です。
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+```
+
+`Linux / AMD64`プラグインの設定例です。
+
+```
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+```
+
+`Windows / AMD64`プラグインの設定例です。
+
+```
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+```
 
 ## Terraformの初期化
 Terraformを使用する前に、次のようにプロバイダー設定ファイルを作成します。
@@ -70,8 +135,19 @@ Terraformを使用する前に、次のようにプロバイダー設定ファ�
 プロバイダーファイルの名前は任意で設定可能で、この例では`provider.tf`を使用します。
 
 ```
-# Configure the OpenStack Provider
-provider "openstack" {
+# Define required providers
+terraform {
+required_version = ">= 1.0.0"
+  required_providers {
+    nhncloud = {
+      source  = "terraform.local/local/nhncloud"
+      version = "1.0.0"
+    }
+  }
+}
+
+# Configure the nhncloud Provider
+provider "nhncloud" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
@@ -79,6 +155,7 @@ provider "openstack" {
   region      = "KR1"
 }
 ```
+
 * **user_name**
     * NHN Cloud IDを使用します。
 * **tenant_id**
@@ -137,7 +214,7 @@ $ terraform apply
 $ ls
 instance.tf provider.tf
 $ cat instance.tf
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   name      = "terraform-instance-01"
   region    = "KR1"
   flavor_id = "da74152c-0167-4ce9-b391-8a88a8ff2754"
@@ -176,11 +253,11 @@ $ terraform plan
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Creating...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-...
-openstack_compute_instance_v2.terraform-instance-01: Still creating... [50s elapsed]
-openstack_compute_instance_v2.terraform-instance-01: Creation complete after 53s [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
+nhncloud_compute_instance_v2.terraform-instance-01: Creating...
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ...
@@ -195,7 +272,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 次はインスタンスに`terraform-sg`セキュリティグループをもう1つ追加する例です。上で作成した`instance.tf`ファイルを下記のように修正します。
 
 ```
-resource "openstack_compute_instance_v2" "terraform-instance-01" {
+resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   ...
   security_groups = ["default", "terraform-sg"]
   ...
@@ -207,32 +284,34 @@ resource "openstack_compute_instance_v2" "terraform-instance-01" {
 ```
 $ terraform plan
 ...
-An execution plan has been generated and is shown below.
-Resource actions are indicated with the following symbols:
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   ~ update in-place
 
 Terraform will perform the following actions:
 
-  ~ openstack_compute_instance_v2.terraform-instance-01
-      security_groups.#:          "1" => "2"
-      security_groups.3814588639: "default" => "default"
-      security_groups.4051241745: "" => "terraform-sg"
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be updated in-place
+  ~ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
+        id                  = "1e846787-04e9-4701-957c-78001b4b7257"
+        name                = "terraform-instance-01"
+      ~ security_groups     = [
+          + "terraform-sg",
+            # (1 unchanged element hidden)
+        ]
+        # (13 unchanged attributes hidden)
 
+
+        # (2 unchanged blocks hidden)
+    }
 
 Plan: 0 to add, 1 to change, 0 to destroy.
-...
 ```
 
 プランを適用すると、インスタンスに新しいセキュリティグループが追加されます。
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-instance-01: Refreshing state... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-instance-01: Modifying... (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
-  security_groups.#:          "1" => "2"
-  security_groups.3814588639: "default" => "default"
-  security_groups.4051241745: "" => "terraform-sg"
-openstack_compute_instance_v2.terraform-instance-01: Modifications complete after 1s (ID: 4d135bc-6a70-4c4d-b645-931570c9f6b1)
+nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -256,8 +335,9 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-  - openstack_compute_instance_v2.terraform-test-01
-
+  # nhncloud_compute_instance_v2.terraform-instance-01 will be destroyed
+  - resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
+...
 
 Plan: 0 to add, 0 to change, 1 to destroy.
 ...
@@ -268,10 +348,11 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ```
 $ terraform apply
 ...
-openstack_compute_instance_v2.terraform-test-01: Refreshing state... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1)
-openstack_compute_instance_v2.terraform-test-01: Still destroying... (ID: f4d135bc-6a70-4c4d-b645-931570c9f6b1, 10s elapsed)
-openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
+nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
+
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ...
 ```
 
@@ -279,10 +360,10 @@ openstack_compute_instance_v2.terraform-test-01: Destruction complete after 11s
 
 tfファイルの作成に必要なインスタンスタイプID、イメージIDなどは、コンソールを通して確認するか、Terraformが提供するdata sourcesを利用して取得できます。Data sourcesはtfファイル内に作成し、取得した情報は修正できません。参照のみ可能です。
 
-Data sourcesは、`{data sourcesリソースタイプ}.{data source名前}`で参照します。下記の例では`openstack_images_image_v2.ubuntu_1804_20200218`で取得したイメージ情報を参照します。
+Data sourcesは、`{data sourcesリソースタイプ}.{data source名前}`で参照します。下記の例では`nhncloud_images_image_v2.ubuntu_1804_20200218`で取得したイメージ情報を参照します。
 
 ```
-data "openstack_images_image_v2" "ubuntu_1804_20200218" {
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
   name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
   most_recent = true
 }
@@ -291,21 +372,18 @@ data "openstack_images_image_v2" "ubuntu_1804_20200218" {
 Data sources内で別のdata sourceを参照できます。
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00"{
+data "nhncloud_blockstorage_volume_v2" "volume_00"{
   name = "ssd_volume1"
   status = "available"
 }
 
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
 ```
-
-詳細なdata sources使用方法は[Terraformサイト](https://www.terraform.io/docs/providers/openstack/index.html)の`Data Sources`項目を参照します。
-
 
 次のセッションでは、NHN Cloudが提供する各種リソースをdata sources機能で取得する方法を説明します。
 
@@ -314,13 +392,13 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 イメージ情報を取得します。NHN Cloudが提供するパブリックイメージまたは個人イメージをサポートします。
 
 ```
-data "openstack_images_image_v2" "ubuntu_1804_20200218" {
+data "nhncloud_images_image_v2" "ubuntu_1804_20200218" {
   name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
   most_recent = true
 }
 
 # 同じ名前のイメージの中から、最も古いイメージを照会
-data "openstack_images_image_v2" "windows2016_20200218" {
+data "nhncloud_images_image_v2" "windows2016_20200218" {
   name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO"
   sort_key = "created_at"
   sort_direction = "asc"
@@ -345,7 +423,7 @@ data "openstack_images_image_v2" "windows2016_20200218" {
 ### ブロックストレージ
 
 ```
-data "openstack_blockstorage_volume_v2" "volume_00" {
+data "nhncloud_blockstorage_volume_v2" "volume_00" {
   name = "ssd_volume1"
   status = "available"
 }
@@ -362,7 +440,7 @@ data "openstack_blockstorage_volume_v2" "volume_00" {
 インスタンスタイプ名は**NHN CloudコンソールCompute > Instanceでインスタンス作成 > インスタンスタイプ選択ボタン**を押すと確認できます。
 
 ```
-data "openstack_compute_flavor_v2" "u2c2m4"{
+data "nhncloud_compute_flavor_v2" "u2c2m4"{
   name = "u2.c2m4"
 }
 ```
@@ -375,9 +453,9 @@ data "openstack_compute_flavor_v2" "u2c2m4"{
 ### スナップショット
 
 ```
-data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
+data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
   name = "my-snapshot"
-  volume_id = data.openstack_blockstorage_volume_v2.volume_00.id
+  volume_id = data.nhncloud_blockstorage_volume_v2.volume_00.id
   status = "available"
   most_recent = true
 }
@@ -396,35 +474,42 @@ data "openstack_blockstorage_snapshot_v2" "my_snapshot" {
 VPCネットワークのUUIDは、**NHN CloudコンソールNetwork > VPC**でVPCを選択して確認可能です。
 
 ```
-data "openstack_networking_network_v2" "default_network" {
-  name="Default Network"
-  network_id = "00d5b852-cb77-4307-b6be-d81dad24eec1"
-}
-```
-
-| 名前 | 形式 | 必須 | 説明 |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 照会するVPCネットワーク名 |
-| network_id | String | - | 照会するVPCネットワークUUID |
-
-
-### サブネット
-
-サブネットIDは、**NHN CloudコンソールNetwork > VPC > サブネット**でサブネットを選択して確認可能です。
-
-```
-data "openstack_networking_subnet_v2" "default_subnet" {
+data "nhncloud_networking_vpc_v2" "default_network" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "e34fc878-89f6-4d17-a039-3830a0b78346"
   name = "Default Network"
-  subnet_id = "756af037-54f3-4aa2-8c22-56c9da055553"
-  network_id = data.openstack_networking_network_v2.default_network.network_id
 }
 ```
-| 名前 | 形式 | 必須 | 説明 |
-| ------ | ---- | ---- | --------- |
-| name | String | - | 照会するサブネットの名前 |
-| subnet_id | String | - | 照会するサブネットのUUID |
-| network_id | String | - | 照会するサブネットが属しているネットワークUUID |
 
+| 名前 | タイプ | 必須 | 説明       |
+| --- | --- |---|------------|
+| region | String | - | 照会するVPCが属するリージョン名 |
+| tenant\_id | String | - | 照会するVPCが属するテナントID |
+| id | String | - | 照会するVPCのID |
+| name | String | - | 照会するVPCの名前 |
+
+### VPCサブネット
+
+サブネットIDはNHN Cloudコンソール **Network > サブネット**でサブネットを選択して確認可能です。
+
+```
+data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
+  region = "KR1"
+  tenant_id = "ba3be1254ab141bcaef674e74630a31f"
+  id = "05f6fdc3-641f-48df-b986-773b6489654f"
+  name = "Default Network"
+  shared = true
+}
+```
+
+| 名前 | タイプ | 必須 | 説明       |
+| --- | --- |---|------------|
+| region | String | - | 照会するサブネットが属するリージョン名 |
+| tenant\_id | String | - | 照会するサブネットが属するテナントID |
+| id | String | - | 照会するサブネットID |
+| name | String | - | 照会するサブネットの名前 |
+| shared | Bool | - | 照会するサブネットの共有有無 |
 
 ## Resources
 
@@ -432,6 +517,7 @@ Terraform resourcesでリソースを作成、修正、削除できます。NHN 
 
 * インスタンス
 * ブロックストレージ
+VPC
 * Floating IP
 * ネットワークポート
 * ロードバランサー
@@ -444,22 +530,22 @@ Terraform resourcesでリソースを作成、修正、削除できます。NHN 
 
 ```
 # u2インスタンス作成
-resource "openstack_compute_instance_v2" "tf_instance_01"{
+resource "nhncloud_compute_instance_v2" "tf_instance_01"{
   name = "tf_instance_01"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  image_id = data.openstack_images_image_v2.centos_610_20200218.id
-  flavor_id = data.openstack_compute_flavor_v2.u2c1m2.id
+  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
   security_groups = ["default"]
   availability_zone = "kr-pub-a"
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   block_device {
-    uuid = data.openstack_images_image_v2.centos_610_20200218.id
+    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type = "image"
     destination_type = "local"
     boot_index = 0
@@ -469,25 +555,25 @@ resource "openstack_compute_instance_v2" "tf_instance_01"{
 }
 
 # u2以外のインスタンスタイプ
-# ネットワーク追加、ブロックストレージ追加されたインスタンスを作成
-resource "openstack_compute_instance_v2" "tf_instance_02" {
+# ネットワーク追加、ブロックストレージ追加されたインスタンス作成
+resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
   region    = "KR1"
   key_pair  = "terraform-keypair"
-  flavor_id = data.openstack_compute_flavor_v2.m2c1m2.id
+  flavor_id = data.nhncloud_compute_flavor_v2.m2c1m2.id
   security_groups = ["default","web"]
 
   network {
-    name = data.openstack_networking_network_v2.default_network.name
-    uuid = data.openstack_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   network {
-    port = openstack_networking_port_v2.port_1.id
+    port = nhncloud_networking_port_v2.port_1.id
   }
 
   block_device {
-    uuid                  = data.openstack_images_image_v2.centos_610_20200218.id
+    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -532,19 +618,19 @@ resource "openstack_compute_instance_v2" "tf_instance_02" {
 ### ブロックストレージ接続
 ```
 # インスタンス作成
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # ブロックストレージ作成
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   ...
 }
 
 # ブロックストレージ接続
-resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
-  instance_id = openstack_compute_instance_v2.tf_instance_02.id
-  volume_id = openstack_blockstorage_volume_v2.volume_01.id
+resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
+  instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
+  volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
 }
 ```
 | 名前 | タイプ | 必須 | 説明 |
@@ -558,7 +644,7 @@ resource "openstack_compute_volume_attach_v2" "volume_to_instance"{
 ### ブロックストレージ作成
 ```
 # HDDタイプの空ブロックストレージ作成
-resource "openstack_blockstorage_volume_v2" "volume_01" {
+resource "nhncloud_blockstorage_volume_v2" "volume_01" {
   name = "tf_volume_01"
   size = 10
   availability_zone = "kr-pub-a"
@@ -566,7 +652,7 @@ resource "openstack_blockstorage_volume_v2" "volume_01" {
 }
 
 # SSDタイプの空ブロックストレージ作成
-resource "openstack_blockstorage_volume_v2" "volume_02" {
+resource "nhncloud_blockstorage_volume_v2" "volume_02" {
   name = "tf_volume_02"
   size = 10
   availability_zone = "kr-pub-b"
@@ -574,10 +660,10 @@ resource "openstack_blockstorage_volume_v2" "volume_02" {
 }
 
 # スナップショットでブロックストレージ作成
-resource "openstack_blockstorage_volume_v2" "volume_03" {
+resource "nhncloud_blockstorage_volume_v2" "volume_03" {
   name = "tf_volume_03"
   description = "terraform create volume with snapshot test"
-  snapshot_id = data.openstack_blockstorage_snapshot_v2.snapshot_01.id
+  snapshot_id = data.nhncloud_blockstorage_snapshot_v2.snapshot_01.id
   size = 30
 }
 ```
@@ -597,21 +683,21 @@ resource "openstack_blockstorage_volume_v2" "volume_03" {
 
 `.tf`ファイルにインポートするブロックストレージ情報を作成します。
 ```
-resource "openstack_blockstorage_volume_v2" "volume_06" {
+resource "nhncloud_blockstorage_volume_v2" "volume_06" {
   name = "volume_06"
   size = 10
 }
 ``` 
 
-`terraform import openstack_blockstorage_volume_v2.{name} {bloack storage id}`コマンドでブロックストレージをインポートします。
+`terraform import nhncloud_blockstorage_volume_v2.{name} {bloack storage id}`コマンドでブロックストレージをインポートします。
 
 ```
-$ terraform import openstack_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
+$ terraform import nhncloud_blockstorage_volume_v2.volume_06 10cf5bec-cebb-479b-8408-3ffe3b569a7a
 ...
-openstack_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
-openstack_blockstorage_volume_v2.volume_06: Import prepared!
-  Prepared openstack_blockstorage_volume_v2 for import
-openstack_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
+nhncloud_blockstorage_volume_v2.volume_06: Importing from ID "10cf5bec-cebb-479b-8408-3ffe3b569a7a"...
+nhncloud_blockstorage_volume_v2.volume_06: Import prepared!
+  Prepared nhncloud_blockstorage_volume_v2 for import
+nhncloud_blockstorage_volume_v2.volume_06: Refreshing state... [id=10cf5bec-cebb-479b-8408-3ffe3b569a7a]
 
 Import successful!
 ...
@@ -622,40 +708,86 @@ Import successful!
 
 NHN CloudはTerraformを通して、下記のリソースの作成をサポートします。
 
+* VPC
+* VPCサブネット
 * Floating IP
 * ネットワークポート
 
 これ以外のVPCリソースは、コンソールで作成する必要があります。
 
+### VPC作成
+
+指定したIP帯域のVPCを作成します。
+
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  name = "tf-vpc-01"
+  cidrv4 = "10.0.0.0/8"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明   |
+| --- | --- |---|--------|
+| name | String | O | VPCの名前 |
+| cidrv4 | String | O | VPC IP帯域 |
+| region | String | - | VPCのリージョン名 |
+| tenant\_id | String | - | VPCのtenant ID |
+
+
+
+### VPCサブネット作成およびルーティングテーブル接続
+
+指定したVPCにユーザーが指定したIP帯域でサブネットを作成し、作成したサブネットに既存のルーティングテーブルを接続します。
+ルーティングテーブルはNHN Cloudコンソールで作成できます。
+
+```
+resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
+  name      = "tf-vpcsubnet-01"
+  vpc_id    = "def56b5e-0f1d-4a31-8005-4d716127f177"
+  cidr      = "10.10.10.0/24"
+  routingtable_id = "c3ed678d-de8b-4bf7-abea-b7c1118f0828"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明       |
+| --- | --- |---|------------|
+| vpc\_id | String | O | サブネットが割り当てられるVPC ID |
+| cidr | String | O | サブネットのIP帯域 |
+| name | String | O | サブネットの名前  |
+| region | String | - | サブネットが割り当てられるリージョン名 |
+| tenant\_id | String | - | サブネットが割り当てられるテナントID |
+| routingtable\_id | String | - | ルーティングテーブルID |
+
+
 ### Floating IP作成
 
 ```
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_compute_floatingip_v2" "fip_01" {
   pool = "Public Network"
 }
 ```
 
 | 名前 | 形式 | 必須 | 説明 |
 | ------ | --- |---- | --------- |
-| pool | String | O | Floating IPを作成するIPプール<br>コンソール`Network > Floating IP`で`Floating IP作成`ボタンをクリックして表示されるIPプールで確認できます。 |
+| pool | String | O | Floating IPを作成するIPプール<br>デフォルト値は`Public Network` |
 
 
 ### Floating IP接続
 ```
 # インスタンス作成
-resource "openstack_compute_instance_v2" "tf_instance_01" {
+resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
 }
 
 # Floating IP作成
-resource "openstack_compute_floatingip_v2" "fip_01" {
+resource "nhncloud_compute_floatingip_v2" "fip_01" {
   ...
 }
 
 # Floating IP接続
-resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
-  floating_ip = openstack_compute_floatingip_v2.fip_01.address
-  instance_id = openstack_compute_instance_v2.tf_instance_01.id
+resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
+  floating_ip = nhncloud_compute_floatingip_v2.fip_01.address
+  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
 }
 
 ```
@@ -669,9 +801,9 @@ resource "openstack_compute_floatingip_associate_v2" "fip_associate" {
 ### ネットワークポート作成
 
 ```
-resource "openstack_networking_port_v2" "port_1" {
+resource "nhncloud_networking_port_v2" "port_1" {
   name = "tf_port_1"
-  network_id = data.openstack_networking_network_v2.default_network.id
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
   admin_state_up = "true"
 }
 ```
@@ -696,10 +828,10 @@ resource "openstack_networking_port_v2" "port_1" {
 ### ロードバランサー作成
 
 ```
-resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
+resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   name = "tf_loadbalancer_01"
   description = "create loadbalancer by terraform."
-  vip_subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
+  vip_subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
   vip_address = "192.168.0.10"  
   admin_state_up = true
 }
@@ -719,12 +851,12 @@ resource "openstack_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 
 ```
 # HTTPリスナー
-resource "openstack_lb_listener_v2" "tf_listener_http_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_http_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "HTTP"
   protocol_port = 80
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -735,12 +867,12 @@ resource "openstack_lb_listener_v2" "tf_listener_http_01"{
 }
 
 # Terminated HTTPSリスナー
-resource "openstack_lb_listener_v2" "tf_listener_01"{
+resource "nhncloud_lb_listener_v2" "tf_listener_01"{
   name = "tf_listener_01"
   description = "create listener by terraform."
   protocol = "TERMINATED_HTTPS"
   protocol_port = 443
-  loadbalancer_id = openstack_lb_loadbalancer_v2.tf_loadbalancer_01.id
+  loadbalancer_id = nhncloud_lb_loadbalancer_v2.tf_loadbalancer_01.id
   default_pool_id = ""
   connection_limit = 2000
   timeout_client_data = 5000
@@ -775,11 +907,11 @@ resource "openstack_lb_listener_v2" "tf_listener_01"{
 <font color='red'>**(注意) NHN Cloudは、プール作成時に`loadbalancer_id`の指定をサポートしません。**</font>
 
 ```
-resource "openstack_lb_pool_v2" "tf_pool_01"{
+resource "nhncloud_lb_pool_v2" "tf_pool_01"{
   name = "tf_pool_01"
   description = "create pool by terraform."
   protocol = "HTTP"
-  listener_id = openstack_lb_listener_v2.tf_listener_01.id
+  listener_id = nhncloud_lb_listener_v2.tf_listener_01.id
   lb_method = "LEAST_CONNECTIONS"
   persistence{
     type = "APP_COOKIE"
@@ -804,9 +936,9 @@ resource "openstack_lb_pool_v2" "tf_pool_01"{
 ### ヘルスモニター作成
 
 ```
-resource "openstack_lb_monitor_v2" "tf_monitor_01"{
+resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
   name = "tf_monitor_01"
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
   type = "HTTP"
   delay = 20
   timeout = 10
@@ -836,10 +968,10 @@ resource "openstack_lb_monitor_v2" "tf_monitor_01"{
 <font color='red'>**(注意)NHN Cloudでメンバー作成時に`subnet_id`を必ず指定します。また`name`はサポートしません。**</font>
 
 ```
-resource "openstack_lb_member_v2" "tf_member_01"{
-  pool_id = openstack_lb_pool_v2.tf_pool_01.id
-  subnet_id = data.openstack_networking_subnet_v2.default_subnet.id
-  address = openstack_compute_instance_v2.tf_instance_01.access_ip_v4
+resource "nhncloud_lb_member_v2" "tf_member_01"{
+  pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
+  subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
+  address = nhncloud_compute_instance_v2.tf_instance_01.access_ip_v4
   protocol_port = 8080
   weight = 4
   admin_state_up = true
