@@ -540,8 +540,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_01"{
   availability_zone = "kr-pub-a"
 
   network {
-    name = data.nhncloud_networking_network_v2.default_network.name
-    uuid = data.nhncloud_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   block_device {
@@ -564,8 +564,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   security_groups = ["default","web"]
 
   network {
-    name = data.nhncloud_networking_network_v2.default_network.name
-    uuid = data.nhncloud_networking_network_v2.default_network.id
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
   network {
@@ -803,7 +803,7 @@ resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
 ```
 resource "nhncloud_networking_port_v2" "port_1" {
   name = "tf_port_1"
-  network_id = data.nhncloud_networking_network_v2.default_network.id
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
   admin_state_up = "true"
 }
 ```
@@ -831,7 +831,7 @@ resource "nhncloud_networking_port_v2" "port_1" {
 resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
   name = "tf_loadbalancer_01"
   description = "create loadbalancer by terraform."
-  vip_subnet_id = data.nhncloud_networking_subnet_v2.default_subnet.id
+  vip_subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
   vip_address = "192.168.0.10"  
   admin_state_up = true
 }
@@ -970,7 +970,7 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 ```
 resource "nhncloud_lb_member_v2" "tf_member_01"{
   pool_id = nhncloud_lb_pool_v2.tf_pool_01.id
-  subnet_id = data.nhncloud_networking_subnet_v2.default_subnet.id
+  subnet_id = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
   address = nhncloud_compute_instance_v2.tf_instance_01.access_ip_v4
   protocol_port = 8080
   weight = 4
