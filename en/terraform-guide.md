@@ -36,7 +36,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * Storage
     * nhncloud_blockstorage_volume_v2
 
-#### Data sources 지원
+#### Supported Data Sources
 
 * nhncloud_images_image_v2
 * nhncloud_blockstorage_volume_v2
