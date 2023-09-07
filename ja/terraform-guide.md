@@ -710,8 +710,8 @@ NHN CloudはTerraformを通して、下記のリソースの作成をサポー�
 
 * VPC
 * VPCサブネット
-* Floating IP
 * ネットワークポート
+* Floating IP
 
 これ以外のVPCリソースは、コンソールで作成する必要があります。
 
@@ -759,6 +759,30 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 | routingtable\_id | String | - | ルーティングテーブルID |
 
 
+### ネットワークポート作成
+
+```
+resource "nhncloud_networking_port_v2" "port_1" {
+  name = "tf_port_1"
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
+  admin_state_up = "true"
+}
+```
+
+| 名前   | 形式 | 必須 | 説明      |
+| ------ | ---- |---| --------- |
+| name | String | O | 作成するポートの名前 |
+| description | String | - | ポートの説明 |
+| network_id | String | O | ポートを作成するVPCネットワークID |
+| tenant_id | String | - | 作成するポートのテナントID |
+| device_id | String | - | 作成されたポートが接続されるデバイスID |
+| fixed_ip | Object | - | 作成するポートの固定IP設定情報<br>`no_fixed_ip`プロパティがあってはならない |
+| fixed_ip.subent_id | String | O | 固定IPのサブネットID |
+| fixed_ip.ip_address | String | - | 設定する固定IPのアドレス |
+| no_fixed_ip | Boolean | - | `true`:固定IPがないポート<br>`fixed_ip`プロパティがあってはならない |
+| admin_state_up | Boolean | - | 管理者制御状態<br> `true`: 作動<br>`false`:停止 |
+
+
 ### Floating IP作成
 
 ```
@@ -774,8 +798,17 @@ resource "nhncloud_compute_floatingip_v2" "fip_01" {
 
 ### Floating IP接続
 ```
+# ネットワークポートの作成
+resource "nhncloud_networking_port_v2" "port_1" {
+  ...
+}
+
 # インスタンス作成
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
+...
+    network {
+    port = nhncloud_networking_port_v2.port_1.id
+  }
   ...
 }
 
@@ -787,41 +820,15 @@ resource "nhncloud_compute_floatingip_v2" "fip_01" {
 # Floating IP接続
 resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
   floating_ip = nhncloud_compute_floatingip_v2.fip_01.address
-  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
+  port_id = nhncloud_networking_port_v2.port_1.id
 }
 
 ```
-| 名前 | 形式 | 必須 | 説明 |
-| ------ | --- |---- | --------- |
-| floating_ip | String | O | 接続するFloating IP |
-| instance_id | String | O | Floating IPを接続する対象インスタンスUUID |
-| fixed_ip | String | - | Floating IPを接続する対象の固定IP |
-| wait_until_associated | Boolean | - | `true`：Floating IPを接続するまで対象インスタンスをポーリング<br>`false`：Floating IPを接続するまで待機しない(デフォルト値) |
 
-### ネットワークポート作成
-
-```
-resource "nhncloud_networking_port_v2" "port_1" {
-  name = "tf_port_1"
-  network_id = data.nhncloud_networking_vpc_v2.default_network.id
-  admin_state_up = "true"
-}
-```
-
-| 名前 | 形式 | 必須 | 説明 |
-| ------ | ---- | ---- | --------- |
-| name | String | O | 作成するポートの名前 |
-| description | String | O | ポートの説明 |
-| network_id | String | O | ポートを作成するVPCネットワークID |
-| tenant_id | String | O | 作成するポートのテナントID |
-| device_id | String | - | 作成されたポートが接続されるデバイスID |
-| fixed_ip | Object | - | 作成するポートの固定IP設定情報<br>`no_fixed_ip`プロパティがあってはならない |
-| fixed_ip.subent_id | String | O | 固定IPのサブネットID |
-| fixed_ip.ip_address | String | - | 設定する固定IPのアドレス |
-| no_fixed_ip | Boolean | - | `true`：固定IPがないポート<br>`fixed_ip`プロパティがあってはならない |
-| admin_state_up | Boolean | - | 管理者制御状態<br> `true`：作動<br>`false`：中止 |
-
-
+| 名前         | 形式 | 必須 | 説明                   |
+|-------------| --- |---- |-------------------------|
+| floating_ip | String | O | 接続するFloating IP           |
+| port_id     | String | O | Floating IPを接続するポートUUID |
 
 
 ## Resources - ロードバランサー
