@@ -703,8 +703,8 @@ NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 
 * VPC
 * VPC 서브넷
-* 플로팅 IP
 * 네트워크 포트
+* 플로팅 IP
 
 이외의 VPC 자원은 콘솔에서 생성해야 합니다.
 
@@ -752,6 +752,30 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 | routingtable\_id | String | - | 라우팅 테이블 ID |
 
 
+### 네트워크 포트 생성
+
+```
+resource "nhncloud_networking_port_v2" "port_1" {
+  name = "tf_port_1"
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
+  admin_state_up = "true"
+}
+```
+
+| 이름    | 형식 | 필수 | 설명       |
+| ------ | ---- |----| --------- |
+| name | String | O  | 생성할 포트의 이름 |
+| description | String | -  | 포트 설명 |
+| network_id | String | O  | 포트를 생성할 VPC 네트워크 ID |
+| tenant_id | String | -  | 생성할 포트의 테넌트 ID |
+| device_id | String | -  | 생성된 포트가 연결될 장치 ID |
+| fixed_ip | Object | -  | 생성할 포트의 고정 IP 설정 정보<br>`no_fixed_ip` 속성이 없어야 함 |
+| fixed_ip.subent_id | String | O  | 고정 IP의 서브넷 ID |
+| fixed_ip.ip_address | String | -  | 설정할 고정 IP의 주소 |
+| no_fixed_ip | Boolean | -  | `true`: 고정 IP가 없는 포트<br>`fixed_ip` 속성이 없어야 함 |
+| admin_state_up | Boolean | -  | 관리자 제어 상태<br> `true`: 작동<br>`false`: 중지 |
+
+
 ### 플로팅 IP 생성
 
 ```
@@ -767,8 +791,17 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 
 ### 플로팅 IP 연결
 ```
+# 네트워크 포트 생성
+resource "nhncloud_networking_port_v2" "port_1" {
+  ...
+}
+
 # 인스턴스 생성
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
+  ...
+    network {
+    port = nhncloud_networking_port_v2.port_1.id
+  }
   ...
 }
 
@@ -780,41 +813,15 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 # 플로팅 IP 연결
 resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
   floating_ip = nhncloud_networking_floatingip_v2.fip_01.address
-  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
+  port_id = nhncloud_networking_port_v2.port_1.id
 }
 
 ```
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| floating_ip | String | O | 연결할 플로팅 IP |
-| instance_id | String | O | 플로팅 IP를 연결할 대상 인스턴스 UUID |
-| fixed_ip | String | - | 플로팅 IP를 연결할 대상의 고정 IP |
-| wait_until_associated | Boolean | - | `true`: 플로팅 IP를 연결될 때까지 대상 인스턴스를 폴링<br>`false`: 플로팅 IP를 연결될 때까지 대기하지 않음(기본값) |
 
-### 네트워크 포트 생성
-
-```
-resource "nhncloud_networking_port_v2" "port_1" {
-  name = "tf_port_1"
-  network_id = data.nhncloud_networking_vpc_v2.default_network.id
-  admin_state_up = "true"
-}
-```
-
-| 이름    | 형식 | 필수  | 설명       |
-| ------ | ---- | ---- | --------- |
-| name | String | O | 생성할 포트의 이름 |
-| description | String | O | 포트 설명 |
-| network_id | String | O | 포트를 생성할 VPC 네트워크 ID |
-| tenant_id | String | O | 생성할 포트의 테넌트 ID |
-| device_id | String | - | 생성된 포트가 연결될 장치 ID |
-| fixed_ip | Object | - | 생성할 포트의 고정 IP 설정 정보<br>`no_fixed_ip` 속성이 없어야 함 |
-| fixed_ip.subent_id | String | O | 고정 IP의 서브넷 ID |
-| fixed_ip.ip_address | String | - | 설정할 고정 IP의 주소 |
-| no_fixed_ip | Boolean | - | `true`: 고정 IP가 없는 포트<br>`fixed_ip` 속성이 없어야 함 |
-| admin_state_up | Boolean | - | 관리자 제어 상태<br> `true`: 작동<br>`false`: 중지 |
-
-
+| 이름          | 형식 | 필수  | 설명                    |
+|-------------| --- |---- |-------------------------|
+| floating_ip | String | O | 연결할 플로팅 IP           |
+| port_id     | String | O | 플로팅 IP를 연결할 포트 UUID |
 
 
 ## Resources - 로드 밸런서

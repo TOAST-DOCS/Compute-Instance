@@ -707,8 +707,8 @@ NHN Cloud supports creation of the following resources with Terraform:
 
 * VPC
 * VPC Subnet
-* Floating IP
 * Network Port
+* Floating IP
 
 Other VPC resources must be created in the console.
 
@@ -756,6 +756,30 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 | routingtable\_id | String | - | Routing table ID |
 
 
+### Create Network Port
+
+```
+resource "nhncloud_networking_port_v2" "port_1" {
+  name = "tf_port_1"
+  network_id = data.nhncloud_networking_vpc_v2.default_network.id
+  admin_state_up = "true"
+}
+```
+
+| Name    | Type | Required | Description       |
+| ------ | ---- |---| --------- |
+| name | String | O | Port name to create |
+| description | String | - | Port description |
+| network_id | String | O | ID of VPC network to create a port |
+| tenant_id | String | - | Tenant ID of the port to create |
+| device_id | String | - | Device ID to which the created port will be connected |
+| fixed_ip | Object | - | Setting information of fixed IP of a port to create<br>Must not include the `no_fixed_ip` attribute |
+| fixed_ip.subent_id | String | O | Subnet ID of a fixed IP |
+| fixed_ip.ip_address | String | - | Address of fixed IP to configure |
+| no_fixed_ip | Boolean | - | `true`: Port without fixed IP<br>Must not include the `fixed_ip` attribute |
+| admin_state_up | Boolean | - | Administrator control status<br> `true`: Running<br>`false`: Suspended |
+
+
 ### Create Floating IP
 
 ```
@@ -771,8 +795,17 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 
 ### Associate Floating IP
 ```
+# Create Network Port
+resource "nhncloud_networking_port_v2" "port_1" {
+  ...
+}
+
 # Create Instance
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
+    ...
+    network {
+    port = nhncloud_networking_port_v2.port_1.id
+  }
   ...
 }
 
@@ -784,41 +817,15 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 # Associate Floating IP
 resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
   floating_ip = nhncloud_networking_floatingip_v2.fip_01.address
-  instance_id = nhncloud_compute_instance_v2.tf_instance_01.id
+  port_id = nhncloud_networking_port_v2.port_1.id
 }
 
 ```
-| Name | Format | Required | Description |
-| ------ | --- |---- | --------- |
-| floating_ip | String | O | Floating IP to associate |
-| instance_id | String | O | UUID of the target instance to be associated with floating IP |
-| fixed_ip | String | - | Fixed IP of the target to be associated with floating IP |
-| wait_until_associated | Boolean | - | `true`: Poll the target instance until floating IP is associated <br>`false`: Do not wait until floating IP is associated (default) |
 
-### Create Network Port
-
-```
-resource "nhncloud_networking_port_v2" "port_1" {
-  name = "tf_port_1"
-  network_id = data.nhncloud_networking_vpc_v2.default_network.id
-  admin_state_up = "true"
-}
-```
-
-| Name | Format | Required | Description |
-| ------ | ---- | ---- | --------- |
-| name | String | O | Name of port to create |
-| description | String | O | Description of port |
-| network_id | String | O | Network ID of VPC to create a port |
-| tenant_id | String | O | Tenant ID of port to create |
-| device_id | String | - | ID of device to attach a created port |
-| fixed_ip | Object | - | Setting information of fixed IP of a port to create <br>Must not include the `no_fixed_ip` attribute |
-| fixed_ip.subent_id | String | O | Subnet ID of fixed IP |
-| fixed_ip.ip_address | String | - | Address of fixed IP to configure |
-| no_fixed_ip | Boolean | - | `true`: Port without fixed IP<br>Must not include the `fixed_ip` attribute |
-| admin_state_up | Boolean | - | Administrator control status <br> `true`: Running <br>`false`: Suspended |
-
-
+| Name          | Format | Required  | Description                    |
+|-------------| --- |---- |-------------------------|
+| floating_ip | String | O | Floating IP to associate           |
+| port_id     | String | O | UUID of port to be associated with floating IP |
 
 
 ## Resources - Load Balancer
