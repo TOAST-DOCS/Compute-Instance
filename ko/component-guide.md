@@ -628,18 +628,10 @@ SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](https://docs
 
 ### TMI 설치
 
+
 root 계정으로 /root 경로에서 dbca 명령어를 실행합니다.
 ```
-$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
-```
-
-
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 8639
+$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ```
 
 | No | 항목 | 인자값 |
@@ -647,7 +639,27 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
 | 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME (= SID ) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
+| 4 |DB\_TYPE | Tibero Type 지정 (16vCore 이하: SE / 16vCore 초과: CE) |
+| 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
+
+### Tibero 7 Cloud Standard Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
+```
+
+
+### Tibero 7 Cloud Enterprise Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+```
 
 #### 설치 완료
 
@@ -670,39 +682,45 @@ SQL> Disconnected.
 Tibero가 구동 중인지 확인합니다.
 
 ```
-[root@tiberoinstance ~]# ps -ef | grep tbsvr
-nhncloud 13933     1  0 09:10 ?        00:00:04 tbsvr          -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13944 13933  0 09:10 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13945 13933  0 09:10 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13946 13933  0 09:10 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13947 13933  0 09:10 ?        00:00:08 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13948 13933  0 09:10 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13949 13933  0 09:10 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13950 13933  0 09:10 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13951 13933  0 09:10 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13952 13933  0 09:10 ?        00:00:09 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13953 13933  0 09:10 ?        00:00:07 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13954 13933  0 09:10 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
-root     21066 12596  0 11:06 pts/0    00:00:00 grep --color=auto tbsvr
+[root@tiberoinstance ~]# ps -ef |grep tbsvr
+nhncloud  9886     1  1 14:14 ?        00:00:00 tbsvr          -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9888  9886  0 14:15 ?        00:00:00 tbsvr_MGWP     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9889  9886 36 14:15 ?        00:00:21 tbsvr_FGWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9890  9886  0 14:15 ?        00:00:00 tbsvr_FGWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9891  9886  0 14:15 ?        00:00:00 tbsvr_FGWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9892  9886  0 14:15 ?        00:00:00 tbsvr_FGWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9893  9886  0 14:15 ?        00:00:00 tbsvr_FGWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9894  9886  0 14:15 ?        00:00:00 tbsvr_FGWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9895  9886  0 14:15 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9896  9886  0 14:15 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9897  9886  0 14:15 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9898  9886  0 14:15 ?        00:00:00 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9899  9886  0 14:15 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9900  9886  0 14:15 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9901  9886  0 14:15 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9902  9886  0 14:15 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9903  9886  0 14:15 ?        00:00:00 tbsvr_PEWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9904  9886  0 14:15 ?        00:00:00 tbsvr_PEWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9905  9886  0 14:15 ?        00:00:00 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9906  9886  3 14:15 ?        00:00:01 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9907  9886  0 14:15 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
+root     13517  8366  0 14:15 pts/0    00:00:00 grep --color=auto tbsvr
 [root@tiberoinstance ~]#
 ```
 
 설치 로그는 /root/.dbset.log에서 확인이 가능합니다.
 
 ```
-[root@tiberoinstance ~]# ls -al
-합계 36
-dr-xr-x---.  4 root root  154  1월 13 09:12 .
-dr-xr-xr-x. 23 root root 4096  1월 13 09:05 ..
--rw-------   1 root root  264  1월 12 19:08 .bash_history
+[root@tiberoinstance ~]# ls -alh
+합계 20K
+dr-xr-x---.  4 root root  104 10월 17 14:15 .
+dr-xr-xr-x. 23 root root 4.0K 10월 17 14:14 ..
 -rw-r--r--.  1 root root   18 12월 29  2013 .bash_logout
 -rw-r--r--.  1 root root  176 12월 29  2013 .bash_profile
 -rw-r--r--.  1 root root  176 12월 29  2013 .bashrc
--rw-r--r--.  1 root root  100 12월 29  2013 .cshrc
--rw-r--r--   1 root root 7732  1월 13 09:12 .dbset.log
-drwxr-----   3 root root   19  1월 13 09:04 .pki
-drwx------   2 root root   29  1월  4 16:58 .ssh
--rw-r--r--.  1 root root  129 12월 29  2013 .tcshrc
+-rw-r--r--   1 root root 3.6K 10월 17 14:15 .dbset.log
+drwxr-----   3 root root   19 10월 17 14:13 .pki
+drwx------   2 root root   29 10월 17 14:04 .ssh
 ```
 
 ### Tibero 접속
@@ -733,13 +751,13 @@ dbca 명령어로 생성한 OS\_ACCOUNT로 로그인합니다.
 ```
 [nhncloud@tiberoinstance ~]$ tbsql sys/tibero
 
-tbSQL 6
+tbSQL 7
 
-TmaxData Corporation Copyright (c) 2008-. All rights reserved.
+TmaxTibero Corporation Copyright (c) 2020-. All rights reserved.
 
 Connected to Tibero.
 
-SQL> select * from v$instance;
+SQL> select * FROM v$instance;
 
 INSTANCE_NUMBER INSTANCE_NAME
 --------------- ----------------------------------------
@@ -750,18 +768,18 @@ HOST_NAME                                                       PARALLEL
    THREAD# VERSION
 ---------- --------
 STARTUP_TIME
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 STATUS           SHUTDOWN_PENDING
 ---------------- ----------------
 TIP_FILE
 --------------------------------------------------------------------------------
               0 tiberotestdb
 tiberotestdb
-tiberoinstance.novalocal                                        NO
-         0 6
-2022/01/13
+tiberoinstance.novalocal                                      NO
+         0 7
+2023/10/17
 NORMAL           NO
-/db/tibero6/config/tiberotestdb.tip
+/db/tibero7/config/tiberotestdb.tip
 
 
 1 row selected.
