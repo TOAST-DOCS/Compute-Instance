@@ -430,6 +430,7 @@ X-Auth-Token: {tokenId}
 | `ACTIVE` | 인스턴스가 활성 상태인 경우 |
 | `BUILDING` | 인스턴스가 생성 중인 경우 |
 | `STOPPED`| 인스턴스가 중지된 경우 |
+| `SHELVED_OFFLOADED` | 인스턴스가 종료된 경우 |
 | `DELETED`| 인스턴스가 삭제된 경우 |
 | `REBOOT`| 인스턴스를 재시작한 경우 |
 | `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
@@ -1179,12 +1180,12 @@ X-Auth-Token: {tokenId}
 ## 인스턴스 추가기능
 NHN Cloud는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
 
-* 인스턴스 시작, 중지, 재시작
+* 인스턴스 시작, 중지, 종료, 재시작
 * 인스턴스 타입 변경
 * 인스턴스 이미지 생성
 * 보안 그룹 추가 및 삭제
 
-### 인스턴스 시작
+### 중지된 인스턴스 시작
 
 중지된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
 
@@ -1213,10 +1214,44 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
 ---
+
+### 종료된 인스턴스 시작
+
+종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHELVED_OFFLOADED**여야 합니다.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|--|---|---|---|--|
+| tenantId | URL | String | O | 테넌트 ID |
+| serverId | URL | UUID | O | 변경할 인스턴스 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| unshelve | Body | none | O | 인스턴스 시작 요청 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+  "unshelve" : null
+}
+```
+
+</p>
+</details>
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
+
+---
 
 ### 인스턴스 중지
 
@@ -1241,6 +1276,40 @@ X-Auth-Token: {tokenId}
 ```json
 {
   "os-stop" : null
+}
+```
+
+</p>
+</details>
+
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
+### 인스턴스 종료
+
+인스턴스를 종료하고 상태를 **SHELVED_OFFLOADED**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE**여야 합니다.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명          |
+|---|---|---|---|-------------|
+| tenantId | URL | String | O | 테넌트 ID      |
+| serverId | URL | UUID | O | 변경할 인스턴스 ID |
+| tokenId | Header | String | O | 토큰 ID       |
+| shelve | Body | none | O | 인스턴스 종료 요청  |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+  "shelve" : null
 }
 ```
 
