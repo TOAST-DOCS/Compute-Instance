@@ -642,7 +642,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 4 |DB\_TYPE | Tibero Type 지정 (16vCore 이하: SE / 16vCore 초과: CE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
-### Tibero 7 Cloud Standard Edition
+##### Tibero 7 Cloud Standard Edition
 ```
 [centos@tiberoinstance ~]$ sudo su root
 [root@tiberoinstance centos]# cd
@@ -652,7 +652,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ```
 
 
-### Tibero 7 Cloud Enterprise Edition
+##### Tibero 7 Cloud Enterprise Edition
 ```
 [centos@tiberoinstance ~]$ sudo su root
 [root@tiberoinstance centos]# cd
