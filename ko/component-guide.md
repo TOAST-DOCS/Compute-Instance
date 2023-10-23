@@ -670,7 +670,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 
 #### 설치 완료
 
-dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 database가 생성됩니다. 소요 시간은 10분 이하입니다. 
+dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 데이터베이스가 생성됩니다. 소요 시간은 10분 이하입니다. 
 완료되면 아래와 같이 출력됩니다.
 
 ```
