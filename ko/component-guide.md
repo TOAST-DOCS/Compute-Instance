@@ -617,10 +617,10 @@ sudo systemctl restart mariadb.service
 #### 최소 권장 사양
 
 - 루트 블록 스토리지 
-    - 빠른 속도를 위해 SSD 를 권장하며, root disk full 이 발생하지 않 도록 **50GB 이상 설정**할 것을 권고한다.
+    - 빠른 속도를 위해 SSD를 권장하며, root disk full 이 발생하지 않도록 **50GB 이상**으로 설정할 것을 권고합니다.
 
-- 최소 권장 사양 : 4vCore / 8GB
-    - ** **권장 사양 미만 사용 시 DBMS 설치가 제한될 수 있습니다.**
+- 최소 권장 사양: 4vCore/8GB
+    - **권장 사양 미만 사용 시 DBMS 설치가 제한될 수 있습니다.**
 #### 추가 블록 스토리지
 
 - 루트 볼륨 이외의 추가 볼륨을 생성합니다.
@@ -644,9 +644,9 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | No | 항목 | 인자값 |
 | :---: | --- | --- |
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
-| 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME (= SID ) |
+| 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 |DB\_TYPE | Tibero Type 지정 (16vCore 이하: SE / 16vCore 초과: CE) |
+| 4 | DB\_TYPE | Tibero Type 지정(16vCore 이하: SE/16vCore 초과: CE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
 ##### Tibero 7 Cloud Standard Edition
@@ -670,7 +670,8 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 
 #### 설치 완료
 
-dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 database가 생성됩니다. 소요 시간은 10분 이하입니다. 완료되면 아래와 같이 출력됩니다.
+dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 database가 생성됩니다. 소요 시간은 10분 이하입니다. 
+완료되면 아래와 같이 출력됩니다.
 
 ```
 SQL>
