@@ -735,7 +735,7 @@ drwx------ 2 root root 29 Oct 17 14:04 .ssh
 
 #### Change the Account
 
-Log in with the OS_ACCOUNT created with the dbca command.
+Log in with the OS\_ACCOUNT created with the dbca command.
 
 
 ```
@@ -990,13 +990,13 @@ shell> sudo systemctl restart mysqld
 ```
 
 ### Connect to Redis
-Connect to a Redis instance by using the \`redis-cli\` command.
+Connect to a Redis instance by using the `redis-cli` command.
 ```
 shell> redis-cli
 ```
 
 ### Initial Setup After Creating a Redis Instance
-The default configuration file for a Redis instance is the \`~/redis/redis.conf\` file. The description for the parameters to be changed is as follows.
+The default configuration file for a Redis instance is the `~/redis/redis.conf` file. The description for the parameters to be changed is as follows.
 
 #### Bind
 - Default value: `127.0.0.1 -::1`
