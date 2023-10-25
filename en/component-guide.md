@@ -188,7 +188,7 @@ shell> mysql -uroot
 
 ### Initial Settings for MySQL Instance
 
-#### 1\. Setting Password
+#### 1\. Set the Password
 
 There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible. You can change the password as follows.
 ```
@@ -200,7 +200,7 @@ Default MySQL validate\_password\_policy is as below:
 * validate\_password\_policy=MEDIUM
 * Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
-#### 2\. Changing Port Number
+#### 2\. Change the Port
 
 The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
 
@@ -284,7 +284,7 @@ shell> psql
 
 ### Create PostgreSQL instance and perform initial setup
 
-#### 1\. Change port
+#### 1\. Change the Port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
@@ -444,7 +444,7 @@ shell> csql -u dba demodb@localhost
 
 ### Initial Setup After Creating a CUBRID Instance
 
-#### 1\. Setting Password
+#### 1\. Set the Password
 
 After initial installation, the CUBRID dba account password is not set. Therefore, you must set a password after installation.
 ```
@@ -577,7 +577,7 @@ Enter password:
 
 ### Initial Setup After Creating a MariaDB Instance
 
-#### 1\. Setting Password
+#### 1\. Set the Password
 
 After initial installation, the MariaDB root account password is not set. Therefore, you must set a password after installation.
 
@@ -587,7 +587,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('password');
 ```
 
-#### 2\. Changing Port Number
+#### 2\. Change the Port
 
 After initial installation, the port is 3306, which is MariaDB's default port. For security reasons, it is recommended to change the port.
 
