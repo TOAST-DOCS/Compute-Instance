@@ -236,7 +236,7 @@ The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables a
 | --- | --- |
 | default\_storage\_engine | Specify a default storage engine: Default is InnoDB with Online-DDL and transactions available. |
 | expire\_logs\_days | Set log expiration period for logs provided by binlog settings. Default is three days. |
-| innodb\_log\_file\_size | Specify the size of log files which save redo logs of transactions. <br><br>Recommended size is 256MB or higher in actual environment, and it is set as 512MB by default. In order for the changes to take effect, please restart the database. |
+| innodb\_log\_file\_size | Specify the size of log files which save redo logs of transactions. <br>Recommended size is 256MB or higher in actual environment, and it is set as 512MB by default. In order for the changes to take effect, please restart the database. |
 | innodb\_file\_per\_table | When a table is deleted or truncated, the table space is immediately returned to the OS. |
 | innodb\_log\_files\_in\_group | Set the number of innodb\_log\_file files and use them in circular fashion: requires at least two. |
 | log_timestamps | Default log time of MySQL 5.7 is displayed in UTC time format; therefore, change log time to system local time. |
@@ -252,7 +252,7 @@ Directory and file description of MySQL are as below:
 | my.cnf | /etc/my.cnf |
 | DATADIR | Path for MySQL Data File  - /var/lib/mysql/ |
 | ERROR_LOG | Path for MySQL error_log File  - /var/log/mysqld.log |
-| SLOW_LOG | Path for MySQL Slow Query File -  <span style="color:#333333">/var/lib/mysql/\*slow.log</span> |
+| SLOW_LOG | Path for MySQL Slow Query File -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
 
 
 > For detailed release status of MySQL Instance, please refer to [Instance Release Notes](/Compute/Compute/en/release-notes/).
@@ -284,7 +284,7 @@ shell> psql
 
 ### Create PostgreSQL instance and perform initial setup
 
-#### 1. Change port
+#### 1\. Change port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
@@ -310,7 +310,7 @@ shell> sudo systemctl restart postgresql-13
 shell> psql -p[changed port number]
 ```
 
-#### 2. Change server log timezone
+#### 2\. Change server log timezone
 
 The default timezone recorded in the server log is set to UTC. It is recommended to change it to match the local time of the SYSTEM.
 <br>
@@ -341,7 +341,7 @@ shell> psql
 postgres=# SHOW log_timezone;
 ```
 
-#### 3. Cancel public schema permission
+#### 3\. Cancel public schema permission
 
 Since all users are provided with CREATE and USAGE permissions for public schema by default, users who can log in to the DB can create objects in public schema. It is recommended to cancel the permissions so that no users can create objects in public schema.
 <br>
@@ -356,7 +356,7 @@ shell> psql
 postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ```
 
-#### 4. Allow remote login
+#### 4\. Allow remote login
 
 To allow logins other than local host, you need to change the listen_addresses variable and client authentication setup file.
 <br>
@@ -444,14 +444,14 @@ shell> csql -u dba demodb@localhost
 
 ### Initial Setup After Creating a CUBRID Instance
 
-#### 1. Setting Password
+#### 1\. Setting Password
 
 After initial installation, the CUBRID dba account password is not set. Therefore, you must set a password after installation.
 ```
 shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 ```
 
-#### 2. Change the Broker Port
+#### 2\. Change the Broker Port
 
 The broker port for **query_editor** defaults to **30000**, and the broker port for **broker1** defaults to **33000**.
 For security reasons, it is recommended to change the port.
@@ -476,7 +476,7 @@ Restart the broker for the port change to take effect.
 shell> cubrid broker restart
 ```
 
-#### 3. Change the Manager Server Port
+#### 3\. Change the Manager Server Port
 
 The manager server port defaults to **8001**.
 For security reasons, it is recommended to change the port.
@@ -507,9 +507,9 @@ The CUBRID directory and file descriptions are as follows.
 | database.txt | CUBRID database location information file path - /opt/cubrid/databases |
 | CONF PATH | CUBRID server, broker, manager environment variable file path - /opt/cubrid/conf |
 | LOG PATH | CUBRID process log file path - /opt/cubrid/log |
-| SQL\_LOG | CUBRID SQL Query file path /opt/cubrid/log/broker/sql_log |
-| ERROR\_LOG | CUBRID ERROR SQL Query file path - /opt/cubrid/log/broker/error_log |
-| SLOW\_LOG | CUBRID Slow Query file path - /opt/cubrid/log/broker/sql_log |
+| SQL\_LOG | CUBRID SQL Query file path /opt/cubrid/log/broker/sql\_log |
+| ERROR\_LOG | CUBRID ERROR SQL Query file path - /opt/cubrid/log/broker/error\_log |
+| SLOW\_LOG | CUBRID Slow Query file path - /opt/cubrid/log/broker/sql\_log |
 
 #### cubrid.conf Description
 
@@ -517,10 +517,10 @@ A server configuration file that allows you to configure the memory of the datab
 
 | Name | Description |
 | --- | --- |
-| service  | A parameter to register processes that start automatically when the CUBRID service starts. <br>By default, server, broker, and manager processes are registered. |
+| service  | A parameter to register processes that start automatically when the CUBRID service starts.<br>By default, server, broker, and manager processes are registered. |
 | cubrid\_port\_id | The port used by the master process. |
 | max\_clients | The maximum number of concurrently connected clients per database server process. |
-| data\_buffer\_size | A parameter to set the size of the data buffer that the database server caches in memory. <br>It is recommended to set the required memory size to a value within 2/3 of the system memory. |
+| data\_buffer\_size | A parameter to set the size of the data buffer that the database server caches in memory.<br>It is recommended to set the required memory size to a value within 2/3 of the system memory. |
 
 #### broker.conf Description
 
@@ -577,7 +577,7 @@ Enter password:
 
 ### Initial Setup After Creating a MariaDB Instance
 
-#### 1. Setting Password
+#### 1\. Setting Password
 
 After initial installation, the MariaDB root account password is not set. Therefore, you must set a password after installation.
 
@@ -587,7 +587,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('password');
 ```
 
-#### 2. Changing Port Number
+#### 2\. Changing Port Number
 
 After initial installation, the port is 3306, which is MariaDB's default port. For security reasons, it is recommended to change the port.
 
@@ -767,26 +767,26 @@ Connected to Tibero.
 
 SQL> select * FROM v$instance;
 
-instance_number instance_name
+INSTANCE_NUMBER INSTANCE_NAME
 --------------- ----------------------------------------
 DB_NAME
 ----------------------------------------
-host_name parallel
+HOST_NAME                                                       PARALLEL
 --------------------------------------------------------------- --------
    THREAD# VERSION
 ---------- --------
 STARTUP_TIME
 --------------------------------------------------------------------------------
-status shutdown_pending
+STATUS           SHUTDOWN_PENDING
 ---------------- ----------------
 TIP_FILE
 --------------------------------------------------------------------------------
               0 tiberotestdb
 tiberotestdb
-tiberoinstance.novalocal NO
+tiberoinstance.novalocal                                      NO
          0 7
-Oct 17, 2023
-NORMAL NO
+2023/10/17
+NORMAL           NO
 /db/tibero7/config/tiberotestdb.tip
 
 
@@ -998,13 +998,13 @@ shell> redis-cli
 ### Initial Setup After Creating a Redis Instance
 The default configuration file for a Redis instance is the \`~/redis/redis.conf\` file. The description for the parameters to be changed is as follows.
 
-#### bind
+#### Bind
 - Default value: `127.0.0.1 -::1`
 - Changed value: `<private ip> 127.0.0.1 -::1`
 
 Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
 
-#### port
+#### Port
 - Default value: `6379`
 
 Port is 6379, a default value for Redis. It is recommended to change the port for security reasons. After changing the port, you can connect to Redis with the following command.
@@ -1013,13 +1013,13 @@ Port is 6379, a default value for Redis. It is recommended to change the port fo
 shell> redis-cli -p <new port>
 ```
 
-#### requirepass/masterauth
+#### Requirepass/masterauth
 - Default value: `nhncloud`
 
-The default password `is nhncloud`. For security reasons, it is recommended to chang the password. If you are using a replication connection, you must change the `values of` `requirepass and` `masterauth`at the same time.
+The default password is `nhncloud`. For security reasons, it is recommended to change the password. If you are using replication connection, you must change the `requirepass` and `masterauth` values at the same time.
 
 ### Automatic HA Configuration Script
-A Redis instance of NHN Cloud provides a script that automatically configures an HA environment. You can use the script only for **a new instance right immediately after installation**, and cannot use after changing the set values from redis.conf.
+A Redis instance of NHN Cloud provides a script that automatically configures an HA environment. You can use the script only for **a new instance immediately after installation**, and cannot use after changing the set values from redis.conf.
 
 To use the script, the following settings are required.
 
