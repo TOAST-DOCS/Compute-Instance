@@ -2,7 +2,7 @@
 
 ## NAT Instance
 NAT instance is an instance that allows you to access internet over a specific IP address band in the private network instance.
-This feature is only available in the Korea (Pangyo) and Korea (Pyeongchon) regions.
+This feature is available only in the Korea (Pangyo) and Korea (Pyeongchon) regions.
 
 ### Key Features
 * The instance of a private network not connect with an internet gateway can access the internet via the NAT instance.
@@ -17,7 +17,7 @@ This feature is only available in the Korea (Pangyo) and Korea (Pyeongchon) regi
 * Redundancy not supported.
 * The option of checking network source/target must be disabled in the Network Interface settings for the NAT instance to work.
 * If a private image is created with NAT instance, the function might not work normally.
-* The NAT instance provides The NAT feature only for one network interface.
+* A NAT instance provides the NAT feature on only one network interface.
 
 > [Note] Difference with NAT gateway
 >
@@ -66,7 +66,7 @@ Click **Associate** and download .rdp file, to access the instance by using the 
 
 #### 1. Set SQL Certification Mode
 
-The default certification mode of the server is set with "**Windows Certification Mode**".
+The default certification mode of the server is set with "Windows Certification Mode".
 To use Microsoft SQL database account, the mode must be changed to SQL Certification Mode.
 
 Execute Microsoft SQL Server Management Studio and associate to an object under the instance name.
@@ -92,7 +92,7 @@ Execute SQL Server configuration manager as below.
 
 1. Click **Protocol for MSSQLSERVER** below **SQL Server Network Configuration** from menu on the left.
 2. Right-click **TCP/IP** among protocol names.
-3. When the menu shows up, select **Properties**.
+3. Choose **Properties** on the menu.
 4. Select the **IP Address** tab.
 5. Select **IP ALL** on the list and change the port number to another.
 
@@ -158,7 +158,6 @@ Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Serve
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
 When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings:
-
 1. Click the service and right-click it. Select **Properties** on the menu.
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
@@ -189,20 +188,19 @@ shell> mysql -uroot
 
 ### Initial Settings for MySQL Instance
 
-#### 1\. Setting Password
+#### 1\. Set the Password
 
-There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.
-
+There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible. You can change the password as follows.
 ```
 mysql> ALTER USER USER() IDENTIFIED BY 'NEW PASSWORD';
 ```
 
-Default MySQL validate_password_policy is as below:
+Default MySQL validate\_password\_policy is as below:
 
 * validate\_password\_policy=MEDIUM
 * Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
-#### 2\. Changing Port Number
+#### 2\. Change the Port
 
 The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
 
@@ -242,7 +240,7 @@ The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables a
 | innodb\_file\_per\_table | When a table is deleted or truncated, the table space is immediately returned to the OS. |
 | innodb\_log\_files\_in\_group | Set the number of innodb\_log\_file files and use them in circular fashion: requires at least two. |
 | log_timestamps | Default log time of MySQL 5.7 is displayed in UTC time format; therefore, change log time to system local time. |
-| slow\_query\_log | Enable the slow\_query log option. Queries taking more than 10 seconds in accordance with long_query_time will be logged to the slow_query_log. |
+| slow\_query\_log | Enable the slow\_query log option. Queries taking more than 10 seconds in accordance with long\_query\_time will be logged to the slow\_query\_log. |
 | sysdate-is-now | For sysdate, SQL with sysdate() used for replication results in discrepant time between Master and Slave, so sysdate() and now() functions will behave the same. |
 
 ### Description of MySQL Directory
@@ -276,7 +274,7 @@ shell> sudo systemctl restart postgresql-13
 
 ### Log in to PostgreSQL
 
-In the beginning after creating an image, log in as shown below.
+For initial connection, connect to MySQL with default user name.
 <br>
 ```
 #Switch account to postgres and log in
@@ -286,7 +284,7 @@ shell> psql
 
 ### Create PostgreSQL instance and perform initial setup
 
-#### 1\. Change port
+#### 1\. Change the Port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
@@ -401,12 +399,12 @@ shell> sudo systemctl restart postgresql-13
 
 PostgreSQL directory and file description is as follows:
 
-| Name           | Description                                                  |
-| -------------- | ------------------------------------------------------------ |
-| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf                 |
-| initdb.log     | PostgreSQL database cluster creation log - /var/lib/pgsql/{version}/initdb.log |
-| DATADIR        | PostgreSQL data file path - /var/lib/pgsql/{version}/data/   |
-| LOG            | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
+| Name | Description |
+| --- | --- |
+| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
+| initdb.log | PostgreSQL database cluster creation log - /var/lib/pgsql/{version}/initdb.log |
+| DATADIR | PostgreSQL data file path - /var/lib/pgsql/{version}/data/ |
+| LOG | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
 
 ## CUBRID Instance
 
@@ -438,7 +436,7 @@ shell> cubrid broker restart
 
 ### Connect to CUBRID
 
-After creating an instance, initially connect as follows.
+For initial connection, connect to MySQL with default user name.
 ```
 shell> sudo su - cubrid
 shell> csql -u dba demodb@localhost
@@ -564,7 +562,7 @@ shell> sudo systemctl restart mariadb.service
 
 ### Connect to MariaDB
 
-After creating an instance, initially connect to MariaDB as follows.
+For initial connection, connect to MySQL with default user name.
 
 ``` sh
 shell> sudo mysql -u root
@@ -616,44 +614,64 @@ sudo systemctl restart mariadb.service
 
 ### Create a Tibero Instance
 
+#### Minimum Recommended Specifications
+
+- Root block storage 
+    - SSD is recommended for speed, and we recommend setting it to at least **50GB**to avoid root disk full.
+
+- Minimum recommended specifications: 4 vCore/8 GB
+    - **Using less than the recommended specifications might limit the DBMS installation.**
 #### Additional Block Storage
 
-Create an additional volume in addition to the root volume.
-Tibero Machine Image (TMI) requires an additional volume of 150GB, so an **additional block storage of 150G or more** must be set.
+- Create additional volumes other than the root volume.
+    - Tibero Machine Image (TMI) requires 150GB of additional volume, so you must set up **at least 150 GB of additional block storage**.
 
-#### Connect to Instance
+### Connect to Instance
 
-After the instance creation is complete, use SSH to access the instance.
-The instance must have a floating IP associated and TCP port 22 (SSH) must be allowed in the security group.
-Connect to the instance using an SSH client and the set key pair.
-For a detailed guide on SSH connection, refer to [SSH Connection Guide](https://docs.toast.com/en/Compute/Instance/en/overview/#linux).
+- After the instance creation is complete, use SSH to access the instance.
+- The instance must have a floating IP associated and TCP port 22 (SSH) must be allowed in the security group.
+- Connect to the instance using an SSH client and the set key pair.
+- For a detailed guide on SSH connection, refer to [SSH Connection Guide\](https://docs.toast.com/en/Compute/Instance/en/overview/#linux).
 
 ### Install TMI
 
+
 Run the dbca command in the /root path with the root account.
 ```
-$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
-```
-
-
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 8639
+$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ```
 
 | No | Item | Argument value |
 | :---: | --- | --- |
 | 1 | OS\_ACCOUNT | OS account under which Tibero runs |
-| 2 | DB\_NAME | DB\_NAME used in Tibero (SID) |
+| 2 | DB\_NAME | DB_NAME (= SID) used by Tibero |
 | 3 | DB\_CHARACTERSET | DB character set used by Tibero |
-| 4 | DB\_PORT | Service IP port used by Tibero |
+| 4 | DB\_TYPE | Specify Tibero Type (16vCore or less: SE/16vCore or more: CE) |
+| 5 | DB\_PORT | Service IP port used by Tibero |
+
+##### Tibero 7 Cloud Standard Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
+```
+
+
+##### Tibero 7 Cloud Enterprise Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+```
 
 #### Complete Installation
 
-When the dbca command is run, the progress is output and the database is created in the nomount mode. It takes less than 10 minutes. When finished, the output is as below.
+When the dbca command is run, the progress is output and the database is created in the nomount mode. It takes less than 10 minutes. 
+When finished, the output is as below.
 
 ```
 SQL>
@@ -672,43 +690,48 @@ SQL> Disconnected.
 Check if Tibero is running.
 
 ```
-[root@tiberoinstance ~]# ps -ef | grep tbsvr
-nhncloud 13933     1  0 09:10 ?        00:00:04 tbsvr          -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13944 13933  0 09:10 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13945 13933  0 09:10 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13946 13933  0 09:10 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13947 13933  0 09:10 ?        00:00:08 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13948 13933  0 09:10 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13949 13933  0 09:10 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13950 13933  0 09:10 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13951 13933  0 09:10 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13952 13933  0 09:10 ?        00:00:09 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13953 13933  0 09:10 ?        00:00:07 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13954 13933  0 09:10 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
-root     21066 12596  0 11:06 pts/0    00:00:00 grep --color=auto tbsvr
+[root@tiberoinstance ~]# ps -ef |grep tbsvr
+nhncloud  9886     1  1 14:14 ?        00:00:00 tbsvr          -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9888  9886  0 14:15 ?        00:00:00 tbsvr_MGWP     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9889  9886 36 14:15 ?        00:00:21 tbsvr_FGWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9890  9886  0 14:15 ?        00:00:00 tbsvr_FGWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9891  9886  0 14:15 ?        00:00:00 tbsvr_FGWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9892  9886  0 14:15 ?        00:00:00 tbsvr_FGWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9893  9886  0 14:15 ?        00:00:00 tbsvr_FGWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9894  9886  0 14:15 ?        00:00:00 tbsvr_FGWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9895  9886  0 14:15 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9896  9886  0 14:15 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9897  9886  0 14:15 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9898  9886  0 14:15 ?        00:00:00 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9899  9886  0 14:15 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9900  9886  0 14:15 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9901  9886  0 14:15 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9902  9886  0 14:15 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9903  9886  0 14:15 ?        00:00:00 tbsvr_PEWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9904  9886  0 14:15 ?        00:00:00 tbsvr_PEWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9905  9886  0 14:15 ?        00:00:00 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9906  9886  3 14:15 ?        00:00:01 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9907  9886  0 14:15 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
+root     13517  8366  0 14:15 pts/0    00:00:00 grep --color=auto tbsvr
 [root@tiberoinstance ~]#
 ```
 
 The installation log can be found in /root/.dbset.log.
 
 ```
-[root@tiberoinstance ~]# ls -al
-합계 36
-dr-xr-x---.  4 root root  154  1월 13 09:12 .
-dr-xr-xr-x. 23 root root 4096  1월 13 09:05 ..
--rw-------   1 root root  264  1월 12 19:08 .bash_history
--rw-r--r--.  1 root root   18 12월 29  2013 .bash_logout
--rw-r--r--.  1 root root  176 12월 29  2013 .bash_profile
--rw-r--r--.  1 root root  176 12월 29  2013 .bashrc
--rw-r--r--.  1 root root  100 12월 29  2013 .cshrc
--rw-r--r--   1 root root 7732  1월 13 09:12 .dbset.log
-drwxr-----   3 root root   19  1월 13 09:04 .pki
-drwx------   2 root root   29  1월  4 16:58 .ssh
--rw-r--r--.  1 root root  129 12월 29  2013 .tcshrc
+[root@tiberoinstance ~]# ls -alh
+Total 20K
+dr-xr-x---.  4 root root 104 Oct 17 14:15 .
+dr-xr-xr-x. 23 root root 4.0K Oct 17 14:14 .
+-rw-r--r--.  1 root root 18 December 29 2013 .bash_logout
+-rw-r--r--.  1 root root 176 Dec 29 2013 .bash_profile
+-rw-r--r--.  1 root root 176 Dec 29 2013 .bashrc
+-rw-r--r-- 1 root root 3.6K Oct 17 14:15 .dbset.log
+drwxr----- 3 root root 19 Oct 17 14:13 .pki
+drwx------ 2 root root 29 Oct 17 14:04 .ssh
 ```
 
 ### Connect to Tibero
-
 
 #### Change the Account
 
@@ -736,13 +759,13 @@ Log in with the OS\_ACCOUNT created with the dbca command.
 ```
 [nhncloud@tiberoinstance ~]$ tbsql sys/tibero
 
-tbSQL 6
+tbSQL 7
 
-TmaxData Corporation Copyright (c) 2008-. All rights reserved.
+TmaxTibero Corporation Copyright (c) 2020-. All rights reserved.
 
 Connected to Tibero.
 
-SQL> select * from v$instance;
+SQL> select * FROM v$instance;
 
 INSTANCE_NUMBER INSTANCE_NAME
 --------------- ----------------------------------------
@@ -753,18 +776,18 @@ HOST_NAME                                                       PARALLEL
    THREAD# VERSION
 ---------- --------
 STARTUP_TIME
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 STATUS           SHUTDOWN_PENDING
 ---------------- ----------------
 TIP_FILE
 --------------------------------------------------------------------------------
               0 tiberotestdb
 tiberotestdb
-tiberoinstance.novalocal                                        NO
-         0 6
-2022/01/13
+tiberoinstance.novalocal                                      NO
+         0 7
+2023/10/17
 NORMAL           NO
-/db/tibero6/config/tiberotestdb.tip
+/db/tibero7/config/tiberotestdb.tip
 
 
 1 row selected.
@@ -815,7 +838,7 @@ shell> sudo systemctl restart kafka.service
 
 ### Install Kafka Cluster
 - Must install in a new instance.
-- An odd number of instances (3 or more) are required, and the installation script is executed in the instance.
+- An odd number of instances (3 or more) are required, and installation script is executed in an instance.
 - An instance consists of of one kafka broker and one zookeeper node.
 - The key pair (PEM file) required to connect to another instance must be located at the ~ path of the instance running the installation script. The key pair of cluster instances must be the same.
 - Only default port installation is supported. If you need to change the port, change the port by referring to the initial settings guide after completing cluster installation.
@@ -831,6 +854,7 @@ How to check Hostname and IP
 ```
 # Check Hostname
 shell> hostname
+
 # Check IP
 Console screen
 or shell> hostname -i
@@ -879,8 +903,7 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ##### Cluster Installation Complete #####
 ```
 
-
-### Initial Setup After Creating Kafka Instance
+### Initial Setup After Creating a Kafka Instance
 #### Change the Port
 After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
 
@@ -911,7 +934,6 @@ zookeeper.connect=Instance IP:zookeeper port to change
 ```
 
 ##### 3) Restart Zookeeper, Kafka broker
-Restart the zookeeper and the kafka for the port change to take effect.
 ```
 shell> sudo systemctl stop kafka.service
 shell> sudo systemctl stop zookeeper.service
@@ -926,6 +948,7 @@ Check if the changed port is in use.
 shell> netstat -ntl | grep [Kafka port]
 shell> netstat -ntl | grep [Zookeeper port]
 ```
+
 ### Create and Use Kafka Topic and Data
 
 Create and query a topic
@@ -956,14 +979,14 @@ shell> ~/kafka/bin/kafka-console-consumer.sh --bootstrap-server [Instance IP]:[K
 
 ### Start/Stop Redis
 ```
-# Start Redis
-shell> sudo systemctl start redis
+# Start the MySQL service
+shell> sudo systemctl start mysqld
 
-# Stop Redis
-shell> sudo systemctl stop redis
+# Stop the MySQL service
+shell> sudo systemctl stop mysqld
 
-# Restart Redis
-shell> sudo systemctl restart redis
+# Restart the MySQL service
+shell> sudo systemctl restart mysqld
 ```
 
 ### Connect to Redis
@@ -1002,6 +1025,7 @@ To use the script, the following settings are required.
 
 ##### Copy key pair
 The instance running the installation script must have a key pair (PEM file) required to connect to other instances. The key pair can be copied as follows.
+
 - centos
 ```
 local> scp -i <key pair>.pem <key pair>.pem centos@<floating ip>:/home/centos/
@@ -1016,11 +1040,11 @@ The key pairs for created instances must be the same.
 ##### Set security group
 You must set a security group (**Network** > **Security Groups**) for communication between Redis instances. Create a security group with the following rules and apply it to a Redis instance.
 
-| Direction | IP protocol | Port range| Ether| Remote|
+| Direction | IP protocol| Port range| Ether| Remote|
 | --- | --- | --- | --- | --- |
-| Inbound |TCP | 6379| IPv4| Instance IP(CIDR)|
-| Inbound |TCP | 16379| IPv4| Instance IP(CIDR)|
-| Inbound |TCP | 26379| IPv4| Instance IP(CIDR)|
+| Inbound|TCP | 6379| IPv4| Instance IP (CIDR)|
+| Inbound|TCP | 16379| IPv4| Instance IP (CIDR)|
+| Inbound|TCP | 26379| IPv4| Instance IP (CIDR)|
 
 #### Sentinel Automatic Configuration
 You will need 3 Redis instances to configure Sentinel. After copying the key pair to the instance used as the master, run the script as follows.
@@ -1098,5 +1122,4 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
-
 
