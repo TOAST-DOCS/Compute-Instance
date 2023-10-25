@@ -624,7 +624,7 @@ sudo systemctl restart mariadb.service
 #### 추가 블록 스토리지
 
 - 루트 볼륨 이외의 추가 볼륨을 생성합니다.
-    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150G 이상**을 반드시 설정해야 합니다.
+    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150GB 이상**을 반드시 설정해야 합니다.
 
 ### 인스턴스 접속
 
