@@ -188,19 +188,19 @@ shell> mysql -uroot
 
 ### MySQL 인스턴스 생성 후 초기 설정
 
-#### 1\. 비밀번호 설정
+#### 1. 비밀번호 설정
 
 초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번호를 설정해야 합니다. 비밀번호는 아래와 같이 변경할 수 있습니다.
 ```
 mysql> ALTER USER USER() IDENTIFIED BY '새로운 비밀번호';
 ```
 
-MySQL의 기본 validate\_password\_policy는 아래와 같습니다.
+MySQL의 기본 validate_password_policy는 아래와 같습니다.
 
-* validate\_password\_policy=MEDIUM
+* validate_password_policy=MEDIUM
 * 기본 **8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
 
-#### 2\. 포트(port) 변경
+#### 2. 포트(port) 변경
 
 제공되는 이미지 포트는 MySQL 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
 
@@ -234,13 +234,13 @@ my.cnf 의 기본 경로는 /etc/my.cnf 이고 NHN Cloud 권장 변수(variable)
 
 | 이름 | 설명 |
 | --- | --- |
-| default\_storage\_engine | 기본 스토리지 엔진(stroage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
-| expire\_logs\_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
-| innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
-| innodb\_file\_per\_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
-| innodb\_log\_files\_in\_group | innodb\_log\_file 파일의 개수를 설정하며 순환적\(circular\)으로 사용됩니다\. 최소 2개 이상으로 구성됩니다\. |
+| default_storage_engine | 기본 스토리지 엔진(stroage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
+| expire_logs_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
+| innodb_log_file_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
+| innodb_file_per_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
+| innodb_log_files_in_group | innodb_log_file 파일의 개수를 설정하며 순환적(circular)으로 사용됩니다. 최소 2개 이상으로 구성됩니다. |
 | log_timestamps | MySQL 5.7의 기본 log 시간은 UTC로 표시됩니다. 그러므로 로그 시간을 SYSTEM 로컬 시간으로 변경합니다. |
-| slow\_query\_log | slow\_query log 옵션을 사용합니다\. long\_query\_time에 따른 기본 10초 이상의 쿼리는 slow\_query\_log에 기록됩니다\. |
+| slow_query_log | slow_query log 옵션을 사용합니다. long_query_time에 따른 기본 10초 이상의 쿼리는 slow_query_log에 기록됩니다. |
 | sysdate-is-now | sysdate의 경우 replication에서 sysdate() 사용된 SQL문은 복제 시 마스터와 슬레이브 간의 시간이 달라지는 문제가 있어 sysdate()와 now()의 함수를 동일하게 적용합니다. |
 
 ### MySQL 디렉터리 설명
@@ -284,7 +284,7 @@ shell> psql
 
 ### PostgreSQL 인스턴스 생성 후 초기 설정
 
-#### 1\. 포트\(port\) 변경
+#### 1. 포트(port) 변경
 
 제공되는 이미지 포트는 PostgreSQL 기본 포트인 5432입니다. 보안상 포트 변경을 권장합니다.
 <br>
@@ -310,7 +310,7 @@ shell> sudo systemctl restart postgresql-13
 shell> psql -p[변경된 포트 번호]
 ```
 
-#### 2\. 서버 로그 타임 존 변경
+#### 2. 서버 로그 타임 존 변경
 
 서버 로그에 기록되는 기본 시간대가 UTC로 설정되어 있습니다. SYSTEM 로컬 시간과 동일하게 변경할 것을 권장합니다.
 <br>
@@ -341,7 +341,7 @@ shell> psql
 postgres=# SHOW log_timezone;
 ```
 
-#### 3\. public 스키마 권한 취소
+#### 3. public 스키마 권한 취소
 
 기본적으로 모든 사용자에게 public 스키마에 대한 CREATE 및 USAGE 권한을 부여하고 있으므로 데이터베이스에 접속할 수 있는 사용자는 public 스키마에서 객체를 생성할 수 있습니다. 모든 사용자가 public 스키마에서 객체를 생성하지 못하도록 권한 취소를 권장합니다.
 <br>
@@ -356,7 +356,7 @@ shell> psql
 postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ```
 
-#### 4\. 원격 접속 허용
+#### 4. 원격 접속 허용
 
 로컬 호스트 이외의 접속을 허용하려면 listen_addresses 변수와 클라이언트 인증 설정 파일을 변경해야 합니다.
 <br>
@@ -444,14 +444,14 @@ shell> csql -u dba demodb@localhost
 
 ### CUBRID 인스턴스 생성 후 초기 설정
 
-#### 1\. 비밀번호 설정
+#### 1. 비밀번호 설정
 
 초기 설치 후 CUBRID dba 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 비밀번호를 설정해야 합니다.
 ```
 shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 ```
 
-#### 2\. 브로커 포트\(port\) 변경
+#### 2. 브로커 포트(port) 변경
 
 **query_editor**의 브로커 포트는 기본값이 **30000**으로 설정되며, **broker1**의 브로커 포트는 기본값이 **33000**으로 설정됩니다.
 보안상 포트 변경을 권장합니다.
@@ -476,7 +476,7 @@ BROKER_PORT             =[변경할 port 주소]
 shell> cubrid broker restart
 ```
 
-#### 3\. 매니저 서버 포트\(port\) 변경
+#### 3. 매니저 서버 포트(port) 변경
 
 매니저 서버 포트는 기본값이 **8001**으로 설정됩니다. 
 보안상 포트 변경을 권장합니다.
@@ -507,9 +507,9 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 | database.txt | CUBRID 데이터베이스 위치 정보 파일 경로 - /opt/cubrid/databases |
 | CONF PATH | CUBRID 서버, 브로커, 매니저 환경변수 파일 경로 - /opt/cubrid/conf |
 | LOG PATH | CUBRID 프로세스 로그 파일 경로 - /opt/cubrid/log |
-| SQL\_LOG | CUBRID SQL Query 파일 경로  /opt/cubrid/log/broker/sql\_log |
-| ERROR\_LOG | CUBRID ERROR SQL Query 파일 경로 - /opt/cubrid/log/broker/error\_log |
-| SLOW\_LOG | CUBRID Slow Query 파일 경로 - /opt/cubrid/log/broker/sql\_log |
+| SQL_LOG | CUBRID SQL Query 파일 경로  /opt/cubrid/log/broker/sql_log |
+| ERROR_LOG | CUBRID ERROR SQL Query 파일 경로 - /opt/cubrid/log/broker/error_log |
+| SLOW_LOG | CUBRID Slow Query 파일 경로 - /opt/cubrid/log/broker/sql_log |
 
 #### cubrid.conf 설명
 
@@ -518,9 +518,9 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 | 이름 | 설명 |
 | --- | --- |
 | service  | CUBRID 서비스 시작 시 자동으로 시작하는 프로세스를 등록하는 파라미터입니다. <br>기본으로 server, broker, manager 프로세스가 등록되어 있습니다. |
-| cubrid\_port\_id | 마스터 프로세스가 사용하는 포트입니다. |
-| max\_clients | 데이터베이스 서버 프로세스 하나당 동시에 접속할 수 있는 클라이언트의 최대 개수입니다. |
-| data\_buffer\_size | 데이터베이스 서버가 메모리 내에 캐시하는 데이터 버퍼의 크기를 설정하기 위한 파라미터입니다. <br>필요한 메모리 크기가 시스템 메모리의 2/3 이내가 되도록 설정할 것을 권장합니다. |
+| cubrid_port_id | 마스터 프로세스가 사용하는 포트입니다. |
+| max_clients | 데이터베이스 서버 프로세스 하나당 동시에 접속할 수 있는 클라이언트의 최대 개수입니다. |
+| data_buffer_size | 데이터베이스 서버가 메모리 내에 캐시하는 데이터 버퍼의 크기를 설정하기 위한 파라미터입니다. <br>필요한 메모리 크기가 시스템 메모리의 2/3 이내가 되도록 설정할 것을 권장합니다. |
 
 #### broker.conf 설명
 
@@ -528,11 +528,11 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 
 | 이름 | 설명 |
 | --- | --- |
-| BROKER\_PORT | 브로커가 사용하는 포트이며, 실제 JDBC와 같은 드라이버에서 보는 포트는 해당 브로커의 포트입니다. |
-| MAX\_NUM\_APPL\_SERVER | 해당 브로커에 동시 접속할 수 있는 CAS의 최대 개수를 설정하는 파라미터입니다. |
-| MIN\_NUM\_APPL\_SERVER | 해당 브로커에 대한 연결 요청이 없더라도 기본적으로 대기하고 있는 CAS 프로세스의 최소 개수를 설정하는 파라미터입니다. |
-| LOG\_DIR | SQL 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
-| ERROR\_LOG\_DIR | 브로커에 대한 에러 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
+| BROKER_PORT | 브로커가 사용하는 포트이며, 실제 JDBC와 같은 드라이버에서 보는 포트는 해당 브로커의 포트입니다. |
+| MAX_NUM_APPL_SERVER | 해당 브로커에 동시 접속할 수 있는 CAS의 최대 개수를 설정하는 파라미터입니다. |
+| MIN_NUM_APPL_SERVER | 해당 브로커에 대한 연결 요청이 없더라도 기본적으로 대기하고 있는 CAS 프로세스의 최소 개수를 설정하는 파라미터입니다. |
+| LOG_DIR | SQL 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
+| ERROR_LOG_DIR | 브로커에 대한 에러 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
 
 #### cm.conf 설명
 
@@ -540,10 +540,10 @@ CUBRID 매니저 설정 파일로, 운영하려는 매니저 서버 프로세스
 
 | 이름 | 설명 |
 | --- | --- |
-| cm\_port | 매니저 서버 프로세스가 사용하는 포트입니다. |
-| cm\_process\_monitor\_interval | 모니터링 정보 수집 주기입니다. |
-| support\_mon\_statistic | 누적 모니터링을 사용할 것인지 설정하는 파라미터입니다. |
-| server\_long\_query\_time | 서버의 진단 항목 중 slow\_query 항목을 설정할 경우 몇 초 이상을 늦은 질의로 판별할지 결정하는 파라미터입니다. |
+| cm_port | 매니저 서버 프로세스가 사용하는 포트입니다. |
+| cm_process_monitor_interval | 모니터링 정보 수집 주기입니다. |
+| support_mon_statistic | 누적 모니터링을 사용할 것인지 설정하는 파라미터입니다. |
+| server_long_query_time | 서버의 진단 항목 중 slow_query 항목을 설정할 경우 몇 초 이상을 늦은 질의로 판별할지 결정하는 파라미터입니다. |
 
 
 ## MariaDB Instance
@@ -577,7 +577,7 @@ Enter password:
 
 ### MariaDB 인스턴스 생성 후 초기 설정
 
-#### 1\. 비밀번호 설정
+#### 1. 비밀번호 설정
 
 초기 설치 후 MariaDB root 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 비밀번호를 설정해야 합니다.
 
@@ -587,7 +587,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('비밀번호');
 ```
 
-#### 2\. 포트\(port\) 변경
+#### 2. 포트(port) 변경
 
 초기 설치 후 포트는 MariaDB의 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
 
@@ -644,10 +644,10 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
 
 | No | 항목 | 인자값 |
 | :---: | --- | --- |
-| 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
-| 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME (= SID ) |
-| 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
+| 1 | OS_ACCOUNT | Tibero가 구동되는 OS 계정 |
+| 2 | DB_NAME | Tibero에서 사용되는 DB_NAME (= SID ) |
+| 3 | DB_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
+| 4 | DB_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
 #### 설치 완료
 
@@ -709,7 +709,7 @@ drwx------   2 root root   29  1월  4 16:58 .ssh
 
 #### 계정 변경
 
-dbca 명령어로 생성한 OS\_ACCOUNT로 로그인합니다.
+dbca 명령어로 생성한 OS_ACCOUNT로 로그인합니다.
 
 
 ```
