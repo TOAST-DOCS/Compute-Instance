@@ -613,44 +613,64 @@ sudo systemctl restart mariadb.service
 
 ### Tibero Instance作成
 
+#### 最小推奨仕様
+
+- ルートブロックストレージ
+    - 高速化のためにSSDを推奨し、root disk fullが発生しないように**50GB以上**に設定することを推奨します。
+
+- 最小推奨仕様: 4vCore/8GB
+    - **推奨仕様未満の場合、DBMSのインストールが制限される場合があります。**
+
 #### 追加ブロックストレージ
 
-rootボリューム以外の追加ボリュームを作成します。
-TMI(Tibero Machine Image)は追加ボリューム150GBを必要とするため、**追加ブロックストレージ150G以上**を必ず設定する必要があります
+- ルートボリューム以外の追加ボリュームを作成します。
+    - TMI(Tibero Machine Image)は追加ボリューム150GBを必要とするため、**追加ブロックストレージ150G以上**を必ず設定する必要があります
 
 ### インスタンス接続
 
-インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
-インスタンスにFloating IPが接続されていて、セキュリティグループでTCPポート22(SSH)が許可されている必要があります。
-SSHクライアントと設定したキーペアを利用してインスタンスに接続します。
-SSH接続の詳細については[SSH接続ガイド](https://docs.toast.com/ko/Compute/Instance/ko/overview/#linux)<span style="color:#313338">を参照してください。</span>
+- インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
+- インスタンスにFloating IPが接続されていて、セキュリティグループでTCPポート22(SSH)が許可されている必要があります。
+- SSHクライアントと設定したキーペアを利用してインスタンスに接続します。
+- SSH接続の詳細については[SSH接続ガイド](https://docs.toast.com/ko/Compute/Instance/ko/overview/#linux)<span style="color:#313338">を参照してください。</span>
 
 ### TMIインストール
 
+
 rootアカウントで /rootパスからdbcaコマンドを実行します。
 ```
-$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
+$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ```
 
+| No | 項目 | 引数値 |
+| :---: | --- | --- |
+| 1 | OS\_ACCOUNT | Tiberoが動作するOSのアカウント |
+| 2 | DB\_NAME | Tiberoで使用されるDB\_NAME(= SID) |
+| 3 | DB\_CHARACTERSET | Tiberoで使用するDB文字コード |
+| 4 | DB\_TYPE | Tibero Type指定(16vCore以下: SE/16vCore超過: CE) |
+| 5 | DB\_PORT | Tiberoで使用するサービスIPのポート |
 
+##### Tibero 7 Cloud Standard Edition
 ```
 [centos@tiberoinstance ~]$ sudo su root
 [root@tiberoinstance centos]# cd
 [root@tiberoinstance ~]# pwd
 /root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 8639
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
 ```
 
-| No | 項目 | 因子値 |
-| :---: | --- | --- |
-| 1 | OS\_ACCOUNT | Tiberoが動作するOSアカウント |
-| 2 | DB\_NAME | Tiberoで使用されるDB\_NAME (= SID ) |
-| 3 | DB\_CHARACTERSET | Tiberoで使用するDB文字コード |
-| 4 | DB\_PORT | Tiberoで使用するサービスIPのポート |
+##### Tibero 7 Cloud Enterprise Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+```
 
 #### インストール完了
 
-dbcaコマンドを実行すると進行状況が表示され、nomountモードでdatabaseが作成されます。所要時間は10分以下です。完了すると以下のように表示されます。
+dbcaコマンドを実行すると進行状況が表示され、nomountモードで データベースが作成されます。所要時間は10分以下です。 
+完了すると下記のように出力されます。
 
 ```
 SQL>
@@ -669,39 +689,45 @@ SQL> Disconnected.
 Tiberoが動作していることを確認します。
 
 ```
-[root@tiberoinstance ~]# ps -ef | grep tbsvr
-nhncloud 13933     1  0 09:10 ?        00:00:04 tbsvr          -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13944 13933  0 09:10 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13945 13933  0 09:10 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13946 13933  0 09:10 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13947 13933  0 09:10 ?        00:00:08 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13948 13933  0 09:10 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13949 13933  0 09:10 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13950 13933  0 09:10 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13951 13933  0 09:10 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13952 13933  0 09:10 ?        00:00:09 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13953 13933  0 09:10 ?        00:00:07 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13954 13933  0 09:10 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
-root     21066 12596  0 11:06 pts/0    00:00:00 grep --color=auto tbsvr
+[root@tiberoinstance ~]# ps -ef |grep tbsvr
+nhncloud  9886     1  1 14:14 ?        00:00:00 tbsvr          -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9888  9886  0 14:15 ?        00:00:00 tbsvr_MGWP     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9889  9886 36 14:15 ?        00:00:21 tbsvr_FGWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9890  9886  0 14:15 ?        00:00:00 tbsvr_FGWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9891  9886  0 14:15 ?        00:00:00 tbsvr_FGWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9892  9886  0 14:15 ?        00:00:00 tbsvr_FGWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9893  9886  0 14:15 ?        00:00:00 tbsvr_FGWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9894  9886  0 14:15 ?        00:00:00 tbsvr_FGWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9895  9886  0 14:15 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9896  9886  0 14:15 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9897  9886  0 14:15 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9898  9886  0 14:15 ?        00:00:00 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9899  9886  0 14:15 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9900  9886  0 14:15 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9901  9886  0 14:15 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9902  9886  0 14:15 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9903  9886  0 14:15 ?        00:00:00 tbsvr_PEWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9904  9886  0 14:15 ?        00:00:00 tbsvr_PEWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9905  9886  0 14:15 ?        00:00:00 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9906  9886  3 14:15 ?        00:00:01 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9907  9886  0 14:15 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
+root     13517  8366  0 14:15 pts/0    00:00:00 grep --color=auto tbsvr
 [root@tiberoinstance ~]#
 ```
 
 インストールログは /root/.dbset.logで確認できます。
 
 ```
-[root@tiberoinstance ~]# ls -al
-合計36
-dr-xr-x---.  4 root root  154  1月13 09:12 .
-dr-xr-xr-x. 23 root root 4096  1月13 09:05 ..
--rw-------   1 root root  264  1月12 19:08 .bash_history
+[root@tiberoinstance ~]# ls -alh
+合計20K
+dr-xr-x---.  4 root root  104 10月17 14:15 .
+dr-xr-xr-x. 23 root root 4.0K 10月17 14:14 ..
 -rw-r--r--.  1 root root   18 12月29  2013 .bash_logout
 -rw-r--r--.  1 root root  176 12月29  2013 .bash_profile
 -rw-r--r--.  1 root root  176 12月29  2013 .bashrc
--rw-r--r--.  1 root root  100 12月29  2013 .cshrc
--rw-r--r--   1 root root 7732  1月13 09:12 .dbset.log
-drwxr-----   3 root root   19  1月13 09:04 .pki
-drwx------   2 root root   29  1月 4 16:58 .ssh
--rw-r--r--.  1 root root  129 12月29  2013 .tcshrc
+-rw-r--r--   1 root root 3.6K 10月17 14:15 .dbset.log
+drwxr-----   3 root root   19 10月17 14:13 .pki
+drwx------   2 root root   29 10月17 14:04 .ssh
 ```
 
 ### Tibero接続
@@ -733,13 +759,13 @@ dbcaコマンドで作成したOS\_ACCOUNTにログインします。
 ```
 [nhncloud@tiberoinstance ~]$ tbsql sys/tibero
 
-tbSQL 6
+tbSQL 7
 
-TmaxData Corporation Copyright (c) 2008-. All rights reserved.
+TmaxTibero Corporation Copyright (c) 2020-. All rights reserved.
 
 Connected to Tibero.
 
-SQL> select * from v$instance;
+SQL> select * FROM v$instance;
 
 INSTANCE_NUMBER INSTANCE_NAME
 --------------- ----------------------------------------
@@ -750,18 +776,18 @@ HOST_NAME                                                       PARALLEL
    THREAD# VERSION
 ---------- --------
 STARTUP_TIME
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 STATUS           SHUTDOWN_PENDING
 ---------------- ----------------
 TIP_FILE
 --------------------------------------------------------------------------------
               0 tiberotestdb
 tiberotestdb
-tiberoinstance.novalocal                                        NO
-         0 6
-44574
+tiberoinstance.novalocal                                      NO
+         0 7
+2023/10/17
 NORMAL           NO
-/db/tibero6/config/tiberotestdb.tip
+/db/tibero7/config/tiberotestdb.tip
 
 
 1 row selected.
@@ -809,12 +835,12 @@ shell> sudo systemctl restart kafka.service
 ```
 
 ### Kafka Clusterインストール
-'- 必ず新規インスタンスにインストールします。
+- 必ず新規インスタンスにインストールします。
 - インスタンスは3台以上、奇数で必要です。インスタンス1台でインストールスクリプトを実行します。
 - インスタンス1台にkafka broker、zookeeper nodeが各1つずつ構成されます。
 - インストールスクリプトを実行するインスタンスの ~ パスに他のインスタンスに接続する時に必要なキーペア(PEMファイル)が必要です。クラスタインスタンスのキーペアはすべて同じでなければなりません。
-'- デフォルトポートのインストールのみサポートします。ポートの変更が必要な場合はクラスタインストールを完了してから初期設定ガイドのポート変更を参考にして変更します。
-'- インスタンス間のKafka関連ポート通信のために、以下のセキュリティグループ設定を追加します。
+- デフォルトポートのインストールのみサポートします。ポートの変更が必要な場合はクラスタインストールを完了してから初期設定ガイドのポート変更を参考にして変更します。
+- インスタンス間のKafka関連ポート通信のために、以下のセキュリティグループ設定を追加します。
 
 セキュリティグループ設定
 ```
@@ -1084,4 +1110,3 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
-
