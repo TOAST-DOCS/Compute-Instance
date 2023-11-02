@@ -77,7 +77,7 @@ Terraform NHN Cloud provider는 다음과 같은 **운영체제/아키텍처** �
 
 Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
 
-Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로드한 바이너리 파일을 플러그인 경로에 추가합니다.
+Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로드한 바이너리 파일을 플러그인 경로에 추가합니다. 바이너리 파일은 실행 권한을 가지고 있어야 합니다.
 
 다음은 운영체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
 ` 항목을 참고합니다.
@@ -105,6 +105,7 @@ Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로�
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `macOS / Apple silicon` 플러그인 설정 예시입니다.
@@ -112,6 +113,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Linux / AMD64` 플러그인 설정 예시입니다.
@@ -119,13 +121,14 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Windows / AMD64` 플러그인 설정 예시입니다.
 
 ```
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraform 초기화
