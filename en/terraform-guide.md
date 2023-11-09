@@ -479,7 +479,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 | Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | Name of VPC network to query |
+| region     | String | - | Region name that VPC to query belongs to |
 | tenant\_id | String | - | Tenant ID that VPC to query belongs to |
 | id | String | - | VPC ID to query |
 | name | String | - | VPC name to query |
