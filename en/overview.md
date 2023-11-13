@@ -74,7 +74,7 @@ Instances are charged using the following criteria.
 * Instances are charged from the moment they are created.
 * Instance root block storage are charged separately according to the block storage pricing policy.
 * When an instance is stopped, a 90% discount based on the website rate is applied for 90 days. If your suspension exceeds 90 days, you will revert to normal rates while maintaining your suspension.
-Terminated instances are not billed.
+* Terminated instances are not billed.
 
 For more details on pricing, see [](https://www.toast.com/kr/service/compute/instance#price)Pricing[](https://www.toast.com/kr/service/compute/instance#price).
 
