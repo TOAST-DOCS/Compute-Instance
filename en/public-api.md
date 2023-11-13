@@ -425,23 +425,24 @@ This API does not return a response body.
 
 Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
 
-| Status Name | Description |
-|--|--|
-| `ACTIVE` | Instance is activated |
-| `BUILDING` | Instance is building |
-| `STOPPED`| Instance is stopped |
-| `DELETED`| Instance is deleted |
-| `REBOOT`| Instance is rebooted |
-| `HARD_REBOOT`| Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again |
-| `RESIZED`| Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted |
-| `REVERT_RESIZE`| Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host |
-| `VERIFY_RESIZE`| Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
-| `ERROR`| Previous operation on the instance has failed |
-| `PAUSED`| Instance is paused<br>Paused instances are saved in hypervisor memory |
-| `REBUILD`| Instance is rebuilt from the original image used for creation |
-| `RESCUED`| Instance is running in recovery mode |
-| `SUSPENDED`| Instance has entered maximum power saving mode by the administrator |
-| `UNKNOWN`| Instance status is unknown<br>`Contact the administrator if the instance is in this status.` |
+| Status Name               | Description                                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| `ACTIVE`          | Instance is activated                                                                                   |
+| `BUILDING`        | Instance is building                                                                                    |
+| `STOPPED`         | Instance is stopped                                                                                      |
+| `SHELVED_OFFLOADED` | Instance is terminated                                                                                      |
+| `DELETED`         | Instance is deleted                                                                                      |
+| `REBOOT`          | Instance is rebooted                                                                                     |
+| `HARD_REBOOT`     | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again                                               |
+| `RESIZED`         | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted                                     |
+| `REVERT_RESIZE`   | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host                                 |
+| `VERIFY_RESIZE`   | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
+| `ERROR`           | Previous operation on the instance has failed                                                                            |
+| `PAUSED`          | Instance is paused<br>Paused instances are saved in hypervisor memory                                                  |
+| `REBUILD`         | Instance is rebuilt from the original image used for creation                                                                   |
+| `RESCUED`         | Instance is running in recovery mode                                                                                |
+| `SUSPENDED`       | Instance has entered maximum power saving mode by the administrator                                                                    |
+| `UNKNOWN`         | Instance status is unknown<br>`Contact the administrator if the instance is in this status.`                                        
 
 ### List Instances
 
@@ -1181,12 +1182,12 @@ This API does not return a response body.
 ## Additional Instance Features
 NHN Cloud provides the following additional features to handle instances.
 
-* Start, Stop, and Restart Instance
+* Start, Stop, Terminate, and Restart Instance
 * Change Instance Flavor
 * Create Instance Image
 * Add/Delete Security Group
 
-### Start Instance
+### Start Stopped Instance
 
 Restart a stopped instance and change its status to **ACTIVE**. To call this API, the instance status must be **SHUTOFF**.
 
@@ -1215,10 +1216,44 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+#### Response
+This API does not return a response body.
+
 ---
+
+### Start Terminated Instance
+
+Restart a terminated instance and changes its status to **ACTIVE**. To call this API, the instance's state must be **SHELVED_OFFLOADED**.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name | Type | Format | Required | Description |
+|--|---|---|---|--|
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| unshelve | Body | none | O | Instance start request |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+  "unshelve" : null
+}
+```
+
+</p>
+</details>
 
 #### Response
 This API does not return a response body.
+
+---
 
 ### Stop Instance
 
@@ -1243,6 +1278,40 @@ X-Auth-Token: {tokenId}
 ```json
 {
   "os-stop" : null
+}
+```
+
+</p>
+</details>
+
+#### Response
+This API does not return a response body.
+
+---
+
+## Terminate Instance
+
+Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name | Type | Format | Required | Description          |
+|---|---|---|---|-------------|
+| tenantId | URL | String | O | Tenant ID      |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID       |
+| shelve | Body | none | O | Request to terminate instance  |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+  "shelve" : null
 }
 ```
 
