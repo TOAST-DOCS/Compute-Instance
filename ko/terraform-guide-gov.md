@@ -117,8 +117,8 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 `Linux / AMD64` 플러그인 설정 예시입니다.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 ```
 
 `Windows / AMD64` 플러그인 설정 예시입니다.
