@@ -633,10 +633,10 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
   }
 }
 ```
-| 이름    | 타입 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | 블록 스토리지를 연결할 대상 인스턴스 |
-| volume_id | String | - | 연결할 블록 스토리지 UUID |
+| 이름    | 타입 | 필수 | 설명       |
+| ------ | --- |----| --------- |
+| instance_id | String | O  | 블록 스토리지를 연결할 대상 인스턴스 |
+| volume_id | String | O  | 연결할 블록 스토리지 UUID |
 
 
 ## Resources - 블록 스토리지
@@ -668,11 +668,11 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| 이름    | 타입 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| name | String | O | 생성할 블록 스토리지 이름 |
+| 이름    | 타입 | 필수 | 설명       |
+| ------ | --- |---| --------- |
+| name | String | - | 생성할 블록 스토리지 이름 |
 | description | String | - | 블록 스토리지 설명 |
-| size | Integer | - | 생성할 블록 스토리지 크기(GB) |
+| size | Integer | O | 생성할 블록 스토리지 크기(GB) |
 | availability_zone | String | - | 생성할 블록 스토리지의 가용성 영역, 값이 존재하지 않을 경우 임의의 가용성 영역<br>availability_zone은 콘솔 `Storage > Block Storage > 관리`의 **블록 스토리지 생성** 버튼을 클릭하면 표시되는 가용성 영역에서 확인할 수 있습니다. |
 | volume_type | String | - | 블록 스토리지 타입<br>`General HDD`: HDD 블록 스토리지(기본값)<br>`General SSD`: SSD 블록 스토리지 |
 
