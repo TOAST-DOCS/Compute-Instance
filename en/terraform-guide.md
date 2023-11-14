@@ -479,7 +479,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 | Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | Name of VPC network to query |
+| region     | String | - | Region name that VPC to query belongs to |
 | tenant\_id | String | - | Tenant ID that VPC to query belongs to |
 | id | String | - | VPC ID to query |
 | name | String | - | VPC name to query |
@@ -631,9 +631,9 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 }
 ```
 | Name | Type | Required | Description |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | Target instance to attach the block storage |
-| volume_id | String | - | UUID of block storage to be attached |
+| ------ | --- |---------| --------- |
+| instance_id | String | O       | Target instance to attach the block storage |
+| volume_id | String | O       | UUID of block storage to be attached |
 
 
 ## Resources - Block Storage
@@ -666,12 +666,12 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 ```
 
 | Name | Type | Required | Description |
-| ------ | --- |---- | --------- |
-| name | String | O | Name of block storage to create |
-| description | String | - | Description of block storage |
-| size | Integer | - | Size of block storage to create (GB) |
-| availability_zone | String | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
-| volume_type | String | - | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
+| ------ | --- |----------| --------- |
+| name | String | -        | Name of block storage to create |
+| description | String | -        | Description of block storage |
+| size | Integer | O        | Size of block storage to create (GB) |
+| availability_zone | String | -        | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
+| volume_type | String | -        | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
 
 
 ### Import Block Storage
