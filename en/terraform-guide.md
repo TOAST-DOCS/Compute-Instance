@@ -77,7 +77,7 @@ Terraform NHN Cloud provider version currently provided is **1.0.0**.
 
 Terraform NHN Cloud provider can be used through local provider setting.
 
-After creating a directory structure to find a local provider, add the downloaded binary file to the plugin path.
+After creating a directory structure to find a local provider, add the downloaded binary file to the plugin path. The binary file must have execute permissions.
 
 The following is the default plugin path according to the operating system. For more information on default routes, see `Implied Local Mirror Directories` on 
 the [Terraform site](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation).
@@ -105,6 +105,7 @@ This is an example of `macOS / AMD64` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `macOS / Apple silicon` plugin settings.
@@ -112,6 +113,7 @@ This is an example of `macOS / Apple silicon` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `Linux / AMD64` plugin settings.
@@ -119,13 +121,14 @@ This is an example of `Linux / AMD64` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `Windows / AMD64` plugin settings.
 
 ```
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraform Initialization

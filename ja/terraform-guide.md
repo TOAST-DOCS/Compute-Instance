@@ -78,7 +78,7 @@ Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互
 
 Local provider設定を通じてTerraform NHN Cloud providerを使用できます。
 
-Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。
+Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。バイナリファイルには実行権限が必要です。
 
 以下はOSごとのプラグイン基本パスです。より詳しい基本パスの説明は[Terraformサイト](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)の`Implied Local Mirror Directories
 `項目を参照してください。
@@ -106,6 +106,7 @@ Local providerを探すためのディレクトリ構造を作成した後、ダ
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `macOS / Apple silicon`プラグインの設定例です。
@@ -113,6 +114,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Linux / AMD64`プラグインの設定例です。
@@ -120,6 +122,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Windows / AMD64`プラグインの設定例です。
@@ -127,6 +130,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraformの初期化
