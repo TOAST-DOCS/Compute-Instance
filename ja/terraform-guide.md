@@ -78,7 +78,7 @@ Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互
 
 Local provider設定を通じてTerraform NHN Cloud providerを使用できます。
 
-Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。
+Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。バイナリファイルには実行権限が必要です。
 
 以下はOSごとのプラグイン基本パスです。より詳しい基本パスの説明は[Terraformサイト](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)の`Implied Local Mirror Directories
 `項目を参照してください。
@@ -106,6 +106,7 @@ Local providerを探すためのディレクトリ構造を作成した後、ダ
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `macOS / Apple silicon`プラグインの設定例です。
@@ -113,6 +114,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Linux / AMD64`プラグインの設定例です。
@@ -120,6 +122,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 `Windows / AMD64`プラグインの設定例です。
@@ -127,6 +130,7 @@ $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.loc
 ```
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraformの初期化
@@ -634,9 +638,9 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 }
 ```
 | 名前 | タイプ | 必須 | 説明 |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | ブロックストレージを接続する対象インスタンス |
-| volume_id | String | - | 接続するブロックストレージUUID |
+| ------ | --- |----| --------- |
+| instance_id | String | O  | ブロックストレージを接続する対象インスタンス |
+| volume_id | String | O  | 接続するブロックストレージUUID |
 
 
 ## Resources - ブロックストレージ
@@ -669,12 +673,12 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 ```
 
 | 名前 | タイプ | 必須 | 説明 |
-| ------ | --- |---- | --------- |
-| name | String | O | 作成するブロックストレージ名 |
-| description | String | - | ブロックストレージの説明 |
-| size | Integer | - | 作成するブロックストレージのサイズ(GB) |
-| availability_zone | String | - | 作成するブロックストレージのアベイラビリティゾーン。値が存在しない場合、任意のアベイラビリティゾーン<br>availability_zoneはコンソール`Storage > Block Storage > 管理`のブロックストレージ作成ボタンを押して表示されるアベイラビリティゾーンで確認できます。 |
-| volume_type | String | - | ブロックストレージタイプ<br>`General HDD`：HDDブロックストレージ(デフォルト値)<br>`General SSD`：SSDブロックストレージ |
+| ------ | --- |----| --------- |
+| name | String | -  | 作成するブロックストレージ名 |
+| description | String | -  | ブロックストレージの説明 |
+| size | Integer | O  | 作成するブロックストレージのサイズ(GB) |
+| availability_zone | String | -  | 作成するブロックストレージのアベイラビリティゾーン。値が存在しない場合、任意のアベイラビリティゾーン<br>availability_zoneはコンソール`Storage > Block Storage > 管理`のブロックストレージ作成ボタンを押して表示されるアベイラビリティゾーンで確認できます。 |
+| volume_type | String | -  | ブロックストレージタイプ<br>`General HDD`：HDDブロックストレージ(デフォルト値)<br>`General SSD`：SSDブロックストレージ |
 
 
 ### ブロックストレージのインポート

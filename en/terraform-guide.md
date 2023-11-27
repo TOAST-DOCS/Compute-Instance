@@ -77,7 +77,7 @@ Terraform NHN Cloud provider version currently provided is **1.0.0**.
 
 Terraform NHN Cloud provider can be used through local provider setting.
 
-After creating a directory structure to find a local provider, add the downloaded binary file to the plugin path.
+After creating a directory structure to find a local provider, add the downloaded binary file to the plugin path. The binary file must have execute permissions.
 
 The following is the default plugin path according to the operating system. For more information on default routes, see `Implied Local Mirror Directories` on 
 the [Terraform site](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation).
@@ -105,6 +105,7 @@ This is an example of `macOS / AMD64` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `macOS / Apple silicon` plugin settings.
@@ -112,6 +113,7 @@ This is an example of `macOS / Apple silicon` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `Linux / AMD64` plugin settings.
@@ -119,13 +121,14 @@ This is an example of `Linux / AMD64` plugin settings.
 ```
 $ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
 $ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64/terraform-provider-nhncloud_v1.0.0
 ```
 
 This is an example of `Windows / AMD64` plugin settings.
 
 ```
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
 
 ## Terraform Initialization
@@ -479,7 +482,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 | Name | Format | Required | Description |
 | ------ | ---- | ---- | --------- |
-| name | String | - | Name of VPC network to query |
+| region     | String | - | Region name that VPC to query belongs to |
 | tenant\_id | String | - | Tenant ID that VPC to query belongs to |
 | id | String | - | VPC ID to query |
 | name | String | - | VPC name to query |
@@ -631,9 +634,9 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 }
 ```
 | Name | Type | Required | Description |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | Target instance to attach the block storage |
-| volume_id | String | - | UUID of block storage to be attached |
+| ------ | --- |---------| --------- |
+| instance_id | String | O       | Target instance to attach the block storage |
+| volume_id | String | O       | UUID of block storage to be attached |
 
 
 ## Resources - Block Storage
@@ -666,12 +669,12 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 ```
 
 | Name | Type | Required | Description |
-| ------ | --- |---- | --------- |
-| name | String | O | Name of block storage to create |
-| description | String | - | Description of block storage |
-| size | Integer | - | Size of block storage to create (GB) |
-| availability_zone | String | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
-| volume_type | String | - | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
+| ------ | --- |----------| --------- |
+| name | String | -        | Name of block storage to create |
+| description | String | -        | Description of block storage |
+| size | Integer | O        | Size of block storage to create (GB) |
+| availability_zone | String | -        | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
+| volume_type | String | -        | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
 
 
 ### Import Block Storage
