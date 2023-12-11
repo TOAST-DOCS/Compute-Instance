@@ -675,8 +675,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.volume_size                    | Integer | -  | 생성할 인스턴스에서 사용할 블록 스토리지 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일 시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고                        |
 | block_device.delete_on_termination          | Boolean | -  | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                                                               |
-| block_device.nhn_encryption.skm_appkey      | String  | O  | SKM 키 조회를 위해 필요한 앱키                                                                                                                                                                          |
-| block_device.nhn_encryption.skm_key_id      | String  | O  | SKM 키 조회를 위해 필요한 키                                                                                                                                                                           |
+| block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                                                    |
+| block_device.nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                                                     |
 
 ### 블록 스토리지 연결
 ```
@@ -743,8 +743,8 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 | volume_type       | String  | - | 블록 스토리지 타입<br>`General HDD`: HDD 블록 스토리지(기본값)<br>`General SSD`: SSD 블록 스토리지<br>`Encrypted HDD`:HDD 암호화 블록 스토리지<br>`Encrypted SSD`: SSD 암호화 블록 스토리지       |
 | snapshot_id       | String  | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨                                                                                                                           |
 | nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                           |
-| nhn_encryption.skm_appkey      | String  | O  | SKM 키 조회를 위해 필요한 앱키                                                                                                                                      |
-| nhn_encryption.skm_key_id      | String  | O  | SKM 키 조회를 위해 필요한 키                                                                                                                                       |
+| nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                      |
+| nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                       |
 
 ### 블록 스토리지 불러오기
 
