@@ -53,10 +53,12 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * nhncloud_keymanager_secret_v1
 * nhncloud_keymanager_container_v1
 
+
 ### 알아두기
 
 * **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
 * **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
+
 
 ## Terraform 설치
 [Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
@@ -80,6 +82,7 @@ Terraform NHN Cloud provider는 다음과 같은 **운영체제/아키텍처** �
 * [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
 * [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
 * [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+
 
 ### Local provider 설정
 
@@ -138,6 +141,7 @@ $ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
 $ copy terraform-provider-nhncloud_v1.0.1 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
 ```
+
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
@@ -243,6 +247,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
+
 ### 구축 계획 확인
 
 tf 파일에서 변경될 리소스를 `plan` 명령으로 확인할 수 있습니다. `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
@@ -252,6 +257,7 @@ $ terraform plan
 ```
 
 생성된 플랜이 잘못되었다면 tf 파일을 수정하고 다시 반복하여 `plan` 명령을 실행합니다. `plan` 명령은 실제 NHN Cloud 리소스를 변경하지 않으므로 인프라 변경 사항을 부담없이 확인할 수 있습니다.
+
 
 ### 리소스 생성하기
 
@@ -272,6 +278,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 `apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 현재 디렉토리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
+
 
 ### 리소스 수정하기
 
@@ -324,6 +331,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
+
 ### 리소스 삭제하기
 
 Terraform으로 생성한 리소스를 지우기 위해 해당하는 `.tf` 파일을 삭제합니다.
@@ -362,6 +370,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 1
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
+
 ## Data sources
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
@@ -392,6 +401,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 ```
 
 다음 섹션에서는 NHN Cloud가 제공하는 각종 리소스를 data sources 기능으로 가져오는 방법을 설명합니다.
+
 
 ### 이미지
 
@@ -426,6 +436,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 | most_recent | Boolean | - | `true`: 조회한 이미지 목록 중 가장 최근에 생성된 이미지 선택<br>`false`: 조회된 순서로 이미지 선택 |
 | member_status | String | - | 조회할 이미지 멤버 상태 <br>`accepted`,`pending`,`rejected`,`all` 중 하나|
 
+
 ### 블록 스토리지
 
 ```
@@ -440,6 +451,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 | name | String | - | 조회할 블록 스토리지 이름 |
 | status | String | - | 조회할 블록 스토리지 상태 |
 | metadata | Object | - | 조회할 블록 스토리지와 관련된 메타데이터 |
+
 
 ### 인스턴스 타입
 
@@ -494,6 +506,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 | tenant\_id | String | - | 조회할 VPC가 속한 테넌트 ID |
 | id | String | - | 조회할 VPC의 ID |
 | name | String | - | 조회할 VPC 이름 |
+
 
 ### VPC 서브넷
 
@@ -571,6 +584,7 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 | region | String | - | 조회할 시크릿 컨테이너가 속한 리전 이름  |
 | name | String | - | 조회할 시크릿 컨테이너 이름         |
 
+
 ## Resources
 
 Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습니다. NHN Cloud에서는 Terraform을 통해 다음 리소스 관리를 지원합니다.
@@ -584,6 +598,7 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 * 보안 그룹
 
 다음 섹션에는 각 리소스를 사용하는 방법을 설명합니다.
+
 
 ## Resources - 인스턴스
 
@@ -651,6 +666,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
+
 | 이름                                          | 형식      | 필수 | 설명                                                                                                                                                                                           |
 |---------------------------------------------|---------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | name                                        | String  | O  | 생성할 인스턴스의 이름                                                                                                                                                                                 |
@@ -677,6 +693,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                                                               |
 | block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                                                    |
 | block_device.nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                                                     |
+
 
 ### 블록 스토리지 연결
 ```
@@ -746,6 +763,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 | nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                      |
 | nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                       |
 
+
 ### 블록 스토리지 불러오기
 
 콘솔 또는 API를 통해 생성한 블록 스토리지를 Terraform으로 불러와 관리할 수 있습니다.
@@ -785,6 +803,7 @@ NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 
 이외의 VPC 자원은 콘솔에서 생성해야 합니다.
 
+
 ### VPC 생성
 
 지정한 IP 대역의 VPC를 생성합니다.
@@ -802,7 +821,6 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 | cidrv4 | String | O | VPC IP 대역 |
 | region | String | - | VPC의 리전 이름 |
 | tenant\_id | String | - | VPC의 tenant ID |
-
 
 
 ### VPC 서브넷 생성 및 라우팅 테이블 연결
@@ -900,6 +918,7 @@ resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
 | floating_ip | String | O | 연결할 플로팅 IP           |
 | port_id     | String | O | 플로팅 IP를 연결할 포트 UUID |
 
+
 ### 라우팅 테이블 생성
 ```
 resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
@@ -918,6 +937,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | name   | String  | O  | 라우팅 테이블 이름                                                      |
 | vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                              |
 | distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형 (기본값: `true`) |
+
 
 ## Resources - 로드 밸런서
 ### 로드 밸런서 생성
@@ -996,6 +1016,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | SNI 인증서 경로 목록 |
 | insert_headers | String | - | 백엔드 멤버에게 요청을 전송하기 전에 추가할 헤더 목록 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
+
 
 ### 풀 생성
 
@@ -1149,6 +1170,7 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 |------|--------|---|------------------|
 | name | String | O | 보안 그룹 이름         |
 | region | String | - | 보안 그룹이 할당될 리전 이름 |
+
 
 ## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
