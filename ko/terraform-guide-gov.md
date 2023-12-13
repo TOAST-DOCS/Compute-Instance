@@ -276,7 +276,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ...
 ```
 
-`apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 현재 디렉토리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
+`apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB 파일(terraform.tfstate)이 현재 디렉터리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
 
 
 ### 리소스 수정하기
@@ -676,7 +676,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | image_id                                    | String  | -  | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                      |
 | key_pair                                    | String  | -  | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고            |
 | availability_zone                           | String  | -  | 생성할 인스턴스의 가용성 영역                                                                                                                                                                             |
-| network                                     | Object  | -  | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 uuid를 확인 가능                                                                       |
+| network                                     | Object  | -  | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 UUID를 확인 가능                                                                       |
 | network.name                                | String  | -  | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 반드시 명시                                                                                                                        |
 | network.uuid                                | String  | -  | VPC 네트워크 ID                                                                                                                                                                                  |
 | network.port                                | String  | -  | VPC 네트워크에 연결할 포트의 ID                                                                                                                                                                         |
@@ -928,11 +928,11 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 }
 ```
 
-| 이름     | 타입      | 필수 | 설명                                                              |
-|--------|---------|----|-----------------------------------------------------------------|
-| name   | String  | O  | 라우팅 테이블 이름                                                      |
-| vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                              |
-| distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형 (기본값: `true`) |
+| 이름     | 타입      | 필수 | 설명                                                             |
+|--------|---------|----|----------------------------------------------------------------|
+| name   | String  | O  | 라우팅 테이블 이름                                                     |
+| vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                             |
+| distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형(기본값: `true`) |
 
 
 ## Resources - 로드 밸런서
@@ -1117,7 +1117,7 @@ resource "nhncloud_keymanager_secret_v1" "secret_01" {
 | 이름                       | 형식 | 필수 | 설명                                                                                                                                                           |
 |--------------------------| ---- |----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | name                     | String | -  | 시크릿 이름                                                                                                                                                       |
-| expiration               | Datetime | -  | 만료일. ISO8601형식으로 요청                                                                                                                                          |
+| expiration               | Datetime | -  | 만료일. ISO8601 형식으로 요청                                                                                                                                         |
 | algorithm                | String | -  | 암호화 알고리즘                                                                                                                                                     |
 | bit_length               | String | -  | 암호화 키 길이                                                                                                                                                     |
 | mode                     | String | -  | 블록 암호 운용 방식                                                                                                                                                  |
