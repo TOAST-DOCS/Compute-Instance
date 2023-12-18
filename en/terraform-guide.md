@@ -33,6 +33,10 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_networking_port_v2
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
+    * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_secgroup_v2
+    * nhncloud_keymanager_secret_v1
+    * nhncloud_keymanager_container_v1
 * Storage
     * nhncloud_blockstorage_volume_v2
 
@@ -44,11 +48,17 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
+* nhncloud_networking_routingtable_v2
+* nhncloud_networking_secgroup_v2
+* nhncloud_keymanager_secret_v1
+* nhncloud_keymanager_container_v1
+
 
 ### Note
 
 * **The version of the Terraform used in the examples below is 1.0.0.**
 * **The name and number of the components including the version can be changed, so make sure you check the information before use.**
+
 
 ## Terraform Installation
 Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.
@@ -72,6 +82,7 @@ Terraform NHN Cloud provider version currently provided is **1.0.0**.
 * [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
 * [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
 * [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+
 
 ### Local provider setup
 
@@ -130,6 +141,7 @@ This is an example of `Windows / AMD64` plugin settings.
 $ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 $ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
 ```
+
 
 ## Terraform Initialization
 Before using Terraform, create a provider configuration file as follows.
@@ -235,6 +247,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
+
 ### Check the Execution plan
 
 You can use the `plan` command to check resources that will be changed in tf files. When you run the `plan` command, Terraform loads .tf files, checks if the configuration is correct, and compares the configuration with its own database and create a plan. When it finishes creating the plan, Terraform aggregates the plan by type and prints out the result in an organized form.
@@ -244,6 +257,7 @@ $ terraform plan
 ```
 
 If the created plan requires modification, correct tf files and execute the `plan` command again. The `plan` command does not change the actual NHN Cloud resources, so you can check the infrastructure changes without any burden.
+
 
 ### Create Resources
 
@@ -316,6 +330,8 @@ nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
+
+
 ### Delete Resources
 
 To delete a resource created with Terraform, delete the corresponding `.tf`  file.
@@ -354,6 +370,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 1
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
+
 ## Data Sources
 
 You can find Flavor ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. Image names are subject to change because NHN Cloud updates them on a regular basis. Refer to console and specify the exact name of the image to use.
@@ -384,6 +401,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 ```
 
 The following sections describe how to import various resources provided by NHN Cloud by using the data resources feature.
+
 
 ### Image
 
@@ -418,6 +436,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 | most_recent | Boolean | - | `true`: Select the most recently created image from the list of queried images <br>`false`: Select images in the queried order |
 | member_status | String | - | Status of image member to query <br>One among `accepted`,`pending`, `rejected`, and `all` |
 
+
 ### Block Storage
 
 ```
@@ -432,6 +451,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 | name | String | - | Name of block storage to query |
 | status | String | - | Status of block storage to query |
 | metadata | Object | - | Metadata related to block storage to query |
+
 
 ### Instance Flavor
 
@@ -487,6 +507,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 | id | String | - | VPC ID to query |
 | name | String | - | VPC name to query |
 
+
 ### VPC Subnet
 
 To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**.
@@ -509,6 +530,61 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 | name | String | - | Subnet name to query |
 | shared | Bool | - | Whether to share subnet to query |
 
+
+### Routing Table
+```
+data "nhncloud_networking_routingtable_v2" "default_rt" {
+  id = "bf15f6f6-1339-4057-a7fe-5811d39bab18"
+}
+```
+
+| Name | Format | Required | Description                  |
+| --- | --- |---|---------------------|
+| tenant_id | String | - | Tenant ID to which routing table to query is included |
+| id | String | - | Routing table ID to query      |
+| name | String | - | Routing table name to query   |
+
+
+### Security Group
+```
+data "nhncloud_networking_secgroup_v2" "default_sg" {
+  name = "default"
+}
+```
+
+| Name | Format | Required | Description                 |
+| --- | --- |---|--------------------|
+| region | String | - | Region name that security group to query belongs to |
+| tenant_id | String | - | Tenant ID that security group to query belongs to |
+| name | String | - | Security group name to query       |
+
+
+### Secret
+```
+data "nhncloud_keymanager_secret_v1" "secret_01" {
+  name      = "terraform_secret_01"
+}
+```
+
+| Name | Format | Required | Description               |
+| --- | --- |---|------------------|
+| region | String | - | Region name that secret to query belongs to |
+| name | String | - | Secret name to query       |
+
+
+### Secret Container
+```
+data "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+}
+```
+
+| Name | Format | Required | Description                      |
+| --- | --- |---|-------------------------|
+| region | String | - | Region name to which the secret container you want to look up belongs.  |
+| name | String | - | Secret container name to query         |
+
+
 ## Resources
 
 You can create, modify, or delete resources with Terraform resources. NHN Cloud supports management of the following resources using Terraform:
@@ -519,8 +595,10 @@ You can create, modify, or delete resources with Terraform resources. NHN Cloud 
 * Floating IP
 * Network port
 * Load balancer
+* Security group
 
 The following sections describe how to use each resource.
+
 
 ## Resources - Instance
 
@@ -588,29 +666,34 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| Name    | Format | Required  | Description                                                                                                                                                                                           |
-| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name | String | O | Name of instance to create                                                                                                                                                                                 |
-| region | String | - | Region of instance to create<br>The default is the region configured in provider.tf                                                                                                                                                     |
-| flavor_name | String | - | Flavor name of instance to create<br>Required if flavor_id is empty                                                                                                                                                |
-| flavor_id | String | - | Flavor ID of instance to create<br>Required if flavor_name is empty                                                                                                                                              |
-| image_name | String | - | Image name to use for creating an instance<br>Required if image_id is empty<br>Available only when the flavor is U2                                                                                                                        |
-| image_id | String | - | Image ID to use for creating an instance<br>Required if image_name is empty<br>Available only when the flavor is U2                                                                                                                      |
-| key_pair | String | - | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console,<br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details            |
-| availability_zone | String | - | Availability zone of an instance to create                                                                                                                                                                             |
-| network | Object | - | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management**  on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
-| network.name | String | - | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified.                                                                                                                        |
-| network.uuid | String | - | ID of VPC network                                                                                                                                                                                  |
-| network.port | String | - | ID of a port to be attached to VPC network                                                                                                                                                                         |
-| security_groups | Array | - | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
-| user_data | String | - | 	Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
-| block_device | Object | - | Information object of image or block storage to be used for an instance                                                                                                                                                               |
-| block_device.uuid | String | - | ID of original block storage <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL images as the source, cannot be used.<br> The original other than `image` must have the same availability zone for the instance to create.                            |
-| block_device.source_type | String | O | Type of original block storage to create<br>`image`: Use an image to create a block storage<br>`volume`: Use the existing block storage, with the destination_type set to volume<br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
-| block_device.destination_type | String | - | Requires different settings depending on the location of instance’s block storage or flavor<br>`local`: For U2 flavor<br>`volume`: For flavors other than U2                                                                                  |
-| block_device.boot_index | Integer | - | Order to boot the specified block storage<br>- If , root block storage<br>- If not, additional block storage<br>The higher the number, the lower the booting priority<br>                                                                                                            |
-| block_device.volume_size | Integer | - | Block storage size for instance to create<br>Available from 20GB to 2,000GB (required if the flavor is U2)<br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide`                        |
-| block_device.delete_on_termination | Boolean | - | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
+
+| Name                                          | Format      | Required | Description                                                                                                                                                                                           |
+|---------------------------------------------|---------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                                        | String  | O  | Name of instance to create                                                                                                                                                                                 |
+| region                                      | String  | -  | Region of instance to create<br>The default is the region configured in provider.tf                                                                                                                                                     |
+| flavor_name                                 | String  | -  | Flavor name of instance to create<br>Required if flavor_id is empty                                                                                                                                                |
+| flavor_id                                   | String  | -  | Flavor ID of instance to create<br>Required if flavor_name is empty                                                                                                                                              |
+| image_name                                  | String  | -  | Image name to use for creating an instance<br>Required if image_id is empty<br>Available only when the flavor is U2                                                                                                                        |
+| image_id                                    | String  | -  | Image ID to use for creating an instance<br>Required if image_name is empty<br>Available only when the flavor is U2                                                                                                                      |
+| key_pair                                    | String  | -  | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console,<br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details            |
+| availability_zone                           | String  | -  | Availability zone of an instance to create                                                                                                                                                                             |
+| network                                     | Object  | -  | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management** on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
+| network.name                                | String  | -  | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified.                                                                                                                        |
+| network.uuid                                | String  | -  | ID of VPC network                                                                                                                                                                                  |
+| network.port                                | String  | -  | ID of a port to be attached to VPC network                                                                                                                                                                         |
+| security_groups                             | Array   | -  | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
+| user_data                                   | String  | -  | 	Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
+| block_device                                | Object  | -  | Information object of image or block storage to be used for an instance                                                                                                                                                               |
+| block_device.uuid                           | String  | -  | ID of original block storage <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL images as the source, cannot be used.<br> The original other than `image` must have the same availability zone for the instance to create.                            |
+| block_device.source_type                    | String  | O  | Type of original block storage to create<br>`image`: Use an image to create a block storage<br>`volume`: Use the existing block storage, with the destination_type set to volume<br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
+| block_device.destination_type               | String  | -  | Requires different settings depending on the location of instance’s block storage or flavor<br>`local`: For U2 flavor<br>`volume`: For flavors other than U2                                                                                  |
+| block_device.boot_index                     | Integer | -  | Order to boot the specified block storage<br>- If , root block storage<br>- If not, additional block storage<br>The higher the number, the lower the booting priority<br>                                                                                                            |
+| block_device.volume_size                    | Integer | -  | Block storage size for instance to create<br>Available from 20GB to 2,000GB (required if the flavor is U2)<br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide`                        |
+| block_device.delete_on_termination          | Boolean | -  | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
+| block_device.nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                                                               |
+| block_device.nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                                                    |
+| block_device.nhn_encryption.skm_key_id      | String  | O  | Key ID in Secure Key Manager                                                                                                                                                                     |
+
 
 ### Attach Block Storage
 ```
@@ -668,13 +751,17 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| Name | Type | Required | Description |
-| ------ | --- |----------| --------- |
-| name | String | -        | Name of block storage to create |
-| description | String | -        | Description of block storage |
-| size | Integer | O        | Size of block storage to create (GB) |
-| availability_zone | String | -        | Availability zone of a block storage to create. If the value does not exist, random availability zone is used. <br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
-| volume_type | String | -        | Type of block storage <br>`General HDD`: HDD block storage (default) <br>`General SSD`: SSD block storage |
+| Name                | Format      | Required | Description                                                                                                                                                       |
+|-------------------|---------|---|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | String  | - | Name of block storage to create                                                                                                                                           |
+| description       | String  | - | Description of block storage                                                                                                                                               |
+| size              | Integer | O | Size of block storage to create (GB)                                                                                                                                       |
+| availability_zone | String  | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used.<br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
+| volume_type       | String  | - | Type of block storage<br>`General HDD`: HDD block storage (default)<br>`General SSD`: SSD block storage<br>`Encrypted HDD`: HDD encrypted block storage<br>`Encrypted SSD`: SSD encrypted block storage       |
+| snapshot_id       | String  | - | Original snapshot ID, if omitted, empty block storage is created                                                                                                                           |
+| nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                           |
+| nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                      |
+| nhn_encryption.skm_key_id      | String  | O  | Key ID in Secure Key Manager                                                                                                                                       |
 
 
 ### Import Block Storage
@@ -712,8 +799,10 @@ NHN Cloud supports creation of the following resources with Terraform:
 * VPC Subnet
 * Network Port
 * Floating IP
+* Routing Table
 
 Other VPC resources must be created in the console.
+
 
 ### Create VPC
 
@@ -732,7 +821,6 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 | cidrv4 | String | O | VPC IP range |
 | region | String | - | VPC region name |
 | tenant\_id | String | - | VPC tenant ID |
-
 
 
 ### Create VPC Subnet and Attach Routing Table
@@ -831,6 +919,26 @@ resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
 | port_id     | String | O | UUID of port to be associated with floating IP |
 
 
+### Create Routing Table
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  ...
+}
+
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  name = "resource-rt-01"
+  vpc_id = nhncloud_networking_vpc_v2.resource-vpc-01.id
+  distributed = false
+}
+```
+
+| Name     | Format      | Required | Description                                                             |
+|--------|---------|----|----------------------------------------------------------------|
+| name   | String  | O  | Routing table name                                                     |
+| vpc_id | String  | O  | VPC ID to which the routing table belongs                                             |
+| distributed   | Boolean | -  | Routing method of routing table </br>`true`: decentralized, `false`: centralized (default: `true`) |
+
+
 ## Resources - Load Balancer
 ### Create Load Balancer
 
@@ -908,6 +1016,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | List of SNI certificate paths |
 | insert_headers | String | - | List of headers to be added before request is sent to a backend member |
 | admin_state_up | Boolean | - | Administrator control status |
+
 
 ### Create Pool
 
@@ -993,6 +1102,74 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 | protocol_port | Integer | O | Port of member to receive traffic |
 | weight | Integer | - | Weight of traffic to receive from the pool <br>The higher the weight, the more traffic you receive. |
 | admin_state_up | Boolean | - | Administrator control status |
+
+
+### Create a Secret
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+  algorithm            = "aes"
+  bit_length           = 256
+  mode                 = "cbc"
+  name                 = "mysecret"
+  payload              = "foobar"
+  payload_content_type = "text/plain"
+  secret_type          = "passphrase"
+}
+```
+
+| Name                       | Format | Required | Description                                                                                                                                                           |
+|--------------------------| ---- |----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                     | String | -  | Secret name                                                                                                                                                       |
+| expiration               | Datetime | -  | Expiration date. Request in ISO8601 format                                                                                                                                         |
+| algorithm                | String | -  | Encryption algorithm                                                                                                                                                     |
+| bit_length               | String | -  | Encryption key length                                                                                                                                                     |
+| mode                     | String | -  | How block encryption work                                                                                                                                                  |
+| payload                  | String | -  | Encryption key payload                                                                                                                                                   |
+| payload_content_type     | String | -  | Encryption key payload content type </br>Required when entering a payload </br>List of supported content types: `text/plain`, `application/octet-stream`, `application/pkcs8`, `application/pkix-cert` |
+| payload_content_encoding | Enum | -  | Encoding encryption key payload </br>Required if payload_content_type is not `text/plain` </br> Only supports `base64`                                                               |
+| secret_type              | Enum | -  | Secret type </br>One of the following: `symmetric`, `public`, `private`, `passphrase`, `certificate`, `opaque`                                                                      |
+
+
+### Create Secret Container
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+...
+}
+
+resource "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+  type      = "generic"
+  secret_refs {
+    secret_ref = nhncloud_keymanager_secret_v1.secret_01.secret_ref
+  }
+}
+```
+
+| Name   | Format     | Required | Description                                                                                                                                                                                             |
+|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type | Enum   | O  | Container type </br>One of `generic`, `rsa`, `certificate`                                                                                                                                               |
+| name | String | -  | Container name                                                                                                                                                                                        |
+| secret_refs | Array  | -  | List of secrets to register in the container                                                                                                                                                                               |
+| secret_refs.secret_ref	 | String | -  | Secret address                                                                                                                                                                                         |
+| secret_refs.name	 | String | -  | The secret name specified by the container </br>If container type is `certificate`: Specify `as` `certificate`, `private_key`, `private_key_passphrase`, and `intermediates` </br>If container type is `rsa`: Specify `as` `private_key`, `private_key_passphrase`, and `public_key` |
+
+
+## Resources - Security Groups
+
+### Create a Security Group
+
+```
+resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
+  name      = "sg-01"
+}
+```
+
+| Name   | Format     | Required | Description               | 
+|------|--------|---|------------------|
+| name | String | O | Security group name         |
+| region | String | - | Name of region to which security group is assigned |
 
 
 ## Reference
