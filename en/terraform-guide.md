@@ -76,12 +76,12 @@ Terraform v1.0.0
 ## Terraform NHN Cloud provider provided
 
 Terraform NHN Cloud provider provides the following **operating system/architecture** compatibility, and you can download the binary file through the link.
-Terraform NHN Cloud provider version currently provided is **1.0.0**.
+Terraform NHN Cloud provider version currently provided is **1.0.1**.
 
-* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
-* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
-* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
 
 
 ### Local provider setup
@@ -109,37 +109,37 @@ Describes path configuration rules for default plugin path.
 
 The following is an example of plugin setting based on **operating system/architecture** after binary download. 
 
-**It is recommended to use version 1.0.0 when configuring the plugin.**
+**It is recommended to use version 1.0.1 when configuring the plugin.**
 
 This is an example of `macOS / AMD64` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64/terraform-provider-nhncloud_v1.0.0
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64/terraform-provider-nhncloud_v1.0.1
 ```
 
 This is an example of `macOS / Apple silicon` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64/terraform-provider-nhncloud_v1.0.0
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64/terraform-provider-nhncloud_v1.0.1
 ```
 
 This is an example of `Linux / AMD64` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_amd64/terraform-provider-nhncloud_v1.0.0
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64/terraform-provider-nhncloud_v1.0.1
 ```
 
 This is an example of `Windows / AMD64` plugin settings.
 
 ```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ copy terraform-provider-nhncloud_v1.0.0 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.1 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
 ```
 
 
@@ -155,7 +155,7 @@ required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
       source  = "terraform.local/local/nhncloud"
-      version = "1.0.0"
+      version = "1.0.1"
     }
   }
 }
