@@ -861,8 +861,8 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐 |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | 블록 스토리지의 암호화 정보                                                                                                                                                                                        |
-| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | O | Secure Key Manager 상품의 앱키                                                                                                                                                                              |
-| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | O | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID                                                                                                                                  |
+| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | Secure Key Manager 상품의 앱키                                                                                                                                                                              |
+| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID                                                                                                                                  |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1. |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10. |
