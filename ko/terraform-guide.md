@@ -195,7 +195,7 @@ $ terraform init
 
 ### Local provider 교체
 
-새로운 버전의 local provider가 릴리스된 경우, 변경된 버전으로 [local provider 설정](#Local-provider-설정) 진행 후 `init` 명령의 `--upgrade` 옵션을 통해 플러그인을 업그레이드할 수 있습니다.
+새로운 버전의 local provider가 릴리스된 경우, 변경할 버전으로 [local provider 설정](#Local-provider-설정) 진행 후 `init` 명령의 `--upgrade` 옵션을 통해 플러그인을 업그레이드할 수 있습니다.
 
 ```
 $ terraform init --upgrade
