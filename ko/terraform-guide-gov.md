@@ -191,6 +191,26 @@ provider.tf
 $ terraform init
 ```
 
+### Local provider 교체
+
+새로운 버전의 local provider가 릴리스된 경우, 변경할 버전으로 [local provider 설정](#local-provider) 진행 후 `init` 명령의 `--upgrade` 옵션을 통해 플러그인을 업그레이드할 수 있습니다.
+
+```
+$ terraform init --upgrade
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
+- Installing terraform.local/local/nhncloud v1.0.1...
+- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+```
+
+
 ## Terraform 기본 사용법
 
 Terraform을 이용한 인프라 구축은 보통 아래와 같은 수명 주기(라이프 사이클)를 가집니다.
