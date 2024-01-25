@@ -78,10 +78,18 @@ Terraform v1.0.0
 Terraform NHN Cloud provider provides the following **operating system/architecture** compatibility, and you can download the binary file through the link.
 Terraform NHN Cloud provider version currently provided is **1.0.1**.
 
-* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
-* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
-* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
-* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+* macOS / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+* macOS / Apple silicon
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+* Linux / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+* Windows / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
 
 
 ### Local provider setup
@@ -683,12 +691,13 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | network.port                                | String  | -  | ID of a port to be attached to VPC network                                                                                                                                                                         |
 | security_groups                             | Array   | -  | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
 | user_data                                   | String  | -  | 	Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
-| block_device                                | Object  | -  | Information object of image or block storage to be used for an instance                                                                                                                                                               |
+| block_device                                | Object  | -  | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
 | block_device.uuid                           | String  | -  | ID of original block storage <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL images as the source, cannot be used.<br> The original other than `image` must have the same availability zone for the instance to create.                            |
-| block_device.source_type                    | String  | O  | Type of original block storage to create<br>`image`: Use an image to create a block storage<br>`volume`: Use the existing block storage, with the destination_type set to volume<br>`snapshot`: Use a snapshot to create a block storage, with the destination_type set to volume |
-| block_device.destination_type               | String  | -  | Requires different settings depending on the location of instance’s block storage or flavor<br>`local`: For U2 flavor<br>`volume`: For flavors other than U2                                                                                  |
-| block_device.boot_index                     | Integer | -  | Order to boot the specified block storage<br>- If , root block storage<br>- If not, additional block storage<br>The higher the number, the lower the booting priority<br>                                                                                                            |
-| block_device.volume_size                    | Integer | -  | Block storage size for instance to create<br>Available from 20GB to 2,000GB (required if the flavor is U2)<br>Since each flavor allows different volume size, see `User Guide > Compute > Instance Console User Guide`                        |
+| block_device.source_type                    | String  | -  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
+| block_device.destination_type               | String  | -  | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors                                                                                  |
+| block_device.boot_index                     | Integer | -  | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority<br>                                                                                                            |
+| block_device.volume_size                    | Integer | -  | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type, and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| block_device.volume_type               | Enum    | -  | Type of block storage<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`.                                                                                         |
 | block_device.delete_on_termination          | Boolean | -  | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                                                               |
 | block_device.nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                                                    |
@@ -757,7 +766,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 | description       | String  | - | Description of block storage                                                                                                                                               |
 | size              | Integer | O | Size of block storage to create (GB)                                                                                                                                       |
 | availability_zone | String  | - | Availability zone of a block storage to create. If the value does not exist, random availability zone is used.<br>To check availability_zone, go to `Storage > Block Storage > Management` on the console and click **Create Block Storage**. |
-| volume_type       | String  | - | Type of block storage<br>`General HDD`: HDD block storage (default)<br>`General SSD`: SSD block storage<br>`Encrypted HDD`: HDD encrypted block storage<br>`Encrypted SSD`: SSD encrypted block storage       |
+| volume_type       | Enum    | -  | Type of block storage<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`.                                                       |
 | snapshot_id       | String  | - | Original snapshot ID, if omitted, empty block storage is created                                                                                                                           |
 | nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                           |
 | nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                      |
