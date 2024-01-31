@@ -159,9 +159,7 @@ rem cmd
 | 인스턴스 요금 | 중지 요금 정책 적용 | 무료 | 무료 |
 | 연결된 다른 리소스 요금 | 과금됨| 과금됨 | 과금됨 |
 
-```
-[참고] 인스턴스 중지 시 정상(100%) 요금 적용: GPU Instance, Bare Metal Instance
-```
+> [참고] GPU Instance, Bare Metal Instance는 종료할 수 없으며 중지 시에도 정상(100%) 요금이 발생합니다.
 
 ### 이미지 생성
 
