@@ -159,9 +159,7 @@ For more details on hypervisor resources and fees for stopping, terminating, and
 | Pricing for instance | Price for stopping applied | Free | Free |
 | Pricing for other connected resources | Charged| Charged | Charged |
 
-```
-[Note] Normal (100%) rates applied when an instance is stopped: GPU Instance, Bare Metal Instance
-```
+[Note] GPU Instances and Bare Metal Instances cannot be terminated and will incur normal (100%) rates when stopped.
 
 ### Create Image
 
