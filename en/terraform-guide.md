@@ -91,7 +91,6 @@ Terraform NHN Cloud provider version currently provided is **1.0.1**.
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
 
-
 ### Local provider setup
 
 Terraform NHN Cloud provider can be used through local provider setting.
@@ -200,6 +199,26 @@ $ ls
 provider.tf
 $ terraform init
 ```
+
+### Replace Local Provider
+
+If a new version of the local provider is released, you can upgrade the plugin via the `--upgrade` option of the `init` command after proceeding to [local provider settings](#local-provider) with the version you want to change.
+
+```
+$ terraform init --upgrade
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
+- Installing terraform.local/local/nhncloud v1.0.1...
+- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+```
+
 
 ## Terraform Usage
 
