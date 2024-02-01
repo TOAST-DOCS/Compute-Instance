@@ -429,7 +429,7 @@ Instances exist in various statuses, and each status defines its own set of perm
 |-------------------|---------------------------------------------------------------------------------------------------|
 | `ACTIVE`          | Instance is activated                                                                                   |
 | `BUILDING`        | Instance is building                                                                                    |
-| `SHUTOFF`         | Instance is stopped                                                                                      |
+| `STOPPED`         | Instance is stopped                                                                                      |
 | `SHELVED_OFFLOADED` | Instance is terminated                                                                                      |
 | `DELETED`         | Instance is deleted                                                                                      |
 | `REBOOT`          | Instance is rebooted                                                                                     |

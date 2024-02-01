@@ -429,7 +429,7 @@ X-Auth-Token: {tokenId}
 |-------------------|--|
 | `ACTIVE`          | 인스턴스가 활성 상태인 경우 |
 | `BUILDING`        | 인스턴스가 생성 중인 경우 |
-| `SHUTOFF`         | 인스턴스가 중지된 경우 |
+| `STOPPED`         | 인스턴스가 중지된 경우 |
 | `SHELVED_OFFLOADED` | 인스턴스가 종료된 경우 |
 | `DELETED`         | 인스턴스가 삭제된 경우 |
 | `REBOOT`          | 인스턴스를 재시작한 경우 |
