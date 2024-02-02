@@ -203,6 +203,23 @@ provider.tf
 $ terraform init
 ```
 
+### Local providerの交換
+
+新しいバージョンのlocal providerがリリースされた場合、変更するバージョンに[local provider設定](#local-provider)を行った後、`init`コマンドの`--upgrade`オプションでプラグインをアップグレードできます。
+
+```
+$ terraform init --upgrade
+Initializing the backend...
+Initializing provider plugins...
+- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
+- Installing terraform.local/local/nhncloud v1.0.1...
+- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+```
+
+
 ## Terraform基本使用方法
 
 Terraformを利用したインフラ構築は、通常下記のようなライフサイクルになります。
