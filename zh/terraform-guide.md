@@ -202,7 +202,7 @@ $ terraform init
 
 ### Replace Local Provider
 
-If a new version of the local provider is released, you can upgrade the plugin via the `--upgrade` option of the `init` command after proceeding to [local provider settings](#local-provider) with the version you want to change.
+If a new version of the local provider is released, you can upgrade the plugin via the `--upgrade` option of the `init` command after proceeding to [local provider settings](#local-provider-setup) with the version you want to change.
 
 ```
 $ terraform init --upgrade
