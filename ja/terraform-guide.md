@@ -33,6 +33,10 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * nhncloud_networking_port_v2
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
+    * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_secgroup_v2
+    * nhncloud_keymanager_secret_v1
+    * nhncloud_keymanager_container_v1
 * Storage
     * nhncloud_blockstorage_volume_v2
 
@@ -44,6 +48,11 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
+* nhncloud_networking_routingtable_v2
+* nhncloud_networking_secgroup_v2
+* nhncloud_keymanager_secret_v1
+* nhncloud_keymanager_container_v1
+
 
 ### 注意
 
@@ -61,24 +70,33 @@ $ wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_
 $ unzip terraform_0.12.24_linux_amd64.zip
 $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
-Terraform v1.0.0
+Terraform v0.12.24
 ```
 
 ## Terraform NHN Cloud provider提供
 
 Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互換性を提供し、リンクからバイナリファイルをダウンロードできます。
-現在提供するTerraform NHN Cloud providerのバージョンは**1.0.0**です。
+現在提供するTerraform NHN Cloud providerのバージョンは**1.0.1**です。
 
-* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
-* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
-* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+* macOS / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+* macOS / Apple silicon
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+* Linux / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+* Windows / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+
 
 ### Local provider設定
 
 Local provider設定を通じてTerraform NHN Cloud providerを使用できます。
 
-Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。
+Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。バイナリファイルには実行権限が必要です。
 
 以下はOSごとのプラグイン基本パスです。より詳しい基本パスの説明は[Terraformサイト](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)の`Implied Local Mirror Directories
 `項目を参照してください。
@@ -99,35 +117,40 @@ Local providerを探すためのディレクトリ構造を作成した後、ダ
 
 以下は、バイナリダウンロード後、**OS/アーキテクチャ**ごとのプラグイン設定例です。 
 
-**プラグインを設定する際は1.0.0バージョンを使用することを推奨します。**
+**プラグインを設定する際は1.0.1バージョンを使用することを推奨します。**
 
 `macOS / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64/terraform-provider-nhncloud_v1.0.1
 ```
 
 `macOS / Apple silicon`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64/terraform-provider-nhncloud_v1.0.1
 ```
 
 `Linux / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64/terraform-provider-nhncloud_v1.0.1
 ```
 
 `Windows / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.1 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
 ```
+
 
 ## Terraformの初期化
 Terraformを使用する前に、次のようにプロバイダー設定ファイルを作成します。
@@ -141,7 +164,7 @@ required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
       source  = "terraform.local/local/nhncloud"
-      version = "1.0.0"
+      version = "1.0.1"
     }
   }
 }
@@ -179,6 +202,23 @@ $ ls
 provider.tf
 $ terraform init
 ```
+
+### Local providerの交換
+
+新しいバージョンのlocal providerがリリースされた場合、変更するバージョンに[local provider設定](#local-provider)を行った後、`init`コマンドの`--upgrade`オプションでプラグインをアップグレードできます。
+
+```
+$ terraform init --upgrade
+Initializing the backend...
+Initializing provider plugins...
+- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
+- Installing terraform.local/local/nhncloud v1.0.1...
+- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+```
+
 
 ## Terraform基本使用方法
 
@@ -234,6 +274,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
+
 ### 構築計画の確認
 
 tfファイルを通して変更されるリソースを`plan`コマンドで確認できます。`plan`コマンドを実行すると、Terraformが.tfファイルをロードして設定が正しいかを確認し、DBと比較してプランを作成します。プラン作成が完了すると、プランをタイプごとに集計して出力します。
@@ -243,6 +284,7 @@ $ terraform plan
 ```
 
 作成されたプランが無効な場合、tfファイルを修正し、再度反復して`plan`コマンドを実行します。`plan`コマンドは実際のNHN Cloudリソースを変更しないため、インフラ変更事項を負担なく確認できます。
+
 
 ### リソースを作成する
 
@@ -264,6 +306,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 `apply`コマンドを実行すると、プラン変更履歴を記録するDBファイル(terraform.tfstate)が現在のディレクトリに作成されます。このファイルを削除しないように注意してください。
+
 
 ### リソースを修正する
 
@@ -316,6 +359,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
+
 ### リソースを削除する
 
 Terraformで作成したリソースを削除するには、該当の`.tf`ファイルを削除します。
@@ -356,6 +400,7 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ...
 ```
 
+
 ## Data sources
 
 tfファイルの作成に必要なインスタンスタイプID、イメージIDなどは、コンソールを通して確認するか、Terraformが提供するdata sourcesを利用して取得できます。Data sourcesはtfファイル内に作成し、取得した情報は修正できません。参照のみ可能です。
@@ -386,6 +431,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 ```
 
 次のセッションでは、NHN Cloudが提供する各種リソースをdata sources機能で取得する方法を説明します。
+
 
 ### イメージ
 
@@ -420,6 +466,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 | most_recent | Boolean | - | `true`：照会したイメージリストのうち、最近作られたイメージ選択<br>`false`：照会された順序でイメージ選択 |
 | member_status | String | - | 照会するイメージメンバーの状態 <br>`accepted`、`pending`、`rejected`、`all`のうちいずれか1つ。|
 
+
 ### ブロックストレージ
 
 ```
@@ -434,6 +481,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 | name | String | - | 照会するブロックストレージ名 |
 | status | String | - | 照会するブロックストレージの状態 |
 | metadata | Object | - | 照会するブロックストレージと関連するメタデータ |
+
 
 ### インスタンスタイプ
 
@@ -489,6 +537,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 | id | String | - | 照会するVPCのID |
 | name | String | - | 照会するVPCの名前 |
 
+
 ### VPCサブネット
 
 サブネットIDはNHN Cloudコンソール **Network > サブネット**でサブネットを選択して確認可能です。
@@ -511,6 +560,60 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 | name | String | - | 照会するサブネットの名前 |
 | shared | Bool | - | 照会するサブネットの共有有無 |
 
+### ルーティングテーブル
+```
+data "nhncloud_networking_routingtable_v2" "default_rt" {
+  id = "bf15f6f6-1339-4057-a7fe-5811d39bab18"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明                 |
+| --- | --- |---|---------------------|
+| tenant\_id | String | - | 照会するルーティングテーブルが属するテナント ID
+| id | String | - | 照会するルーティングテーブルID      |
+| name | String | - | 照会するルーティングテーブルの名前
+
+
+### セキュリティグループ
+```
+data "nhncloud_networking_secgroup_v2" "default_sg" {
+  name = "default"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明                |
+| --- | --- |---|--------------------|
+| region | String | - | 照会するセキュリティグループが属するリージョン名 |
+| tenant\_id | String | - | 照会するセキュリティグループが属するテナントID |
+| name | String | - | 照会するセキュリティグループの名前      |
+
+
+### シークレット
+```
+data "nhncloud_keymanager_secret_v1" "secret_01" {
+  name      = "terraform_secret_01"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明              |
+| --- | --- |---|------------------|
+| region | String | - | 照会するシークレットが属するリージョン名 |
+| name | String | - | 照会するシークレットの名前      |
+
+
+### シークレットコンテナ
+```
+data "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+}
+```
+
+| 名前 | タイプ | 必須 | 説明                     |
+| --- | --- |---|-------------------------|
+| region | String | - | 照会するシークレットコンテナが属するリージョン名 |
+| name | String | - | 照会するシークレットコンテナ名        |
+
+
 ## Resources
 
 Terraform resourcesでリソースを作成、修正、削除できます。NHN Cloudでは、Terraformによる次のリソース管理をサポートします。
@@ -521,8 +624,10 @@ VPC
 * Floating IP
 * ネットワークポート
 * ロードバランサー
+* セキュリティグループ
 
 次のセッションでは各リソースを使用する方法を説明します。
+
 
 ## Resources - インスタンス
 
@@ -590,29 +695,33 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| 名前   | 形式 | 必須 | 説明                                                                                                                                                                                          |
-| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name | String | O | 作成するインスタンスの名前                                                                                                                                                                                |
-| region | String | - | 作成するインスタンスのリージョン<br>デフォルト値はprovider.tfに設定されたリージョン                                                                                                                                                    |
-| flavor_name | String | - | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須                                                                                                                                               |
-| flavor_id | String | - | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須                                                                                                                                             |
-| image_name | String | - | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                       |
-| image_id | String | - | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                     |
-| key_pair | String | - | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。           |
-| availability_zone | String | - | 作成するインスタンスのアベイラビリティゾーン                                                                                                                                                                            |
-| network | Object | - | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
-| network.name | String | - | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示                                                                                                                       |
-| network.uuid | String | - | VPCネットワークID                                                                                                                                                                                  |
-| network.port | String | - | VPCネットワークに接続するポートのID                                                                                                                                                                         |
-| security_groups | Array | - | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
-| user_data | String | - | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br>                                                                                                                              |
-| block_device | Object | - | インスタンスに使用するイメージまたはブロックストレージ情報オブジェクト                                                                                                                                                              |
-| block_device.uuid | String | - | ブロックストレージの原本ID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある                            |
-| block_device.source_type | String | O | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたブロックストレージで使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
-| block_device.destination_type | String | - | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>`local`：U2インスタンスタイプを利用する場合<br>`volume`：U2以外のインスタンスタイプを利用する場合                                                                                 |
-| block_device.boot_index | Integer | - | 指定したブロックストレージの起動順序<br>0の場合、ルートブロックストレージ<br>それ以外は追加ブロックストレージ<br>数字が大きいほど起動順序が下がる<br>                                                                                                            |
-| block_device.volume_size | Integer | - | 作成するインスタンスで使用するブロックストレージサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照                       |
-| block_device.delete_on_termination | Boolean | - | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
+| 名前                                         | 形式     | 必須 | 説明                                                                                                                                                                                          |
+|---------------------------------------------|---------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                                        | String  | O  | 作成するインスタンスの名前                                                                                                                                                                                |
+| region                                      | String  | -  | 作成するインスタンスのリージョン<br>デフォルト値はprovider.tfに設定されたリージョン                                                                                                                                                    |
+| flavor_name                                 | String  | -  | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須                                                                                                                                               |
+| flavor_id                                   | String  | -  | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須                                                                                                                                             |
+| image_name                                  | String  | -  | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                       |
+| image_id                                    | String  | -  | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                     |
+| key_pair                                    | String  | -  | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。           |
+| availability_zone                           | String  | -  | 作成するインスタンスのアベイラビリティゾーン                                                                                                                                                                            |
+| network                                     | Object  | -  | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
+| network.name                                | String  | -  | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示                                                                                                                       |
+| network.uuid                                | String  | -  | VPCネットワークID                                                                                                                                                                                  |
+| network.port                                | String  | -  | VPCネットワークに接続するポートのID                                                                                                                                                                         |
+| security_groups                             | Array   | -  | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
+| user_data                                   | String  | -  | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br>                                                                                                                              |
+| block_device                                | Object  | -  | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合、必ず指定する必要がある** |
+| block_device.uuid                           | String  | -  | ブロックストレージの原本ID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある                            |
+| block_device.source_type                    | String  | -  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
+| block_device.destination_type               | String  | -  | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>- `local`: U2インスタンスタイプを利用する場合<br>- `volume`: U2以外のインスタンスタイプを利用する場合                                                                                 |
+| block_device.boot_index                     | Integer | -  | 指定したブロックストレージの起動順序<br>- `0`の場合、ルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる<br>                                                                                                            |
+| block_device.volume_size                    | Integer | -  | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+| block_device.volume_type               | Enum    | -  | ブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示**レスポンスの`name`参考                                                                                        |
+| block_device.delete_on_termination          | Boolean | -  | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
+| block_device.nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                                                              |
+| block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager商品のアプリケーションキー                                                                                                                                                                   |
+| block_device.nhn_encryption.skm_key_id      | String  | O  | Secure Key ManagerのキーID                                                                                                                                                                     |
 
 
 ### ブロックストレージ接続
@@ -634,9 +743,9 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 }
 ```
 | 名前 | タイプ | 必須 | 説明 |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | ブロックストレージを接続する対象インスタンス |
-| volume_id | String | - | 接続するブロックストレージUUID |
+| ------ | --- |----| --------- |
+| instance_id | String | O  | ブロックストレージを接続する対象インスタンス |
+| volume_id | String | O  | 接続するブロックストレージUUID |
 
 
 ## Resources - ブロックストレージ
@@ -668,13 +777,17 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| 名前 | タイプ | 必須 | 説明 |
-| ------ | --- |---- | --------- |
-| name | String | O | 作成するブロックストレージ名 |
-| description | String | - | ブロックストレージの説明 |
-| size | Integer | - | 作成するブロックストレージのサイズ(GB) |
-| availability_zone | String | - | 作成するブロックストレージのアベイラビリティゾーン。値が存在しない場合、任意のアベイラビリティゾーン<br>availability_zoneはコンソール`Storage > Block Storage > 管理`のブロックストレージ作成ボタンを押して表示されるアベイラビリティゾーンで確認できます。 |
-| volume_type | String | - | ブロックストレージタイプ<br>`General HDD`：HDDブロックストレージ(デフォルト値)<br>`General SSD`：SSDブロックストレージ |
+| 名前               | タイプ     | 必須 | 説明                                                                                                                                                      |
+|-------------------|---------|---|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | String  | - | 作成するブロックストレージ名                                                                                                                                          |
+| description       | String  | - | ブロックストレージの説明                                                                                                                                              |
+| size              | Integer | O | 作成するブロックストレージのサイズ(GB)                                                                                                                                       |
+| availability_zone | String  | - | 作成するブロックストレージのアベイラビリティゾーン。値が存在しない場合、任意のアベイラビリティゾーン<br>availability_zoneはコンソール`Storage > Block Storage > 管理`のブロックストレージ作成ボタンを押して表示されるアベイラビリティゾーンで確認できます。 |
+| volume_type       | Enum    | -  | ブロックストレージタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示** レスポンスの`name`参考                                                      |
+| snapshot_id       | String  | - | 原本スナップショットID、省略すると空のブロックストレージが作成される                                                                                                                          |
+| nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                          |
+| nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager商品のアプリケーションキー                                                                                                                                     |
+| nhn_encryption.skm_key_id      | String  | O  | Secure Key ManagerのキーID                                                                                                                                       |
 
 
 ### ブロックストレージのインポート
@@ -712,8 +825,10 @@ NHN CloudはTerraformを通して、下記のリソースの作成をサポー�
 * VPCサブネット
 * ネットワークポート
 * Floating IP
+* ルーティングテーブル
 
 これ以外のVPCリソースは、コンソールで作成する必要があります。
+
 
 ### VPC作成
 
@@ -732,7 +847,6 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 | cidrv4 | String | O | VPC IP帯域 |
 | region | String | - | VPCのリージョン名 |
 | tenant\_id | String | - | VPCのtenant ID |
-
 
 
 ### VPCサブネット作成およびルーティングテーブル接続
@@ -831,6 +945,25 @@ resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
 | port_id     | String | O | Floating IPを接続するポートUUID |
 
 
+### ルーティングテーブルの作成
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  ...
+}
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  name = "resource-rt-01"
+  vpc_id = nhncloud_networking_vpc_v2.resource-vpc-01.id
+  distributed = false
+}
+```
+
+| 名前    | タイプ     | 必須 | 説明                                                            |
+|--------|---------|----|----------------------------------------------------------------|
+| name   | String  | O  | ルーティングテーブルの名前                                                    |
+| vpc_id | String  | O  | ルーティングテーブルが属するVPC ID                                             |
+| distributed   | Boolean | -  | ルーティングテーブルのルーティング方式 </br>`true`:分散型、`false`:中央集中型(デフォルト値: `true`) |
+
+
 ## Resources - ロードバランサー
 ### ロードバランサー作成
 
@@ -908,6 +1041,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | SNI証明書のパスリスト |
 | insert_headers | String | - | バックエンドメンバーにリクエストを転送する前に追加するヘッダリスト |
 | admin_state_up | Boolean | - | 管理者制御状態 |
+
 
 ### プール作成
 
@@ -993,6 +1127,73 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 | protocol_port | Integer | O | トラフィックを受信するメンバーのポート |
 | weight | Integer | - | プールで受信する必要があるトラフィックの重み<br>高いほどトラフィックをたくさん受信する。 |
 | admin_state_up | Boolean | - | 管理者制御状態 |
+
+
+### シークレットの作成
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+  algorithm            = "aes"
+  bit_length           = 256
+  mode                 = "cbc"
+  name                 = "mysecret"
+  payload              = "foobar"
+  payload_content_type = "text/plain"
+  secret_type          = "passphrase"
+}
+```
+
+| 名前                      | 形式 | 必須 | 説明                                                                                                                                                          |
+|--------------------------| ---- |----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                     | String | -  | シークレットの名前                                                                                                                                                      |
+| expiration               | Datetime | -  | 有効期限。ISO8601形式でリクエスト                                                                                                                                        |
+| algorithm                | String | -  | 暗号化アルゴリズム                                                                                                                                                    |
+| bit_length               | String | -  | 暗号化キーの長さ                                                                                                                                                     |
+| mode                     | String | -  | ブロック暗号運用方式                                                                                                                                                 |
+| payload                  | String | -  | 暗号化キーペイロード                                                                                                                                                  |
+| payload_content_type     | String | -  | 暗号化キーペイロードコンテンツタイプ </br>payloadを入力する時、必ず入力しなければならない </br>サポートするコンテンツタイプリスト: `text/plain`, `application/octet-stream`, `application/pkcs8`, `application/pkix-cert` |
+| payload_content_encoding | Enum | -  | 暗号化キーペイロードエンコード方式 </br>payload_content_typeが`text/plain`ではない場合、必ず入力する必要があります。</br> `base64`のみサポート                                                              |
+| secret_type              | Enum | -  | シークレットタイプ </br>`symmetric`, `public`, `private`, `passphrase`, `certificate`, `opaque`のいずれか                                                                     |
+
+
+### シークレットコンテナの作成
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+...
+}
+resource "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+  type      = "generic"
+  secret_refs {
+    secret_ref = nhncloud_keymanager_secret_v1.secret_01.secret_ref
+  }
+}
+```
+
+| 名前  | 形式    | 必須 | 説明                                                                                                                                                                                            |
+|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type | Enum   | O  | コンテナタイプ </br>`generic`, `rsa`, `certificate`のいずれか                                                                                                                                              |
+| name | String | -  | コンテナ名                                                                                                                                                                                       |
+| secret_refs | Array  | -  | コンテナに登録するシークレットリスト                                                                                                                                                                              |
+| secret_refs.secret_ref	 | String | -  | シークレットアドレス                                                                                                                                                                                        |
+| secret_refs.name	 | String | -  | コンテナが指定したシークレット名 </br>コンテナタイプが`certificate`の場合：`certificate`, `private_key`, `private_key_passphrase`, `intermediates`に指定 </br>コンテナタイプが`rsa`の場合：`private_key`, `private_key_passphrase`, `public_key`に指定 |
+
+
+## Resources - セキュリティグループ
+
+### セキュリティグループの作成
+
+```
+resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
+  name      = "sg-01"
+}
+```
+
+| 名前  | 形式    | 必須 | 説明              | 
+|------|--------|---|------------------|
+| name | String | O | セキュリティグループ名        |
+| region | String | - | セキュリティグループが割り当てられるリージョン名 |
 
 
 ## 参考サイト

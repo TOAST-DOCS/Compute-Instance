@@ -425,23 +425,24 @@ X-Auth-Token: {tokenId}
 
 인스턴스는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 인스턴스 상태 목록은 다음과 같습니다.
 
-| 상태 명 | 설명 |
-|--|--|
-| `ACTIVE` | 인스턴스가 활성 상태인 경우 |
-| `BUILDING` | 인스턴스가 생성 중인 경우 |
-| `STOPPED`| 인스턴스가 중지된 경우 |
-| `DELETED`| 인스턴스가 삭제된 경우 |
-| `REBOOT`| 인스턴스를 재시작한 경우 |
-| `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
-| `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 중지되었다가 다시 시작된 상태 |
-| `REVERT_RESIZE`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원 상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
-| `ERROR`| 직전 인스턴스에 취한 동작이 실패한 경우 |
-| `PAUSED`| 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
-| `REBUILD`| 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
-| `RESCUED`| 인스턴스를 복구 모드에서 실행 중 |
-| `SUSPENDED`| 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
-| `UNKNOWN`| 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
+| 상태명               | 설명                                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| `ACTIVE`          | 인스턴스가 활성 상태인 경우                                                                                   |
+| `BUILDING`        | 인스턴스가 생성 중인 경우                                                                                    |
+| `STOPPED`         | 인스턴스가 중지된 경우                                                                                      |
+| `SHELVED_OFFLOADED` | 인스턴스가 종료된 경우                                                                                      |
+| `DELETED`         | 인스턴스가 삭제된 경우                                                                                      |
+| `REBOOT`          | 인스턴스를 재시작한 경우                                                                                     |
+| `HARD_REBOOT`     | 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작                                               |
+| `RESIZED`         | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 중지되었다가 다시 시작된 상태                                     |
+| `REVERT_RESIZE`   | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원상태로 돌아가기 위해 복구하는 경우                                 |
+| `VERIFY_RESIZE`   | 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
+| `ERROR`           | 직전 인스턴스에 취한 동작이 실패한 경우                                                                            |
+| `PAUSED`          | 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨                                                  |
+| `REBUILD`         | 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태                                                                   |
+| `RESCUED`         | 인스턴스를 복구 모드에서 실행 중                                                                                |
+| `SUSPENDED`       | 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우                                                                    |
+| `UNKNOWN`         | 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.`                                          |
 
 ### 인스턴스 목록 보기
 
@@ -854,11 +855,15 @@ X-Auth-Token: {tokenId}
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
 | server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 블록 스토리지를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
 | server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL, MySQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함 |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 생성할 블록 스토리지 원본의 타입<br>`image`: 이미지를 이용해 블록 스토리지 생성<br>`volume`: 기존에 생성된 블록 스토리지로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅숏을 이용해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
+| server.block_device_mapping_v2.source_type | Body | Enum | - | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
-| server.block_device_mapping_v2.volume_type | Body | String | - | 생성되는 블록 스토리지의 타입<br>-`General HDD`: HDD 타입의 블록 스토리지<br>-`General SSD`: SSD 타입의 블록 스토리지<br> 생략할 경우 `General HDD`로 적용됨 |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | 블록 스토리지의 암호화 정보                                                                                                                                                                                        |
+| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | Secure Key Manager 상품의 앱키                                                                                                                                                                              |
+| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID                                                                                                                                  |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1. |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10. |
@@ -1178,15 +1183,15 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 인스턴스 추가기능
+## 인스턴스 추가 기능
 NHN Cloud는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
 
-* 인스턴스 시작, 중지, 재시작
+* 인스턴스 시작, 중지, 종료, 재시작
 * 인스턴스 타입 변경
 * 인스턴스 이미지 생성
 * 보안 그룹 추가 및 삭제
 
-### 인스턴스 시작
+### 중지된 인스턴스 시작
 
 중지된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
 
@@ -1215,10 +1220,44 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
 ---
+
+### 종료된 인스턴스 시작
+
+종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHELVED_OFFLOADED**여야 합니다.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|--|---|---|---|--|
+| tenantId | URL | String | O | 테넌트 ID |
+| serverId | URL | UUID | O | 변경할 인스턴스 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| unshelve | Body | none | O | 인스턴스 시작 요청 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+  "unshelve" : null
+}
+```
+
+</p>
+</details>
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
+
+---
 
 ### 인스턴스 중지
 
@@ -1254,9 +1293,43 @@ X-Auth-Token: {tokenId}
 
 ---
 
+### 인스턴스 종료
+
+인스턴스를 종료하고 상태를 **SHELVED_OFFLOADED**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE**여야 합니다.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명          |
+|---|---|---|---|-------------|
+| tenantId | URL | String | O | 테넌트 ID      |
+| serverId | URL | UUID | O | 변경할 인스턴스 ID |
+| tokenId | Header | String | O | 토큰 ID       |
+| shelve | Body | none | O | 인스턴스 종료 요청  |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+  "shelve" : null
+}
+```
+
+</p>
+</details>
+
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
+---
+
 ### 인스턴스 재시작
 
-인스턴스를 재시작 합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
+인스턴스를 재시작합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
 
 * **SOFT** 방식: **"우아한 연결 중지(Graceful shutdown)"**를 통해 인스턴스를 중지하고 재시작합니다. 인스턴스가 **ACTIVE** 상태여야 합니다.
 * **HARD** 방식: 강제 중지 후 인스턴스를 재시작합니다. 물리 서버의 전원을 끄고 다시 켜는 것과 동일한 동작입니다. 인스턴스가 다음 상태일 때만 강제로 중지할 수 있습니다.

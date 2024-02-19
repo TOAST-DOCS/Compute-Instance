@@ -611,44 +611,64 @@ sudo systemctl restart mariadb.service
 
 ### Tibero Instance 생성
 
+#### 최소 권장 사양
+
+- 루트 블록 스토리지 
+    - 빠른 속도를 위해 SSD를 권장하며, root disk full 이 발생하지 않도록 **50GB 이상**으로 설정할 것을 권고합니다.
+
+- 최소 권장 사양: 4vCore/8GB
+    - **권장 사양 미만 사용 시 DBMS 설치가 제한될 수 있습니다.**
 #### 추가 블록 스토리지
 
-root 볼륨 이외의 추가 볼륨을 생성합니다.
-TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150G 이상**을 반드시 설정해야 합니다.
+- 루트 볼륨 이외의 추가 볼륨을 생성합니다.
+    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150G 이상**을 반드시 설정해야 합니다.
 
 ### 인스턴스 접속
 
-인스턴스 생성 완료 후 SSH를 사용하여 인스턴스에 접근합니다.
-인스턴스에 플로팅 IP가 연결되어 있어야 하며 보안 그룹에서 TCP 포트 22(SSH)가 허용되어야 합니다.
-SSH 클라이언트와 설정한 키페어를 이용해 인스턴스에 접속합니다.
-SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](https://docs.toast.com/ko/Compute/Instance/ko/overview/#linux)<span style="color:#313338">를 참고하시기 바랍니다.</span>
+- 인스턴스 생성 완료 후 SSH를 사용하여 인스턴스에 접근합니다.
+- 인스턴스에 플로팅 IP가 연결되어 있어야 하며 보안 그룹에서 TCP 포트 22(SSH)가 허용되어야 합니다.
+- SSH 클라이언트와 설정한 키페어를 이용해 인스턴스에 접속합니다.
+- SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](https://docs.toast.com/ko/Compute/Instance/ko/overview/#linux)<span style="color:#313338">를 참고하시기 바랍니다.</span>
 
 ### TMI 설치
 
+
 root 계정으로 /root 경로에서 dbca 명령어를 실행합니다.
 ```
-$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
-```
-
-
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 8639
+$ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ```
 
 | No | 항목 | 인자값 |
 | :---: | --- | --- |
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
-| 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME (= SID ) |
+| 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
+| 4 | DB\_TYPE | Tibero Type 지정(16vCore 이하: SE/16vCore 초과: CE) |
+| 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
+
+##### Tibero 7 Cloud Standard Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
+```
+
+
+##### Tibero 7 Cloud Enterprise Edition
+```
+[centos@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance centos]# cd
+[root@tiberoinstance ~]# pwd
+/root
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+```
 
 #### 설치 완료
 
-dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 database가 생성됩니다. 소요 시간은 10분 이하입니다. 완료되면 아래와 같이 출력됩니다.
+dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 데이터베이스가 생성됩니다. 소요 시간은 10분 이하입니다. 
+완료되면 아래와 같이 출력됩니다.
 
 ```
 SQL>
@@ -667,39 +687,45 @@ SQL> Disconnected.
 Tibero가 구동 중인지 확인합니다.
 
 ```
-[root@tiberoinstance ~]# ps -ef | grep tbsvr
-nhncloud 13933     1  0 09:10 ?        00:00:04 tbsvr          -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13944 13933  0 09:10 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13945 13933  0 09:10 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13946 13933  0 09:10 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13947 13933  0 09:10 ?        00:00:08 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13948 13933  0 09:10 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13949 13933  0 09:10 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13950 13933  0 09:10 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13951 13933  0 09:10 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13952 13933  0 09:10 ?        00:00:09 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13953 13933  0 09:10 ?        00:00:07 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
-nhncloud 13954 13933  0 09:10 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
-root     21066 12596  0 11:06 pts/0    00:00:00 grep --color=auto tbsvr
+[root@tiberoinstance ~]# ps -ef |grep tbsvr
+nhncloud  9886     1  1 14:14 ?        00:00:00 tbsvr          -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9888  9886  0 14:15 ?        00:00:00 tbsvr_MGWP     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9889  9886 36 14:15 ?        00:00:21 tbsvr_FGWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9890  9886  0 14:15 ?        00:00:00 tbsvr_FGWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9891  9886  0 14:15 ?        00:00:00 tbsvr_FGWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9892  9886  0 14:15 ?        00:00:00 tbsvr_FGWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9893  9886  0 14:15 ?        00:00:00 tbsvr_FGWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9894  9886  0 14:15 ?        00:00:00 tbsvr_FGWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9895  9886  0 14:15 ?        00:00:00 tbsvr_FGWP006  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9896  9886  0 14:15 ?        00:00:00 tbsvr_FGWP007  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9897  9886  0 14:15 ?        00:00:00 tbsvr_FGWP008  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9898  9886  0 14:15 ?        00:00:00 tbsvr_FGWP009  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9899  9886  0 14:15 ?        00:00:00 tbsvr_PEWP000  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9900  9886  0 14:15 ?        00:00:00 tbsvr_PEWP001  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9901  9886  0 14:15 ?        00:00:00 tbsvr_PEWP002  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9902  9886  0 14:15 ?        00:00:00 tbsvr_PEWP003  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9903  9886  0 14:15 ?        00:00:00 tbsvr_PEWP004  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9904  9886  0 14:15 ?        00:00:00 tbsvr_PEWP005  -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9905  9886  0 14:15 ?        00:00:00 tbsvr_AGNT     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9906  9886  3 14:15 ?        00:00:01 tbsvr_DBWR     -t NORMAL -SVR_SID tiberotestdb
+nhncloud  9907  9886  0 14:15 ?        00:00:00 tbsvr_RCWP     -t NORMAL -SVR_SID tiberotestdb
+root     13517  8366  0 14:15 pts/0    00:00:00 grep --color=auto tbsvr
 [root@tiberoinstance ~]#
 ```
 
 설치 로그는 /root/.dbset.log에서 확인이 가능합니다.
 
 ```
-[root@tiberoinstance ~]# ls -al
-합계 36
-dr-xr-x---.  4 root root  154  1월 13 09:12 .
-dr-xr-xr-x. 23 root root 4096  1월 13 09:05 ..
--rw-------   1 root root  264  1월 12 19:08 .bash_history
+[root@tiberoinstance ~]# ls -alh
+합계 20K
+dr-xr-x---.  4 root root  104 10월 17 14:15 .
+dr-xr-xr-x. 23 root root 4.0K 10월 17 14:14 ..
 -rw-r--r--.  1 root root   18 12월 29  2013 .bash_logout
 -rw-r--r--.  1 root root  176 12월 29  2013 .bash_profile
 -rw-r--r--.  1 root root  176 12월 29  2013 .bashrc
--rw-r--r--.  1 root root  100 12월 29  2013 .cshrc
--rw-r--r--   1 root root 7732  1월 13 09:12 .dbset.log
-drwxr-----   3 root root   19  1월 13 09:04 .pki
-drwx------   2 root root   29  1월  4 16:58 .ssh
--rw-r--r--.  1 root root  129 12월 29  2013 .tcshrc
+-rw-r--r--   1 root root 3.6K 10월 17 14:15 .dbset.log
+drwxr-----   3 root root   19 10월 17 14:13 .pki
+drwx------   2 root root   29 10월 17 14:04 .ssh
 ```
 
 ### Tibero 접속
@@ -730,13 +756,13 @@ dbca 명령어로 생성한 OS\_ACCOUNT로 로그인합니다.
 ```
 [nhncloud@tiberoinstance ~]$ tbsql sys/tibero
 
-tbSQL 6
+tbSQL 7
 
-TmaxData Corporation Copyright (c) 2008-. All rights reserved.
+TmaxTibero Corporation Copyright (c) 2020-. All rights reserved.
 
 Connected to Tibero.
 
-SQL> select * from v$instance;
+SQL> select * FROM v$instance;
 
 INSTANCE_NUMBER INSTANCE_NAME
 --------------- ----------------------------------------
@@ -747,18 +773,18 @@ HOST_NAME                                                       PARALLEL
    THREAD# VERSION
 ---------- --------
 STARTUP_TIME
-----------------------------------------------------------------
+--------------------------------------------------------------------------------
 STATUS           SHUTDOWN_PENDING
 ---------------- ----------------
 TIP_FILE
 --------------------------------------------------------------------------------
               0 tiberotestdb
 tiberotestdb
-tiberoinstance.novalocal                                        NO
-         0 6
-2022/01/13
+tiberoinstance.novalocal                                      NO
+         0 7
+2023/10/17
 NORMAL           NO
-/db/tibero6/config/tiberotestdb.tip
+/db/tibero7/config/tiberotestdb.tip
 
 
 1 row selected.
@@ -785,7 +811,6 @@ Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 * SYSGIS: GIS 관련 테이블 생성 및 태스크를 수행하는 계정입니다.
 * OUTLN: 동일한 SQL 수행 시 항상 같은 플랜으로 수행될 수 있게 관련 힌트를 저장하는 등의 태스크를 수행합니다.
 * TIBERO/TIBERO1: example user이며 DBA 권한을 가지고 있습니다.
-
 
 ## Kafka Instance
 > [참고]
@@ -945,4 +970,152 @@ shell> ~/kafka/bin/kafka-console-producer.sh --broker-list [인스턴스IP]:[카
 
 # consumer 시작
 shell> ~/kafka/bin/kafka-console-consumer.sh --bootstrap-server [인스턴스IP]:[카프카PORT] --from-beginning --topic kafka
+```
+
+## Redis Instance
+
+### Redis 시작/정지
+```
+# Redis 서비스 시작
+shell> sudo systemctl start redis
+
+# Redis 서비스 중지
+shell> sudo systemctl stop redis
+
+# Redis 서비스 재시작
+shell> sudo systemctl restart redis
+```
+
+### Redis 접속
+`redis-cli` 커맨드를 이용해 Redis 인스턴스에 접속할 수 있습니다.
+```
+shell> redis-cli
+```
+
+### Redis 인스턴스 생성 후 초기 설정
+Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. 변경해야 할 파라미터에 대한 설명은 아래와 같습니다.
+
+#### bind
+- 기본 값: `127.0.0.1 -::1`
+- 변경 값: `<private ip> 127.0.0.1 -::1`
+
+Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스턴스로의 접근을 허용하려면 해당 파라미터에 private ip를 추가해야 합니다. private ip는 `hostname -I` 커맨드로 확인할 수 있습니다.
+
+#### port
+- 기본 값: `6379`
+
+포트는 Redis 기본값인 6379입니다. 보안상 포트 변경을 권장합니다. 포트를 변경한 뒤에는 아래 커맨드로 Redis에 접속할 수 있습니다.
+
+```
+shell> redis-cli -p <새로운 포트>
+```
+
+#### requirepass/masterauth
+- 기본 값: `nhncloud`
+
+기본 비밀번호는 `nhncloud`입니다. 보안상 비밀번호 변경을 권장합니다. 복제 연결을 사용할 경우 `requirepass`와 `masterauth`값을 동시에 변경해야 합니다.
+
+### 자동 HA 구성 스크립트
+NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 스크립트를 제공합니다. 스크립트는 반드시 **설치 직후의 신규 인스턴스**에서만 사용할 수 있으며, redis.conf에서 설정값을 변경한 경우에는 사용할 수 없습니다.
+
+스크립트를 사용하기 위해서는 다음 설정이 필수적으로 필요합니다.
+
+##### 키 페어 복사
+설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키 페어(PEM 파일)가 있어야 합니다. 키 페어는 다음과 같이 복사할 수 있습니다.
+
+- centos
+```
+local> scp -i <키 페어>.pem <키 페어>.pem centos@<floating ip>:/home/centos/
+```
+- ubuntu
+```
+local> scp -i <키 페어>.pem <키 페어>.pem ubuntu@<floating ip>:/home/ubuntu/
+```
+
+생성한 인스턴스들의 키 페어는 모두 동일해야 합니다.
+
+##### 보안 그룹 설정
+Redis 인스턴스간의 통신을 위해 보안 그룹(**Network** > **Security Groups**) 설정이 필요합니다. 아래 규칙으로 보안 그룹을 생성한 뒤 Redis 인스턴스에 적용하세요.
+
+| 방향 | IP 프로토콜| 포트 범위| Ether| 원격|
+| --- | --- | --- | --- | --- |
+| 수신|TCP | 6379| IPv4| 인스턴스 IP(CIDR)|
+| 수신|TCP | 16379| IPv4| 인스턴스 IP(CIDR)|
+| 수신|TCP | 26379| IPv4| 인스턴스 IP(CIDR)|
+
+#### Sentinel 자동구성
+Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
+
+```
+shell> sh .redis_make_sentinel.sh
+```
+
+이후 마스터와 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+
+```
+shell> sh .redis_make_sentinel.sh
+Enter Master's IP: 192.168.0.33
+Enter Replica-1's IP: 192.168.0.27
+Enter Replica-2's IP: 192.168.0.97
+```
+
+복사해 온 키 페어의 파일명을 입력합니다.
+```
+shell> Enter Pemkey's name: <키 페어>.pem
+```
+
+#### Cluster 자동 구성
+Cluster 구성을 위해 6개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
+
+```
+shell> sh .redis_make_cluster.sh
+```
+
+이후 클러스터에 사용할 Redis 인스턴스의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+
+```
+shell> sh .redis_make_cluster.sh
+Enter cluster-1'IP:  192.168.0.79
+Enter cluster-2'IP: 192.168.0.10
+Enter cluster-3'IP: 192.168.0.33
+Enter cluster-4'IP:  192.168.0.116
+Enter cluster-5'IP:  192.168.0.91
+Enter cluster-6'IP:  192.168.0.32
+```
+
+복사해 온 키 페어의 파일명을 입력합니다.
+
+```
+shell> Enter Pemkey's name: <키 페어>.pem
+```
+
+`yes`를 입력해 클러스터 구성을 완료합니다.
+```
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.168.0.91:6379 to 192.168.0.79:6379
+Adding replica 192.168.0.32:6379 to 192.168.0.10:6379
+Adding replica 192.168.0.116:6379 to 192.168.0.33:6379
+M: 0a6ee5bf24141f0058c403d8cc42b349cdc09752 192.168.0.79:6379
+   slots:[0-5460] (5461 slots) master
+M: b5d078bd7b30ddef650d9a7fa9735e7648efc86f 192.168.0.10:6379
+   slots:[5461-10922] (5462 slots) master
+M: 0da9b78108b6581bdb90002cbdde3506e9173dd8 192.168.0.33:6379
+   slots:[10923-16383] (5461 slots) master
+S: 078b4ce014a52588e23577b3fc2dabf408723d68 192.168.0.116:6379
+   replicates 0da9b78108b6581bdb90002cbdde3506e9173dd8
+S: caaae4ebd3584c0481205e472d6bd0f9dc5c574e 192.168.0.91:6379
+   replicates 0a6ee5bf24141f0058c403d8cc42b349cdc09752
+S: ab2aa9e37cee48ef8e4237fd63e8301d81193818 192.168.0.32:6379
+   replicates b5d078bd7b30ddef650d9a7fa9735e7648efc86f
+Can I set the above configuration? (type 'yes' to accept):
+```
+
+```
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
 ```
