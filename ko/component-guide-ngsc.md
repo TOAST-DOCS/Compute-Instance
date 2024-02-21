@@ -814,8 +814,6 @@ Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 
 ## Kafka Instance
 > [참고]
-> 본 가이드는 Kafka 3.3.1 버전을 기준으로 작성되었습니다.
-> 다른 버전을 사용하시는 경우 해당 버전에 맞게 변경해 주십시오.
 > 인스턴스 타입은 c1m2(CPU 1core, Memory 2GB) 이상 사양으로 생성해 주십시오.
 
 ### Zookeeper, Kafka broker 시작/정지
