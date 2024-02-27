@@ -817,8 +817,6 @@ The default accounts provided by Tibero are as follows.
 
 ## Kafka Instance
 > [Note]
-> This guide is created based on Kafka version 3.3.1.
-> If you are using a different version, please makes changes accordingly.
 > For the instance flavor, please choose c1m2 (CPU 1core,  Memory 2GB) or higher specifications.
 
 ### Start and Stop Zookeeper, Kafka broker
