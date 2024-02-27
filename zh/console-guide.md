@@ -147,6 +147,20 @@ For more details regarding user scripts, see the [cloud-init](https://cloudinit.
 
 ## Additional Instance Features
 
+### Change Instance Status
+
+An instance’s status can be changed by stopping, terminating, deleting, and starting it.
+
+For more details on hypervisor resources and fees for stopping, terminating, and deleting instances, see the table below.
+
+| Classification | Stop instance | Terminate Instance | Delete Instance |
+| --- | -- | --- | --- |
+| Hypervisor resource | Resource remain allocated  | Resource returned and reallocated when an instance is started | Resource removed |
+| Pricing for instance | Price for stopping applied | Free | Free |
+| Pricing for other connected resources | Charged| Charged | Charged |
+
+> [Note] GPU Instances and Bare Metal Instances cannot be terminated and will incur normal (100%) rates when stopped.
+
 ### Create Image
 
 Create an image from an instance's root block storage. It is recommended to stop instances before creating an image in order to ensure data integrity.

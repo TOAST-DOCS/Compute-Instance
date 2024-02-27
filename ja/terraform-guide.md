@@ -78,10 +78,18 @@ Terraform v0.12.24
 Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互換性を提供し、リンクからバイナリファイルをダウンロードできます。
 現在提供するTerraform NHN Cloud providerのバージョンは**1.0.1**です。
 
-* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
-* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
-* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
-* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+* macOS / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+* macOS / Apple silicon
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+* Linux / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+* Windows / AMD64
+  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
+  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
 
 
 ### Local provider設定
@@ -194,6 +202,23 @@ $ ls
 provider.tf
 $ terraform init
 ```
+
+### Local providerの交換
+
+新しいバージョンのlocal providerがリリースされた場合、変更するバージョンに[local provider設定](#local-provider)を行った後、`init`コマンドの`--upgrade`オプションでプラグインをアップグレードできます。
+
+```
+$ terraform init --upgrade
+Initializing the backend...
+Initializing provider plugins...
+- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
+- Installing terraform.local/local/nhncloud v1.0.1...
+- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+```
+
 
 ## Terraform基本使用方法
 
@@ -686,12 +711,13 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | network.port                                | String  | -  | VPCネットワークに接続するポートのID                                                                                                                                                                         |
 | security_groups                             | Array   | -  | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
 | user_data                                   | String  | -  | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br>                                                                                                                              |
-| block_device                                | Object  | -  | インスタンスに使用するイメージまたはブロックストレージ情報オブジェクト                                                                                                                                                              |
+| block_device                                | Object  | -  | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合、必ず指定する必要がある** |
 | block_device.uuid                           | String  | -  | ブロックストレージの原本ID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある                            |
-| block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>`image`：イメージを利用してブロックストレージ作成<br>`volume`：既に作成されたブロックストレージで使用、 destination_typeは必ずvolumeを指定<br>`snapshot`：スナップショットを利用してブロックストレージ作成、 destination_typeは必ずvolumeを指定 |
-| block_device.destination_type               | String  | -  | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>`local`：U2インスタンスタイプを利用する場合<br>`volume`：U2以外のインスタンスタイプを利用する場合                                                                                 |
-| block_device.boot_index                     | Integer | -  | 指定したブロックストレージの起動順序<br>0の場合、ルートブロックストレージ<br>それ以外は追加ブロックストレージ<br>数字が大きいほど起動順序が下がる<br>                                                                                                            |
-| block_device.volume_size                    | Integer | -  | 作成するインスタンスで使用するブロックストレージサイズ<br>最小20GBから最大2,000GBまで設定可能(インスタンスタイプがU2の時は必須入力)<br>インスタンスタイプに応じて設定できるvolume_sizeが異なるため、`ユーザーガイド > Compute > Instanceコンソール使用ガイド`を参照                       |
+| block_device.source_type                    | String  | -  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
+| block_device.destination_type               | String  | -  | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>- `local`: U2インスタンスタイプを利用する場合<br>- `volume`: U2以外のインスタンスタイプを利用する場合                                                                                 |
+| block_device.boot_index                     | Integer | -  | 指定したブロックストレージの起動順序<br>- `0`の場合、ルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる<br>                                                                                                            |
+| block_device.volume_size                    | Integer | -  | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+| block_device.volume_type               | Enum    | -  | ブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示**レスポンスの`name`参考                                                                                        |
 | block_device.delete_on_termination          | Boolean | -  | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                                                              |
 | block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager商品のアプリケーションキー                                                                                                                                                                   |
@@ -757,7 +783,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 | description       | String  | - | ブロックストレージの説明                                                                                                                                              |
 | size              | Integer | O | 作成するブロックストレージのサイズ(GB)                                                                                                                                       |
 | availability_zone | String  | - | 作成するブロックストレージのアベイラビリティゾーン。値が存在しない場合、任意のアベイラビリティゾーン<br>availability_zoneはコンソール`Storage > Block Storage > 管理`のブロックストレージ作成ボタンを押して表示されるアベイラビリティゾーンで確認できます。 |
-| volume_type       | String  | - | ブロックストレージタイプ<br>`General HDD`：HDDブロックストレージ(デフォルト値<br>`General SSD`：SSDブロックストレージ<br>`Encrypted HDD`：HDD暗号化ブロックストレージ<br>`Encrypted SSD`：SSD暗号化ブロックストレージ      |
+| volume_type       | Enum    | -  | ブロックストレージタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示** レスポンスの`name`参考                                                      |
 | snapshot_id       | String  | - | 原本スナップショットID、省略すると空のブロックストレージが作成される                                                                                                                          |
 | nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                          |
 | nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager商品のアプリケーションキー                                                                                                                                     |
