@@ -262,7 +262,7 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 ### PostgreSQL 시작/정지 방법
 
 ```
-##CentOS 인 경우
+##CentOS인 경우
 
 #postgresql 서비스 시작
 shell> sudo systemctl start postgresql-${version}
@@ -273,12 +273,12 @@ shell> sudo systemctl stop postgresql-${version}
 #postgresql 서비스 재시작
 shell> sudo systemctl restart postgresql-${version}
 
-##Ubuntu 인 경우
+##Ubuntu인 경우
 
 # postgresql 서비스 시작 
 shell> sudo systemctl start postgresql
 
-# postgresql 서비스 증지
+# postgresql 서비스 중지
 shell> sudo systemctl stop postgresql
 
 # postgresql 서비스 재시작
@@ -313,10 +313,10 @@ port =사용하고자 하는 포트명
 
 #postgresql 서비스 재시작
 
-##CentOS 인 경우
+##CentOS인 경우
 shell> sudo systemctl restart postgresql-${version}
 
-##Ubuntu 인 경우
+##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
 
 #변경된 포트로 아래와 같이 접속
@@ -342,10 +342,10 @@ log_timezone =사용하고자 하는 타임 존
 
 #postgresql 서비스 재시작
 
-##CentOS 인 경우
+##CentOS인 경우
 shell> sudo systemctl restart postgresql-${version}
 
-##Ubuntu 인 경우
+##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
 
 
@@ -410,10 +410,10 @@ host    허용DB           허용유저          허용주소                   
 
 #postgresql 서비스 재시작
 
-##CentOS 인 경우
+##CentOS인 경우
 shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
 
-##Ubuntu 인 경우
+##Ubuntu인 경우
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 ```
