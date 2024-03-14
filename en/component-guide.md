@@ -272,12 +272,12 @@ shell> sudo systemctl stop postgresql-${version}
 
 #Restart postgresql service
 shell> sudo systemctl restart postgresql-${version}
-##Ubuntu인 경우
-# postgresql 서비스 시작 
+##Ubuntu
+# Start postgresql service 
 shell> sudo systemctl start postgresql
-# postgresql 서비스 중지
+# Stop postgresql service
 shell> sudo systemctl stop postgresql
-# postgresql 서비스 재시작
+# Restart postgresql service
 shell> sudo systemctl restart postgresql
 ```
 
