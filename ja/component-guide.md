@@ -262,14 +262,24 @@ MySQLディレクトリおよびファイル説明は下記の通りです。
 ### PostgreSQL開始/停止方法
 
 ```
+##CentOSの場合
+
 #postgresqlサービス開始
-shell> sudo systemctl start postgresql-13
+shell> sudo systemctl start postgresql-${version}
 
 #postgresqlサービス中止
-shell> sudo systemctl stop postgresql-13
+shell> sudo systemctl stop postgresql-${version}
 
 #postgresqlサービス再起動
-shell> sudo systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntuの場合
+# postgresqlサービス開始
+shell> sudo systemctl start postgresql
+# postgresqlサービス停止
+shell> sudo systemctl stop postgresql
+# postgresqlサービス再起動
+shell> sudo systemctl restart postgresql
 ```
 
 ### PostgreSQL接続
@@ -289,21 +299,22 @@ shell> psql
 提供されるイメージポートはPostgreSQL基本ポート5432です。セキュリティ上、ポートの変更を推奨します。
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
+shell> vi postgresql.conf
 
 #postgresql.confファイルに使用するポートを明記します。
 
 port =使用するポート名
 
-
 #viエディタ保存
-
 
 #postgresqlサービス再起動
 
-shell> sudo systemctl restart postgresql-13
+##CentOSの場合
+shell> sudo systemctl restart postgresql-${version}
 
+##Ubuntuの場合
+shell> sudo systemctl restart postgresql
 
 #変更されたポートに下記のように接続
 
@@ -315,7 +326,7 @@ shell> psql -p[変更されたポート番号]
 サーバーログに記録される基本時間帯がUTCに設定されています。SYSTEMローカル時間と同じタイムゾーンに変更することを推奨します。
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #postgresql.confファイルに使用するタイムゾーンを明記します。
@@ -328,7 +339,11 @@ log_timezone =使用するタイムゾーン
 
 #postgresqlサービス再起動
 
-shell> sudo systemctl restart postgresql-13
+##CentOSの場合
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntuの場合
+shell> sudo systemctl restart postgresql
 
 
 #postgresql接続
@@ -361,7 +376,7 @@ postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ローカルホスト以外の接続を許可するにはlisten_addresses変数とクライアント認証設定ファイルを変更する必要があります。
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #postgresql.confファイルに許可するアドレスを明記します。
@@ -375,7 +390,7 @@ listen_addresses =許可するアドレス
 #viエディタ保存
 
 
-shell> vi /var/lib/pgsql/13/data/pg_hba.conf
+shell> vi pg_hba.conf
 
 
 #IPアドレス形式ごとにクライアント認証制御
@@ -392,19 +407,23 @@ host    許可DB           許可ユーザー         許可アドレス        
 
 #postgresqlサービス再起動
 
-shell> sudo systemctl restart postgresql-13
+##CentOSの場合
+shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
+
+##Ubuntuの場合
+shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
+
 ```
 
 ### PostgreSQLディレクトリ説明
 
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
 
-| 名前 | 説明 |
-| --- | --- |
-| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
-| initdb.log | PostgreSQLデータベースクラスター作成log - /var/lib/pgsql/{version}/initdb.log |
-| DATADIR | PostgreSQLデータファイルパス - /var/lib/pgsql/{version}/data/ |
-| LOG | PostgreSQL logファイルパス - /var/lib/pgsql/{version}/data/log/\*.log |
+| 名前 | 説明 | CentOS |Ubuntu |
+| --- | --- | --- | --- |
+| postgresql.cnf | configファイル | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQLデータファイルパス | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL logファイルパス | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 ### CUBRIDサービスの起動/停止方法
@@ -785,7 +804,7 @@ TIP_FILE
 tiberotestdb
 tiberoinstance.novalocal                                      NO
          0 7
-2023/10/17
+45216
 NORMAL           NO
 /db/tibero7/config/tiberotestdb.tip
 
@@ -817,8 +836,6 @@ Tiberoで提供する基本アカウントは次のとおりです。
 
 ## Kafka Instance
 > [参考]
-> このガイドはKafka 3.3.1バージョンを基準に作成されました。
-> 他のバージョンを使用する場合は、該当のバージョンに合わせて変更してください。
 > インスタンスタイプはc1m2(CPU 1core、Memory 2GB)以上の仕様で作成してください。
 
 ### Zookeeper、Kafka broker起動/停止
