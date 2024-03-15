@@ -262,14 +262,23 @@ Directory and file description of MySQL are as below:
 ### How to start/stop PostgreSQL
 
 ```
+##CentOS 
+
 #Start postgresql service
-shell> sudo systemctl start postgresql-13
+shell> sudo systemctl start postgresql-${version}
 
 #Stop postgresql service
-shell> sudo systemctl stop postgresql-13
+shell> sudo systemctl stop postgresql-${version}
 
 #Restart postgresql service
-shell> sudo systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-${version}
+##Ubuntu
+# Start postgresql service 
+shell> sudo systemctl start postgresql
+# Stop postgresql service
+shell> sudo systemctl stop postgresql
+# Restart postgresql service
+shell> sudo systemctl restart postgresql
 ```
 
 ### Log in to PostgreSQL
@@ -289,20 +298,22 @@ shell> psql
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #Specify the port to be used in the postgresql.conf file.
 
 port =name of the port to use
 
-
 #Save vi editor
-
 
 #Restart postgresql service
 
-shell> sudo systemctl restart postgresql-13
+##CentOS
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntu
+shell> sudo systemctl restart postgresql
 
 
 #Log in with the changed port as shown below
@@ -315,7 +326,7 @@ shell> psql -p[changed port number]
 The default timezone recorded in the server log is set to UTC. It is recommended to change it to match the local time of the SYSTEM.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #Specify the timezone to be used in the postgresql.conf file.
@@ -328,7 +339,11 @@ log_timezone = timezone to use
 
 #Restart postgresql service
 
-shell> sudo systemctl restart postgresql-13
+##CentOS
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntu
+shell> sudo systemctl restart postgresql
 
 
 #Log in to postgresql
@@ -361,8 +376,7 @@ postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 To allow logins other than local host, you need to change the listen_addresses variable and client authentication setup file.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
-
+shell> vi postgresql.conf
 
 #Specify the address to be used in the postgresql.conf file.
 #To allow all IPv4 addresses, 0.0.0.0
@@ -375,7 +389,7 @@ listen_addresses = address to allow
 #Save vi editor
 
 
-shell> vi /var/lib/pgsql/13/data/pg_hba.conf
+shell> vi pg_hba.conf
 
 
 #Client authentication control per IP address format
@@ -392,19 +406,22 @@ host    allowed DB           allowed user          allowed address              
 
 #Restart postgresql service
 
-shell> sudo systemctl restart postgresql-13
+##CentOS
+shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
+
+##Ubuntu
+shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 ```
 
 ### PostgreSQL directory description
 
 PostgreSQL directory and file description is as follows:
 
-| Name | Description |
-| --- | --- |
-| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
-| initdb.log | PostgreSQL database cluster creation log - /var/lib/pgsql/{version}/initdb.log |
-| DATADIR | PostgreSQL data file path - /var/lib/pgsql/{version}/data/ |
-| LOG | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
+| Name | Description | CentOS |Ubuntu |
+| --- | --- | --- | --- |
+| postgresql.cnf | config file | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQL data file path | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL log file path | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 
