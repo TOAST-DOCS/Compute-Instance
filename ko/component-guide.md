@@ -1073,10 +1073,11 @@ Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스�
 shell> sh .redis_make_sentinel.sh
 ```
 
-이후 마스터와 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+이후 접속 정보에서 사용할 마스터명(Master Name)과 마스터 및 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
 
 ```
 shell> sh .redis_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
 Enter Master's IP: 192.168.0.33
 Enter Replica-1's IP: 192.168.0.27
 Enter Replica-2's IP: 192.168.0.97
