@@ -262,14 +262,27 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 ### PostgreSQL 시작/정지 방법
 
 ```
+##CentOS인 경우
+
 #postgresql 서비스 시작
-shell> sudo systemctl start postgresql-13
+shell> sudo systemctl start postgresql-${version}
 
 #postgresql 서비스 중지
-shell> sudo systemctl stop postgresql-13
+shell> sudo systemctl stop postgresql-${version}
 
 #postgresql 서비스 재시작
-shell> sudo systemctl restart postgresql-13
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntu인 경우
+
+# postgresql 서비스 시작 
+shell> sudo systemctl start postgresql
+
+# postgresql 서비스 중지
+shell> sudo systemctl stop postgresql
+
+# postgresql 서비스 재시작
+shell> sudo systemctl restart postgresql
 ```
 
 ### PostgreSQL 접속
@@ -289,21 +302,22 @@ shell> psql
 제공되는 이미지 포트는 PostgreSQL 기본 포트인 5432입니다. 보안상 포트 변경을 권장합니다.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
 
+shell> vi postgresql.conf
 
 #postgresql.conf 파일에 사용하고자 하는 포트를 명시해 줍니다.
 
 port =사용하고자 하는 포트명
 
-
 #vi 편집기 저장
-
 
 #postgresql 서비스 재시작
 
-shell> sudo systemctl restart postgresql-13
+##CentOS인 경우
+shell> sudo systemctl restart postgresql-${version}
 
+##Ubuntu인 경우
+shell> sudo systemctl restart postgresql
 
 #변경된 포트로 아래와 같이 접속
 
@@ -315,7 +329,7 @@ shell> psql -p[변경된 포트 번호]
 서버 로그에 기록되는 기본 시간대가 UTC로 설정되어 있습니다. SYSTEM 로컬 시간과 동일하게 변경할 것을 권장합니다.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #postgresql.conf 파일에 사용하고자 하는 타임 존을 명시해 줍니다.
@@ -328,7 +342,11 @@ log_timezone =사용하고자 하는 타임 존
 
 #postgresql 서비스 재시작
 
-shell> sudo systemctl restart postgresql-13
+##CentOS인 경우
+shell> sudo systemctl restart postgresql-${version}
+
+##Ubuntu인 경우
+shell> sudo systemctl restart postgresql
 
 
 #postgresql 접속
@@ -361,7 +379,7 @@ postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 로컬 호스트 이외의 접속을 허용하려면 listen_addresses 변수와 클라이언트 인증 설정 파일을 변경해야 합니다.
 <br>
 ```
-shell> vi /var/lib/pgsql/13/data/postgresql.conf
+shell> vi postgresql.conf
 
 
 #postgresql.conf 파일에 허용하고자 하는 주소를 명시해 줍니다.
@@ -375,7 +393,7 @@ listen_addresses =허용하고자 하는 주소
 #vi 편집기 저장
 
 
-shell> vi /var/lib/pgsql/13/data/pg_hba.conf
+shell> vi pg_hba.conf
 
 
 #IP주소 형식별로 클라이언트 인증 제어
@@ -392,19 +410,23 @@ host    허용DB           허용유저          허용주소                   
 
 #postgresql 서비스 재시작
 
-shell> sudo systemctl restart postgresql-13
+##CentOS인 경우
+shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
+
+##Ubuntu인 경우
+shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
+
 ```
 
 ### PostgreSQL 디렉터리 설명
 
 PostgreSQL 디렉터리 및 파일 설명은 아래와 같습니다.
 
-| 이름 | 설명 |
-| --- | --- |
-| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
-| initdb.log | PostgreSQL 데이터베이스 클러스터 생성 log - /var/lib/pgsql/{version}/initdb.log |
-| DATADIR | PostgreSQL 데이터 파일 경로 - /var/lib/pgsql/{version}/data/ |
-| LOG | PostgreSQL log 파일 경로 - /var/lib/pgsql/{version}/data/log/\*.log |
+| 이름 | 설명 | CentOS |Ubuntu |
+| --- | --- | --- | --- |
+| postgresql.cnf | config 파일 | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQL 데이터 파일 경로 | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL log 파일 경로 | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 
@@ -1051,10 +1073,11 @@ Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스�
 shell> sh .redis_make_sentinel.sh
 ```
 
-이후 마스터와 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+이후 접속 정보에서 사용할 마스터명(Master Name)과 마스터 및 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
 
 ```
 shell> sh .redis_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
 Enter Master's IP: 192.168.0.33
 Enter Replica-1's IP: 192.168.0.27
 Enter Replica-2's IP: 192.168.0.97
