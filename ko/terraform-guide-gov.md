@@ -35,6 +35,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
     * nhncloud_networking_secgroup_v2
+    * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
 * Storage
@@ -1196,6 +1197,37 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | name | String | O | 보안 그룹 이름         |
 | region | String | - | 보안 그룹이 할당될 리전 이름 |
 
+### 보안 규칙 생성
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+
+###################### Data Sources ######################
+
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| 이름   | 형식     | 필수 | 설명               | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | 보안 규칙의 원격 보안 그룹 ID |
+| direction | Enum | O | 보안 규칙이 적용되는 패킷 방향<br>**ingress**, **egress** |
+| ethertype | Enum | O | `IPv4`로 지정. 생략 시에 `IPv4`로 지정 |
+| protocol | String | - | 보안 규칙의 프로토콜 이름. 생략 시에 모든 프로토콜에 적용. |
+| port_range_max | Integer | - | 보안 규칙의 포트 범위 최댓값 |
+| port_range_min | Integer | - | 보안 규칙의 포트 범위 최솟값 |
+| security_group_id | UUID | O | 보안 규칙이 속한 보안 그룹 ID |
+| remote_ip_prefix | Enum | - | 보안 규칙의 목적지 IP 접두사 |
+| description | String | - | 보안 규칙 설명 |
 
 ## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
