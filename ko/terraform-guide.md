@@ -32,8 +32,11 @@ NHN Cloud는 Terraform OpenStack Provider에서 아래 기술된 data sources와
     * openstack_compute_floatingip_v2
     * openstack_compute_floatingip_associate_v2
     * openstack_networking_port_v2
-* Storage
+* Block Storage
     * openstack_blockstorage_volume_v2
+* Object Storage
+    * openstack_objectstorage_container_v1
+    * openstack_objectstorage_object_v1
 
 #### Data sources 지원
 
@@ -443,11 +446,16 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 
 * 인스턴스
 * 블록 스토리지
+* 오브젝트 스토리지
 * 플로팅 IP
 * 네트워크 포트
 * 로드 밸런서
 
 다음 섹션에는 각 리소스를 사용하는 방법을 설명합니다.
+
+### 알아두기
+
+* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)을 참고하십시오.
 
 ## Resources - 인스턴스
 
