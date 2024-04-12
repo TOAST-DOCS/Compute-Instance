@@ -552,7 +552,6 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                          |
 | servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                     |
 | servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                           |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                                |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
@@ -622,7 +621,6 @@ X-Auth-Token: {tokenId}
       "name": "Web-Server",
       "created": "2020-02-25T01:15:46Z",
       "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-      "OS-DCF:diskConfig": "MANUAL",
       "os-extended-volumes:volumes_attached": [
         {
           "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -707,7 +705,6 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                         |
 | server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                    |
 | server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                          |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
 | server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                               |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
@@ -718,7 +715,7 @@ X-Auth-Token: {tokenId}
 
 ```json
 {
-  "server": {
+  "server": {제
     "status": "ACTIVE",
     "updated": "2020-02-25T01:22:24Z",
     "hostId": "078d06f898889699f8731d030812e43d2c417edb2cf641dda598c7bd",
@@ -776,7 +773,6 @@ X-Auth-Token: {tokenId}
     "name": "Web-Server",
     "created": "2020-02-25T01:15:46Z",
     "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-    "OS-DCF:diskConfig": "MANUAL",
     "os-extended-volumes:volumes_attached": [
       {
         "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -905,7 +901,6 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                           |
 |---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름                                                                                                                                                                                           |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
 | server.id | Body | UUID | 생성한 인스턴스의 ID                                                                                                                                                                                                 |
 
 <details><summary>예시</summary>
@@ -919,7 +914,6 @@ X-Auth-Token: {tokenId}
         "name": "default"
       }
     ],
-    "OS-DCF:diskConfig": "MANUAL",
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
@@ -1390,7 +1384,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                                              |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청                                                                                                                                                                                                      |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID                                                                                                                                                                                                     |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 루트 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
 
 <details><summary>예시</summary>
 <p>

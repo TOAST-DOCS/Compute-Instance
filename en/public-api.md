@@ -552,7 +552,6 @@ The request format is the same as List Instances.
 | servers.user_id | Body | String | ID of user creating instance                                                                                                                                                                                          |
 | servers.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                     |
 | servers.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                           |
-| servers.OS-DCF:diskConfig | Body | Enum | Instance block storage partition method used by instance, either `MANUAL` or `AUTO`<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                                |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
@@ -622,7 +621,6 @@ The request format is the same as List Instances.
       "name": "Web-Server",
       "created": "2020-02-25T01:15:46Z",
       "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-      "OS-DCF:diskConfig": "MANUAL",
       "os-extended-volumes:volumes_attached": [
         {
           "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -707,7 +705,6 @@ This API does not require a request body.
 | server.user_id | Body | String | ID of user creating instance                                                                                                                                                                                         |
 | server.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                    |
 | server.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                          |
-| server.OS-DCF:diskConfig | Body | Enum | Instance block storage partition method, either `MANUAL` or `AUTO`<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | server.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                               |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
@@ -777,7 +774,6 @@ This API does not require a request body.
     "name": "Web-Server",
     "created": "2020-02-25T01:15:46Z",
     "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-    "OS-DCF:diskConfig": "MANUAL",
     "os-extended-volumes:volumes_attached": [
       {
         "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -909,7 +905,6 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Description                                                                                                                                                                                                           |
 |---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | server.security_groups.name | Body | String | Security group name of created instance                                                                                                                                                                                           |
-| server.OS-DCF:diskConfig | Body | Enum | Block storage partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`.<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 | server.id | Body | UUID | Created instance ID                                                                                                                                                                                                 |
 
 <details><summary>Example</summary>
@@ -923,7 +918,6 @@ X-Auth-Token: {tokenId}
         "name": "default"
       }
     ],
-    "OS-DCF:diskConfig": "MANUAL",
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
@@ -1394,7 +1388,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | Token ID                                                                                                                                                                                                              |
 | resize | Body | Object | O | Instance flavor change request                                                                                                                                                                                                      |
 | resize.flavorRef | Body | UUID | O | New instance flavor ID                                                                                                                                                                                                     |
-| resize.OS-DCF:diskConfig | Body | Enum | - | Root block storage partition method after changing the type, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`.<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 
 <details><summary>Example</summary>
 <p>
