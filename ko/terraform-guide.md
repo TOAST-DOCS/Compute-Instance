@@ -1224,7 +1224,7 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 |------|--------|---|------------------|
 | remote_group_id | UUID | - | 보안 규칙의 원격 보안 그룹 ID |
 | direction | Enum | O | 보안 규칙이 적용되는 패킷 방향<br>**ingress**, **egress** |
-| ethertype | Enum | O | `IPv4`로 지정. 생략 시에 `IPv4`로 지정 |
+| ethertype | Enum | - | `IPv4`로 지정. 생략 시 `IPv4`로 지정 |
 | protocol | String | - | 보안 규칙의 프로토콜 이름. 생략 시에 모든 프로토콜에 적용. |
 | port_range_max | Integer | - | 보안 규칙의 포트 범위 최댓값 |
 | port_range_min | Integer | - | 보안 규칙의 포트 범위 최솟값 |
