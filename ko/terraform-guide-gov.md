@@ -35,6 +35,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
     * nhncloud_networking_secgroup_v2
+    * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
 * Storage
@@ -707,11 +708,11 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | network                                     | Object  | -  | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 UUID를 확인 가능                                                                       |
 | network.name                                | String  | -  | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 반드시 명시                                                                                                                        |
 | network.uuid                                | String  | -  | VPC 네트워크 ID                                                                                                                                                                                  |
-| network.port                                | String  | -  | VPC 네트워크에 연결할 포트의 ID                                                                                                                                                                         |
+| network.port                                | String  | -  | VPC 네트워크에 연결할 포트의 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                         |
 | security_groups                             | Array   | -  | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능                                                                             |
-| user_data                                   | String  | -  | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br>                                                                                                                              |
+| user_data                                   | String  | -  | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br>                                                                                                                              |
 | block_device                                | Object  | O  | 인스턴스의 블록 스토리지 정보 객체 |
-| block_device.source_type                    | String  | O  | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성 |
+| block_device.source_type                    | String  | O  | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음) |
 | block_device.uuid                           | String  | -  | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함                            |
 | block_device.boot_index                     | Integer | O  | 지정한 블록 스토리지의 부팅 순서<br>- `0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
 | block_device.destination_type               | String  | O  | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                                  |
@@ -1196,6 +1197,37 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | name | String | O | 보안 그룹 이름         |
 | region | String | - | 보안 그룹이 할당될 리전 이름 |
 
+### 보안 규칙 생성
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+
+###################### Data Sources ######################
+
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| 이름   | 형식     | 필수 | 설명               | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | 보안 규칙의 원격 보안 그룹 ID |
+| direction | Enum | O | 보안 규칙이 적용되는 패킷 방향<br>**ingress**, **egress** |
+| ethertype | Enum | - | `IPv4`로 지정. 생략 시 `IPv4`로 지정 |
+| protocol | String | - | 보안 규칙의 프로토콜 이름. 생략 시에 모든 프로토콜에 적용. |
+| port_range_max | Integer | - | 보안 규칙의 포트 범위 최댓값 |
+| port_range_min | Integer | - | 보안 규칙의 포트 범위 최솟값 |
+| security_group_id | UUID | O | 보안 규칙이 속한 보안 그룹 ID |
+| remote_ip_prefix | Enum | - | 보안 규칙의 목적지 IP 접두사 |
+| description | String | - | 보안 규칙 설명 |
 
 ## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
