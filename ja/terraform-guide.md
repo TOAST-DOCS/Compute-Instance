@@ -35,6 +35,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
     * nhncloud_networking_secgroup_v2
+* nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
 * Storage
@@ -708,15 +709,15 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | network                                     | Object  | -  | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
 | network.name                                | String  | -  | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示                                                                                                                       |
 | network.uuid                                | String  | -  | VPCネットワークID                                                                                                                                                                                  |
-| network.port                                | String  | -  | VPCネットワークに接続するポートのID                                                                                                                                                                         |
+| network.port                                | String  | -  | VPCVPCネットワークに接続するポートのID<br>ポートIDを指定する際、要求したセキュリティグループは指定した既存のポートには適用されない。                                                                                                                                                                         |
 | security_groups                             | Array   | -  | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
-| user_data                                   | String  | -  | 	インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可<br>                                                                                                                              |
-| block_device                                | Object  | O  | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合、必ず指定する必要がある** |
-| block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
-| block_device.uuid                           | String  | -  | ブロックストレージの原本ID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならず、イメージ作成ができないWAF、MS-SQLイメージが原本のvolumeやsnapshotは使用できません。<br> `image`を除く原本は作成するインスタンスのアベイラビリティゾーンが同じである必要がある                            |
-| block_device.boot_index                     | Integer | O  | 指定したブロックストレージの起動順序<br>- `0`の場合、ルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる<br>                                                                                                            |
-| block_device.destination_type               | String  | O  | インスタンスブロックストレージの位置、インスタンスタイプに応じて設定必要<br>- `local`: U2インスタンスタイプを利用する場合<br>- `volume`: U2以外のインスタンスタイプを利用する場合                                                                                 |
-| block_device.volume_size                    | Integer | O  | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+| user_data                                   | String  | -  | インスタンスの起動後に実行するスクリプトと設定<br>base64でエンコードされた文字列で65535バイトまで許容。<br>                                                                                                                              |
+| block_device                                | Object  | O  | インスタンスのブロックストレージ情報オブジェクト |
+| block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージを作成(ルートブロックストレージとして使用不可) |
+| block_device.uuid                           | String  | -  | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない                           |
+| block_device.boot_index                     | Integer | O  | 指定したブロックストレージの起動順序<br>- `0`の場合はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序は低くなる<br>                                                                                                            |
+| block_device.destination_type               | String  | O  | インスタンスブロックストレージの位置、インスタンスタイプによって異なる設定が必要<br>- `local`: U2インスタンスタイプを利用する場合<br>- `volume`: U2以外のインスタンスタイプを利用する場合                                                                                |
+| block_device.volume_size                    | Integer | O  | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合は、U2インスタンスタイプに指定されたサイズで作成され、この値は無視されます。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は「ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージのサイズ」を参照してください。 |
 | block_device.volume_type               | Enum    | -  | ブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示**レスポンスの`name`参考                                                                                        |
 | block_device.delete_on_termination          | Boolean | -  | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                                                              |
@@ -1195,6 +1196,35 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | name | String | O | セキュリティグループ名        |
 | region | String | - | セキュリティグループが割り当てられるリージョン名 |
 
+### セキュリティルールの作成
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+###################### Data Sources ######################
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| 名前 | 形式   | 必須 | 説明             | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | セキュリティルールの遠隔セキュリティグループID |
+| direction | Enum | O | セキュリティルールが適用されるパケットの方向<br>**ingress**, **egress** |
+| ethertype | Enum | - | `IPv4`で指定。省略時は`IPv4`で指定 |
+| protocol | String | - | セキュリティルールのプロトコル名。省略時は全てのプロトコルに適用。 |
+| port_range_max | Integer | - | セキュリティルールのポート範囲最大値 |
+| port_range_min | Integer | - | セキュリティルールのポート範囲最小値 |
+| security_group_id | UUID | O | セキュリティルールが属するセキュリティグループID |
+| remote_ip_prefix | Enum | - | セキュリティルールの宛先IPプレフィックス |
+| description | String | - | セキュリティルールの説明 |
 
 ## 参考サイト
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
