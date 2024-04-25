@@ -1200,5 +1200,37 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | region | String | - | Name of region to which security group is assigned |
 
 
+### Create a Security Rule
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+
+###################### Data Sources ######################
+
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| Name   | Format     | Required | Description               | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | Remote security group ID of security rules |
+| direction | Enum | O | Packet direction to which security rules apply<br>**ingress**, **egress** |
+| ethertype | Enum | - | Specify as `IPv4`. Specify as `IPv4`when omitted |
+| protocol | String | - | Protocol name of the security rule. Applied to all protocols if omitted. |
+| port_range_max | Integer | - | Maximum port range of the security rule |
+| port_range_min | Integer | - | Minimum port range of the security rule |
+| security_group_id | UUID | O | Security group ID containing the security rule |
+| remote_ip_prefix | Enum | - | Destination IP prefix of the security rule |
+| description | String | - | Security rule description |
+
 ## Reference
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
