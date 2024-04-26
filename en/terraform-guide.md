@@ -35,6 +35,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
     * nhncloud_networking_secgroup_v2
+    * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
 * Storage
