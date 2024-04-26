@@ -425,24 +425,26 @@ This API does not return a response body.
 
 Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
 
-| Status Name               | Description                                                                                                |
+| Status Name              | Description                                                                                                |
 |-------------------|---------------------------------------------------------------------------------------------------|
-| `ACTIVE`          | Instance is activated                                                                                   |
-| `BUILDING`        | Instance is building                                                                                    |
-| `STOPPED`         | Instance is stopped                                                                                      |
-| `SHELVED_OFFLOADED` | Instance is terminated                                                                                      |
-| `DELETED`         | Instance is deleted                                                                                      |
-| `REBOOT`          | Instance is rebooted                                                                                     |
-| `HARD_REBOOT`     | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again                                               |
-| `RESIZED`         | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted                                     |
-| `REVERT_RESIZE`   | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host                                 |
-| `VERIFY_RESIZE`   | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
-| `ERROR`           | Previous operation on the instance has failed                                                                            |
-| `PAUSED`          | Instance is paused<br>Paused instances are saved in hypervisor memory                                                  |
-| `REBUILD`         | Instance is rebuilt from the original image used for creation                                                                   |
-| `RESCUED`         | Instance is running in recovery mode                                                                                |
-| `SUSPENDED`       | Instance has entered maximum power saving mode by the administrator                                                                    |
-| `UNKNOWN`         | Instance status is unknown<br>`Contact the administrator if the instance is in this status.`                                        
+| `ACTIVE` | Instance is activated |
+| `BUILD` | Instance is building |
+| `DELETED` | Instance is deleted |
+| `ERROR` | Previous operation on the instance has failed |
+| `HARD_REBOOT` | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again |
+| `MIGRATING` | Instance is migrating<br> This is caused by a real-time migration (moving active instances) |
+| `PASSWORD` | Password is being reset on instance |
+| `PAUSED` | Instance is paused<br>Paused instances are saved in hypervisor memory |
+| `REBOOT` | Instance is in a soft reboot state<br> Reboot command is passed to the virtual machine operating system |
+| `REBUILD` | Instance is rebuilt from the original image used for creation |
+| `RESCUE` | Instance is running in recovery mode |
+| `RESIZE` | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted |
+| `REVERT_RESIZE` | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host |
+| `VERIFY_RESIZE` | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
+| `SHELVED_OFFLOADED` | Instance is terminated |
+| `SHUTOFF` | Instance is stopped |
+| `SUSPENDED` | Instance has entered maximum power saving mode by the administrator |
+| `UNKNOWN` | Instance status is unknown<br>`Contact the administrator if the instance is in this status.` | 
 
 ### List Instances
 
@@ -552,7 +554,6 @@ The request format is the same as List Instances.
 | servers.user_id | Body | String | ID of user creating instance                                                                                                                                                                                          |
 | servers.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                     |
 | servers.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                           |
-| servers.OS-DCF:diskConfig | Body | Enum | Instance block storage partition method used by instance, either `MANUAL` or `AUTO`<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                                |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
@@ -622,7 +623,6 @@ The request format is the same as List Instances.
       "name": "Web-Server",
       "created": "2020-02-25T01:15:46Z",
       "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-      "OS-DCF:diskConfig": "MANUAL",
       "os-extended-volumes:volumes_attached": [
         {
           "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -707,7 +707,6 @@ This API does not require a request body.
 | server.user_id | Body | String | ID of user creating instance                                                                                                                                                                                         |
 | server.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                    |
 | server.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                          |
-| server.OS-DCF:diskConfig | Body | Enum | Instance block storage partition method, either `MANUAL` or `AUTO`<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. NHN Cloud uses `MANUAL`. |
 | server.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                               |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
@@ -777,7 +776,6 @@ This API does not require a request body.
     "name": "Web-Server",
     "created": "2020-02-25T01:15:46Z",
     "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-    "OS-DCF:diskConfig": "MANUAL",
     "os-extended-volumes:volumes_attached": [
       {
         "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -849,18 +847,18 @@ X-Auth-Token: {tokenId}
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | Network ID to create instance |
 | server.networks.subnet | Body | UUID | - | Subnet ID within network to create instance |
-| server.networks.port | Body | UUID | - | Port ID to create instance |
+| server.networks.port | Body | UUID | - | Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
 | server.networks.fixed_ip | Body | String | - | Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
-| server.block_device_mapping_v2 | Body | Object | - | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
+| server.block_device_mapping_v2 | Body | Object | O | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
 | server.block_device_mapping_v2.uuid | Body | String | - | Block storage source ID <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL, or MySQL images as the source, cannot be used.<br> Sources excluding those of `image` type must belong to the same availability zone as the instance being created. |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
-| server.block_device_mapping_v2.destination_type | Body | Enum | - | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors |
+| server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
-| server.block_device_mapping_v2.boot_index | Body | Integer | - | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| server.block_device_mapping_v2.volume_size | Body | Integer | O | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | Block storage encryption information                                                                                                                                                                                        |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | AppKeys for Secure Key Manager products                                                                                                                                                                              |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
@@ -886,11 +884,10 @@ X-Auth-Token: {tokenId}
     "max_count": 1,
     "min_count": 1,
     "block_device_mapping_v2": [{
+      "source_type": "image",
       "uuid": "9956f822-29c9-4f81-9410-0c392d9c8c24",
       "boot_index": 0,
       "volume_size": 1000,
-      "device_name": "vda",
-      "source_type": "image",
       "destination_type": "volume",
       "delete_on_termination": 1
     }],
@@ -909,7 +906,6 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Description                                                                                                                                                                                                           |
 |---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | server.security_groups.name | Body | String | Security group name of created instance                                                                                                                                                                                           |
-| server.OS-DCF:diskConfig | Body | Enum | Block storage partition method used by instance, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`.<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 | server.id | Body | UUID | Created instance ID                                                                                                                                                                                                 |
 
 <details><summary>Example</summary>
@@ -923,7 +919,6 @@ X-Auth-Token: {tokenId}
         "name": "default"
       }
     ],
-    "OS-DCF:diskConfig": "MANUAL",
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
@@ -1394,7 +1389,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | Token ID                                                                                                                                                                                                              |
 | resize | Body | Object | O | Instance flavor change request                                                                                                                                                                                                      |
 | resize.flavorRef | Body | UUID | O | New instance flavor ID                                                                                                                                                                                                     |
-| resize.OS-DCF:diskConfig | Body | Enum | - | Root block storage partition method after changing the type, either `MANUAL` or `AUTO`. NHN Cloud uses `MANUAL`.<br>**AUTO**: Automatically sets the block storage as one partition<br>**MANUAL**: Sets partition as specified in the image. If the block storage size is larger than the size specified in the image, leave that portion unused. |
 
 <details><summary>Example</summary>
 <p>

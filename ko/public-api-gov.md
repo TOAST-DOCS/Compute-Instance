@@ -425,24 +425,26 @@ X-Auth-Token: {tokenId}
 
 인스턴스는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 인스턴스 상태 목록은 다음과 같습니다.
 
-| 상태명               | 설명 |
-|-------------------|--|
-| `ACTIVE`          | 인스턴스가 활성 상태인 경우 |
-| `BUILDING`        | 인스턴스가 생성 중인 경우 |
-| `STOPPED`         | 인스턴스가 중지된 경우 |
+| 상태명              | 설명                                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| `ACTIVE` | 인스턴스가 활성 상태인 경우 |
+| `BUILD` | 인스턴스가 생성 중인 경우 |
+| `DELETED` | 인스턴스가 삭제된 경우 |
+| `ERROR` | 직전 인스턴스에 취한 동작이 실패한 경우 |
+| `HARD_REBOOT` | 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
+| `MIGRATING` | 인스턴스가 마이그레이션 중인 경우<br> 이는 실시간 마이그레이션(활성 인스턴스 이동) 작업으로 인해 발생함 |
+| `PASSWORD` | 인스턴스에서 비밀번호를 재설정하는 중인 경우 |
+| `PAUSED` | 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
+| `REBOOT` | 인스턴스가 소프트 재부팅 상태인 경우<br> 재부팅 명령이 가상머신 운영 체제에 전달됨 |
+| `REBUILD` | 인스턴스를 생성 당시 이미지로부터 새롭게 만들어 내는 상태 |
+| `RESCUE` | 인스턴스를 복구 모드에서 실행 중인 경우 |
+| `RESIZE` | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 중지되었다가 다시 시작된 상태 |
+| `REVERT_RESIZE` | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원상태로 돌아가기 위해 복구하는 경우 |
+| `VERIFY_RESIZE` | 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는 이 경우 자동으로 `ACTIVE` 상태가 됨 |
 | `SHELVED_OFFLOADED` | 인스턴스가 종료된 경우 |
-| `DELETED`         | 인스턴스가 삭제된 경우 |
-| `REBOOT`          | 인스턴스를 재시작한 경우 |
-| `HARD_REBOOT`     | 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
-| `RESIZED`         | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 중지되었다가 다시 시작된 상태 |
-| `REVERT_RESIZE`   | 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`   | 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
-| `ERROR`           | 직전 인스턴스에 취한 동작이 실패한 경우 |
-| `PAUSED`          | 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
-| `REBUILD`         | 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
-| `RESCUED`         | 인스턴스를 복구 모드에서 실행 중 |
-| `SUSPENDED`       | 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
-| `UNKNOWN`         | 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
+| `SHUTOFF` | 인스턴스가 중지된 경우 |
+| `SUSPENDED` | 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
+| `UNKNOWN` | 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` | 
 
 ### 인스턴스 목록 보기
 
@@ -552,7 +554,6 @@ X-Auth-Token: {tokenId}
 | servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                          |
 | servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                     |
 | servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                           |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
 | servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                                |
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
@@ -622,7 +623,6 @@ X-Auth-Token: {tokenId}
       "name": "Web-Server",
       "created": "2020-02-25T01:15:46Z",
       "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-      "OS-DCF:diskConfig": "MANUAL",
       "os-extended-volumes:volumes_attached": [
         {
           "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -707,7 +707,6 @@ X-Auth-Token: {tokenId}
 | server.user_id | Body | String | 인스턴스를 생성한 사용자 ID                                                                                                                                                                                         |
 | server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식                                                                                                                                                                    |
 | server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID                                                                                                                                                                                          |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. NHN Cloud는 `MANUAL`를 사용 |
 | server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 블록 스토리지 목록 객체                                                                                                                                                                               |
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
@@ -776,7 +775,6 @@ X-Auth-Token: {tokenId}
     "name": "Web-Server",
     "created": "2020-02-25T01:15:46Z",
     "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-    "OS-DCF:diskConfig": "MANUAL",
     "os-extended-volumes:volumes_attached": [
       {
         "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -848,18 +846,18 @@ X-Auth-Token: {tokenId}
 | server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정                                                                                                  |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID                                                                                                                                                                   |
 | server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID                                                                                                                                                              |
-| server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID                                                                                                                                                                     |
+| server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                     |
 | server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP                                                                                                                                                                     |
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함                                                                                                                               |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍                                                                                                                                                |
-| server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 블록 스토리지를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함**                                                                                                              |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL, MySQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함                  |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성 |
-| server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                          |
+| server.block_device_mapping_v2 | Body | Object | O | 인스턴스의 블록 스토리지 정보 객체 |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음) |
+| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
+| server.block_device_mapping_v2.boot_index | Body | Integer | O | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐                                                                                                                         |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                          |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지                                                                                                                         |
-| server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐                                                                                                                         |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | O | 생성할 블록 스토리지 크기<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어                                                                                                                                                                          |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.                                                                                                                                                      |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.                                                                                                                                     |
@@ -882,11 +880,10 @@ X-Auth-Token: {tokenId}
     "max_count": 1,
     "min_count": 1,
     "block_device_mapping_v2": [{
+      "source_type": "image",
       "uuid": "9956f822-29c9-4f81-9410-0c392d9c8c24",
       "boot_index": 0,
       "volume_size": 1000,
-      "device_name": "vda",
-      "source_type": "image",
       "destination_type": "volume",
       "delete_on_termination": 1
     }],
@@ -905,7 +902,6 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명                                                                                                                                                                                                           |
 |---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름                                                                                                                                                                                           |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
 | server.id | Body | UUID | 생성한 인스턴스의 ID                                                                                                                                                                                                 |
 
 <details><summary>예시</summary>
@@ -919,7 +915,6 @@ X-Auth-Token: {tokenId}
         "name": "default"
       }
     ],
-    "OS-DCF:diskConfig": "MANUAL",
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
@@ -1390,7 +1385,6 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                                              |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청                                                                                                                                                                                                      |
 | resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID                                                                                                                                                                                                     |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 루트 블록 스토리지 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 블록 스토리지를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 블록 스토리지의 크기가 더 큰 경우 사용하지 않은 채로 남겨 둠. |
 
 <details><summary>예시</summary>
 <p>
