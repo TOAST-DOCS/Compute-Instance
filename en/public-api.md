@@ -847,7 +847,7 @@ X-Auth-Token: {tokenId}
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | Network ID to create instance |
 | server.networks.subnet | Body | UUID | - | Subnet ID within network to create instance |
-| server.networks.port | Body | UUID | - | Port ID to create instance |
+| server.networks.port | Body | UUID | - | Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
 | server.networks.fixed_ip | Body | String | - | Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
