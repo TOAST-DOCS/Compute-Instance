@@ -77,20 +77,24 @@ Terraform v0.12.24
 ## Terraform NHN Cloud provider提供
 
 Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互換性を提供し、リンクからバイナリファイルをダウンロードできます。
-現在提供するTerraform NHN Cloud providerのバージョンは**1.0.1**です。
+現在提供するTerraform NHN Cloud providerのバージョンは**1.0.2**です。
 
 * macOS / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.2)
 * macOS / Apple silicon
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.2)
 * Linux / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.2)
 * Windows / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.2)
 
 
 ### Local provider設定
@@ -118,38 +122,38 @@ Local providerを探すためのディレクトリ構造を作成した後、ダ
 
 以下は、バイナリダウンロード後、**OS/アーキテクチャ**ごとのプラグイン設定例です。 
 
-**プラグインを設定する際は1.0.1バージョンを使用することを推奨します。**
+**プラグインを設定する際は1.0.2バージョンを使用することを推奨します。**
 
 `macOS / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64/terraform-provider-nhncloud_v1.0.2
 ```
 
 `macOS / Apple silicon`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64/terraform-provider-nhncloud_v1.0.2
 ```
 
 `Linux / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64/terraform-provider-nhncloud_v1.0.2
 ```
 
 `Windows / AMD64`プラグインの設定例です。
 
 ```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
-$ copy terraform-provider-nhncloud_v1.0.1 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.2 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
 ```
 
 
@@ -165,7 +169,7 @@ required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
       source  = "terraform.local/local/nhncloud"
-      version = "1.0.1"
+      version = "1.0.2"
     }
   }
 }
@@ -212,9 +216,9 @@ $ terraform init
 $ terraform init --upgrade
 Initializing the backend...
 Initializing provider plugins...
-- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
-- Installing terraform.local/local/nhncloud v1.0.1...
-- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+- Finding terraform.local/local/nhncloud versions matching "1.0.2"...
+- Installing terraform.local/local/nhncloud v1.0.2...
+- Installed terraform.local/local/nhncloud v1.0.2 (unauthenticated)
 Terraform has made some changes to the provider dependency selections recorded
 in the .terraform.lock.hcl file. Review those changes and commit them to your
 version control system if they represent changes you intended to make.
