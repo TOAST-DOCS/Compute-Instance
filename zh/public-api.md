@@ -425,24 +425,26 @@ This API does not return a response body.
 
 Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
 
-| Status Name               | Description                                                                                                |
+| Status Name              | Description                                                                                                |
 |-------------------|---------------------------------------------------------------------------------------------------|
-| `ACTIVE`          | Instance is activated                                                                                   |
-| `BUILDING`        | Instance is building                                                                                    |
-| `STOPPED`         | Instance is stopped                                                                                      |
-| `SHELVED_OFFLOADED` | Instance is terminated                                                                                      |
-| `DELETED`         | Instance is deleted                                                                                      |
-| `REBOOT`          | Instance is rebooted                                                                                     |
-| `HARD_REBOOT`     | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again                                               |
-| `RESIZED`         | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted                                     |
-| `REVERT_RESIZE`   | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host                                 |
-| `VERIFY_RESIZE`   | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
-| `ERROR`           | Previous operation on the instance has failed                                                                            |
-| `PAUSED`          | Instance is paused<br>Paused instances are saved in hypervisor memory                                                  |
-| `REBUILD`         | Instance is rebuilt from the original image used for creation                                                                   |
-| `RESCUED`         | Instance is running in recovery mode                                                                                |
-| `SUSPENDED`       | Instance has entered maximum power saving mode by the administrator                                                                    |
-| `UNKNOWN`         | Instance status is unknown<br>`Contact the administrator if the instance is in this status.`                                        
+| `ACTIVE` | Instance is activated |
+| `BUILD` | Instance is building |
+| `DELETED` | Instance is deleted |
+| `ERROR` | Previous operation on the instance has failed |
+| `HARD_REBOOT` | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again |
+| `MIGRATING` | Instance is migrating<br> This is caused by a real-time migration (moving active instances) |
+| `PASSWORD` | Password is being reset on instance |
+| `PAUSED` | Instance is paused<br>Paused instances are saved in hypervisor memory |
+| `REBOOT` | Instance is in a soft reboot state<br> Reboot command is passed to the virtual machine operating system |
+| `REBUILD` | Instance is rebuilt from the original image used for creation |
+| `RESCUE` | Instance is running in recovery mode |
+| `RESIZE` | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted |
+| `REVERT_RESIZE` | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host |
+| `VERIFY_RESIZE` | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
+| `SHELVED_OFFLOADED` | Instance is terminated |
+| `SHUTOFF` | Instance is stopped |
+| `SUSPENDED` | Instance has entered maximum power saving mode by the administrator |
+| `UNKNOWN` | Instance status is unknown<br>`Contact the administrator if the instance is in this status.` | 
 
 ### List Instances
 
@@ -845,7 +847,7 @@ X-Auth-Token: {tokenId}
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | Network ID to create instance |
 | server.networks.subnet | Body | UUID | - | Subnet ID within network to create instance |
-| server.networks.port | Body | UUID | - | Port ID to create instance |
+| server.networks.port | Body | UUID | - | Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
 | server.networks.fixed_ip | Body | String | - | Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
