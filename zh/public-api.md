@@ -1,48 +1,46 @@
-## Compute > Instance > API v2 가이드
+## Compute > Instance > API v2 Guide
 
-API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+To use the APIs listed in this document, you will need the appropriate API endpoint and token. See [API v2 Preparations](/Compute/Compute/en/identity-api/) to prepare the necessary information for using APIs.
 
-인스턴스 API는 `compute` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
+The Instance API uses the `compute` type endpoint. For the exact endpoint, see `serviceCatalog` from the token issue response.
 
-| 타입 | 리전 | 엔드포인트 |
+| Type | Region | Endpoint |
 |---|---|---|
-| compute | 한국(판교) 리전<br>일본 리전 | https://kr1-api-instance.infrastructure.cloud.toast.com<br>https://jp1-api-instance.infrastructure.cloud.toast.com |
+| compute | Korea (Pangyo)<br>Korea (Pyeongchon)<br>Japan | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
 
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, and as such refrain from using them since they may be changed without prior notice.
 
-## 인스턴스 타입
+## Instance Flavors
 
-### 타입 목록 보기
+### List Flavors
 
 ```
 GET /v2/{tenantId}/flavors
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| minDisk | Query | Integer | - | Minimum block storage size (GB)<br>Returns only flavors with block storage sizes greater than specified value |
+| minRam | Query | Integer | - | Minimum RAM Size (MB)<br>Returns only flavors with RAM sizes greater than specified value |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| flavors | Body | Object | 인스턴스 타입 목록 객체 |
-| flavors.id | Body | UUID | 인스턴스 타입 ID |
-| flavors.links | Body | Object | 인스턴스 타입 경로 객체 |
-| flavors.name | Body | String | 인스턴스 타입 이름 |
+| flavors | Body | Object | Instance flavor list object |
+| flavors.id | Body | UUID | Instance flavor ID |
+| flavors.links | Body | Object | Instance flavor path object |
+| flavors.name | Body | String | Instance flavor name |
 
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -52,11 +50,11 @@ X-Auth-Token: {tokenId}
       "id": "013bea75-8541-4c6f-9abe-a03fee3d74fe",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "bookmark"
         }
       ],
@@ -66,11 +64,11 @@ X-Auth-Token: {tokenId}
       "id": "0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "bookmark"
         }
       ],
@@ -85,45 +83,43 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 타입 목록 상세 보기
+### List Flavors with Details
 
 ```
 GET /v2/{tenantId}/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| minDisk | Query | Integer | - | 최소 디스크 크기(GB)<br>지정한 크기보다 디스크 크기가 큰 타입만 반환 |
-| minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
-| limit | Query | Integer | - | 타입 목록 개수<br>지정된 개수 만큼의 타입 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫 번째 타입 ID<br/>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| minDisk | Query | Integer | - | Minimum block storage size (GB)<br/>Returns only flavors with block storage sizes greater than specified value |
+| minRam | Query | Integer | - | Minimum RAM Size (MB)<br/>Returns only flavors with RAM sizes greater than specified value |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| flavors | Body | Object | 인스턴스 타입 목록 객체 |
-| flavors.id | Body | UUID | 인스턴스 타입 ID |
-| flavors.links | Body | Object | 인스턴스 타입 경로 객체 |
-| flavors.name | Body | String | 인스턴스 타입 이름 |
-| flavors.ram | Body | Integer | 메모리 크기(MB) |
-| flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 활성화 여부 |
-| flavors.vcpus | Body | Integer | vCPU 개수 |
-| flavors.extra_specs | Body | Object | 추가 사양 객체 |
-| flavors.swap | Body | Integer | 스와프 영역 크기(GB) |
-| flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부 |
-| flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
-| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 볼륨 크기(GB) |
-| flavors.disk | Body | Integer | 기본 디스크 크기(GB) |
+| Name | Type | Format | Description             |
+|---|---|---|----------------|
+| flavors | Body | Object | Instance flavor list object  |
+| flavors.id | Body | UUID | Instance flavor ID     |
+| flavors.links | Body | Object | Instance flavor path object  |
+| flavors.name | Body | String | Instance flavor name     |
+| flavors.ram | Body | Integer | Memory size (MB)     |
+| flavors.OS-FLV-DISABLED:disabled | Body | Boolean | Indicates whether the flavor is enabled         |
+| flavors.vcpus | Body | Integer | Number of vCPUs        |
+| flavors.extra_specs | Body | Object | Extra specifications object       |
+| flavors.swap | Body | Integer | Swap space size (GB)  |
+| flavors.os-flavor-access:is_public | Body | Boolean | Indicates whether the flavor is publicly visible          |
+| flavors.rxtx_factor | Body | Float | Network transmission packet rate |
+| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Temporary block storage size (GB)     |
+| flavors.disk | Body | Integer | Root block storage size (GB) |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -133,11 +129,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m256",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "bookmark"
         }
       ],
@@ -158,11 +154,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m128",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "bookmark"
         }
       ],
@@ -188,32 +184,32 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 가용성 영역
+## Availability Zones
 
-### 가용성 목록 보기
+### List Availability Zones
 
 ```
 GET /v2/{tenantId}/os-availability-zone
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-| 이름 | 종류 | 형식 | 설명 |
+#### Response
+| Name | Type | Format | Description |
 |---|---|---|---|
-| availabilityZoneInfo | Body | Object | 가용성 영역 정보 객체 |
-| availabilityZoneInfo.zoneName | Body | String | 가용성 영역 이름 |
-| availabilityZoneInfo.zoneState | Body | Object | 가용성 영역 상태 정보 객체 |
-| availabilityZoneInfo.available | Body | Object | 가용성 영역 상태 |
+| availabilityZoneInfo | Body | Object | Availability zone info object |
+| availabilityZoneInfo.zoneName | Body | String | Availability zone name |
+| availabilityZoneInfo.zoneState | Body | Object | Availability zone state info object |
+| availabilityZoneInfo.available | Body | Object | Availability zone state |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -240,33 +236,33 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 키페어
+## Key Pairs
 
-### 키페어 목록 보기
+### List Key Pairs
 ```
 GET /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| keypairs | Body | Array | 키페어 객체 목록 |
-| keypairs.keypair | Body | Object | 키페어 객체 |
-| keypairs.keypair.name | Body | String | 키페어 이름 |
-| keypairs.keypair.public_key | Body | String | 공개키 |
-| keypairs.keypair.fingerprint | Body | String | 키페어 지문 |
+| keypairs | Body | Array | List of key pair objects |
+| keypairs.keypair | Body | Object | Key pair object |
+| keypairs.keypair.name | Body | String | Key pair name |
+| keypairs.keypair.public_key | Body | String | Pubic key |
+| keypairs.keypair.fingerprint | Body | String | Key pair fingerprint |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -288,37 +284,37 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 보기
+### Show Key Pair
 ```
 GET /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| keypairName | URL | String | O | 키페어 이름 |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| keypairName | URL | String | O | Key pair name |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| keypair | Body | Object | 키페어 객체 목록 |
-| keypair.public_key | Body | String | 공개키 |
-| keypair.user_id | Body | String | 키페어 소유주 ID |
-| keypair.name | Body | String | 키페어 이름 |
-| keypair.deleted | Body | Boolean | 키페어 삭제 여부 |
-| keypair.created_at | Body | Datetime | 키페어 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.updated_at | Body | Datetime | 키페어 수정 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.deleted_at | Body | Datetime | 키페어 삭제 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| keypair.fingerprint | Body | String | 키페어 지문 |
-| keypair.id | Body | Integer | 키페어 ID |
+| keypair | Body | Object | List of key pair objects |
+| keypair.public_key | Body | String | Pulbic key |
+| keypair.user_id | Body | String | Key pair owner ID |
+| keypair.name | Body | String | Key pair name |
+| keypair.deleted | Body | Boolean | Indicates whether the key pair has been deleted |
+| keypair.created_at | Body | Datetime | Key pair created time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.updated_at | Body | Datetime | Key pair updated time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.deleted_at | Body | Datetime | Key pair deleted time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| keypair.fingerprint | Body | String | Key pair fingerprint |
+| keypair.id | Body | Integer | Key pair ID |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -342,24 +338,24 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 생성/등록하기
+### Create/Register Key Pair
 
 ```
 POST /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| keypair | Body | Object | O | 키페어 객체 |
-| keypair.name | Body | String | O | 생성 또는 등록할 키페어 이름 |
-| keypair.public_key | Body | String | - | 등록할 공개키. 이 필드가 생략되면 새로운 키페어를 생성합니다. |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| keypair | Body | Object | O | Key pair object |
+| keypair.name | Body | String | O | Key pair name to create or register |
+| keypair.public_key | Body | String | - | Public key to register. If left blank, a new key pair is created. |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -374,18 +370,18 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| keypair | Body | Object | 키페어 객체 |
-| keypair.public_key | Body | String | 공개키 |
-| keypair.private_key | Body | String | 비밀키, 새로운 키페어를 생성한 경우에 비밀키를 반환합니다. |
-| keypair.user_id | Body | String | 키페어 소유주 ID |
-| keypair.name | Body | String | 키페어 이름 |
-| keypair.fingerprint | Body | String | 키페어 지문 |
+| keypair | Body | Object | Key pair object |
+| keypair.public_key | Body | String | Public key |
+| keypair.private_key | Body | String | Private key. Visible if a key pair has been newly generated. |
+| keypair.user_id | Body | String | Key pair owner ID |
+| keypair.name | Body | String | Key pair name |
+| keypair.fingerprint | Body | String | Key pair fingerprint |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -404,83 +400,86 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 키페어 삭제하기
+### Delete Key Pair
 ```
 DELETE /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| keypairName | URL | String | O | 키페어 이름 |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| keypairName | URL | String | O | Key pair name |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 
-## 인스턴스
+## Instance
 
-### 인스턴스 상태
+### Instance Status
 
-인스턴스는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 인스턴스 상태 목록은 다음과 같습니다.
+Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
 
-| 상태 명 | 설명 |
-|--|--|
-| `ACTIVE` | 인스턴스가 활성 상태인 경우 |
-| `BUILDING` | 인스턴스가 생성 중인 경우 |
-| `STOPPED`| 인스턴스가 종료된 경우 |
-| `DELETED`| 인스턴스가 삭제된 경우 |
-| `REBOOT`| 인스턴스를 재시작한 경우 |
-| `HARD_REBOOT`| 인스턴스를 강제 재시작한 경우<br> 물리 서버의 전원을 내리고 다시 켜는 것과 동일한 동작 |
-| `RESIZED`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 경우<br>인스턴스가 종료되었다가 다시 시작된 상태 |
-| `REVERT_RESIZE`| 인스턴스 타입을 변경하거나 인스턴스를 다른 호스트로 옮기는 과정에서 실패했을 때 원 상태로 돌아가기 위해 복구하는 경우 |
-| `VERIFY_RESIZE`| 인스턴스가 타입 변경 또는 인스턴스를 다른 호스트로 옮기는 과정을 마치고 사용자의 승인을 기다리는 경우<br>NHN Cloud에서는  이 경우 자동으로 `ACTIVE` 상태가 됨 |
-| `ERROR`| 직전 인스턴스에 취한 동작이 실패한 경우 |
-| `PAUSED`| 인스턴스가 일시 정지된 경우<br>일시 정지된 인스턴스는 하이퍼바이저의 메모리에 저장됨 |
-| `REBUILD`| 인스턴스를 생성 당시 이미지로부터 새롭게 만들어내는 상태 |
-| `RESCUED`| 인스턴스를 복구 모드에서 실행 중 |
-| `SUSPENDED`| 인스턴스가 관리자에 의해 최대 절전 모드로 진입한 경우 |
-| `UNKNOWN`| 인스턴스의 상태를 알 수 없는 경우<br>`인스턴스가 이 상태로 진입한 경우 관리자에게 문의합니다.` |
+| Status Name              | Description                                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------|
+| `ACTIVE` | Instance is activated |
+| `BUILD` | Instance is building |
+| `DELETED` | Instance is deleted |
+| `ERROR` | Previous operation on the instance has failed |
+| `HARD_REBOOT` | Instance is forcefully rebooted<br> Same as turning the physical server's power switch off and back on again |
+| `MIGRATING` | Instance is migrating<br> This is caused by a real-time migration (moving active instances) |
+| `PASSWORD` | Password is being reset on instance |
+| `PAUSED` | Instance is paused<br>Paused instances are saved in hypervisor memory |
+| `REBOOT` | Instance is in a soft reboot state<br> Reboot command is passed to the virtual machine operating system |
+| `REBUILD` | Instance is rebuilt from the original image used for creation |
+| `RESCUE` | Instance is running in recovery mode |
+| `RESIZE` | Instance is changing flavors or migrating to another host<br>Instance is stopped and restarted |
+| `REVERT_RESIZE` | Instance is restored to its original state when a failure occurs while changing flavors or migrating to another host |
+| `VERIFY_RESIZE` | Instance is waiting for confirmation after changing flavors or migrating to another host<br>In NHN Cloud, the status is automatically changed to `ACTIVE`. |
+| `SHELVED_OFFLOADED` | Instance is terminated |
+| `SHUTOFF` | Instance is stopped |
+| `SUSPENDED` | Instance has entered maximum power saving mode by the administrator |
+| `UNKNOWN` | Instance status is unknown<br>`Contact the administrator if the instance is in this status.` | 
 
-### 인스턴스 목록 보기
+### List Instances
 
 ```
 GET /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| reservation_id | Query | String | - | 인스턴스 생성 예약 ID. <br>예약 ID를 지정하면 동시에 생성된 인스턴스 목록만 반환함 |
-| changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을 반환. `YYYY-MM-DDThh:mm:ss`의 형태. |
-| image | Query | UUID | - | 이미지 ID<br>지정된 이미지를 사용한 인스턴스 목록을 반환 |
-| flavor | Query | UUID | - | 인스턴스 타입 ID<br>지정된 타입을 사용한 인스턴스 목록을 반환 |
-| name | Query | String | - | 인스턴스 이름<br>지정된 이름을 가진 인스턴스 목록을 반환, 정규 표현식으로 질의 가능 |
-| status | Query | Enum | - | 인스턴스 상태<br>지정된 상태를 가진 인스턴스 목록을 반환 |
-| limit | Query | Integer | - | 인스턴스 목록 개수<br>지정된 개수 만큼의 인스턴스 목록을 반환 |
-| marker | Query | UUID | - | 목록의 첫번째 인스턴스 UUID<br>정렬 기준에 따라 `marker`로 지정된 인스턴스부터 `limit` 개수 만큼의 인스턴스 목록을 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| reservation_id | Query | String | - | Reservation ID for instance creation. <br>If specified, only returns list of instances that have been created simultaneously |
+| changes-since | Query | Datetime | - | Returns list of instances changed since the specified time. `YYYY-MM-DDThh:mm:ss` format. |
+| image | Query | UUID | - | Image ID<br>Return list of instances with specified image |
+| flavor | Query | UUID | - | Instance flavor ID<br>Return list of instances with specified flavor |
+| name | Query | String | - | Instance name<br>Return list of instances with specified name, regex is supported |
+| status | Query | Enum | - | Instance status<br>Return list of instances with specified status |
+| limit | Query | Integer | - | Number of instances to query<br>Return list with up to specified number of instances |
+| marker | Query | UUID | - | UUID of first instance in the list <br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| servers | Body | Object | 인스턴스 목록 객체 |
-| id | Body | UUID | 인스턴스 UUID |
-| links | body | Object | 인스턴스 경로 객체 |
-| name | body | String | 인스턴스 이름 |
+| servers | Body | Object | Instance list object |
+| id | Body | UUID | Instance UUID |
+| links | body | Object | Instance path object |
+| name | body | String | Instance name |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -490,11 +489,11 @@ X-Auth-Token: {tokenId}
       "id": "aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -509,59 +508,58 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 목록 상세 보기
+### List Instances with Details
 
-인스턴스 목록 보기와 동일하게 현재 테넌트에 생성된 인스턴스 목록을 반환합니다. 단, 인스턴스별 상세한 정보가 같이 조회됩니다.
+Return the list of instances created in the current tenant, same as List Instances. However, detailed instance information is returned.
 
 ```
 GET /v2/{tenantId}/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-인스턴스 목록 보기와 동일한 요청 형태입니다.
+The request format is the same as List Instances.
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| servers | body | Object | 인스턴스 목록 객체 |
-| status | body | Enum | 인스턴스 상태 |
-| servers.id | Body | UUID | 인스턴스 ID |
-| servers.name | Body | String | 인스턴스 이름, 최대 255자 |
-| servers.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| servers.addresses | Body | Object | 인스턴스 IP 목록 객체. <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨. |
-| servers.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
-| servers.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| servers.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원 |
-| servers.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
-| servers.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
-| servers.links | Body | Object | 인스턴스 경로 객체 |
-| servers.key_name | Body | String | 인스턴스 키페어 이름 |
-| servers.image | Body | Object | 인스턴스 이미지 객체 |
-| servers.image.id | Body | UUID | 인스턴스 이미지 ID |
-| servers.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| servers.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알려줌 |
-| servers.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
-| servers.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
-| servers.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.flavor | Body | Object | 인스턴스 타입 정보 객체 |
-| servers.flavor.id | Body | UUID | 인스턴스 타입 ID |
-| servers.flavor.links | Body | Object | 인스턴스 타입 경로 객체 |
-| servers.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
-| servers.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
-| servers.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| servers.created | Body | Datetime | 인스턴스 생성 시각. `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| servers.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| servers.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식으로, `MANUAL` 또는 `AUTO` 중 하나<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
-| servers.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
-| servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
-| servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
-| servers.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
+| Name | Type | Format | Description                                                                                                                                                                                                        |
+|---|---|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| servers | body | Object | Instance list object                                                                                                                                                                                                |
+| status | body | Enum | Instance Status                                                                                                                                                                                                   |
+| servers.id | Body | UUID | Instance ID                                                                                                                                                                                                   |
+| servers.name | Body | String | Instance name, max 255 characters                                                                                                                                                                                          |
+| servers.updated | Body | Datetime | Last updated time of instance in `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                  |
+| servers.hostId | Body | String | ID of host running instance                                                                                                                                                                                        |
+| servers.addresses | Body | Object | Instance IP list object. <br>The size of the list is the number of ports attached to the instance.                                                                                                                                                             |
+| servers.addresses."Network Name" | Body | Object | Port information of each network associated with instance                                                                                                                                                                                  |
+| servers.addresses."Network Name".OS-EXT-IPS-MAC:mac_addr | Body | String | MAC address of port associated with instance                                                                                                                                                                                      |
+| servers.addresses."Network Name".version | Body | Integer | IP version of port associated with instance<br>NHN Cloud supports only IPv4                                                                                                                                                                |
+| servers.addresses."Network Name".addr | Body | String | IP address of port associated with instance                                                                                                                                                                                       |
+| servers.addresses."Network Name".OS-EXT-IPS:type | Body | Enum | IP address type of port<br>Either `fixed` or `floating`                                                                                                                                                                |
+| servers.links | Body | Object | Instance path object                                                                                                                                                                                                |
+| servers.key_name | Body | String | Instance key pair name                                                                                                                                                                                               |
+| servers.image | Body | Object | Instance image object                                                                                                                                                                                               |
+| servers.image.id | Body | UUID | Instance image ID                                                                                                                                                                                               |
+| servers.image.links | Body | Object | Instance image path object                                                                                                                                                                                            |
+| servers.OS-EXT-STS:task_state | Body | String | Instance task status<br>Shows the status of a task operating on an instance                                                                                                                                                               |
+| servers.OS-EXT-STS:vm_state | Body | String | Current instance status                                                                                                                                                                                                |
+| servers.OS-SRV-USG:launched_at | Body | Datetime | Last instance booted time<br>`YYYY-MM-DDThh:mm:ss.ssssss` format                                                                                                                                                         |
+| servers.OS-SRV-USG:terminated_at | Body | Datetime | Instance deleted time<br>`YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                   |
+| servers.flavor | Body | Object | Instance flavor information object                                                                                                                                                                                             |
+| servers.flavor.id | Body | UUID | Instance flavor ID                                                                                                                                                                                                |
+| servers.flavor.links | Body | Object | Instance flavor path object                                                                                                                                                                                             |
+| servers.security_groups | Body | Object | List object of security groups assigned to instance                                                                                                                                                                                     |
+| servers.security_groups.name | Body | String | Name of security group assigned to instance                                                                                                                                                                                        |
+| servers.user_id | Body | String | ID of user creating instance                                                                                                                                                                                          |
+| servers.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                     |
+| servers.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                           |
+| servers.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                                |
+| servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                   |
+| servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
+| servers.metadata | Body | Object | Instance metadata object<br>Stores instance metadata as key-value pairs                                                                                                                                                                   |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -583,11 +581,11 @@ X-Auth-Token: {tokenId}
       },
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -596,7 +594,7 @@ X-Auth-Token: {tokenId}
         "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
         "links": [
           {
-            "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
             "rel": "bookmark"
           }
         ]
@@ -608,7 +606,7 @@ X-Auth-Token: {tokenId}
         "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
         "links": [
           {
-            "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
             "rel": "bookmark"
           }
         ]
@@ -625,7 +623,6 @@ X-Auth-Token: {tokenId}
       "name": "Web-Server",
       "created": "2020-02-25T01:15:46Z",
       "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-      "OS-DCF:diskConfig": "MANUAL",
       "os-extended-volumes:volumes_attached": [
         {
           "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -660,63 +657,63 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 보기
+### Get Instance
 
 ```
 GET /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-이 API는 요청 본문을 요구하지 않습니다.
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Instance ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| server | body | Object | 인스턴스 객체 |
-| status | body | Enum | 인스턴스 상태 |
-| server.id | Body | UUID | 인스턴스 ID |
-| server.name | Body | String | 인스턴스 이름, 최대 255자 |
-| server.updated | Body | Datetime | 인스턴스 최종 수정 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.hostId | Body | String | 인스턴스가 구동 중인 호스트 ID |
-| server.addresses | Body | Object | 인스턴스 IP 목록 객체 <br>인스턴스에 연결된 포트 수 만큼 목록이 생성됨 |
-| server.addresses."Network 이름" | Body | Object | 인스턴스에 연결된 Network별 포트 정보 |
-| server.addresses."Network 이름".OS-EXT-IPS-MAC:mac_addr | Body | String | 인스턴스에 연결된 포트의 MAC 주소 |
-| server.addresses."Network 이름".version | Body | Integer | 인스턴스에 연결된 포트의 IP 버전<br>NHN Cloud는 IPv4만 지원 |
-| server.addresses."Network 이름".addr | Body | String | 인스턴스에 연결된 포트의 IP 주소 |
-| server.addresses."Network 이름".OS-EXT-IPS:type | Body | Enum | 포트의 IP 주소 타입<br>`fixed` 또는 `floating` 중 하나 |
-| server.links | Body | Object | 인스턴스 경로 객체 |
-| server.key_name | Body | String | 인스턴스 키페어 이름 |
-| server.image | Body | Object | 인스턴스 이미지 객체 |
-| server.image.id | Body | UUID | 인스턴스 이미지 ID |
-| server.image.links | Body | Object | 인스턴스 이미지 경로 객체 |
-| server.OS-EXT-STS:task_state | Body | String | 인스턴스 작업 상태<br>인스턴스에 동작을 가했을 때 동작 진행 상태를 알림 |
-| server.OS-EXT-STS:vm_state | Body | String | 인스턴스 현재 상태 |
-| server.OS-SRV-USG:launched_at | Body | Datetime | 인스턴스 마지막 부팅 시각<br>`YYYY-MM-DDThh:mm:ss.ssssss` 형식 |
-| server.OS-SRV-USG:terminated_at | Body | Datetime | 인스턴스 삭제 시각<br>`YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.flavor | Body | Object | 인스턴스 타입 정보 객체 |
-| server.flavor.id | Body | UUID | 인스턴스 타입 ID |
-| server.flavor.links | Body | Object | 인스턴스 타입 경로 객체 |
-| server.security_groups | Body | Object | 인스턴스에 할당된 보안 그룹 목록 객체 |
-| server.security_groups.name | Body | String | 인스턴스에 할당된 보안 그룹 이름 |
-| server.user_id | Body | String | 인스턴스를 생성한 사용자 ID |
-| server.created | Body | Datetime | 인스턴스 생성 시각, `YYYY-MM-DDThh:mm:ssZ` 형식 |
-| server.tenant_id | Body | String | 인스턴스가 속한 테넌트 ID |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. NHN Cloud는 `MANUAL`를 사용 |
-| server.os-extended-volumes:volumes_attached | Body | Object | 인스턴스에 연결된 추가 볼륨 목록 객체 |
-| server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 볼륨 ID |
-| server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off |
-| server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관 |
+| Name | Type | Format | Description                                                                                                                                                                                                       |
+|---|---|---|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server | body | Object | Instance object                                                                                                                                                                                                  |
+| status | body | Enum | Instance Status                                                                                                                                                                                                  |
+| server.id | Body | UUID | Instance ID                                                                                                                                                                                                  |
+| server.name | Body | String | Instance name, max 255 characters                                                                                                                                                                                         |
+| server.updated | Body | Datetime | Last updated time of instance in `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                 |
+| server.hostId | Body | String | ID of host running instance                                                                                                                                                                                       |
+| server.addresses | Body | Object | Instance IP list object. <br>The size of the list is the number of ports attached to the instance.                                                                                                                                                              |
+| server.addresses."Network Name" | Body | Object | Port information of each network associated with instance                                                                                                                                                                                 |
+| server.addresses."Network Name".OS-EXT-IPS-MAC:mac_addr | Body | String | MAC address of port associated with instance                                                                                                                                                                                     |
+| server.addresses."Network Name".version | Body | Integer | IP version of port associated with instance<br>NHN Cloud supports only IPv4                                                                                                                                                               |
+| server.addresses."Network Name".addr | Body | String | IP address of port associated with instance                                                                                                                                                                                      |
+| server.addresses."Network Name".OS-EXT-IPS:type | Body | Enum | IP address type of port<br>Either `fixed` or `floating`                                                                                                                                                               |
+| server.links | Body | Object | Instance path object                                                                                                                                                                                               |
+| server.key_name | Body | String | Instance key pair name                                                                                                                                                                                              |
+| server.image | Body | Object | Instance image object                                                                                                                                                                                              |
+| server.image.id | Body | UUID | Instance image ID                                                                                                                                                                                              |
+| server.image.links | Body | Object | Instance image path object                                                                                                                                                                                           |
+| server.OS-EXT-STS:task_state | Body | String | Instance task status<br>Shows the status of a task operating on an instance                                                                                                                                                               |
+| server.OS-EXT-STS:vm_state | Body | String | Current instance status                                                                                                                                                                                               |
+| server.OS-SRV-USG:launched_at | Body | Datetime | Last instance booted time<br>`YYYY-MM-DDThh:mm:ss.ssssss` format                                                                                                                                                        |
+| server.OS-SRV-USG:terminated_at | Body | Datetime | Instance deleted time<br>`YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                  |
+| server.flavor | Body | Object | Instance flavor information object                                                                                                                                                                                            |
+| server.flavor.id | Body | UUID | Instance flavor ID                                                                                                                                                                                               |
+| server.flavor.links | Body | Object | Instance flavor path object                                                                                                                                                                                            |
+| server.security_groups | Body | Object | List object of security groups assigned to instance                                                                                                                                                                                    |
+| server.security_groups.name | Body | String | Name of security group assigned to instance                                                                                                                                                                                       |
+| server.user_id | Body | String | ID of user creating instance                                                                                                                                                                                         |
+| server.created | Body | Datetime | Instance created time. `YYYY-MM-DDThh:mm:ssZ` format                                                                                                                                                                    |
+| server.tenant_id | Body | String | Tenant ID that instance belongs to                                                                                                                                                                                          |
+| server.os-extended-volumes:volumes_attached | Body | Object | List object of additional block storage attached to the instance                                                                                                                                                                               |
+| server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                  |
+| server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
+| server.metadata | Body | Object | Instance metadata object<br>Stores instance metadata as key-value pairs                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | Size of an additional local block storage attached to the instance                                                                                                                                                                               |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -737,11 +734,11 @@ X-Auth-Token: {tokenId}
     },
     "links": [
       {
-        "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "bookmark"
       }
     ],
@@ -750,7 +747,7 @@ X-Auth-Token: {tokenId}
       "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
           "rel": "bookmark"
         }
       ]
@@ -762,7 +759,7 @@ X-Auth-Token: {tokenId}
       "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
       "links": [
         {
-          "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
           "rel": "bookmark"
         }
       ]
@@ -779,7 +776,6 @@ X-Auth-Token: {tokenId}
     "name": "Web-Server",
     "created": "2020-02-25T01:15:46Z",
     "tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
-    "OS-DCF:diskConfig": "MANUAL",
     "os-extended-volumes:volumes_attached": [
       {
         "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570"
@@ -813,22 +809,22 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 생성하기
+### Create Instance
 
-인스턴스를 생성합니다.
+Create an instance.
 
-인스턴스 생성 API를 호출한 후에 인스턴스 조회를 통해 인스턴스 상태를 확인합니다.
+After calling the Create Instance API, query the instance and check its status.
 
-* 인스턴스의 상태가 **ACTIVE**가 되면 인스턴스가 정상적으로 생성 완료됩니다.
-* 인스턴스 상태가 **BUILDING**에서 오래 지속되거나 **ERROR**인 경우, 인스턴스 생성 매개 변수를 확인하고 다시 생성을 시도합니다.
+* If the status becomes **ACTIVE**, the instance has been created successfully.
+* If the status remains in **BUILDING** for a long time or becomes **ERROR**, check parameters used for instance creation and try creating again.
 
-Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 제약 조건이 있습니다.
+Windows instances have the following additional restrictions that apply to facilitate stable usage.
 
-* RAM이 2GB 이상인 인스턴스 타입을 사용합니다.
-* 50GB 이상의 기본 디스크가 필요합니다.
-* U2 타입은 Windows 이미지를 사용할 수 없습니다.
+* Use an instance flavor with at least 2GB RAM capacity.
+* Require 50 GB or more of root block storage.
+* U2 flavor instances cannot use Windows images.
 
-기본 디스크 크기는 Linux는 10GB, Windows는 50GB부터 1TB까지 지정할 수 있습니다.
+The root block storage size that can be specified is 10GB for Linux and 50GB for Windows.
 
 
 ```
@@ -836,40 +832,42 @@ POST /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨 |
-| server.security_groups.name | body | String | - | 인스턴스에 추가할 보안 그룹 이름 |
-| server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용 |
-| server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨 |
-| server.imageRef | Body | String | O | 인스턴스를 생성할 때 사용할 이미지 ID |
-| server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정 |
-| server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
-| server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
-| server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID |
-| server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP |
-| server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함 |
-| server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
-| server.personality | Body | Object | - | 인스턴스에 추가할 파일 정보 객체 |
-| server.personality.path | Body | String | - | 인스턴스에 추가할 파일 경로 |
-| server.personality.content | Body | String | - | 인스턴스에 추가할 파일 내용<br>Base64 인코딩된 문자열로, 인코딩 전 기준으로 65535자까지 허용 |
-| server.block_device_mapping_v2 | Body | Object | - | 인스턴스의 블록 스토리지 정보 객체<br>**로컬 디스크를 사용하는 U2 외의 인스턴스 타입을 사용할 경우 반드시 지정해야 함** |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 ID<br>**NHN Cloud는 `image`만 지원하므로 반드시 image ID로 작성해야 함** |
-| server.block_device_mapping_v2.source_type | Body | Enum | - | 인스턴스의 볼륨 원형 타입으로, NHN Cloud는 `image`만 지원|
-| server.block_device_mapping_v2.destination_type | Body | Enum | - | 인스턴스 볼륨의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우 |
-| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 볼륨 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
-| server.block_device_mapping_v2.boot_index | Body | Integer | - | 지정한 볼륨의 부팅 순서<br>-`0`이면 루트 볼륨<br>- 그 외는 추가 볼륨<br>크기가 클수록 부팅 순서는 낮아짐 |
-| server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
-| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최솟값.<br>기본값은 1. |
-| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 갯수의 최대값.<br>기본값은 min_count, 최대값은 10. |
-| server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
+| server.security_groups.name | body | String | - | Name of security group to be added to instance |
+| server.user_data | body | String | - | Script to be executed or settings to apply after instance boot<br>Allows up to 65535 bytes of base 64-encoded character strings |
+| server.availability_zone | body | String | - | Availability zone where instance will be created<br>If left blank, a random zone will be selected |
+| server.imageRef | Body | String | O | Image ID to create instance |
+| server.flavorRef | Body | String | O | Instance flavor ID to create instance |
+| server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
+| server.networks.uuid | Body | UUID | - | Network ID to create instance |
+| server.networks.subnet | Body | UUID | - | Subnet ID within network to create instance |
+| server.networks.port | Body | UUID | - | Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
+| server.networks.fixed_ip | Body | String | - | Fixed IP to create instance |
+| server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
+| server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
+| server.block_device_mapping_v2 | Body | Object | O | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
+| server.block_device_mapping_v2.uuid | Body | String | - | Block storage source ID <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL, or MySQL images as the source, cannot be used.<br> Sources excluding those of `image` type must belong to the same availability zone as the instance being created. |
+| server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
+| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
+| server.block_device_mapping_v2.volume_size | Body | Integer | O | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | Block storage encryption information                                                                                                                                                                                        |
+| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | AppKeys for Secure Key Manager products                                                                                                                                                                              |
+| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
+| server.key_name | Body | String | O | Key pair to access instance |
+| server.min_count | Body | Integer | - | Minimum number of instances to create with this request.<br>Default value is 1. |
+| server.max_count | Body | Integer | - | Maximum number of instances to create with this request.<br>Default value is min_count, max value is 10. |
+| server.return_reservation_id | Body | Boolean | - | Instance creation request reservation ID.<br>If set to True, reservation ID is returned instead of instance creation information.<br>Default value is False |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -886,11 +884,10 @@ X-Auth-Token: {tokenId}
     "max_count": 1,
     "min_count": 1,
     "block_device_mapping_v2": [{
+      "source_type": "image",
       "uuid": "9956f822-29c9-4f81-9410-0c392d9c8c24",
       "boot_index": 0,
       "volume_size": 1000,
-      "device_name": "vda",
-      "source_type": "image",
       "destination_type": "volume",
       "delete_on_termination": 1
     }],
@@ -904,15 +901,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| server.security_groups.name | Body | String | 생성한 인스턴스의 보안 그룹 이름 |
-| server.OS-DCF:diskConfig | Body | Enum | 인스턴스 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
-| server.id | Body | UUID | 생성한 인스턴스의 ID |
+| Name | Type | Format | Description                                                                                                                                                                                                           |
+|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server.security_groups.name | Body | String | Security group name of created instance                                                                                                                                                                                           |
+| server.id | Body | UUID | Created instance ID                                                                                                                                                                                                 |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -923,15 +919,14 @@ X-Auth-Token: {tokenId}
         "name": "default"
       }
     ],
-    "OS-DCF:diskConfig": "MANUAL",
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
-        "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "bookmark"
       }
     ]
@@ -944,25 +939,25 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 수정하기
-생성된 인스턴스를 수정합니다. 변경할 수 있는 속성은 일부 항목으로 제한됩니다.
+### Modify Instance
+Modify created instance. Only some attributes are allowed to be modified.
 
 ```
 PUT /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| server | Body | Object | O | 인스턴스 변경 요청 객체 |
-| server.name | Body | String | - | 인스턴스의 새로운 이름 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| server | Body | Object | O | Modify instance request object |
+| server.name | Body | String | - | New instance name |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -976,62 +971,62 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-인스턴스 보기와 동일합니다.
+#### Response
+Same as Get Instance.
 
 ---
 
-### 인스턴스 삭제하기
-생성된 인스턴스를 삭제합니다.
+### Delete Instance
+Delete a created instance.
 
 ```
 DELETE /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 삭제할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Deleting instance ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-## 볼륨 연결 관리
-### 인스턴스에 연결된 볼륨 목록 보기
+## Manage Block Storage Attachment
+### List additional block storage attached to the instance
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| limit | Query | Integer | - | 조회할 목록 개수 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 offset번째 볼륨부터 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| limit | Query | Integer | - | Number of volumes to query |
+| offset | Query | Integer | - | Start point of returned list<br>Return block storage starting from offset of the entire list |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| volumeAttachments | Body | Array | 연결 정보 객체 목록 |
-| volumeAttachments.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachments.id | Body | UUID | 연결 정보 ID |
-| volumeAttachments.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachments.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachments | Body | Array | List of attachment information objects |
+| volumeAttachments.device | Body | String | Block storage name<br>e.g.) `/dev/vdb` |
+| volumeAttachments.id | Body | UUID | Attachment information ID |
+| volumeAttachments.serverId | Body | UUID | Instance ID |
+| volumeAttachments.volumeId | Body | UUID | Block storage ID |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1058,33 +1053,33 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스에 연결된 볼륨 보기
+### List additional block storage attached to the instance
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| volumeId | URL | UUID | O | 조회할 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Instance ID |
+| volumeId | URL | UUID | O | ID of block storage to query |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| volumeAttachment | Body | Object | 연결 정보 객체 |
-| volumeAttachment.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachment.id | Body | UUID | 연결 정보 ID |
-| volumeAttachment.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachment.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachment | Body | Object | Attachment information object |
+| volumeAttachment.device | Body | String | Block storage name<br>e.g.) `/dev/vdb` |
+| volumeAttachment.id | Body | UUID | Attachment information ID |
+| volumeAttachment.serverId | Body | UUID | Instance ID |
+| volumeAttachment.volumeId | Body | UUID | Block storage ID |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1103,23 +1098,23 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스에 추가 볼륨 연결하기
+### Attach additional block storage to the instance
 ```
 POST /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| volumeAttachment | Body | Object | O | 볼륨 연결 요청 객체 |
-| volumeAttachment.volumeId | Body | UUID | O | 연결할 볼륨 ID |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| volumeAttachment | Body | Object | O | Object to request block storage attachment |
+| volumeAttachment.volumeId | Body | UUID | O | ID of block storage to attach |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1133,17 +1128,17 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| volumeAttachment | Body | Object | 연결 정보 객체 |
-| volumeAttachment.device | Body | String | 인스턴스의 볼륨 이름<br>예) `/dev/vdb` |
-| volumeAttachment.id | Body | UUID | 연결 정보 ID |
-| volumeAttachment.serverId | Body | UUID | 인스턴스 ID |
-| volumeAttachment.volumeId | Body | UUID | 볼륨 ID |
+| volumeAttachment | Body | Object | Attachment information object |
+| volumeAttachment.device | Body | String | Block storage name<br>e.g.) `/dev/vdb` |
+| volumeAttachment.id | Body | UUID | Attachment information ID |
+| volumeAttachment.serverId | Body | UUID | Instance ID |
+| volumeAttachment.volumeId | Body | UUID | Block storage ID |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1162,53 +1157,53 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 인스턴스 볼륨 연결 끊기
+### Detach block storage from the instance
 ```
 DELETE /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 인스턴스 ID |
-| volumeId | URL | UUID | O | 연결을 끊을 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Instance ID |
+| volumeId | URL | UUID | O | ID of block storage to detach |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-## 인스턴스 추가기능
-NHN Cloud는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합니다.
+## Additional Instance Features
+NHN Cloud provides the following additional features to handle instances.
 
-* 인스턴스 시작, 종료, 재시작
-* 인스턴스 타입 변경
-* 인스턴스 이미지 생성
-* 보안 그룹 추가 및 삭제
+* Start, Stop, Terminate, and Restart Instance
+* Change Instance Flavor
+* Create Instance Image
+* Add/Delete Security Group
 
-### 인스턴스 시작
+### Start Stopped Instance
 
-종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
+Restart a stopped instance and change its status to **ACTIVE**. To call this API, the instance status must be **SHUTOFF**.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### Request
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-start | Body | none | O | 인스턴스 시작 요청 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| os-start | Body | none | O | Instance start request |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1220,29 +1215,63 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+#### Response
+This API does not return a response body.
+
 ---
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+### Start Terminated Instance
 
-### 인스턴스 종료
-
-인스턴스를 종료하고 상태를 **SHUTOFF**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE** 또는 **ERROR**여야 합니다.
+Restart a terminated instance and changes its status to **ACTIVE**. To call this API, the instance's state must be **SHELVED_OFFLOADED**.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-stop | Body | none | O | 인스턴스 종료 요청 |
+#### Request
+| Name | Type | Format | Required | Description |
+|--|---|---|---|--|
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| unshelve | Body | none | O | Instance start request |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+  "unshelve" : null
+}
+```
+
+</p>
+</details>
+
+#### Response
+This API does not return a response body.
+
+---
+
+### Stop Instance
+
+Stop instance and change its status to **SHUTOFF**. To call this API, the instance status must be either **ACTIVE** or **ERROR**.
+
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name | Type | Format | Required | Description |
+|---|---|---|---|--|
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| os-stop | Body | none | O | Instance stop request |
+
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1254,17 +1283,51 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-### 인스턴스 재시작
+## Terminate Instance
 
-인스턴스를 재시작 합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
+Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
 
-* **SOFT** 방식: **"우아한 연결 종료(Graceful shutdown)"**를 통해 인스턴스를 종료하고 재시작합니다. 인스턴스가 **ACTIVE** 상태여야 합니다.
-* **HARD** 방식: 강제 종료 후 인스턴스를 재시작합니다. 물리 서버의 전원을 끄고 다시 켜는 것과 동일한 동작입니다. 인스턴스가 다음 상태일 때만 강제로 종료할 수 있습니다.
+```
+POST /v2/{tenantId}/servers/{serverId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name | Type | Format | Required | Description          |
+|---|---|---|---|-------------|
+| tenantId | URL | String | O | Tenant ID      |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID       |
+| shelve | Body | none | O | Request to terminate instance  |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+  "shelve" : null
+}
+```
+
+</p>
+</details>
+
+#### Response
+This API does not return a response body.
+
+---
+
+### Restart Instance
+
+Restart an instance. An instance can be restarted using either a **SOFT** restart or a **HARD** restart.
+
+* **SOFT**: An instance is stopped via **"Graceful Shutdown"** and restarted. The instance must be in **ACTIVE** status.
+* **HARD**: Forcefully stop the instance and restart it. This works the same way as turning the power switch of a physical server off and on again. An instance can only be forcefully stopped when it is in one of these statuses.
     * **ACTIVE**
     * **ERROR**
     * **HARD_REBOOT**
@@ -1278,16 +1341,16 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### Request
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| reboot | Body | Object | O | 인스턴스 재부팅 요청 객체 |
-| reboot.type | Body | Enum | O | 재부팅 방식, **SOFT** 또는 **HARD** |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| reboot | Body | Object | O | Instance reboot request object |
+| reboot.type | Body | Enum | O | Reboot type: **SOFT** or **HARD** |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1301,16 +1364,16 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-### 인스턴스 타입 변경
+### Change Instance Flavor
 
-인스턴스 타입을 변경합니다. 인스턴스가 **ACTIVE**이거나 **SHUTOFF** 상태일 때만 인스턴스 타입 변경할 수 있습니다. 인스턴스의 상태가 **ACTIVE**인 경우에는 인스턴스 타입 변경 과정에서 인스턴스는 종료되고 다시 시작됩니다.
+Change the flavor of an instance. Flavors can only be changed when an instance is **ACTIVE** or **SHUTOFF**. If an instance is **ACTIVE**, the instance is stopped and restarted while changing flavors.
 
-사용하는 이미지나 인스턴스 타입에 따라 변경할 수 있는 타입이 제한될 수 있습니다. 자세한 변경 제약 사항은 콘솔 사용자 가이드를 참고합니다.
+Depending on the current image and flavor you are using, you may be restricted from changing to some flavors. For more details, see the Console Guide.
 
 
 ```
@@ -1318,17 +1381,16 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| resize | Body | Object | O | 인스턴스 타입 변경 요청 |
-| resize.flavorRef | Body | UUID | O | 변경할 인스턴스 타입 ID |
-| resize.OS-DCF:diskConfig | Body | Enum | - | 타입 변경 후 기본 디스크 파티션 방식. `MANUAL` 또는 `AUTO` 중 하나. NHN Cloud에서는 `MANUAL`로 설정됨.<br>**AUTO**: 자동으로 전체 디스크를 하나의 파티션으로 설정<br>**MANUAL**: 이미지에 지정된 대로 파티션을 설정. 이미지에서 설정된 크기보다 디스크의 크기가 더 큰 경우 사용하지 않은 채로 남겨둠. |
+#### Request
+| Name | Type | Format | Required | Description                                                                                                                                                                                                                 |
+|---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | Tenant ID                                                                                                                                                                                                             |
+| serverId | URL | UUID | O | Modifying instance ID                                                                                                                                                                                                        |
+| tokenId | Header | String | O | Token ID                                                                                                                                                                                                              |
+| resize | Body | Object | O | Instance flavor change request                                                                                                                                                                                                      |
+| resize.flavorRef | Body | UUID | O | New instance flavor ID                                                                                                                                                                                                     |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1342,35 +1404,35 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-### 인스턴스 이미지 생성
+### Create Instance Image
 
-인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 [블록 스토리지 API](/Storage/Block Storage/ko/public-api/#_22)를 참고합니다.
+Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/ko/public-api/#_22).
 
-인스턴스의 상태가 **ACTIVE**, **SHUTOFF**, **SUSPENDED**, **PAUSED**일 때만 이미지를 생성할 수 있습니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 종료한 상태에서 진행하는 것을 권장합니다.
+Images can only be created when an instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to stop instances before creating images to ensure data integrity.
 
-이미지 생성이 성공하면 이미지 상태가 `active`로 바뀝니다. 이미지 생성이 완료되는 것을 확인하려면 이미지 조회 API를 통해 지속적으로 상태를 확인합니다.
+When an image is successfully created, the image status becomes `active`. To check if an image is successfully created, use the Get Image API to continuously check its status.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### Request
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| createImage | Body | Object | O | 이미지 생성 요청 |
-| createImage.name | Body | String | O | 생성할 이미지 이름 |
-| createImage.metadata | Body | Object | - | 생성할 이미지의 메타데이터<br>Key-Value 형태로 기술 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| createImage | Body | Object | O | Image create request |
+| createImage.name | Body | String | O | Name of image to create |
+| createImage.metadata | Body | Object | - | Metadata of image to create<br>Written in Key-Value format |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1388,35 +1450,35 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
+#### Response
 
-이 API는 응답 본문을 반환하지 않습니다. 생성된 이미지는 응답 헤더의 `Location`으로 확인합니다.
+This API does not return a response body. Check the `Location` response header for the created image.
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |--|--|--|--|
-| Location | Header | String | 생성한 이미지 URL |
+| Location | Header | String | Created image URL |
 
 ---
 
-### 보안 그룹 추가
+### Add Security Group
 
-인스턴스에 보안 그룹을 추가합니다. 추가한 보안 그룹은 인스턴스의 모든 포트에 적용됩니다.
+Add a security group to an instance. The added security group is applied to all ports of the instance.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### Request
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| addSecurityGroup | Body | Object | O | 보안 그룹 추가 요청 객체 |
-| addSecurityGroup.name | Body | String | O | 추가할 보안 그룹 이름 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| addSecurityGroup | Body | Object | O | Add security group request object |
+| addSecurityGroup.name | Body | String | O | Name of security group to add |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1431,30 +1493,30 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
 
 ---
 
-### 보안 그룹 삭제
+### Delete Security Group
 
-인스턴스에서 보안 그룹을 삭제합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 삭제됩니다.
+Delete a security group from an instance. The specified security group is deleted from all ports of the instance.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+#### Request
+| Name | Type | Format | Required | Description |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
-| serverId | URL | UUID | O | 변경할 인스턴스 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| removeSecurityGroup | Body | Object | O | 보안 그룹 삭제 요청 객체 |
-| removeSecurityGroup.name | Body | String | O | 삭제할 보안 그룹 이름 |
+| tenantId | URL | String | O | Tenant ID |
+| serverId | URL | UUID | O | Modifying instance ID |
+| tokenId | Header | String | O | Token ID |
+| removeSecurityGroup | Body | Object | O | Delete security group request object |
+| removeSecurityGroup.name | Body | String | O | Name of security group to delete |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -1469,5 +1531,5 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.
