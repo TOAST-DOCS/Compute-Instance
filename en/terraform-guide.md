@@ -639,7 +639,7 @@ The following sections describe how to use each resource.
 
 ### Note
 
-* For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/).
+* For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/third-party-tools-guide/).
 
 ## Resources - Instance
 
