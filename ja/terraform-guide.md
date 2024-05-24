@@ -38,8 +38,11 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
-* Storage
+* Block Storage
     * nhncloud_blockstorage_volume_v2
+* Object Storage
+    * nhncloud_objectstorage_container_v1
+    * nhncloud_objectstorage_object_v1
 
 #### Data sourcesサポート
 
@@ -625,6 +628,7 @@ Terraform resourcesでリソースを作成、修正、削除できます。NHN 
 
 * インスタンス
 * ブロックストレージ
+* オブジェクトストレージ
 VPC
 * Floating IP
 * ネットワークポート
@@ -632,6 +636,9 @@ VPC
 * セキュリティグループ
 
 次のセッションでは各リソースを使用する方法を説明します。
+### 特記事項
+
+* オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.gov-nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)を参照してください。
 
 
 ## Resources - インスタンス
