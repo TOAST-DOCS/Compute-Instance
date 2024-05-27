@@ -853,7 +853,7 @@ X-Auth-Token: {tokenId}
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
 | server.block_device_mapping_v2 | Body | Object | O | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージの原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
+| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：U2インスタンスタイプを利用する場合。<br>- `volume`：U2以外のインスタンスタイプを利用する場合。 |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | 作成するブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
