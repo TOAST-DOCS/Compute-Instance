@@ -35,6 +35,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
     * nhncloud_networking_secgroup_v2
+    * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
     * nhncloud_keymanager_container_v1
 * Storage
@@ -76,20 +77,25 @@ Terraform v1.0.0
 ## Terraform NHN Cloud provider provided
 
 Terraform NHN Cloud provider provides the following **operating system/architecture** compatibility, and you can download the binary file through the link.
-Terraform NHN Cloud provider version currently provided is **1.0.1**.
+Terraform NHN Cloud provider version currently provided is **1.0.2**.
 
 * macOS / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.2)
 * macOS / Apple silicon
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.2)
 * Linux / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.2)
 * Windows / AMD64
   * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
   * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
+  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.2)
+
 
 ### Local provider setup
 
@@ -116,37 +122,37 @@ Describes path configuration rules for default plugin path.
 
 The following is an example of plugin setting based on **operating system/architecture** after binary download. 
 
-**It is recommended to use version 1.0.1 when configuring the plugin.**
+**It is recommended to use version 1.0.2 when configuring the plugin.**
 
 This is an example of `macOS / AMD64` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_amd64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64/terraform-provider-nhncloud_v1.0.2
 ```
 
 This is an example of `macOS / Apple silicon` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/darwin_arm64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64/terraform-provider-nhncloud_v1.0.2
 ```
 
 This is an example of `Linux / AMD64` plugin settings.
 
 ```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
-$ cp terraform-provider-nhncloud_v1.0.1 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/linux_amd64/terraform-provider-nhncloud_v1.0.1
+$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
+$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
+$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64/terraform-provider-nhncloud_v1.0.2
 ```
 
 This is an example of `Windows / AMD64` plugin settings.
 
 ```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
-$ copy terraform-provider-nhncloud_v1.0.1 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.1/windows_amd64
+$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
+$ copy terraform-provider-nhncloud_v1.0.2 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
 ```
 
 
@@ -162,7 +168,7 @@ required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
       source  = "terraform.local/local/nhncloud"
-      version = "1.0.1"
+      version = "1.0.2"
     }
   }
 }
@@ -210,9 +216,9 @@ $ terraform init --upgrade
 Initializing the backend...
 
 Initializing provider plugins...
-- Finding terraform.local/local/nhncloud versions matching "1.0.1"...
-- Installing terraform.local/local/nhncloud v1.0.1...
-- Installed terraform.local/local/nhncloud v1.0.1 (unauthenticated)
+- Finding terraform.local/local/nhncloud versions matching "1.0.2"...
+- Installing terraform.local/local/nhncloud v1.0.2...
+- Installed terraform.local/local/nhncloud v1.0.2 (unauthenticated)
 
 Terraform has made some changes to the provider dependency selections recorded
 in the .terraform.lock.hcl file. Review those changes and commit them to your
@@ -707,15 +713,15 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | network                                     | Object  | -  | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management** on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
 | network.name                                | String  | -  | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified.                                                                                                                        |
 | network.uuid                                | String  | -  | ID of VPC network                                                                                                                                                                                  |
-| network.port                                | String  | -  | ID of a port to be attached to VPC network                                                                                                                                                                         |
+| network.port                                | String  | -  | ID of a port to be attached to VPC network<br>Security groups requested when specifying a port ID are not applied to existing specified ports                                           |
 | security_groups                             | Array   | -  | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
-| user_data                                   | String  | -  | 	Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
-| block_device                                | Object  | -  | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
-| block_device.uuid                           | String  | -  | ID of original block storage <br>The block storage must be a bootable source if used as the root block storage. Volumes or snapshots which cannot be used to create images, such as those with WAF, MS-SQL images as the source, cannot be used.<br> The original other than `image` must have the same availability zone for the instance to create.                            |
-| block_device.source_type                    | String  | -  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
-| block_device.destination_type               | String  | -  | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors                                                                                  |
-| block_device.boot_index                     | Integer | -  | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority<br>                                                                                                            |
-| block_device.volume_size                    | Integer | -  | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type, and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| user_data                                   | String  | -  | Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
+| block_device                                | Object  | O  | Block storage information object |
+| block_device.source_type                    | String  | O  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage) |
+| block_device.uuid                           | String  | -  | Original image ID of block storage <br>For root block storage, it must be a bootable source.                            |
+| block_device.boot_index                     | Integer | O  | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority<br>                                                                                                            |
+| block_device.destination_type               | String  | O  | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors                                                                                  |
+| block_device.volume_size                    | Integer | O  | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
 | block_device.volume_type               | Enum    | -  | Type of block storage<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`.                                                                                         |
 | block_device.delete_on_termination          | Boolean | -  | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                                                               |
@@ -1199,6 +1205,38 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | name | String | O | Security group name         |
 | region | String | - | Name of region to which security group is assigned |
 
+
+### Create a Security Rule
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+
+###################### Data Sources ######################
+
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| Name   | Format     | Required | Description               | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | Remote security group ID of security rules |
+| direction | Enum | O | Packet direction to which security rules apply<br>**ingress**, **egress** |
+| ethertype | Enum | - | Specify as `IPv4`. Specify as `IPv4`when omitted |
+| protocol | String | - | Protocol name of the security rule. Applied to all protocols if omitted. |
+| port_range_max | Integer | - | Maximum port range of the security rule |
+| port_range_min | Integer | - | Minimum port range of the security rule |
+| security_group_id | UUID | O | Security group ID containing the security rule |
+| remote_ip_prefix | Enum | - | Destination IP prefix of the security rule |
+| description | String | - | Security rule description |
 
 ## Reference
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
