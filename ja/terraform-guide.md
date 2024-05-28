@@ -638,7 +638,7 @@ VPC
 次のセッションでは各リソースを使用する方法を説明します。
 ### 特記事項
 
-* オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.gov-nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)を参照してください。
+* オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/third-party-tools-guide/)を参照してください。
 
 
 ## Resources - インスタンス
