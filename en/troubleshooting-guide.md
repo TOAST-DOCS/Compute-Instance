@@ -14,7 +14,6 @@ It happens when the personal key (PEM key) applied to access instance has invali
 Adjust the authority of personal key file like below.
 
     $ chmod 600 your-key.pem
-
 <br>
 
 <h3> How do I get the root authority from CentOS instance?  </h3>
@@ -22,7 +21,6 @@ Adjust the authority of personal key file like below.
 To get root authority from CentOS instance, use the 'sudo' command like follows.
 
     $ sudo su
-
 <br>
 
 <h3> I find error mounting, after creating image and instance, and booting it. </h3>
@@ -33,51 +31,95 @@ For instances that use more than two block storages, set disks other than defaul
 
 To resolve this issue, set block storage of the `/etc/fstab` file, except default disk, as footnote, before creating an image.
 <br>
+<br>
 
 <h3> It takes too long to access SSH. </h3>
 
 It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receive DNS.
+<br>
 <br>
 
 <h3> I find "Could not resolve the host" and cannot use yum. </h3>
 
 It happens when DNS is blocked at the receiving part of the security group to which instance belongs. Adjust the security group to be allowed to receive DNS.
 <br>
+<br>
 
-<h3> Package update fails on CentOS 6.x instance. </h3>
+<h3> Package update fails on CentOS instances. </h3>
 
 Use the `yum repository` file after modifying the file as follows.
 Additional updates are not supported for OS for which official support has ended, so it is recommended that you use a higher version of the OS.
+
+<h4>CentOS 6.x</h4>
+
 ```
 $ sudo vi /etc/yum.repos.d/CentOS-Base.repo
-...
+
 [base]
-name=CentOS-$releasever - Base
+...
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
 baseurl=https://vault.centos.org/6.10/os/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+...
 
-#released updates
 [updates]
-name=CentOS-$releasever - Updates
+...
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
 baseurl=https://vault.centos.org/6.10/updates/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+...
 
-#additional packages that may be useful
 [extras]
-name=CentOS-$releasever - Extras
+...
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
 baseurl=https://vault.centos.org/6.10/extras/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ...
 
+```
+
+<h4>CentOS 7.x</h4>
+
+```
+
+$ sudo vi /etc/yum.repos.d/CentOS-Base.repo
+
+[base]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
+...
+
+[updates]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/updates/$basearch/
+...
+
+[extras]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/extras/$basearch/
+...
+
+[centosplus]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/centosplus/$basearch/
+...
+```
+
+<h4>Common</h4>
+
+```
 $ sudo yum clean all
 $ sudo yum repolist
 ```
+
+<br>
+<br>
+
