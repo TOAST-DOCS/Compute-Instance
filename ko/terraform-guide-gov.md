@@ -78,86 +78,9 @@ Terraform v1.0.0
 ```
 
 
-## Terraform NHN Cloud provider 제공
+## Terraform provider 제공
 
-Terraform NHN Cloud provider는 다음과 같은 **운영체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드할 수 있습니다.
-현재 제공하는 Terraform NHN Cloud provider 버전은 **1.0.2** 입니다.
-
-* macOS / AMD64
-  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.1)
-  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.2)
-* macOS / Apple silicon
-  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
-  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.1)
-  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.2)
-* Linux / AMD64
-  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
-  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.1)
-  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.2)
-* Windows / AMD64
-  * [1.0.0](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
-  * [1.0.1](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.1)
-  * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.2)
-
-
-### Local provider 설정
-
-Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
-
-Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로드한 바이너리 파일을 플러그인 경로에 추가합니다. 바이너리 파일은 실행 권한을 가지고 있어야 합니다.
-
-다음은 운영체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
-` 항목을 참고합니다.
-
-* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-
-플러그인 기본 경로 구성 규칙에 대한 설명입니다.
-
-* **version**
-    * provider의 버전입니다.
-* **platforms**
-    * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
-    * **darwin_adm64** : macOS / AMD64
-    * **darwin_arm64** : macOS / Apple silicon
-    * **linux_amd64** : Linux / AMD64
-    * **windows_amd64** : Windows / AMD64
-
-다음은 바이너리 다운로드 후 **운영체제/아키텍처**에 따른 플러그인 설정 예시입니다. 
-
-**플러그인 설정 시 1.0.2 버전 사용을 권장합니다.**
-
-`macOS / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64/terraform-provider-nhncloud_v1.0.2
-```
-
-`macOS / Apple silicon` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64/terraform-provider-nhncloud_v1.0.2
-```
-
-`Linux / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64/terraform-provider-nhncloud_v1.0.2
-```
-
-`Windows / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
-$ copy terraform-provider-nhncloud_v1.0.2 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
-```
+NHN Cloud는 Hashicorp 사의 공식 파트너로서 [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)를 통해 Terraform provider를 제공합니다.
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
@@ -170,7 +93,7 @@ terraform {
 required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
-      source  = "terraform.local/local/nhncloud"
+      source  = "nhn-cloud/nhncloud"
       version = "1.0.2"
     }
   }
@@ -205,25 +128,6 @@ provider "nhncloud" {
 $ ls
 provider.tf
 $ terraform init
-```
-
-### Local provider 교체
-
-새로운 버전의 local provider가 릴리스된 경우, 변경할 버전으로 [local provider 설정](#local-provider) 진행 후 `init` 명령의 `--upgrade` 옵션을 통해 플러그인을 업그레이드할 수 있습니다.
-
-```
-$ terraform init --upgrade
-
-Initializing the backend...
-
-Initializing provider plugins...
-- Finding terraform.local/local/nhncloud versions matching "1.0.2"...
-- Installing terraform.local/local/nhncloud v1.0.2...
-- Installed terraform.local/local/nhncloud v1.0.2 (unauthenticated)
-
-Terraform has made some changes to the provider dependency selections recorded
-in the .terraform.lock.hcl file. Review those changes and commit them to your
-version control system if they represent changes you intended to make.
 ```
 
 
