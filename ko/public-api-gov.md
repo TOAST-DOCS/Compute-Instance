@@ -1413,6 +1413,9 @@ X-Auth-Token: {tokenId}
 
 이미지 생성이 성공하면 이미지 상태가 `active`로 바뀝니다. 이미지 생성이 완료되는 것을 확인하려면 이미지 조회 API를 통해 지속적으로 상태를 확인합니다.
 
+> [주의]
+> 생성된 이미지의 크기는 루트 블록 스토리지의 실제 사용량보다 더 클 수 있습니다.
+
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
