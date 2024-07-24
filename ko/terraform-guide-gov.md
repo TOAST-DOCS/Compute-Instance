@@ -80,7 +80,8 @@ Terraform v1.0.0
 
 ## Terraform provider 제공
 
-NHN Cloud는 Hashicorp 사의 공식 파트너로서 [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)를 통해 Terraform provider를 제공합니다.
+NHN Cloud는 HashiCorp사의 공식 파트너로서 [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)를 통해 Terraform provider를 제공합니다.
+
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
