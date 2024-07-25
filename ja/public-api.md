@@ -1417,6 +1417,9 @@ X-Auth-Token: {tokenId}
 
 イメージの作成に成功すると、イメージの状態が`active`に変わります。イメージの作成が完了したことを確認するにはイメージ照会APIで持続的に状態を確認します。
 
+> [注意]
+> 作成されたイメージのサイズはルートブロックストレージの実際の使用量より大きくなる可能性があります。
+
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
