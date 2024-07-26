@@ -68,6 +68,9 @@ When you create multiple instances without specifying an availability zone, each
 
 Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users.
 
+> [Note]
+> Key Pair is a resource assigned to the user account, so it's not deleted when you delete a project.
+
 ### Network
 
 Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface (`eth0`) will be set as the default gateway.
@@ -168,6 +171,9 @@ Create an image from an instance's root block storage. It is recommended to stop
 While it is possible to create an image from an instance that has no available free space in its root block storage, those images are unusable by other instances because they cannot be properly initialized. Before creating an image, ensure that your instance has at least 100KB of free space.
 
 Created images are registered as private images in **Compute > Image**. You can use the registered image to create an instance with a block storage identical to that of the original instance.
+
+> [Caution]
+> The size of the created image may be larger than the actual usage of the root block storage.
 
 ### Associate/Disassociate Floating IP
 

@@ -1417,6 +1417,9 @@ Images can only be created when an instance is **ACTIVE**, **SHUTOFF**, **SUSPEN
 
 When an image is successfully created, the image status becomes `active`. To check if an image is successfully created, use the Get Image API to continuously check its status.
 
+> [Caution]
+> The size of the created image may be larger than the actual usage of the root block storage.
+
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
