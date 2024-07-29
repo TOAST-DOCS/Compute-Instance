@@ -206,6 +206,16 @@ When you modify flavors, instance resize and resize confirmation tasks proceed. 
 
 Instances will be charged using the new flavor from the moment the modification completes.
 
+### Change Instance Key Pairs
+
+You can change the instance key pair only if the instance is enabled. Change the instance default account's key pair to the selected key pair. The instance default account can be found in the **Access Information** tab of the instance details screen.
+
+> [Caution] Changing an instance key pair deletes all public key information in the instance except for the selected key pair.
+
+> [Note] Only project members with the ADMIN permissions for the basic infrastructure can change the instance key pair, which cannot be changed if it is a Windows OS instance.
+
+> [Note] If the image version used to create the instance is low, the feature to change key pairs may not be available.
+
 ## Key Pairs
 
 ### Import Key Pairs (Windows)
