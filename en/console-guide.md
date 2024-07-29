@@ -39,7 +39,6 @@ Instance flavors can be changed in the NHN Cloud console even after instance cre
 
 Determines the root block storage size of an instance.
 
-- The size of the block storage cannot be changed after an instance has been created. If you require more root block storage space, you must use additional block storages.
 - The block storage size must be at least the minimum size required by the image.
 
 The root block storage size varies depending on instance flavor.

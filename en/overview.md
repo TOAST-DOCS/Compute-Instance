@@ -59,7 +59,7 @@ When a key pair is newly generated, its private key is downloaded. As private ke
 > [Note]
 > Key pair is a resource assigned to the user account, so it's not deleted when you delete a project.
 
-### Security Group
+### Security Groups
 
 A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
 
