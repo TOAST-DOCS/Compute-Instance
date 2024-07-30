@@ -855,7 +855,7 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージの原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
 | server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
-| server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：U2インスタンスタイプを利用する場合。<br>- `volume`：U2以外のインスタンスタイプを利用する場合。 |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：GPUインスタンス、Bare Metalインスタンス、U2インスタンスタイプを利用する場合。<br>- `volume`：その他のインスタンスタイプを利用する場合。 |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | 作成するブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のブロックストレージ処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
 | server.block_device_mapping_v2.volume_size | Body | Integer | O | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
@@ -1416,6 +1416,9 @@ X-Auth-Token: {tokenId}
 インスタンスの状態が**ACTIVE**、**SHUTOFF**、**SUSPENDED**、**PAUSED**の時のみイメージを作成できます。イメージの作成は、データの整合性を保障するためにインスタンスを停止した状態で進行することを推奨します。
 
 イメージの作成に成功すると、イメージの状態が`active`に変わります。イメージの作成が完了したことを確認するにはイメージ照会APIで持続的に状態を確認します。
+
+> [注意]
+> 作成されたイメージのサイズはルートブロックストレージの実際の使用量より大きくなる可能性があります。
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action

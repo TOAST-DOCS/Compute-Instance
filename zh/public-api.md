@@ -855,7 +855,7 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
 | server.block_device_mapping_v2.uuid | Body | String | - | Source image ID of block storage<br>For root block storage, the source must be bootable |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
-| server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For GPU, Bare Metal, and U2 instance flavors<br>- `volume`: For other instance flavors |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
 | server.block_device_mapping_v2.volume_size | Body | Integer | O | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
@@ -1416,6 +1416,9 @@ Create an image from an instance. Only `U2` flavor instances can create images v
 Images can only be created when an instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to stop instances before creating images to ensure data integrity.
 
 When an image is successfully created, the image status becomes `active`. To check if an image is successfully created, use the Get Image API to continuously check its status.
+
+> [Caution]
+> The size of the created image may be larger than the actual usage of the root block storage.
 
 ```
 POST /v2/{tenantId}/servers/{serverId}/action
