@@ -39,7 +39,6 @@ Instance flavors can be changed in the NHN Cloud console even after instance cre
 
 Determines the root block storage size of an instance.
 
-- The size of the block storage cannot be changed after an instance has been created. If you require more root block storage space, you must use additional block storages.
 - The block storage size must be at least the minimum size required by the image.
 
 The root block storage size varies depending on instance flavor.
@@ -67,6 +66,9 @@ When you create multiple instances without specifying an availability zone, each
 ### Key Pair
 
 Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users.
+
+> [Note]
+> Key Pair is a resource assigned to the user account, so it's not deleted when you delete a project.
 
 ### Network
 
@@ -169,6 +171,9 @@ While it is possible to create an image from an instance that has no available f
 
 Created images are registered as private images in **Compute > Image**. You can use the registered image to create an instance with a block storage identical to that of the original instance.
 
+> [Caution]
+> The size of the created image may be larger than the actual usage of the root block storage.
+
 ### Associate/Disassociate Floating IP
 
 Floating IP can be associated with or disassociated from an instance, regardless of the instance's status. If you have no available floating IP or if the floating IP you want is not available, you can create one by clicking **Create**. Alternatively, floating IP can also be created from **Network > VPC > Floating IP**.
@@ -200,6 +205,16 @@ When you modify flavors, instance resize and resize confirmation tasks proceed. 
 > [Note] The instance's root block storage size cannot be modified. If an instance requires additional block storage space, attach a block storage. For details on how to attach block storage, see [Block Storage Overview](/Storage/Block%20Storage/ko/overview/).
 
 Instances will be charged using the new flavor from the moment the modification completes.
+
+### Change Instance Key Pairs
+
+You can change the instance key pair only if the instance is enabled. Change the instance default account's key pair to the selected key pair. The instance default account can be found in the **Access Information** tab of the instance details screen.
+
+> [Caution] Changing an instance key pair deletes all public key information in the instance except for the selected key pair.
+
+> [Note] Only project members with the ADMIN permissions for the basic infrastructure can change the instance key pair, which cannot be changed if it is a Windows OS instance.
+
+> [Note] If the image version used to create the instance is low, the feature to change key pairs may not be available.
 
 ## Key Pairs
 
