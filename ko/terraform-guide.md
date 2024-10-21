@@ -34,6 +34,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_routingtable_attach_gateway_v2
     * nhncloud_networking_secgroup_v2
     * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
@@ -854,6 +855,27 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | name   | String  | O  | 라우팅 테이블 이름                                                     |
 | vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                             |
 | distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형(기본값: `true`) |
+
+### 라우팅 테이블에 인터넷 게이트웨이 연결하기
+
+라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
+인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다.
+
+```
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  ...
+}
+
+resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
+  routingtable_id = nhncloud_networking_routingtable_v2.resource-rt-01.id
+  gateway_id = "5c7c578a-d199-4672-95d0-1980f996643f"
+}
+```
+
+| 이름     | 타입      | 필수 | 설명                       |
+|--------|---------|----|--------------------------|
+| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID |
+| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID |
 
 
 ## Resources - 로드 밸런서
