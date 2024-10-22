@@ -872,10 +872,10 @@ resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
 }
 ```
 
-| 이름     | 타입      | 필수 | 설명                       |
-|--------|---------|----|--------------------------|
-| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID |
-| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID |
+| 이름     | 타입      | 필수 | 설명                                                                                                                |
+|--------|---------|----|-------------------------------------------------------------------------------------------------------------------|
+| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID                                                                                                    |
+| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID<br>콘솔의 **Network > Internet Gateway** 메뉴에서 사용할 인터넷 게이트웨이을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
 
 
 ## Resources - 로드 밸런서
