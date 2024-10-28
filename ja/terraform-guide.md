@@ -34,6 +34,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_routingtable_attach_gateway_v2    
     * nhncloud_networking_secgroup_v2
     * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
@@ -496,8 +497,8 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 インスタンスタイプ名は**NHN CloudコンソールCompute > Instanceでインスタンス作成 > インスタンスタイプ選択ボタン**を押すと確認できます。
 
 ```
-data "nhncloud_compute_flavor_v2" "u2c2m4"{
-  name = "u2.c2m4"
+data "nhncloud_compute_flavor_v2" "m2c2m4"{
+  name = "m2.c2m4"
 }
 ```
 
@@ -646,32 +647,7 @@ VPC
 ### インスタンス作成
 
 ```
-# u2インスタンス作成
-resource "nhncloud_compute_instance_v2" "tf_instance_01"{
-  name = "tf_instance_01"
-  region    = "KR1"
-  key_pair  = "terraform-keypair"
-  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
-  security_groups = ["default"]
-  availability_zone = "kr-pub-a"
 
-  network {
-    name = data.nhncloud_networking_vpc_v2.default_network.name
-    uuid = data.nhncloud_networking_vpc_v2.default_network.id
-  }
-
-  block_device {
-    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-    source_type = "image"
-    destination_type = "local"
-    boot_index = 0
-    delete_on_termination = true
-    volume_size = 30
-  }
-}
-
-# u2以外のインスタンスタイプ
 # ネットワーク追加、ブロックストレージ追加されたインスタンス作成
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
@@ -713,8 +689,6 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | region                                      | String  | -  | 作成するインスタンスのリージョン<br>デフォルト値はprovider.tfに設定されたリージョン                                                                                                                                                    |
 | flavor_name                                 | String  | -  | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須                                                                                                                                               |
 | flavor_id                                   | String  | -  | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須                                                                                                                                             |
-| image_name                                  | String  | -  | インスタンス作成時に使用するイメージ名<br>image_idが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                       |
-| image_id                                    | String  | -  | インスタンス作成時に使用するイメージID<br>image_nameが空の時は必須<br>インスタンスタイプがU2の時のみ使用可                                                                                                                     |
 | key_pair                                    | String  | -  | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。           |
 | availability_zone                           | String  | -  | 作成するインスタンスのアベイラビリティゾーン                                                                                                                                                                            |
 | network                                     | Object  | -  | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
@@ -727,8 +701,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージを作成(ルートブロックストレージとして使用不可) |
 | block_device.uuid                           | String  | -  | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない                           |
 | block_device.boot_index                     | Integer | O  | 指定したブロックストレージの起動順序<br>- `0`の場合はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序は低くなる<br>                                                                                                            |
-| block_device.destination_type               | String  | O  | インスタンスブロックストレージの位置、インスタンスタイプによって異なる設定が必要<br>- `local`: U2インスタンスタイプを利用する場合<br>- `volume`: U2以外のインスタンスタイプを利用する場合                                                                                |
-| block_device.volume_size                    | Integer | O  | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合は、U2インスタンスタイプに指定されたサイズで作成され、この値は無視されます。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は「ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージのサイズ」を参照してください。 |
+| block_device.destination_type               | String  | O  | インスタンスブロックストレージの位置                                                                                |
+| block_device.volume_size                    | Integer | O  | 作成するブロックストレージサイズ<br>`GB`単位<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は「ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージのサイズ」を参照してください。 |
 | block_device.volume_type               | Enum    | -  | ブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示**レスポンスの`name`参考                                                                                        |
 | block_device.delete_on_termination          | Boolean | -  | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                                                              |
@@ -975,6 +949,25 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | vpc_id | String  | O  | ルーティングテーブルが属するVPC ID                                             |
 | distributed   | Boolean | -  | ルーティングテーブルのルーティング方式 </br>`true`:分散型、`false`:中央集中型(デフォルト値: `true`) |
 
+### ルーティングテーブルにインターネットゲートウェイを接続する
+
+ルーティングテーブルにインターネットゲートウェイを接続します。
+インターネットゲートウェイはNHN Cloudコンソールで作成できます。インターネットゲートウェイを作成する方法は[ユーザーガイド](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)を参照してください。
+
+```
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  ...
+}
+resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
+  routingtable_id = nhncloud_networking_routingtable_v2.resource-rt-01.id
+  gateway_id = "5c7c578a-d199-4672-95d0-1980f996643f"
+}
+```
+
+| 名前    | タイプ     | 必須 | 説明                                                                                                                     |
+|--------|---------|----|-------------------------------------------------------------------------------------------------------------------------|
+| routingtable_id   | String  | O  | 修正するルーティングテーブルID                                                                                                          |
+| gateway_id | String  | O  | ルーティングテーブルに接続するインターネットゲートウェイのID<br>コンソールの**Network > Internet Gateway**メニューで使用するインターネットゲートウェイを選択すると、下部の詳細情報画面でゲートウェイのIDを確認可能 |
 
 ## Resources - ロードバランサー
 ### ロードバランサー作成
