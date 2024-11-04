@@ -34,7 +34,6 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
-    * nhncloud_networking_routingtable_attach_gateway_v2
     * nhncloud_networking_secgroup_v2
     * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
@@ -399,8 +398,8 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 인스턴스 타입 이름은 NHN Cloud 콘솔 **Compute > Instance**에서 **인스턴스 생성 > 인스턴스 타입 선택** 버튼을 클릭해 확인할 수 있습니다.
 
 ```
-data "nhncloud_compute_flavor_v2" "m2c2m4"{
-  name = "m2.c2m4"
+data "nhncloud_compute_flavor_v2" "u2c2m4"{
+  name = "u2.c2m4"
 }
 ```
 
@@ -550,6 +549,32 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 ### 인스턴스 생성
 
 ```
+# u2 인스턴스 생성
+resource "nhncloud_compute_instance_v2" "tf_instance_01"{
+  name = "tf_instance_01"
+  region    = "KR1"
+  key_pair  = "terraform-keypair"
+  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
+  security_groups = ["default"]
+  availability_zone = "kr-pub-a"
+
+  network {
+    name = data.nhncloud_networking_vpc_v2.default_network.name
+    uuid = data.nhncloud_networking_vpc_v2.default_network.id
+  }
+
+  block_device {
+    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+    source_type = "image"
+    destination_type = "local"
+    boot_index = 0
+    delete_on_termination = true
+    volume_size = 30
+  }
+}
+
+# u2 외의 인스턴스 타입
 # 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
@@ -592,6 +617,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | region                                      | String  | -  | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전                                                                                                                                                     |
 | flavor_name                                 | String  | -  | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수                                                                                                                                                |
 | flavor_id                                   | String  | -  | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수                                                                                                                                              |
+| image_name                                  | String  | -  | 인스턴스 생성 시 사용할 이미지 이름<br>image_id가 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                        |
+| image_id                                    | String  | -  | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                      |
 | key_pair                                    | String  | -  | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고            |
 | availability_zone                           | String  | -  | 생성할 인스턴스의 가용성 영역                                                                                                                                                                             |
 | network                                     | Object  | -  | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 UUID를 확인 가능                                                                       |
@@ -604,8 +631,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.source_type                    | String  | O  | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음) |
 | block_device.uuid                           | String  | -  | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함                            |
 | block_device.boot_index                     | Integer | O  | 지정한 블록 스토리지의 부팅 순서<br>- `0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
-| block_device.destination_type               | String  | O  | 인스턴스 블록 스토리지의 위치<br>`volume`만 지원                                                                                                                                                |
-| block_device.volume_size                    | Integer | O  | 생성할 블록 스토리지 크기<br>`GB` 단위<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| block_device.destination_type               | String  | O  | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>- `local`: U2 인스턴스 타입을 이용하는 경우<br>- `volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                                  |
+| block_device.volume_size                    | Integer | O  | 생성할 블록 스토리지 크기<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | block_device.volume_type               | Enum    | -  | 블록 스토리지의 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드` 의 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고                                                                                         |
 | block_device.delete_on_termination          | Boolean | -  | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                                                               |
@@ -855,27 +882,6 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | name   | String  | O  | 라우팅 테이블 이름                                                     |
 | vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                             |
 | distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형(기본값: `true`) |
-
-### 라우팅 테이블에 인터넷 게이트웨이 연결하기
-
-라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
-인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
-
-```
-resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
-  ...
-}
-
-resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
-  routingtable_id = nhncloud_networking_routingtable_v2.resource-rt-01.id
-  gateway_id = "5c7c578a-d199-4672-95d0-1980f996643f"
-}
-```
-
-| 이름     | 타입      | 필수 | 설명                                                                                                                      |
-|--------|---------|----|-------------------------------------------------------------------------------------------------------------------------|
-| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID                                                                                                          |
-| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID<br>콘솔의 **Network > Internet Gateway** 메뉴에서 사용할 인터넷 게이트웨이를 선택하면 하단 상세 정보 화면에서 게이트웨이의 ID 확인 가능 |
 
 
 ## Resources - 로드 밸런서
