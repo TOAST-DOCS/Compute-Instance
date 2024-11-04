@@ -614,6 +614,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 
 
 ### Attach Block Storage
+```
 # Create Instance
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
   ...
