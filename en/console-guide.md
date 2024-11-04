@@ -210,7 +210,7 @@ Instances will be charged using the new flavor from the moment the modification 
 
 You can change instance OS information regardless of the state of the instance. 
 
-On the **Compute > Instance** page, click the instance whose OS information you want to change. On the **Basic Information** tab of that instance's details screen, click **OS > Change**.
+On the **Compute > Instance** page, click the instance whose OS information you want to change. On the **Basic Information** tab of that instance's details screen, click **OS > Modify**.
 
 > [Note] You can't change the OS type.
 
