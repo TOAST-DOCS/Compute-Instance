@@ -206,9 +206,21 @@ When you modify flavors, instance resize and resize confirmation tasks proceed. 
 
 Instances will be charged using the new flavor from the moment the modification completes.
 
-### Change Instance Key Pairs
+### Change Instance OS Details
 
-You can change the instance key pair only if the instance is enabled. Change the instance default account's key pair to the selected key pair. The instance default account can be found in the **Access Information** tab of the instance details screen.
+You can change instance OS information regardless of the state of the instance. 
+
+On the **Compute > Instance** page, click the instance whose OS information you want to change. On the **Basic Information** tab of that instance's details screen, click **OS > Change**.
+
+> [Note] You can't change the OS type.
+
+### Change Instance Key Pair
+
+You can change the instance key pair only if the instance is active.
+
+On the **Compute > Instance** page, click the instance whose key pair information you want to change. On the **Basic Information** tab of that instance's details screen, click **Key Pair > Change**.
+
+Change the key pair of the instance default account to the selected key pair. The instance default account can be found on the **Connection Information** tab of the instance's bottom details screen.
 
 > [Caution] Changing an instance key pair deletes all public key information in the instance except for the selected key pair.
 
