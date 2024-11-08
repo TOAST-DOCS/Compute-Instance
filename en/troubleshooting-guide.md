@@ -45,6 +45,14 @@ It happens when DNS is blocked at the receiving part of the security group to wh
 <br>
 <br>
 
+<h3>Something goes wrong on instances using proxies</h3>
+
+NHN Cloud's Monitoring services (System Monitoring, Service Monitoring, Cloud Monitoring) may not work properly on instances that use proxies. Also, in the case of Windows operating systems, problems such as password reset may occur.
+
+To avoid this issue, you must disable proxying for the `169.254.0.0/16` band on instances that use proxies. Typically, you would set this value in an environment variable called `no_proxy`, but some proxies ignore this environment variable, so refer to the proxy guide to set this up.
+<br>
+<br>
+
 <h3> Package update fails on CentOS instances. </h3>
 
 Use the `yum repository` file after modifying the file as follows.
