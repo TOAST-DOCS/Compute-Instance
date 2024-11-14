@@ -34,6 +34,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
     * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_routingtable_attach_gateway_v2
     * nhncloud_networking_secgroup_v2
     * nhncloud_networking_secgroup_rule_v2
     * nhncloud_keymanager_secret_v1
@@ -397,8 +398,8 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 To check name of a flavor, go to **Compute > Instance** on NHN Cloud console and click **Create Instance > Select Flavor**.
 
 ```
-data "nhncloud_compute_flavor_v2" "u2c2m4"{
-  name = "u2.c2m4"
+data "nhncloud_compute_flavor_v2" "m2c2m4"{
+  name = "m2.c2m4"
 }
 ```
 
@@ -548,33 +549,7 @@ The following sections describe how to use each resource.
 
 ### Create Instance
 
-```
-# Create u2 Instance
-resource "nhncloud_compute_instance_v2" "tf_instance_01"{
-  name = "tf_instance_01"
-  region    = "KR1"
-  key_pair  = "terraform-keypair"
-  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
-  security_groups = ["default"]
-  availability_zone = "kr-pub-a"
 
-  network {
-    name = data.nhncloud_networking_vpc_v2.default_network.name
-    uuid = data.nhncloud_networking_vpc_v2.default_network.id
-  }
-
-  block_device {
-    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-    source_type = "image"
-    destination_type = "local"
-    boot_index = 0
-    delete_on_termination = true
-    volume_size = 30
-  }
-}
-
-# Flavors other than u2
 # Create instance with network and block storage added
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
@@ -617,8 +592,6 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | region                                      | String  | -  | Region of instance to create<br>The default is the region configured in provider.tf                                                                                                                                                     |
 | flavor_name                                 | String  | -  | Flavor name of instance to create<br>Required if flavor_id is empty                                                                                                                                                |
 | flavor_id                                   | String  | -  | Flavor ID of instance to create<br>Required if flavor_name is empty                                                                                                                                              |
-| image_name                                  | String  | -  | Image name to use for creating an instance<br>Required if image_id is empty<br>Available only when the flavor is U2                                                                                                                        |
-| image_id                                    | String  | -  | Image ID to use for creating an instance<br>Required if image_name is empty<br>Available only when the flavor is U2                                                                                                                      |
 | key_pair                                    | String  | -  | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console,<br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details            |
 | availability_zone                           | String  | -  | Availability zone of an instance to create                                                                                                                                                                             |
 | network                                     | Object  | -  | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management** on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
@@ -631,8 +604,8 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.source_type                    | String  | O  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage) |
 | block_device.uuid                           | String  | -  | Original image ID of block storage <br>For root block storage, it must be a bootable source.                            |
 | block_device.boot_index                     | Integer | O  | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority<br>                                                                                                            |
-| block_device.destination_type               | String  | O  | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors                                                                                  |
-| block_device.volume_size                    | Integer | O  | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| block_device.destination_type               | String  | O  |Location of instance block storage<br>Supports `volume` only                                                     |
+| block_device.volume_size                    | Integer | O  | Block storage size to create<br>In `GB` units<br>Depending on the instance type, the size of root block storage that can be created varies, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size` for details. |
 | block_device.volume_type               | Enum    | -  | Type of block storage<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`.                                                                                         |
 | block_device.delete_on_termination          | Boolean | -  | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                                                               |
@@ -883,6 +856,26 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | vpc_id | String  | O  | VPC ID to which the routing table belongs                                             |
 | distributed   | Boolean | -  | Routing method of routing table </br>`true`: decentralized, `false`: centralized (default: `true`) |
 
+### Associate Internet Gateway with Routing Table
+
+Associate an Internet gateway to the routing table.
+You can create an Internet gateway in the NHN Cloud console. For information on how to create an Internet gateway, see the [User Guide](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2).
+
+```
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  ...
+}
+
+resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
+  routingtable_id = nhncloud_networking_routingtable_v2.resource-rt-01.id
+  gateway_id = "5c7c578a-d199-4672-95d0-1980f996643f"
+}
+```
+
+| Name     | Format      | Required | Description                                                                                                                      |
+|--------|---------|----|-------------------------------------------------------------------------------------------------------------------------|
+| routingtable_id   | String  | O  | Routing table ID to modify                                                                                                          |
+| gateway_id | String  | O  | Internet gateway ID to be associated with routing table<br>In the console, select the Internet gateway you want to use from the **Network > Internet Gateway** menu, and you can see the ID of the gateway in the details screen below. |
 
 ## Resources - Load Balancer
 ### Create Load Balancer
