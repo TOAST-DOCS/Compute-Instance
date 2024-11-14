@@ -11,7 +11,7 @@ An instance consists of the following components:
 - **Flavor**: Virtual hardware performance specifications of an instance
 - **Availability Zone** (AZ): Physical location where an instance will be created
 - **Key Pair**: Key used to access an instance
-- **Security Group**: Network security settings for an instance
+- **Security Groups**: Network security settings for an instance
 - **Network**: Virtual network where an instance will be connected
 
 Instance properties and usage change depending on these components. While settings for these components, with the exception of image and availability zone, can be modified after the creation of an instance, some flavors cannot be modified after an instance has been created. For more details on modifying instance flavors, see [Modify Flavor in the Console Guide](./console-guide/#modify-flavor).
@@ -54,9 +54,12 @@ A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastru
 Key pairs can be newly generated from the NHN Cloud console during instance creation, or you can register your own existing key pairs. For more details on how to register key pairs, see [Import Key Pairs in the Console Guide](./console-guide/#key-pairs).
 
 > [Caution]
-When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
+When a key pair is newly generated, its private key is downloaded. As private keys cannot be reissued, be sure to store them in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
 
-### Security Group
+> [Note]
+> Key pair is a resource assigned to the user account, so it's not deleted when you delete a project.
+
+### Security Groups
 
 A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
 
@@ -74,6 +77,7 @@ Instances are charged using the following criteria.
 * Instances are charged from the moment they are created.
 * Instance root block storage are charged separately according to the block storage pricing policy.
 * When an instance is stopped, a 90% discount based on the website rate is applied for 90 days. If your suspension exceeds 90 days, you will revert to normal rates while maintaining your suspension.
+* Terminated instances are not billed.
 
 For more details on pricing, see [](https://www.toast.com/kr/service/compute/instance#price)Pricing[](https://www.toast.com/kr/service/compute/instance#price).
 

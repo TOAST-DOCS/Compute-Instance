@@ -33,8 +33,17 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
     * nhncloud_networking_port_v2
     * nhncloud_networking_vpc_v2
     * nhncloud_networking_vpcsubnet_v2
-* Storage
+    * nhncloud_networking_routingtable_v2
+    * nhncloud_networking_routingtable_attach_gateway_v2
+    * nhncloud_networking_secgroup_v2
+    * nhncloud_networking_secgroup_rule_v2
+    * nhncloud_keymanager_secret_v1
+    * nhncloud_keymanager_container_v1
+* Block Storage
     * nhncloud_blockstorage_volume_v2
+* Object Storage
+    * nhncloud_objectstorage_container_v1
+    * nhncloud_objectstorage_object_v1
 
 #### Data sources 지원
 
@@ -44,11 +53,17 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
+* nhncloud_networking_routingtable_v2
+* nhncloud_networking_secgroup_v2
+* nhncloud_keymanager_secret_v1
+* nhncloud_keymanager_container_v1
+
 
 ### 알아두기
 
 * **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
 * **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
+
 
 ## Terraform 설치
 [Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
@@ -63,70 +78,10 @@ $ terraform -v
 Terraform v1.0.0
 ```
 
-## Terraform NHN Cloud provider 제공
+## Terraform provider 제공
 
-Terraform NHN Cloud provider는 다음과 같은 **운영체제/아키텍처** 호환성을 제공하며, 링크을 통해 바이너리 파일을 다운로드할 수 있습니다.
-현재 제공하는 Terraform NHN Cloud provider 버전은 **1.0.0** 입니다.
+NHN Cloud는 HashiCorp사의 공식 파트너로서 [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)를 통해 Terraform provider를 제공합니다.
 
-* [macOS / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_amd64/terraform-provider-nhncloud_v1.0.0)
-* [macOS / Apple silicon](https://static.toastoven.net/prod_cloud_terraform_provider/darwin_arm64/terraform-provider-nhncloud_v1.0.0)
-* [Linux / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/linux_amd64/terraform-provider-nhncloud_v1.0.0)
-* [Windows / AMD64](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.0)
-
-### Local provider 설정
-
-Local provider 설정을 통해 Terraform NHN Cloud provider를 사용할 수 있습니다.
-
-Local provider를 찾기 위한 디렉터리 구조를 생성한 뒤 다운로드한 바이너리 파일을 플러그인 경로에 추가합니다.
-
-다음은 운영체제에 따른 플러그인 기본 경로입니다. 더 자세한 기본 경로 설명은 [Terraform 사이트](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)의 `Implied Local Mirror Directories
-` 항목을 참고합니다.
-
-* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-
-플러그인 기본 경로 구성 규칙에 대한 설명입니다.
-
-* **version**
-    * provider의 버전입니다.
-* **platforms**
-    * 패키지가 있는 플랫폼을 설명하는 개체 배열로 운영체제 식별 키워드와 CPU 아키텍처 식별 키워드로 구성되어 있습니다.
-    * **darwin_adm64** : macOS / AMD64
-    * **darwin_arm64** : macOS / Apple silicon
-    * **linux_amd64** : Linux / AMD64
-    * **windows_amd64** : Windows / AMD64
-
-다음은 바이너리 다운로드 후 **운영체제/아키텍처**에 따른 플러그인 설정 예시입니다. 
-
-**플러그인 설정 시 1.0.0 버전 사용을 권장합니다.**
-
-`macOS / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_amd64
-```
-
-`macOS / Apple silicon` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/darwin_arm64
-```
-
-`Linux / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/linux_arm64
-```
-
-`Windows / AMD64` 플러그인 설정 예시입니다.
-
-```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.0 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.0/windows_amd64
-```
 
 ## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
@@ -139,8 +94,8 @@ terraform {
 required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
-      source  = "terraform.local/local/nhncloud"
-      version = "1.0.0"
+      source  = "nhn-cloud/nhncloud"
+      version = "1.0.2"
     }
   }
 }
@@ -177,6 +132,7 @@ $ ls
 provider.tf
 $ terraform init
 ```
+
 
 ## Terraform 기본 사용법
 
@@ -232,6 +188,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
+
 ### 구축 계획 확인
 
 tf 파일에서 변경될 리소스를 `plan` 명령으로 확인할 수 있습니다. `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
@@ -241,6 +198,7 @@ $ terraform plan
 ```
 
 생성된 플랜이 잘못되었다면 tf 파일을 수정하고 다시 반복하여 `plan` 명령을 실행합니다. `plan` 명령은 실제 NHN Cloud 리소스를 변경하지 않으므로 인프라 변경 사항을 부담없이 확인할 수 있습니다.
+
 
 ### 리소스 생성하기
 
@@ -260,7 +218,8 @@ nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-`apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB파일(terraform.tfstate)이 현재 디렉토리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
+`apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB 파일(terraform.tfstate)이 현재 디렉터리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
+
 
 ### 리소스 수정하기
 
@@ -313,6 +272,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
+
 ### 리소스 삭제하기
 
 Terraform으로 생성한 리소스를 지우기 위해 해당하는 `.tf` 파일을 삭제합니다.
@@ -351,6 +311,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 1
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
+
 ## Data sources
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
@@ -381,6 +342,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 ```
 
 다음 섹션에서는 NHN Cloud가 제공하는 각종 리소스를 data sources 기능으로 가져오는 방법을 설명합니다.
+
 
 ### 이미지
 
@@ -415,6 +377,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 | most_recent | Boolean | - | `true`: 조회한 이미지 목록 중 가장 최근에 생성된 이미지 선택<br>`false`: 조회된 순서로 이미지 선택 |
 | member_status | String | - | 조회할 이미지 멤버 상태 <br>`accepted`,`pending`,`rejected`,`all` 중 하나|
 
+
 ### 블록 스토리지
 
 ```
@@ -430,13 +393,14 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 | status | String | - | 조회할 블록 스토리지 상태 |
 | metadata | Object | - | 조회할 블록 스토리지와 관련된 메타데이터 |
 
+
 ### 인스턴스 타입
 
 인스턴스 타입 이름은 NHN Cloud 콘솔 **Compute > Instance**에서 **인스턴스 생성 > 인스턴스 타입 선택** 버튼을 클릭해 확인할 수 있습니다.
 
 ```
-data "nhncloud_compute_flavor_v2" "u2c2m4"{
-  name = "u2.c2m4"
+data "nhncloud_compute_flavor_v2" "m2c2m4"{
+  name = "m2.c2m4"
 }
 ```
 
@@ -484,6 +448,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 | id | String | - | 조회할 VPC의 ID |
 | name | String | - | 조회할 VPC 이름 |
 
+
 ### VPC 서브넷
 
 서브넷 ID는 NHN Cloud 콘솔 **Network > 서브넷**에서 서브넷을 선택하여 확인 가능합니다.
@@ -506,50 +471,85 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 | name | String | - | 조회할 서브넷 이름 |
 | shared | Bool | - | 조회할 서브넷의 공유 여부 |
 
+
+### 라우팅 테이블
+```
+data "nhncloud_networking_routingtable_v2" "default_rt" {
+  id = "bf15f6f6-1339-4057-a7fe-5811d39bab18"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명                  |
+| --- | --- |---|---------------------|
+| tenant\_id | String | - | 조회할 라우팅 테이블이 속한 테넌트 ID |
+| id | String | - | 조회할 라우팅 테이블 ID      |
+| name | String | - | 조회할 라우팅 테이블 이름   |
+
+
+### 보안 그룹
+```
+data "nhncloud_networking_secgroup_v2" "default_sg" {
+  name = "default"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명                 |
+| --- | --- |---|--------------------|
+| region | String | - | 조회할 보안 그룹이 속한 리전 이름 |
+| tenant\_id | String | - | 조회할 보안 그룹이 속한 테넌트 ID |
+| name | String | - | 조회할 보안 그룹 이름       |
+
+
+### 시크릿
+```
+data "nhncloud_keymanager_secret_v1" "secret_01" {
+  name      = "terraform_secret_01"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명               |
+| --- | --- |---|------------------|
+| region | String | - | 조회할 시크릿이 속한 리전 이름 |
+| name | String | - | 조회할 시크릿 이름       |
+
+
+### 시크릿 컨테이너
+```
+data "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명                      |
+| --- | --- |---|-------------------------|
+| region | String | - | 조회할 시크릿 컨테이너가 속한 리전 이름  |
+| name | String | - | 조회할 시크릿 컨테이너 이름         |
+
+
 ## Resources
 
 Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습니다. NHN Cloud에서는 Terraform을 통해 다음 리소스 관리를 지원합니다.
 
 * 인스턴스
 * 블록 스토리지
+* 오브젝트 스토리지
 * VPC
 * 플로팅 IP
 * 네트워크 포트
 * 로드 밸런서
+* 보안 그룹
 
 다음 섹션에는 각 리소스를 사용하는 방법을 설명합니다.
+
+### 알아두기
+
+* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
 
 ## Resources - 인스턴스
 
 ### 인스턴스 생성
 
 ```
-# u2 인스턴스 생성
-resource "nhncloud_compute_instance_v2" "tf_instance_01"{
-  name = "tf_instance_01"
-  region    = "KR1"
-  key_pair  = "terraform-keypair"
-  image_id = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-  flavor_id = data.nhncloud_compute_flavor_v2.u2c2m4.id
-  security_groups = ["default"]
-  availability_zone = "kr-pub-a"
-
-  network {
-    name = data.nhncloud_networking_vpc_v2.default_network.name
-    uuid = data.nhncloud_networking_vpc_v2.default_network.id
-  }
-
-  block_device {
-    uuid = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
-    source_type = "image"
-    destination_type = "local"
-    boot_index = 0
-    delete_on_termination = true
-    volume_size = 30
-  }
-}
-
-# u2 외의 인스턴스 타입
 # 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
@@ -585,29 +585,33 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 }
 ```
-| 이름    | 형식 | 필수  | 설명                                                                                                                                                                                           |
-| ------ | ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name | String | O | 생성할 인스턴스의 이름                                                                                                                                                                                 |
-| region | String | - | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전                                                                                                                                                     |
-| flavor_name | String | - | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수                                                                                                                                                |
-| flavor_id | String | - | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수                                                                                                                                              |
-| image_name | String | - | 인스턴스 생성 시 사용할 이미지 이름<br>image_id가 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                        |
-| image_id | String | - | 인스턴스 생성 시 사용할 이미지 ID<br>image_name이 비어 있을 때 필수<br>인스턴스 타입이 U2일 때만 사용 가능                                                                                                                      |
-| key_pair | String | - | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고            |
-| availability_zone | String | - | 생성할 인스턴스의 가용성 영역                                                                                                                                                                             |
-| network | Object | - | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 uuid를 확인 가능                                                                       |
-| network.name | String | - | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 반드시 명시                                                                                                                        |
-| network.uuid | String | - | VPC 네트워크 ID                                                                                                                                                                                  |
-| network.port | String | - | VPC 네트워크에 연결할 포트의 ID                                                                                                                                                                         |
-| security_groups | Array | - | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능                                                                             |
-| user_data | String | - | 	인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br>                                                                                                                              |
-| block_device | Object | - | 인스턴스에 사용할 이미지 또는 블록 스토리지 정보 객체                                                                                                                                                               |
-| block_device.uuid | String | - | 블록 스토리지의 원본 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 하며, 이미지 생성이 불가능한 WAF, MS-SQL 이미지가 원본인 volume이나 snapshot은 사용할 수 없음<br> `image`를 제외한 원본은 생성할 인스턴스의 가용성 영역이 같아야 함                            |
-| block_device.source_type | String | O | 생성할 블록 스토리지 원본의 타입<br>`image`: 이미지를 이용해 블록 스토리지 생성<br>`volume`: 기존에 생성된 블록 스토리지로 사용, destination_type은 반드시 volume으로 지정<br>`snapshot`: 스냅숏을 이용해 블록 스토리지 생성, destination_type은 반드시 volume으로 지정 |
-| block_device.destination_type | String | - | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요<br>`local`: U2 인스턴스 타입을 이용하는 경우<br>`volume`: U2 외의 인스턴스 타입을 이용하는 경우                                                                                  |
-| block_device.boot_index | Integer | - | 지정한 블록 스토리지의 부팅 순서<br>0이면 루트 블록 스토리지<br>그 외는 추가 블록 스토리지<br>숫자가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
-| block_device.volume_size | Integer | - | 생성할 인스턴스에서 사용할 블록 스토리지 크기<br>최소 20GB에서 최대 2,000GB까지 설정 가능(인스턴스 타입이 U2일 시 필수 입력)<br>인스턴스 타입에 따라 설정할 수 있는 volume_size가 다르므로 `사용자 가이드 > Compute > Instance 콘솔 사용 가이드` 참고                        |
-| block_device.delete_on_termination | Boolean | - | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
+
+| 이름                                          | 형식      | 필수 | 설명                                                                                                                                                                                           |
+|---------------------------------------------|---------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                                        | String  | O  | 생성할 인스턴스의 이름                                                                                                                                                                                 |
+| region                                      | String  | -  | 생성할 인스턴스의 리전<br>기본값은 provider.tf에 설정된 리전                                                                                                                                                     |
+| flavor_name                                 | String  | -  | 생성할 인스턴스의 인스턴스 타입 이름<br>flavor_id가 비어 있을 때 필수                                                                                                                                                |
+| flavor_id                                   | String  | -  | 생성할 인스턴스의 인스턴스 타입 ID<br>flavor_name이 비어 있을 때 필수                                                                                                                                              |
+| key_pair                                    | String  | -  | 인스턴스 접속에 사용할 키페어 이름<br>키페어는 NHN Cloud 콘솔의 **Compute > Instance > Key Pair** 메뉴에서 새로 생성하거나,<br>이미 가지고 있는 키페어를 등록하여 사용<br>생성, 등록 방법은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드`를 참고            |
+| availability_zone                           | String  | -  | 생성할 인스턴스의 가용성 영역                                                                                                                                                                             |
+| network                                     | Object  | -  | 생성할 인스턴스에 연결할 VPC 네트워크 정보.<br>콘솔의 **Network > VPC > Management** 메뉴에서 연결할 VPC를 선택하면 하단 상세 정보 화면에서 네트워크 이름과 UUID를 확인 가능                                                                       |
+| network.name                                | String  | -  | VPC 네트워크 이름 <br>network.name, network.uuid, network.port 중 하나는 반드시 명시                                                                                                                        |
+| network.uuid                                | String  | -  | VPC 네트워크 ID                                                                                                                                                                                  |
+| network.port                                | String  | -  | VPC 네트워크에 연결할 포트의 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                         |
+| security_groups                             | Array   | -  | 인스턴스에서 사용할 보안 그룹의 이름 목록 <br>콘솔의 **Network > VPC > Security Groups** 메뉴에서 사용할 보안 그룹을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능                                                                             |
+| user_data                                   | String  | -  | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용<br>                                                                                                                              |
+| block_device                                | Object  | O  | 인스턴스의 블록 스토리지 정보 객체 |
+| block_device.source_type                    | String  | O  | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음) |
+| block_device.uuid                           | String  | -  | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함                            |
+| block_device.boot_index                     | Integer | O  | 지정한 블록 스토리지의 부팅 순서<br>- `0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
+| block_device.destination_type               | String  | O  | 인스턴스 블록 스토리지의 위치<br>`volume`만 지원                                                                                                                                                |
+| block_device.volume_size                    | Integer | O  | 생성할 블록 스토리지 크기<br>`GB` 단위<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| block_device.volume_type               | Enum    | -  | 블록 스토리지의 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드` 의 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고                                                                                         |
+| block_device.delete_on_termination          | Boolean | -  | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
+| block_device.nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                                                               |
+| block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                                                    |
+| block_device.nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                                                     |
+
 
 ### 블록 스토리지 연결
 ```
@@ -630,10 +634,10 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
   }
 }
 ```
-| 이름    | 타입 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| instance_id | String | - | 블록 스토리지를 연결할 대상 인스턴스 |
-| volume_id | String | - | 연결할 블록 스토리지 UUID |
+| 이름    | 타입 | 필수 | 설명       |
+| ------ | --- |----| --------- |
+| instance_id | String | O  | 블록 스토리지를 연결할 대상 인스턴스 |
+| volume_id | String | O  | 연결할 블록 스토리지 UUID |
 
 
 ## Resources - 블록 스토리지
@@ -665,13 +669,17 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 }
 ```
 
-| 이름    | 타입 | 필수  | 설명       |
-| ------ | --- |---- | --------- |
-| name | String | O | 생성할 블록 스토리지 이름 |
-| description | String | - | 블록 스토리지 설명 |
-| size | Integer | - | 생성할 블록 스토리지 크기(GB) |
-| availability_zone | String | - | 생성할 블록 스토리지의 가용성 영역, 값이 존재하지 않을 경우 임의의 가용성 영역<br>availability_zone은 콘솔 `Storage > Block Storage > 관리`의 **블록 스토리지 생성** 버튼을 클릭하면 표시되는 가용성 영역에서 확인할 수 있습니다. |
-| volume_type | String | - | 블록 스토리지 타입<br>`General HDD`: HDD 블록 스토리지(기본값)<br>`General SSD`: SSD 블록 스토리지 |
+| 이름                | 타입      | 필수 | 설명                                                                                                                                                       |
+|-------------------|---------|---|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name              | String  | - | 생성할 블록 스토리지 이름                                                                                                                                           |
+| description       | String  | - | 블록 스토리지 설명                                                                                                                                               |
+| size              | Integer | O | 생성할 블록 스토리지 크기(GB)                                                                                                                                       |
+| availability_zone | String  | - | 생성할 블록 스토리지의 가용성 영역, 값이 존재하지 않을 경우 임의의 가용성 영역<br>availability_zone은 콘솔 `Storage > Block Storage > 관리`의 **블록 스토리지 생성** 버튼을 클릭하면 표시되는 가용성 영역에서 확인할 수 있습니다. |
+| volume_type       | Enum    | -  | 블록 스토리지 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드` 의 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고                                                       |
+| snapshot_id       | String  | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨                                                                                                                           |
+| nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                           |
+| nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager 상품의 앱키                                                                                                                                      |
+| nhn_encryption.skm_key_id      | String  | O  | Secure Key Manager의 키 ID                                                                                                                                       |
 
 
 ### 블록 스토리지 불러오기
@@ -709,8 +717,10 @@ NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 * VPC 서브넷
 * 네트워크 포트
 * 플로팅 IP
+* 라우팅 테이블
 
 이외의 VPC 자원은 콘솔에서 생성해야 합니다.
+
 
 ### VPC 생성
 
@@ -729,7 +739,6 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 | cidrv4 | String | O | VPC IP 대역 |
 | region | String | - | VPC의 리전 이름 |
 | tenant\_id | String | - | VPC의 tenant ID |
-
 
 
 ### VPC 서브넷 생성 및 라우팅 테이블 연결
@@ -828,6 +837,47 @@ resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
 | port_id     | String | O | 플로팅 IP를 연결할 포트 UUID |
 
 
+### 라우팅 테이블 생성
+```
+resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
+  ...
+}
+
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  name = "resource-rt-01"
+  vpc_id = nhncloud_networking_vpc_v2.resource-vpc-01.id
+  distributed = false
+}
+```
+
+| 이름     | 타입      | 필수 | 설명                                                             |
+|--------|---------|----|----------------------------------------------------------------|
+| name   | String  | O  | 라우팅 테이블 이름                                                     |
+| vpc_id | String  | O  | 라우팅 테이블이 속할 VPC ID                                             |
+| distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형(기본값: `true`) |
+
+### 라우팅 테이블에 인터넷 게이트웨이 연결하기
+
+라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
+인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다.
+
+```
+resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
+  ...
+}
+
+resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
+  routingtable_id = nhncloud_networking_routingtable_v2.resource-rt-01.id
+  gateway_id = "5c7c578a-d199-4672-95d0-1980f996643f"
+}
+```
+
+| 이름     | 타입      | 필수 | 설명                                                                                                                |
+|--------|---------|----|-------------------------------------------------------------------------------------------------------------------|
+| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID                                                                                                    |
+| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID<br>콘솔의 **Network > Internet Gateway** 메뉴에서 사용할 인터넷 게이트웨이을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
+
+
 ## Resources - 로드 밸런서
 ### 로드 밸런서 생성
 
@@ -905,6 +955,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | SNI 인증서 경로 목록 |
 | insert_headers | String | - | 백엔드 멤버에게 요청을 전송하기 전에 추가할 헤더 목록 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
+
 
 ### 풀 생성
 
@@ -990,6 +1041,106 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 | protocol_port | Integer | O | 트래픽을 수신할 멤버의 포트 |
 | weight | Integer | - | 풀에서 받아야 하는 트래픽의 가중치<br>높을수록 트래픽을 많이 받음 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
+
+
+### 시크릿 생성
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+  algorithm            = "aes"
+  bit_length           = 256
+  mode                 = "cbc"
+  name                 = "mysecret"
+  payload              = "foobar"
+  payload_content_type = "text/plain"
+  secret_type          = "passphrase"
+}
+```
+
+| 이름                       | 형식 | 필수 | 설명                                                                                                                                                           |
+|--------------------------| ---- |----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name                     | String | -  | 시크릿 이름                                                                                                                                                       |
+| expiration               | Datetime | -  | 만료일. ISO8601 형식으로 요청                                                                                                                                         |
+| algorithm                | String | -  | 암호화 알고리즘                                                                                                                                                     |
+| bit_length               | String | -  | 암호화 키 길이                                                                                                                                                     |
+| mode                     | String | -  | 블록 암호 운용 방식                                                                                                                                                  |
+| payload                  | String | -  | 암호화 키 페이로드                                                                                                                                                   |
+| payload_content_type     | String | -  | 암호화 키 페이로드 콘텐츠 타입 </br>payload를 입력할 시 필수로 입력해야 함 </br>지원하는 콘텐츠 타입 목록: `text/plain`, `application/octet-stream`, `application/pkcs8`, `application/pkix-cert` |
+| payload_content_encoding | Enum | -  | 암호화 키 페이로드 인코딩 방식 </br>payload_content_type이 `text/plain`이 아닌 경우 필수로 입력해야 함 </br> `base64`만 지원                                                               |
+| secret_type              | Enum | -  | 시크릿 타입 </br>`symmetric`, `public`, `private`, `passphrase`, `certificate`, `opaque` 중 하나                                                                     |
+
+
+### 시크릿 컨테이너 생성
+
+```
+resource "nhncloud_keymanager_secret_v1" "secret_01" {
+...
+}
+
+resource "nhncloud_keymanager_container_v1" "container_01" {
+  name      = "terraform_container_01"
+  type      = "generic"
+  secret_refs {
+    secret_ref = nhncloud_keymanager_secret_v1.secret_01.secret_ref
+  }
+}
+```
+
+| 이름   | 형식     | 필수 | 설명                                                                                                                                                                                             |
+|------|--------|----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type | Enum   | O  | 컨테이너 타입 </br>`generic`, `rsa`, `certificate` 중 하나                                                                                                                                              |
+| name | String | -  | 컨테이너 이름                                                                                                                                                                                        |
+| secret_refs | Array  | -  | 컨테이너에 등록할 시크릿 목록                                                                                                                                                                               |
+| secret_refs.secret_ref	 | String | -  | 시크릿 주소                                                                                                                                                                                         |
+| secret_refs.name	 | String | -  | 컨테이너가 지정한 시크릿 이름 </br>컨테이너 타입이 `certificate`인 경우: `certificate`, `private_key`, `private_key_passphrase`, `intermediates`로 지정 </br>컨테이너 타입이 `rsa`인 경우: `private_key`, `private_key_passphrase`, `public_key`로 지정 |
+
+
+## Resources - 보안 그룹
+
+### 보안 그룹 생성
+
+```
+resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
+  name      = "sg-01"
+}
+```
+
+| 이름   | 형식     | 필수 | 설명               | 
+|------|--------|---|------------------|
+| name | String | O | 보안 그룹 이름         |
+| region | String | - | 보안 그룹이 할당될 리전 이름 |
+
+### 보안 규칙 생성
+
+```
+resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = data.nhncloud_networking_secgroup_v2.sg-01.id
+}
+
+###################### Data Sources ######################
+
+data "nhncloud_networking_secgroup_v2" "sg-01" {
+  name = "sg-01"
+}
+```
+
+| 이름   | 형식     | 필수 | 설명               | 
+|------|--------|---|------------------|
+| remote_group_id | UUID | - | 보안 규칙의 원격 보안 그룹 ID |
+| direction | Enum | O | 보안 규칙이 적용되는 패킷 방향<br>**ingress**, **egress** |
+| ethertype | Enum | - | `IPv4`로 지정. 생략 시 `IPv4`로 지정 |
+| protocol | String | - | 보안 규칙의 프로토콜 이름. 생략 시에 모든 프로토콜에 적용. |
+| port_range_max | Integer | - | 보안 규칙의 포트 범위 최댓값 |
+| port_range_min | Integer | - | 보안 규칙의 포트 범위 최솟값 |
+| security_group_id | UUID | O | 보안 규칙이 속한 보안 그룹 ID |
+| remote_ip_prefix | Enum | - | 보안 규칙의 목적지 IP 접두사 |
+| description | String | - | 보안 규칙 설명 |
 
 
 ## 참고 사이트

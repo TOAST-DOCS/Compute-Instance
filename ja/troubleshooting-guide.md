@@ -14,7 +14,6 @@ NHN Cloudで提供するOSバージョンのみ利用できます。個人イメ
 下記のように秘密鍵ファイルの権限を調整します。
 
     $ chmod 600 your-key.pem
-
 <br>
 
 <h3>CentOSインスタンスでどうやってroot権限を取得しますか？</h3>
@@ -22,7 +21,6 @@ NHN Cloudで提供するOSバージョンのみ利用できます。個人イメ
 CentOSインスタンスでroot権限を取得するには、次のように`sudo`コマンドを利用します。
 
     $ sudo su
-
 <br>
 
 <h3>個人イメージを作り、インスタンスを作成して起動しましたがマウント(mount)エラーが発生します。</h3>
@@ -33,40 +31,43 @@ CentOSインスタンスでroot権限を取得するには、次のように`sud
 
 この問題を解消するには、`/etc/fstab`ファイルで基本ディスク以外のブロックストレージ設定をコメント処理してイメージを作成する必要があります。
 <br>
+<br>
 
 <h3>SSH接続が遅すぎます</h3>
 
 インスタンスが属すセキュリティグループの送信部分でDNSをブロックした場合に発生します。DNS送信ができるようにセキュリティグループを調整します。
+<br>
 <br>
 
 <h3>「Could not resolve the host」メッセージが表示され、yumなどを使用できません。</h3>
 
 インスタンスが属すセキュリティグループの送信部分でDNSをブロックした場合に発生します。DNS送信ができるようにセキュリティグループを調整します。
 <br>
+<br>
 
-<h3>CentOS 6.xインスタンスでパッケージアップデートに失敗します。</h3>
+<h3>CentOS インスタンスでパッケージアップデートに失敗します。</h3>
 
 次のように`yum repository`ファイルを修正して使用します。
 公式サポートが終了したOSは追加アップデートがサポートされないため、上位バージョンOSの使用を推奨します。
+
+<h4>CentOS 6.x</h4>
+
 ```
 $ sudo vi /etc/yum.repos.d/CentOS-Base.repo
-...
+
 [base]
-name=CentOS-$releasever - Base
+…
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
 baseurl=https://vault.centos.org/6.10/os/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+…
 
-#released updates
 [updates]
-name=CentOS-$releasever - Updates
+…
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
 baseurl=https://vault.centos.org/6.10/updates/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+…
 
 #additional packages that may be useful
 [extras]
@@ -74,10 +75,46 @@ name=CentOS-$releasever - Extras
 #mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra&cc=$cc
 #baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
 baseurl=https://vault.centos.org/6.10/extras/$basearch/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ...
 
+```
+
+<h4>CentOS 7.x</h4>
+
+```
+$ sudo vi /etc/yum.repos.d/CentOS-Base.repo
+[base]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
+...
+[updates]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/updates/$basearch/
+...
+[extras]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/extras/$basearch/
+...
+[centosplus]
+...
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus&infra=$infra&cc=$cc
+#baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+baseurl=https://vault.centos.org/7.9.2009/centosplus/$basearch/
+...
+```
+
+<h4>共通</h4>
+
+```
 $ sudo yum clean all
 $ sudo yum repolist
 ```
+
+<br>
+<br>
