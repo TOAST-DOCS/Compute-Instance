@@ -1026,10 +1026,6 @@ NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 �
 ##### 키 페어 복사
 설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키 페어(PEM 파일)가 있어야 합니다. 키 페어는 다음과 같이 복사할 수 있습니다.
 
-- centos
-```
-local> scp -i <키 페어>.pem <키 페어>.pem centos@<floating ip>:/home/centos/
-```
 - ubuntu
 ```
 local> scp -i <키 페어>.pem <키 페어>.pem ubuntu@<floating ip>:/home/ubuntu/
@@ -1080,8 +1076,8 @@ shell> sh .redis_make_cluster.sh
 ```
 shell> sh .redis_make_cluster.sh
 Enter cluster-1'IP:  192.168.0.79
-Enter cluster-2'IP: 192.168.0.10
-Enter cluster-3'IP: 192.168.0.33
+Enter cluster-2'IP:  192.168.0.10
+Enter cluster-3'IP:  192.168.0.33
 Enter cluster-4'IP:  192.168.0.116
 Enter cluster-5'IP:  192.168.0.91
 Enter cluster-6'IP:  192.168.0.32
