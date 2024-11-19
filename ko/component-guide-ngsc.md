@@ -621,7 +621,7 @@ sudo systemctl restart mariadb.service
 #### 추가 블록 스토리지
 
 - 루트 볼륨 이외의 추가 볼륨을 생성합니다.
-    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150G 이상**을 반드시 설정해야 합니다.
+    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150GB 이상**을 반드시 설정해야 합니다.
 
 ### 인스턴스 접속
 
@@ -643,26 +643,16 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
 | 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_TYPE | Tibero Type 지정(16vCore 이하: SE/16vCore 초과: CE) |
+| 4 | DB\_TYPE | 이미지에 지정된 인스턴스 타입 ($TYPE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
-##### Tibero 7 Cloud Standard Edition
+##### Tibero 7 설치
 ```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
 [root@tiberoinstance ~]# pwd
 /root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
-```
-
-
-##### Tibero 7 Cloud Enterprise Edition
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
 #### 설치 완료
