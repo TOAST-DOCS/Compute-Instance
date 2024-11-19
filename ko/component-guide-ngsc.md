@@ -621,7 +621,7 @@ sudo systemctl restart mariadb.service
 #### 추가 블록 스토리지
 
 - 루트 볼륨 이외의 추가 볼륨을 생성합니다.
-    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150G 이상**을 반드시 설정해야 합니다.
+    - TMI(Tibero Machine Image)는 추가 볼륨 150GB를 요구하기 때문에 **추가 블록 스토리지 150GB 이상**을 반드시 설정해야 합니다.
 
 ### 인스턴스 접속
 
@@ -643,26 +643,16 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
 | 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_TYPE | Tibero Type 지정(16vCore 이하: SE/16vCore 초과: CE) |
+| 4 | DB\_TYPE | 이미지에 지정된 인스턴스 타입 ($TYPE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
-##### Tibero 7 Cloud Standard Edition
+##### Tibero 7 설치
 ```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
 [root@tiberoinstance ~]# pwd
 /root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
-```
-
-
-##### Tibero 7 Cloud Enterprise Edition
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
 #### 설치 완료
@@ -1021,10 +1011,6 @@ NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 �
 ##### 키 페어 복사
 설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키 페어(PEM 파일)가 있어야 합니다. 키 페어는 다음과 같이 복사할 수 있습니다.
 
-- centos
-```
-local> scp -i <키 페어>.pem <키 페어>.pem centos@<floating ip>:/home/centos/
-```
 - ubuntu
 ```
 local> scp -i <키 페어>.pem <키 페어>.pem ubuntu@<floating ip>:/home/ubuntu/
@@ -1048,10 +1034,11 @@ Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스�
 shell> sh .redis_make_sentinel.sh
 ```
 
-이후 마스터와 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+이후 접속 정보에서 사용할 마스터명(Master Name)과 마스터 및 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
 
 ```
 shell> sh .redis_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
 Enter Master's IP: 192.168.0.33
 Enter Replica-1's IP: 192.168.0.27
 Enter Replica-2's IP: 192.168.0.97
@@ -1074,8 +1061,8 @@ shell> sh .redis_make_cluster.sh
 ```
 shell> sh .redis_make_cluster.sh
 Enter cluster-1'IP:  192.168.0.79
-Enter cluster-2'IP: 192.168.0.10
-Enter cluster-3'IP: 192.168.0.33
+Enter cluster-2'IP:  192.168.0.10
+Enter cluster-3'IP:  192.168.0.33
 Enter cluster-4'IP:  192.168.0.116
 Enter cluster-5'IP:  192.168.0.91
 Enter cluster-6'IP:  192.168.0.32
