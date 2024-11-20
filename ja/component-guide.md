@@ -665,25 +665,16 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 1 | OS\_ACCOUNT | Tiberoが動作するOSのアカウント |
 | 2 | DB\_NAME | Tiberoで使用されるDB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tiberoで使用するDB文字コード |
-| 4 | DB\_TYPE | Tibero Type指定(16vCore以下: SE/16vCore超過: CE) |
+| 4 | DB\_TYPE | 画像に指定されたインスタンスタイプ($TYPE) |
 | 5 | DB\_PORT | Tiberoで使用するサービスIPのポート |
 
-##### Tibero 7 Cloud Standard Edition
+##### Tibero 7インストール
 ```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
 [root@tiberoinstance ~]# pwd
 /root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
-```
-
-##### Tibero 7 Cloud Enterprise Edition
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
 #### インストール完了
