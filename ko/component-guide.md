@@ -262,17 +262,6 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 ### PostgreSQL 시작/정지 방법
 
 ```
-##CentOS인 경우
-
-#postgresql 서비스 시작
-shell> sudo systemctl start postgresql-${version}
-
-#postgresql 서비스 중지
-shell> sudo systemctl stop postgresql-${version}
-
-#postgresql 서비스 재시작
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntu인 경우
 
 # postgresql 서비스 시작 
@@ -313,9 +302,6 @@ port =사용하고자 하는 포트명
 
 #postgresql 서비스 재시작
 
-##CentOS인 경우
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
 
@@ -341,9 +327,6 @@ log_timezone =사용하고자 하는 타임 존
 
 
 #postgresql 서비스 재시작
-
-##CentOS인 경우
-shell> sudo systemctl restart postgresql-${version}
 
 ##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
@@ -410,9 +393,6 @@ host    허용DB           허용유저          허용주소                   
 
 #postgresql 서비스 재시작
 
-##CentOS인 경우
-shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
-
 ##Ubuntu인 경우
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
@@ -422,11 +402,11 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQL 디렉터리 및 파일 설명은 아래와 같습니다.
 
-| 이름 | 설명 | CentOS |Ubuntu |
-| --- | --- | --- | --- |
-| postgresql.cnf | config 파일 | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
-| DATADIR | PostgreSQL 데이터 파일 경로 | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
-| LOG | PostgreSQL log 파일 경로 | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
+| 이름 | 설명 | Ubuntu |
+| --- | --- | --- |
+| postgresql.cnf | config 파일 | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQL 데이터 파일 경로 | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL log 파일 경로 | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 
