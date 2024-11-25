@@ -262,17 +262,6 @@ MySQLディレクトリおよびファイル説明は下記の通りです。
 ### PostgreSQL開始/停止方法
 
 ```
-##CentOSの場合
-
-#postgresqlサービス開始
-shell> sudo systemctl start postgresql-${version}
-
-#postgresqlサービス中止
-shell> sudo systemctl stop postgresql-${version}
-
-#postgresqlサービス再起動
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntuの場合
 # postgresqlサービス開始
 shell> sudo systemctl start postgresql
@@ -310,9 +299,6 @@ port =使用するポート名
 
 #postgresqlサービス再起動
 
-##CentOSの場合
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntuの場合
 shell> sudo systemctl restart postgresql
 
@@ -338,9 +324,6 @@ log_timezone =使用するタイムゾーン
 
 
 #postgresqlサービス再起動
-
-##CentOSの場合
-shell> sudo systemctl restart postgresql-${version}
 
 ##Ubuntuの場合
 shell> sudo systemctl restart postgresql
@@ -407,9 +390,6 @@ host    許可DB           許可ユーザー         許可アドレス        
 
 #postgresqlサービス再起動
 
-##CentOSの場合
-shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
-
 ##Ubuntuの場合
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
@@ -419,11 +399,11 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
 
-| 名前 | 説明 | CentOS |Ubuntu |
-| --- | --- | --- | --- |
-| postgresql.cnf | configファイル | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
-| DATADIR | PostgreSQLデータファイルパス | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
-| LOG | PostgreSQL logファイルパス | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
+| 名前 | 説明 | Ubuntu |
+| --- | --- | --- |
+| postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQLデータファイルパス | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL logファイルパス | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 ### CUBRIDサービスの起動/停止方法

@@ -262,16 +262,6 @@ Directory and file description of MySQL are as below:
 ### How to start/stop PostgreSQL
 
 ```
-##CentOS 
-
-#Start postgresql service
-shell> sudo systemctl start postgresql-${version}
-
-#Stop postgresql service
-shell> sudo systemctl stop postgresql-${version}
-
-#Restart postgresql service
-shell> sudo systemctl restart postgresql-${version}
 ##Ubuntu
 # Start postgresql service 
 shell> sudo systemctl start postgresql
@@ -309,9 +299,6 @@ port =name of the port to use
 
 #Restart postgresql service
 
-##CentOS
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntu
 shell> sudo systemctl restart postgresql
 
@@ -338,9 +325,6 @@ log_timezone = timezone to use
 
 
 #Restart postgresql service
-
-##CentOS
-shell> sudo systemctl restart postgresql-${version}
 
 ##Ubuntu
 shell> sudo systemctl restart postgresql
@@ -406,9 +390,6 @@ host    allowed DB           allowed user          allowed address              
 
 #Restart postgresql service
 
-##CentOS
-shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
-
 ##Ubuntu
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 ```
@@ -417,11 +398,11 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQL directory and file description is as follows:
 
-| Name | Description | CentOS |Ubuntu |
-| --- | --- | --- | --- |
-| postgresql.cnf | config file | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
-| DATADIR | PostgreSQL data file path | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
-| LOG | PostgreSQL log file path | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
+| Name | Description | Ubuntu |
+| --- | --- | --- |
+| postgresql.cnf | config file | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQL data file path | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL log file path | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 
