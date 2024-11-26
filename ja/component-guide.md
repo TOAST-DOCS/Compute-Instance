@@ -262,17 +262,6 @@ MySQLディレクトリおよびファイル説明は下記の通りです。
 ### PostgreSQL開始/停止方法
 
 ```
-##CentOSの場合
-
-#postgresqlサービス開始
-shell> sudo systemctl start postgresql-${version}
-
-#postgresqlサービス中止
-shell> sudo systemctl stop postgresql-${version}
-
-#postgresqlサービス再起動
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntuの場合
 # postgresqlサービス開始
 shell> sudo systemctl start postgresql
@@ -310,9 +299,6 @@ port =使用するポート名
 
 #postgresqlサービス再起動
 
-##CentOSの場合
-shell> sudo systemctl restart postgresql-${version}
-
 ##Ubuntuの場合
 shell> sudo systemctl restart postgresql
 
@@ -338,9 +324,6 @@ log_timezone =使用するタイムゾーン
 
 
 #postgresqlサービス再起動
-
-##CentOSの場合
-shell> sudo systemctl restart postgresql-${version}
 
 ##Ubuntuの場合
 shell> sudo systemctl restart postgresql
@@ -407,9 +390,6 @@ host    許可DB           許可ユーザー         許可アドレス        
 
 #postgresqlサービス再起動
 
-##CentOSの場合
-shell> pg_ctl reload -D /var/lib/pgsql/${version}/data/
-
 ##Ubuntuの場合
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
@@ -419,11 +399,11 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
 
-| 名前 | 説明 | CentOS |Ubuntu |
-| --- | --- | --- | --- |
-| postgresql.cnf | configファイル | /var/lib/pgsql/{version}/data/postgresql.conf | /etc/postgresql/${version}/main/postgresql.conf |
-| DATADIR | PostgreSQLデータファイルパス | /var/lib/pgsql/{version}/data/ | /var/lib/postgresql/${version}/main |
-| LOG | PostgreSQL logファイルパス | /var/lib/pgsql/{version}/data/log/\*.log |  /var/lib/postgresql/${version}/main/log/\*.log |
+| 名前 | 説明 | Ubuntu |
+| --- | --- | --- |
+| postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQLデータファイルパス | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL logファイルパス | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 ### CUBRIDサービスの起動/停止方法
@@ -1032,10 +1012,6 @@ NHN CloudのRedisインスタンスは自動的にHA環境を構成するスク�
 
 ##### キーペアコピー
 インストールスクリプトを実行するインスタンスに他のインスタンス接続に必要なキーペア(PEMファイル)が必要です。キーペアは次のようにコピーできます。
-- centos
-```
-local> scp -i <キーペア>.pem <キーペア>.pem centos@<floating ip>:/home/centos/
-```
 - ubuntu
 ```
 local> scp -i <キーペア>.pem <キーペア>.pem ubuntu@<floating ip>:/home/ubuntu/
@@ -1058,10 +1034,11 @@ Sentinel構成のために3つのRedisインスタンスが必要です。マス
 shell> sh .redis_make_sentinel.sh
 ```
 
-その後、マスターとレプリカのprivate IPを順番に入力します。各インスタンスのprivate IPは`hostname -I`コマンドで確認できます。
+その後、接続情報で使用するマスター名(Master Name)とマスター及びレプリカのprivate IPを順番に入力します。各インスタンスのprivate IPは`hostname -I`コマンドで確認できます。
 
 ```
 shell> sh .redis_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
 Enter Master's IP: 192.168.0.33
 Enter Replica-1's IP: 192.168.0.27
 Enter Replica-2's IP: 192.168.0.97
@@ -1084,8 +1061,8 @@ shell> sh .redis_make_cluster.sh
 ```
 shell> sh .redis_make_cluster.sh
 Enter cluster-1'IP:  192.168.0.79
-Enter cluster-2'IP: 192.168.0.10
-Enter cluster-3'IP: 192.168.0.33
+Enter cluster-2'IP:  192.168.0.10
+Enter cluster-3'IP:  192.168.0.33
 Enter cluster-4'IP:  192.168.0.116
 Enter cluster-5'IP:  192.168.0.91
 Enter cluster-6'IP:  192.168.0.32
