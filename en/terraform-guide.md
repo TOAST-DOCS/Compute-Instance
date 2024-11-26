@@ -549,7 +549,7 @@ The following sections describe how to use each resource.
 
 ### Create Instance
 
-
+```
 # Create instance with network and block storage added
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
