@@ -859,7 +859,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 ### 라우팅 테이블에 인터넷 게이트웨이 연결하기
 
 라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
-인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다.
+인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
 
 ```
 resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
@@ -872,10 +872,10 @@ resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
 }
 ```
 
-| 이름     | 타입      | 필수 | 설명                                                                                                                |
-|--------|---------|----|-------------------------------------------------------------------------------------------------------------------|
-| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID                                                                                                    |
-| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID<br>콘솔의 **Network > Internet Gateway** 메뉴에서 사용할 인터넷 게이트웨이을 선택하면, 하단 상세 정보 화면에서 정보 확인 가능 |
+| 이름     | 타입      | 필수 | 설명                                                                                                                      |
+|--------|---------|----|-------------------------------------------------------------------------------------------------------------------------|
+| routingtable_id   | String  | O  | 수정할 라우팅 테이블 ID                                                                                                          |
+| gateway_id | String  | O  | 라우팅 테이블에 연결할 인터넷 게이트웨이의 ID<br>콘솔의 **Network > Internet Gateway** 메뉴에서 사용할 인터넷 게이트웨이를 선택하면 하단 상세 정보 화면에서 게이트웨이의 ID 확인 가능 |
 
 
 ## Resources - 로드 밸런서

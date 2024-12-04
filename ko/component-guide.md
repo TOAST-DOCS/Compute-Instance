@@ -262,8 +262,6 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 ### PostgreSQL 시작/정지 방법
 
 ```
-##Ubuntu인 경우
-
 # postgresql 서비스 시작 
 shell> sudo systemctl start postgresql
 
@@ -302,7 +300,6 @@ port =사용하고자 하는 포트명
 
 #postgresql 서비스 재시작
 
-##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
 
 #변경된 포트로 아래와 같이 접속
@@ -328,7 +325,6 @@ log_timezone =사용하고자 하는 타임 존
 
 #postgresql 서비스 재시작
 
-##Ubuntu인 경우
 shell> sudo systemctl restart postgresql
 
 
@@ -393,7 +389,6 @@ host    허용DB           허용유저          허용주소                   
 
 #postgresql 서비스 재시작
 
-##Ubuntu인 경우
 shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 ```
@@ -648,26 +643,16 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 1 | OS\_ACCOUNT | Tibero가 구동되는 OS 계정 |
 | 2 | DB\_NAME | Tibero에서 사용되는 DB\_NAME(= SID) |
 | 3 | DB\_CHARACTERSET | Tibero에서 사용하는 DB 문자 집합 |
-| 4 | DB\_TYPE | Tibero Type 지정(16vCore 이하: SE/16vCore 초과: CE) |
+| 4 | DB\_TYPE | 이미지에 지정된 인스턴스 타입 ($TYPE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
-##### Tibero 7 Cloud Standard Edition
+##### Tibero 7 설치
 ```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
 [root@tiberoinstance ~]# pwd
 /root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 SE 8639
-```
-
-
-##### Tibero 7 Cloud Enterprise Edition
-```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
-[root@tiberoinstance ~]# pwd
-/root
-[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 CE 8639
+[root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
 #### 설치 완료
