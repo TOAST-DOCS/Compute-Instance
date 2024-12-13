@@ -397,11 +397,11 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQL 디렉터리 및 파일 설명은 아래와 같습니다.
 
-| 이름 | 설명 |Ubuntu |
+| 이름 | 설명 | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | config 파일 | /etc/postgresql/${version}/main/postgresql.conf |
-| DATADIR | PostgreSQL 데이터 파일 경로   | /var/lib/postgresql/${version}/main |
-| LOG | PostgreSQL log 파일 경로  |  /var/lib/postgresql/${version}/main/log/\*.log |
+| DATADIR | PostgreSQL 데이터 파일 경로 | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL log 파일 경로 | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
 
