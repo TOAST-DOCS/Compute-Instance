@@ -772,7 +772,7 @@ TIP_FILE
 tiberotestdb
 tiberoinstance.novalocal                                      NO
          0 7
-2023/10/17
+2024/12/23
 NORMAL           NO
 /db/tibero7/config/tiberotestdb.tip
 
