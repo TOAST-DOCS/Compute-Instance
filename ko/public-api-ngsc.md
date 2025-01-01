@@ -1531,3 +1531,84 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
+
+
+## 인스턴스 메타데이터
+
+### 인스턴스 메타데이터 생성/수정하기
+
+인스턴스의 메타데이터를 생성하거나 수정합니다.
+요청하는 키가 기존 키와 일치하는 경우 키-값을 요청 값으로 변경합니다.
+
+```
+PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름       | 종류 | 형식 | 필수 | 설명                                               |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                           |
+| serverId | URL | UUID | O | 인스턴스 ID                                          |
+| key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키                         |
+| tokenId  | Header | String | O | 토큰 ID                                            |
+| meta     | Body | Object | O | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+#### 응답
+
+| 이름   | 종류 | 형식 | 설명                                               |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### 인스턴스 메타데이터 삭제하기
+
+요청하는 키와 일치하는 인스턴스의 메타데이터를 삭제합니다.
+
+```
+DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름       | 종류 | 형식 | 필수 | 설명                  |
+|----------|---|---|---|---------------------|
+| tenantId | URL | String | O | 테넌트 ID              |
+| serverId | URL | UUID | O | 인스턴스 ID             |
+| key      | URL | String | O | 인스턴스에서 삭제할 메타데이터의 키 |
+| tokenId  | Header | String | O | 토큰 ID               |
+
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
