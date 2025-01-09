@@ -899,7 +899,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | vip_address | String | - | 로드 밸런서의 IP 지정 |
 | security_group_ids | Object | - | 로드 벨런서에 적용할 보안 그룹 ID 목록<br>**보안 그룹은 반드시 이름이 아닌 ID로 지정해야 함** |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
-
+| loadbalancer_type | String | - | 로드 밸런서 타입<br>`shared`/`dedicated` 사용 가능<br>생략할 경우 `shared`로 설정됨 |
 
 ### 리스너 생성
 
@@ -955,11 +955,10 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | SNI 인증서 경로 목록 |
 | insert_headers | String | - | 백엔드 멤버에게 요청을 전송하기 전에 추가할 헤더 목록 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
+| keepalive_timeout | Integer | - | 리스너의 keepalive timeout |
 
 
 ### 풀 생성
-
-<font color='red'>**(주의) NHN Cloud는 풀 생성 시에 `loadbalancer_id` 지정을 지원하지 않습니다.**</font>
 
 ```
 resource "nhncloud_lb_pool_v2" "tf_pool_01"{
@@ -980,12 +979,14 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 | name | String | - | 로드 밸런서 이름 |
 | description | String | - | 풀 설명 |
 | protocol | String | O | 프로토콜<br>`TCP`, `HTTP`, `HTTPS`, `PROXY` 중 하나 |
-| listener_id | String | O | 생성할 풀이 연결될 리스너 ID |
+| loadbalancer_id | String | -  | 생성할 풀이 연결될 로드밸런서 ID<br>로드밸런서 ID나 리스너 ID 중 하나는 필수로 입력       |
+| listener_id | String | -  | 생성할 풀이 연결될 리스너 ID<br>로드밸런서 ID나 리스너 ID 중 하나는 필수로 입력              |
 | lb_method | String | O | 풀의 트래픽을 멤버에게 분배하는 로드 밸런싱 방식<br>`ROUND_ROBIN`,`LEAST_CONNECTIONS`,`SOURCE_IP` 중 하나 |
 | persistence | Object | - | 생성할 풀의 세션 지속성 |
 | persistence.type | String | O | 세션 지속성 타입<br>`SOURCE_IP`, `HTTP_COOKIE`, `APP_COOKIE` 중 하나<br>로드 밸런싱 방식이 `SOURCE_IP`인 경우 사용 할 수 없음<br>프로토콜이 `HTTPS`이거나 `TCP`인 경우 HTTP_COOKIE와 APP_COOKIE를 사용할 수 없음 |
 | persistence.cookie_name | String | - | 쿠키 이름<br>persistence.cookie_name은 세션 지속성 타입이 APP_COOKIE인 경우에만 사용 가능 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
+| member_port | Integer | - | 멤버의 수신 포트<br>트래픽을 이 포트로 전달<br>기본 값은 `-1` |
 
 
 ### 헬스 모니터 생성
@@ -1016,7 +1017,8 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | http_method | String | - | 상태 확인에 사용할 HTTP 메서드<br>기본값은 GET|
 | expected_codes | String | - | 정상 상태로 간주할 멤버의 HTTP(S) 응답 코드<br>expected_codes는 목록(`200,201,202`)이나 범위 지정(`200-202`)도 가능 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
-
+| host_header | String | - | 상태 확인에 사용할 호스트 헤더의 필드값<br>상태 확인 타입을 `TCP`로 설정한 경우 이 필드에 설정한 값은 무시 |
+| health_check_port | Integer | - | 헬스 체크의 대상이 되는 멤버 포트 |
 
 ### 멤버 생성
 
