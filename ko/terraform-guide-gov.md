@@ -22,6 +22,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * Compute
     * nhncloud_compute_instance_v2
     * nhncloud_compute_volume_attach_v2
+    * nhncloud_compute_keypair_v2
 * Network
     * nhncloud_lb_loadbalancer_v2
     * nhncloud_lb_listener_v2
@@ -50,6 +51,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * nhncloud_images_image_v2
 * nhncloud_blockstorage_volume_v2
 * nhncloud_compute_flavor_v2
+* nhncloud_compute_keypair_v2
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
@@ -409,6 +411,19 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 | name | String | - | 조회할 인스턴스 타입 이름 |
 
 
+### 키페어
+
+```
+data "nhncloud_compute_keypair_v2" "my_keypair"{
+  name = "my_keypair"
+}
+```
+
+| 이름    | 형식 | 필수 | 설명         |
+| ------ | ---- |----|------------|
+| name | String | O  | 조회할 키페어 이름 |
+
+
 ### 스냅숏
 
 ```
@@ -635,6 +650,25 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | ------ | --- |----| --------- |
 | instance_id | String | O  | 블록 스토리지를 연결할 대상 인스턴스 |
 | volume_id | String | O  | 연결할 블록 스토리지 UUID |
+
+
+### 키페어
+```
+resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
+  name = "tf_kp_01"
+}
+
+# public_key 지정
+resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
+  name = "tf_kp_02"
+  public_key = "ssh-rsa ... Generated-by-Nova"
+}
+```
+
+| 이름        | 타입 | 필수 | 설명                             |
+|-----------| --- |----|--------------------------------|
+| name      | String | O  | 생성할 키페어 이름                     |
+| public_key | String | -  | 등록할 공개키<br>생략하면 새로운 공개키를 생성 |
 
 
 ## Resources - 블록 스토리지
