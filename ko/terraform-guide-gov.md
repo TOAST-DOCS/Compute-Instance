@@ -670,6 +670,9 @@ resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
 | name      | String | O  | 생성할 키페어 이름                     |
 | public_key | String | -  | 등록할 공개키<br>생략하면 새로운 공개키를 생성 |
 
+> [주의]
+> Terraform을 통해 키페어를 생성하는 경우 개인키는 상태 파일(terraform.tfstate)에 **암호화되지 않은 상태**로 저장됩니다.
+
 
 ## Resources - 블록 스토리지
 
