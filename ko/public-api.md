@@ -844,7 +844,7 @@ X-Auth-Token: {tokenId}
 | server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 원본 블록 스토리지의 가용성 영역과 동일하게 설정 필요 |
 | server.imageRef | Body | String | - | 인스턴스를 생성할 때 사용할 이미지 ID<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요 |
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정 |
+| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC가 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정 |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID |
 | server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID |
 | server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음 |
@@ -858,7 +858,7 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: GPU 인스턴스, U2 인스턴스 타입을 이용하는 경우<br>- `volume`: 그 외의 인스턴스 타입을 이용하는 경우 |
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지 |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기 보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | 블록 스토리지의 암호화 정보                                                                                                                                                                                        |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | Secure Key Manager 상품의 앱키                                                                                                                                                                              |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID                                                                                                                                  |
@@ -1540,7 +1540,7 @@ X-Auth-Token: {tokenId}
 
 ## 인스턴스 메타데이터
 
-인스턴스 메타데이터 값에 따라 콘솔의 **Compute > Instance** 서비스 페이지에서 인스턴스 상세 정보 화면의 내용을 결정합니다. 인스턴스 메타데이터 별 내용은 다음과 같습니다.
+인스턴스 메타데이터 값에 따라 콘솔의 **Compute > Instance** 서비스 페이지에서 인스턴스 상세 정보 화면의 내용을 결정합니다. 인스턴스 메타데이터별 내용은 다음과 같습니다.
 
 | 인스턴스 메타데이터     | 내용                                           |
 |----------------|----------------------------------------------|

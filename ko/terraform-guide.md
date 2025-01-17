@@ -620,7 +620,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.uuid                           | String  | -  | 블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `image`인 경우 이미지 ID를 설정<br>- 소스 타입이 `volume`인 경우 기존에 생성된 블록 스토리지 ID를 설정<br>- 소스 타입이 `snapshot`인 경우 스냅숏 ID를 설정<br>- 소스 타입이 `blank`인 경우 설정 불필요<br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
 | block_device.boot_index                     | Integer | O  | 지정한 블록 스토리지의 부팅 순서<br>- `0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐<br>                                                                                                            |
 | block_device.destination_type               | String  | O  | 인스턴스 블록 스토리지의 위치<br>`volume`만 지원                                                                                                                                                |
-| block_device.volume_size                    | Integer | -  | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기 보다 같거나 크게 설정<br>`GB` 단위<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| block_device.volume_size                    | Integer | -  | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | block_device.volume_type               | Enum    | -  | 생성할 블록 스토리지의 타입<br>블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | block_device.delete_on_termination          | Boolean | -  | `true`: 인스턴스 삭제 시 블록 디바이스도 함께 삭제<br>`false`: 인스턴스 삭제 시 블록 디바이스는 함께 삭제하지 않음                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | 블록 스토리지 암호화 정보                                                                                                                                                                               |
@@ -671,10 +671,10 @@ resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
 | 이름        | 타입 | 필수 | 설명                             |
 |-----------| --- |----|--------------------------------|
 | name      | String | O  | 생성할 키페어 이름                     |
-| public_key | String | -  | 등록할 공개키<br>생략하면 새로운 공개키를 생성 |
+| public_key | String | -  | 등록할 공개 키<br>생략하면 새로운 공개 키를 생성 |
 
 > [주의]
-> Terraform을 통해 키페어를 생성하는 경우 개인키는 상태 파일(terraform.tfstate)에 **암호화되지 않은 상태**로 저장됩니다.
+> Terraform을 통해 키페어를 생성하는 경우 개인 키는 상태 파일(terraform.tfstate)에 **암호화되지 않은 상태**로 저장됩니다.
 
 
 ## Resources - 블록 스토리지
@@ -934,7 +934,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | tenant_id | String | - | 로드 밸런서가 생성될 테넌트 ID |
 | vip_subnet_id | String | O | 로드 밸런서가 사용할 서브넷 UUID |
 | vip_address | String | - | 로드 밸런서의 IP 지정 |
-| security_group_ids | Object | - | 로드 벨런서에 적용할 보안 그룹 ID 목록<br>**보안 그룹은 반드시 이름이 아닌 ID로 지정해야 함** |
+| security_group_ids | Object | - | 로드 밸런서에 적용할 보안 그룹 ID 목록<br>**보안 그룹은 반드시 이름이 아닌 ID로 지정해야 함** |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
 | loadbalancer_type | String | - | 로드 밸런서 타입<br>`shared`/`dedicated` 사용 가능<br>생략할 경우 `shared`로 설정됨 |
 
@@ -1016,11 +1016,11 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 | name | String | - | 로드 밸런서 이름 |
 | description | String | - | 풀 설명 |
 | protocol | String | O | 프로토콜<br>`TCP`, `HTTP`, `HTTPS`, `PROXY` 중 하나 |
-| loadbalancer_id | String | -  | 생성할 풀이 연결될 로드밸런서 ID<br>로드밸런서 ID나 리스너 ID 중 하나는 필수로 입력       |
-| listener_id | String | -  | 생성할 풀이 연결될 리스너 ID<br>로드밸런서 ID나 리스너 ID 중 하나는 필수로 입력              |
+| loadbalancer_id | String | -  | 생성할 풀이 연결될 로드 밸런서 ID<br>로드 밸런서 ID나 리스너 ID 중 하나는 필수로 입력       |
+| listener_id | String | -  | 생성할 풀이 연결될 리스너 ID<br>로드 밸런서 ID나 리스너 ID 중 하나는 필수로 입력              |
 | lb_method | String | O | 풀의 트래픽을 멤버에게 분배하는 로드 밸런싱 방식<br>`ROUND_ROBIN`,`LEAST_CONNECTIONS`,`SOURCE_IP` 중 하나 |
 | persistence | Object | - | 생성할 풀의 세션 지속성 |
-| persistence.type | String | O | 세션 지속성 타입<br>`SOURCE_IP`, `HTTP_COOKIE`, `APP_COOKIE` 중 하나<br>로드 밸런싱 방식이 `SOURCE_IP`인 경우 사용 할 수 없음<br>프로토콜이 `HTTPS`이거나 `TCP`인 경우 HTTP_COOKIE와 APP_COOKIE를 사용할 수 없음 |
+| persistence.type | String | O | 세션 지속성 타입<br>`SOURCE_IP`, `HTTP_COOKIE`, `APP_COOKIE` 중 하나<br>로드 밸런싱 방식이 `SOURCE_IP`인 경우 사용할 수 없음<br>프로토콜이 `HTTPS`이거나 `TCP`인 경우 HTTP_COOKIE와 APP_COOKIE를 사용할 수 없음 |
 | persistence.cookie_name | String | - | 쿠키 이름<br>persistence.cookie_name은 세션 지속성 타입이 APP_COOKIE인 경우에만 사용 가능 |
 | admin_state_up | Boolean | - | 관리자 제어 상태 |
 | member_port | Integer | - | 멤버의 수신 포트<br>트래픽을 이 포트로 전달<br>기본 값은 `-1` |
