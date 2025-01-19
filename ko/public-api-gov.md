@@ -840,10 +840,10 @@ X-Auth-Token: {tokenId}
 | server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨                                                                                                                                                   |
 | server.security_groups.name | body | String | - | 인스턴스에 추가할 보안 그룹 이름                                                                                                                                                                        |
 | server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용                                                                                                                                |
-| server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨                                                                                                                                                    |
-| server.imageRef | Body | String | O | 인스턴스를 생성할 때 사용할 이미지 ID                                                                                                                                                                    |
+| server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 원본 블록 스토리지의 가용성 영역과 동일하게 설정 필요 |
+| server.imageRef | Body | String | - | 인스턴스를 생성할 때 사용할 이미지 ID<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요 |
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID                                                                                                                                                                |
-| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC이 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정                                                                                                  |
+| server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC가 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정                                                                                                  |
 | server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID                                                                                                                                                                   |
 | server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID                                                                                                                                                              |
 | server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                     |
@@ -851,16 +851,16 @@ X-Auth-Token: {tokenId}
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함                                                                                                                               |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍                                                                                                                                                |
 | server.block_device_mapping_v2 | Body | Object | O | 인스턴스의 블록 스토리지 정보 객체 |
-| server.block_device_mapping_v2.source_type | Body | Enum | O | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음) |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 원본 이미지 ID <br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음)<br>- `volume`: 기존에 생성된 블록 스토리지를 사용<br>- `snapshot`: 스냅숏을 이용해 블록 스토리지 생성 |
+| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `image`인 경우 이미지 ID를 설정<br>- 소스 타입이 `volume`인 경우 기존에 생성된 블록 스토리지 ID를 설정<br>- 소스 타입이 `snapshot`인 경우 스냅숏 ID를 설정<br>- 소스 타입이 `blank`인 경우 설정 불필요<br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐                                                                                                                         |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: GPU 인스턴스, U2 인스턴스 타입을 이용하는 경우<br>- `volume`: 그 외의 인스턴스 타입을 이용하는 경우 |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지                                                                                                                         |
-| server.block_device_mapping_v2.volume_size | Body | Integer | O | 생성할 블록 스토리지 크기<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어                                                                                                                                                                          |
-| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.                                                                                                                                                      |
-| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.                                                                                                                                     |
+| server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
+| server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False                                                                                                                    |
 
 <details><summary>예시</summary>
@@ -1529,6 +1529,183 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+
+#### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
+
+## 인스턴스 메타데이터
+
+인스턴스 메타데이터 값에 따라 콘솔의 **Compute > Instance** 서비스 페이지에서 인스턴스 상세 정보 화면의 내용을 결정합니다. 인스턴스 메타데이터별 내용은 다음과 같습니다.
+
+| 인스턴스 메타데이터     | 내용                                           |
+|----------------|----------------------------------------------|
+| os_distro      | **기본 정보**의 **OS**의 이름<br>os_version과 조합하여 사용 |
+| os_version     | **기본 정보**의 **OS**의 버전<br>os_distro와 조합하여 사용  |
+| image_name     | **기본 정보**의 **이미지 이름**                        |
+| os_type      | **접속 정보** 형식                                 |
+| login_username | **접속 정보**의 사용자 이름                            |
+
+> [주의] 인스턴스 메타데이터 변경 및 삭제 시 연관 서비스 및 기능에 영향이 발생할 수 있으며, 이에 따른 결과에 대한 책임은 사용자에게 있습니다.
+
+### 인스턴스 메타데이터 목록 보기
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름       | 종류 | 형식 | 필수 | 설명                                               |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                           |
+| serverId | URL | UUID | O | 인스턴스 ID                                          |
+| tokenId  | Header | String | O | 토큰 ID                                            |
+
+#### 응답
+
+| 이름       | 종류 | 형식 | 설명                                               |
+|----------|---|---|--------------------------------------------------|
+| metadata | Body | Object | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "metadata": {
+        "os_distro": "ubuntu",
+        "description": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "volume_size": "20",
+        "project_domain": "NORMAL",
+        "monitoring_agent": "sysmon",
+        "image_name": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "os_version": "Server 20.04 LTS",
+        "os_architecture": "amd64",
+        "login_username": "ubuntu",
+        "os_type": "linux",
+        "tc_env": "sysmon,dfeac7db42a192a73959d5646117af58"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### 인스턴스 메타데이터 보기
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름       | 종류 | 형식 | 필수 | 설명                       |
+|----------|---|---|---|--------------------------|
+| tenantId | URL | String | O | 테넌트 ID                   |
+| serverId | URL | UUID | O | 인스턴스 ID                  |
+| key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키 |
+| tokenId  | Header | String | O | 토큰 ID                    |
+
+#### 응답
+
+| 이름   | 종류 | 형식 | 설명                                               |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+### 인스턴스 메타데이터 생성/수정하기
+
+인스턴스의 메타데이터를 생성하거나 수정합니다.
+요청하는 키가 기존 키와 일치하는 경우 키-값을 요청 값으로 변경합니다.
+
+```
+PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름       | 종류 | 형식 | 필수 | 설명                                               |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                           |
+| serverId | URL | UUID | O | 인스턴스 ID                                          |
+| key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키                         |
+| tokenId  | Header | String | O | 토큰 ID                                            |
+| meta     | Body | Object | O | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+#### 응답
+
+| 이름   | 종류 | 형식 | 설명                                               |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | 인스턴스에 생성 혹은 수정할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### 인스턴스 메타데이터 삭제하기
+
+요청하는 키와 일치하는 인스턴스의 메타데이터를 삭제합니다.
+
+```
+DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름       | 종류 | 형식 | 필수 | 설명                  |
+|----------|---|---|---|---------------------|
+| tenantId | URL | String | O | 테넌트 ID              |
+| serverId | URL | UUID | O | 인스턴스 ID             |
+| key      | URL | String | O | 인스턴스에서 삭제할 메타데이터의 키 |
+| tokenId  | Header | String | O | 토큰 ID               |
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
