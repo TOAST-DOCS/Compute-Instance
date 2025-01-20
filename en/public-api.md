@@ -841,8 +841,8 @@ X-Auth-Token: {tokenId}
 | server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
 | server.security_groups.name | body | String | - | Name of security group to be added to instance |
 | server.user_data | body | String | - | Script to be executed or settings to apply after instance boot<br>Allows up to 65535 bytes of base 64-encoded character strings |
-| server.availability_zone | body | String | - | Availability zone where instance will be created<br>If left blank, a random zone will be selected |
-| server.imageRef | Body | String | O | Image ID to create instance |
+| server.availability_zone | body | String | - | Availability zone where instance will be created<br>If left blank, a random zone will be selected<br>If the source type of the root block storage is `volume`, `snapshot`, it must be set to the same availability zone as the source block storage |
+| server.imageRef | Body | String | - | Image ID to create instance<br>No configuration required if the source type of the root block storage is `volume`, `snapshot` |
 | server.flavorRef | Body | String | O | Instance flavor ID to create instance |
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | Network ID to create instance |
@@ -852,19 +852,19 @@ X-Auth-Token: {tokenId}
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
 | server.block_device_mapping_v2 | Body | Object | O | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
-| server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create empty block storage |
-| server.block_device_mapping_v2.uuid | Body | String | - | Source image ID of block storage<br>For root block storage, the source must be bootable |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage)<br>- `volume`: Use previously created block storage<br>- `snapshot`: Create block storage with snapshots |
+| server.block_device_mapping_v2.uuid | Body | String | - | Different settings required for different types of block storage sources<br>- Set the image ID if the source type is `image`<br>- Set an existing created block storage ID if the source type is `volume`<br>- Set `snapshot` ID if the source type is `snapshot`<br>- No settings required if source type is ` blank`<br>For root block storage, it must be a bootable source. |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For GPU and U2 instance flavors<br>- `volume`: For other instance flavors |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>No configuration required if the source type of block storage is `volume`, `snapshot`<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
-| server.block_device_mapping_v2.volume_size | Body | Integer | O | Size of block storage to create<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | Size of block storage to create<br>Different settings required for different types of block storage sources<br>- No configuration required if source type is `volume`<br>- Set equal to or larger than the original block storage size if the source type is `snapshot`<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | Block storage encryption information                                                                                                                                                                                        |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | AppKeys for Secure Key Manager products                                                                                                                                                                              |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
 | server.key_name | Body | String | O | Key pair to access instance |
-| server.min_count | Body | Integer | - | Minimum number of instances to create with this request.<br>Default value is 1. |
-| server.max_count | Body | Integer | - | Maximum number of instances to create with this request.<br>Default value is min_count, max value is 10. |
+| server.min_count | Body | Integer | - | Minimum number of instances to create with this request.<br>Default value is 1.<br>Can only be set to `1` if the source type of the block storage is `volume` |
+| server.max_count | Body | Integer | - | Maximum number of instances to create with this request.<br>Default value is min_count, max value is 10.<br>Can only be set to `1` if the source type of the block storage is `volume` |
 | server.return_reservation_id | Body | Boolean | - | Instance creation request reservation ID.<br>If set to True, reservation ID is returned instead of instance creation information.<br>Default value is False |
 
 <details><summary>Example</summary>
@@ -1533,6 +1533,183 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+
+#### Response
+This API does not return a response body.
+
+
+## Instance Metadata
+
+The values of the instance metadata determine the content of the instance details screen on the **Compute > Instance** service page in the console. The contents by instance metadata are as follows
+
+| Instance Metadata     | Content                                           |
+|----------------|----------------------------------------------|
+| os_distro      | Name of the **OS** in **Basic Information**<br>Used in combination with os_version |
+| os_version     | Version of the **OS** in **Basic Information**<br>Used in combination with os_distro  |
+| image_name     | **Image name** for **Basic Information**                        |
+| os_type      | **Access Information** format                                 |
+| login_username | Username in **Access Information**                            |
+
+> [Caution] Changing and deleting instance metadata can affect related services and features, and you are responsible for the consequences.
+
+### View a List of Instance Metadata
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+This API does not require a request body.
+
+| Name       | Type | Format | Required | Description                                               |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | Tenant ID                                           |
+| serverId | URL | UUID | O | Instance ID                                          |
+| tokenId  | Header | String | O | Token ID                                            |
+
+#### Response
+
+| Name       | Type | Format | Description                                               |
+|----------|---|---|--------------------------------------------------|
+| metadata | Body | Object | Metadata objects to create or modify on the instance<br>Key-value pairs of max 255 characters |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "metadata": {
+        "os_distro": "ubuntu",
+        "description": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "volume_size": "20",
+        "project_domain": "NORMAL",
+        "monitoring_agent": "sysmon",
+        "image_name": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "os_version": "Server 20.04 LTS",
+        "os_architecture": "amd64",
+        "login_username": "ubuntu",
+        "os_type": "linux",
+        "tc_env": "sysmon,dfeac7db42a192a73959d5646117af58"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### View Instance Metadata
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+This API does not require a request body.
+
+| Name       | Type | Format | Required | Description                       |
+|----------|---|---|---|--------------------------|
+| tenantId | URL | String | O | Tenant ID                   |
+| serverId | URL | UUID | O | Instance ID                  |
+| key      | URL | String | O | Key for metadata to create or modify on the instance |
+| tokenId  | Header | String | O | Token ID                    |
+
+#### Response
+
+| Name   | Type | Format | Description                                               |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | Metadata objects to create or modify on the instance<br>Key-value pairs of max 255 characters |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+### Create/Modify Instance Metadata
+
+Create or modify metadata for the instance.
+If the key you are requesting matches an existing key, change the key-value to the requested value.
+
+```
+PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name       | Type | Format | Required | Description                                               |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | Tenant ID                                           |
+| serverId | URL | UUID | O | Instance ID                                          |
+| key      | URL | String | O | Key for metadata to create or modify on the instance                         |
+| tokenId  | Header | String | O | Token ID                                            |
+| meta     | Body | Object | O | Metadata objects to create or modify on the instance<br>Key-value pairs of max 255 characters |
+
+<details>
+<summary>Example</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+#### Response
+
+| Name   | Type | Format | Description                                               |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | Metadata objects to create or modify on the instance<br>Key-value pairs of max 255 characters |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### Delete Instance Metadata
+
+Delete metadata for instances that match the key you're requesting.
+
+```
+DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+This API does not require a request body.
+
+| Name       | Type | Format | Required | Description                  |
+|----------|---|---|---|---------------------|
+| tenantId | URL | String | O | Tenant ID              |
+| serverId | URL | UUID | O | Instance ID             |
+| key      | URL | String | O | The key to the metadata you want to delete from the instance |
+| tokenId  | Header | String | O | Token ID               |
 
 #### Response
 This API does not return a response body.
