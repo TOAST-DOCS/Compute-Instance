@@ -56,7 +56,7 @@ The root block storage size varies depending on instance flavor.
 > If you select **block storage** for **Use Existing Resource** in the **OS settings**, you can't change the block storage size.
 > If you select **snapshot** for **Use Existing Resource** in the **OS settings**, block storage size must be set equal to or larger than the original block storage size.
 
-### Block Storage Type
+#### Block Storage Type
 
 Determines the default block storage type of an instance.
 
