@@ -4,6 +4,14 @@
 
 You can create instances either by using the settings below or by using instance templates. To create instances using instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
 
+### OS Settings
+
+Determine how the root block storage is created that will be used when an instance is created.
+
+- Select either **Create New and Set up** or **Use Existing Resource**.
+- If you select **Create New and Set up**, create root block storage using an image.
+- If you select **Use Existing Resource**, use a previously created block storage or snapshot.
+
 ### Image
 
 Select the image that contains the operating system you need. You can choose between public images provided by NHN Cloud, images you've previously created, or shared images.
@@ -16,11 +24,55 @@ The available instance flavors vary depending on the image you choose, so we rec
 | Windows                           | 50GB or more  | 2GB or more |
 
 
+### Root Block Storage
+
+Set up root block storage according to the **OS settings**.
+
+- If you select **Create New and Set up**, create the root block store by specifying the **block storage type** and **block storage size**.
+- If you select **Use Existing Resource**, specify the **original resource** to use as root block storage.
+
+#### Original Resource
+
+You can select either a previously created **block storage** or **snapshot**.
+
+- When you select **block storage**, use the previously created block storage as the root block storage.
+- When you select **snapshot**, the root block storage is created using a previously created snapshot.
+
+#### Block Storage Size
+
+Specify the root block storage size of an instance.
+
+- The block storage size must be at least the minimum size required by the image.
+
+The root block storage size varies depending on instance flavor.
+
+| Flavors               | Supported Block Storage Size         |
+| -------------------| -------------------------- |
+| u2 flavors             | 20 ~ 100 GB (varies by flavor) |
+| t2, m2, c2, r2, and x1 flavors | 20 ~ 2000 GB               |
+
+> [Note]
+> Because you are charged by block storage size, it is inefficient to make the default block storage size large without consideration. We recommend that you add additional block storage as needed.
+> If you select **block storage** for **Use Existing Resource** in the **OS settings**, you can't change the block storage size.
+> If you select **snapshot** for **Use Existing Resource** in the **OS settings**, block storage size must be set equal to or larger than the original block storage size.
+
+#### Block Storage Type
+
+Determines the default block storage type of an instance.
+
+- Choose either **HDD** or **SSD**. The choice of block storage type affects pricing and performance.
+- You cannot change the block storage type once the instance is created.
+
+> [Note]
+> If you select **Use Existing Resource** in the **OS settings**, you can't change the block storage type.
+
 ### Availability Zone
 
 If an availability zone is not specified, a random zone is selected. An instance can use a block storage only if they both exist in the same availability zone. If the block storage you wish to use exists in a particular availability zone, then select that zone.
 
-> [Note] VPC resources are available in all availability zones.
+> [Note]
+> Resources in a VPC can be used in any availability zone.
+> If you select **Use Existing Resource** in the **OS settings**, you can't change the availability zone.
 
 For more details on availability zones, see [Availability Zone in Instance Overview](./overview/#availability-zone).
 
@@ -35,33 +87,14 @@ Instance flavors can be changed in the NHN Cloud console even after instance cre
 
 > [Caution] An instance's root block storagecannot be changed by changing instance flavors.
 
-### Block Storage Size
-
-Determines the root block storage size of an instance.
-
-- The block storage size must be at least the minimum size required by the image.
-
-The root block storage size varies depending on instance flavor.
-
-| Flavors               | Supported Block Storage Size         |
-| -------------------| -------------------------- |
-| u2 flavors             | 20 ~ 100 GB (varies by flavor) |
-| t2, m2, c2, r2, and x1 flavors | 20 ~ 2000 GB               |
-
->[Note] Creating a default block storage with the largest possible size is not always efficient since you are charged by block storage size. We recommend you add block storages as they become necessary.
-
-### Block Storage Type
-
-Determines the default block storage type of an instance.
-
-- Choose either **HDD** or **SSD**. The choice of block storage type affects pricing and performance.
-- You cannot change the block storage type once the instance is created.
-
 ### Number of Instances
 
 You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, block storage size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` will result in `my-instance-1` and `my-instance-2`. The maximum number of instances you can create at once is 10.
 
 When you create multiple instances without specifying an availability zone, each instance will be created in a randomly selected availability zone. For example, if two instances are created without specifying an availability zone, they may be created in the same zone or they may be created in different zones. If all instances need to be created in the same availability zone, select a particular zone.
+
+> [Note]
+> If you select **block storage** for **Use Existing Resource** in the **OS settings** or **Use Existing Network Interface** in the **network settings**, the number of instances is limited to `1`.
 
 ### Key Pair
 
@@ -213,6 +246,12 @@ You can change instance OS information regardless of the state of the instance.
 On the **Compute > Instance** page, click the instance whose OS information you want to change. On the **Basic Information** tab of that instance's details screen, click **OS > Modify**.
 
 > [Note] You can't change the OS type.
+
+### Change Instance Description
+ 
+You can change instance description regardless of the state of the instance. 
+ 
+On the **Compute > Instance** page, click the instance whose information you want to change. On the **Basic Information** tab of that instance's details screen, click **Description > Change**.
 
 ### Change Instance Key Pair
 

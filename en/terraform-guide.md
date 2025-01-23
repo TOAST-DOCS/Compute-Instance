@@ -22,6 +22,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * Compute
     * nhncloud_compute_instance_v2
     * nhncloud_compute_volume_attach_v2
+    * nhncloud_compute_keypair_v2
 * Network
     * nhncloud_lb_loadbalancer_v2
     * nhncloud_lb_listener_v2
@@ -50,6 +51,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * nhncloud_images_image_v2
 * nhncloud_blockstorage_volume_v2
 * nhncloud_compute_flavor_v2
+* nhncloud_compute_keypair_v2
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
@@ -408,6 +410,19 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 | name | String | - | Name of flavor to query |
 
 
+### Key Pair
+
+```
+data "nhncloud_compute_keypair_v2" "my_keypair"{
+  name = "my_keypair"
+}
+```
+
+| Name    | Format | Required | Description         |
+| ------ | ---- |----|------------|
+| name | String | O  | Key pair name to query |
+
+
 ### Snapshot
 
 ```
@@ -593,7 +608,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | flavor_name                                 | String  | -  | Flavor name of instance to create<br>Required if flavor_id is empty                                                                                                                                                |
 | flavor_id                                   | String  | -  | Flavor ID of instance to create<br>Required if flavor_name is empty                                                                                                                                              |
 | key_pair                                    | String  | -  | Key pair name to use for accessing the instance<br>You can create a new key pair from **Compute > Instance > Key Pairs** on NHN Cloud console,<br>or register an existing key pair<br>See `User Guide > Compute > Instance > Console User Guide` for more details            |
-| availability_zone                           | String  | -  | Availability zone of an instance to create                                                                                                                                                                             |
+| availability_zone                           | String  | -  | Availability zone where instance will be created<br>If left blank, a random zone will be selected<br>If the source type of the root block storage is `volume`, `snapshot`, it must be set to the same availability zone as the source block storage |
 | network                                     | Object  | -  | VPC network information to be attached to an instance to create.<br>Go to **Network > VPC > Management** on the console, select VPC to be attached, and check the network name and UUID at the bottom.                                                                       |
 | network.name                                | String  | -  | Name of VPC network <br>One among network.name, network.uuid, and network.port must be specified.                                                                                                                        |
 | network.uuid                                | String  | -  | ID of VPC network                                                                                                                                                                                  |
@@ -601,12 +616,12 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | security_groups                             | Array   | -  | List of the security group names for instance <br>Select a security group from **Network > VPC > Security Groups** on the console, and check detailed information at the bottom of the page.                                                                             |
 | user_data                                   | String  | -  | Script to be executed after instance booting and its configuration<br>Base64-encoded string, which allows up to 65535 bytes<br>                                                                                                                              |
 | block_device                                | Object  | O  | Block storage information object |
-| block_device.source_type                    | String  | O  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage) |
-| block_device.uuid                           | String  | -  | Original image ID of block storage <br>For root block storage, it must be a bootable source.                            |
+| block_device.source_type                    | String  | O  | Type of original block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage)<br>- `volume`: Use previously created block storage<br>- `snapshot`: Create block storage with snapshots |
+| block_device.uuid                           | String  | -  | Different settings required for different types of block storage sources<br>- Set the image ID if the source type is `image`<br>- Set an existing created block storage ID if the source type is `volume`<br>- Set `snapshot` ID if the source type is `snapshot`<br>- No settings required if source type is ` blank`<br>For root block storage, it must be a bootable source. |
 | block_device.boot_index                     | Integer | O  | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority<br>                                                                                                            |
 | block_device.destination_type               | String  | O  |Location of instance block storage<br>Supports `volume` only                                                     |
-| block_device.volume_size                    | Integer | O  | Block storage size to create<br>In `GB` units<br>Depending on the instance type, the size of root block storage that can be created varies, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size` for details. |
-| block_device.volume_type               | Enum    | -  | Type of block storage<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`.                                                                                         |
+| block_device.volume_size                    | Integer | -  | Size of block storage to create<br>Different settings required for different types of block storage sources<br>- No settings required if source type is `volume`<br>- Set equal to or larger than the original block storage size if the source type is `snapshot`<br>GB (unit)<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| block_device.volume_type               | Enum    | -  | Type of Block Storage to Create<br>No configuration required if the source type of the block storage is `volume`, `snapshot`<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
 | block_device.delete_on_termination          | Boolean | -  | `true`: When deleting an instance, delete a block device<br>`false`: When deleting an instance, do not delete a block device                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | About block storage encryption                                                                                                                                                                               |
 | block_device.nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                                                    |
@@ -638,6 +653,28 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | ------ | --- |---------| --------- |
 | instance_id | String | O       | Target instance to attach the block storage |
 | volume_id | String | O       | UUID of block storage to be attached |
+
+
+### Key Pair
+```
+resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
+  name = "tf_kp_01"
+}
+
+# specify public_key
+resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
+  name = "tf_kp_02"
+  public_key = "ssh-rsa ... Generated-by-Nova"
+}
+```
+
+| Name        | Format | Required | Description                             |
+|-----------| --- |----|--------------------------------|
+| name      | String | O  | Name of the key pair to create                     |
+| public_key | String | -  | Public key to register<br>If omitted, create a new public key |
+
+> [Caution]
+> When you create a key pair through Terraform, the private key is stored **unencrypted** in the state file (terraform.tfstate).
 
 
 ## Resources - Block Storage
@@ -898,7 +935,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | vip_address | String | - | IP address of load balancer |
 | security_group_ids | Object | - | List of security group IDs to be applied for load balancer <br>**Security groups must be specified by ID, not by name** |
 | admin_state_up | Boolean | - | Administrator control status |
-
+| loadbalancer_type | String | - | Load Balancer Type<br>`shared/dedicated` available<br>Set to `shared` if omitted |
 
 ### Create Listener
 
@@ -954,11 +991,11 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | List of SNI certificate paths |
 | insert_headers | String | - | List of headers to be added before request is sent to a backend member |
 | admin_state_up | Boolean | - | Administrator control status |
+| keepalive_timeout | Integer | - | The listener's keepalive timeout |
 
 
 ### Create Pool
 
-<font color='red'>**(Caution) NHN Cloud does not support specifying `loadbalancer_id` when creating a pool.**</font>
 
 ```
 resource "nhncloud_lb_pool_v2" "tf_pool_01"{
@@ -979,12 +1016,14 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 | name | String | - | Load balancer name |
 | description | String | - | Pool description |
 | protocol | String | O | Protocol <br>One among `TCP`, `HTTP`, `HTTPS`, and `PROXY` |
-| listener_id | String | O | ID of listener with which a pool to create is associated |
+| loadbalancer_id | String | -  | The load balancer ID that the pool to be created will be connected to<br>At least one of the load balancer ID or listener ID is required       |
+| listener_id | String | -  | ID of listener with which a pool to create is associated<br>At least one of the load balancer ID or listener ID is required              |
 | lb_method | String | O | Load balancing method to distribute pool traffic to members <br>One among `ROUND_ROBIN`,`LEAST_CONNECTIONS`, and `SOURCE_IP` |
 | persistence | Object | - | Session persistence of a pool to create |
 | persistence.type | String | O | Session persistence type<br>One among `SOURCE_IP`, `HTTP_COOKIE`, and `APP_COOKIE` <br>Unavailable if the load balancing method is `SOURCE_IP`<br>HTTP_COOKIE and APP_COOKIE are unavailable if the protocol is `HTTPS` or `TCP` |
 | persistence.cookie_name | String | - | Name of cookie <br>persistence.cookie_name is available only when the session persistence type is APP_COOKIE |
 | admin_state_up | Boolean | - | Administrator control status |
+| member_port | Integer | - | The member's listening port<br>Forward traffic to this port<br>The default value is `-1` |
 
 
 ### Create Health Monitor
@@ -1015,6 +1054,8 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | http_method | String | - | HTTP method to use for status check<br>The default is GET |
 | expected_codes | String | - | HTTP(S) response code of members to be considered as normal status <br/>expected_codes can be set as list (`200,201,202`) or range (`200-202`) |
 | admin_state_up | Boolean | - | Administrator control status |
+| host_header | String | - | Field values in the host header to use for status checking<br>If you set the health check type to `TCP`, the value you set in this field is ignored. |
+| health_check_port | Integer | - | Member port targeted by health check |
 
 
 ### Create Member
