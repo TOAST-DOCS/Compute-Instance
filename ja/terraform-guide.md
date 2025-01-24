@@ -1024,7 +1024,6 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | vip_address | String | - | ロードバランサーのIP指定 |
 | security_group_ids | Object | - | ロードバランサーに適用するセキュリティグループIDリスト<br>**セキュリティグループは必ず名前ではなくIDで指定する必要があります。** |
 | admin_state_up | Boolean | - | 管理者制御状態 |
-
 | loadbalancer_type | String | - | ロードバランサータイプ<br>`shared`/`dedicated`使用可能<br>省略した場合、`shared`に設定される |
 
 ### リスナー作成
