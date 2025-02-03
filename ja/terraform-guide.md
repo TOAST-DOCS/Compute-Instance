@@ -22,6 +22,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
 * Compute
     * nhncloud_compute_instance_v2
     * nhncloud_compute_volume_attach_v2
+    * nhncloud_compute_keypair_v2    
 * Network
     * nhncloud_lb_loadbalancer_v2
     * nhncloud_lb_listener_v2
@@ -50,6 +51,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
 * nhncloud_images_image_v2
 * nhncloud_blockstorage_volume_v2
 * nhncloud_compute_flavor_v2
+* nhncloud_compute_keypair_v2
 * nhncloud_blockstorage_snapshot_v2
 * nhncloud_networking_vpc_v2
 * nhncloud_networking_vpcsubnet_v2
@@ -507,6 +509,18 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 | name | String | - | 照会するインスタンスタイプ名 |
 
 
+### キーペア
+
+```
+data "nhncloud_compute_keypair_v2" "my_keypair"{
+  name = "my_keypair"
+}
+```
+
+| 名前  | 形式 | 必須 | 説明       |
+| ------ | ---- |----|------------|
+| name | String | O  | 照会するキーペア名 |
+
 ### スナップショット
 
 ```
@@ -690,7 +704,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | flavor_name                                 | String  | -  | 作成するインスタンスのインスタンスタイプ名<br>flavor_idが空の時は必須                                                                                                                                               |
 | flavor_id                                   | String  | -  | 作成するインスタンスのインスタンスタイプID<br>flavor_nameが空の時は必須                                                                                                                                             |
 | key_pair                                    | String  | -  | インスタンス接続に使用するキーペア名<br>キーペアはNHN Cloudコンソールの**Compute > Instance > Key Pair**メニューで新たに作成するか、<br>すでに持っているキーペアを登録して使用。<br>作成、登録方法は`ユーザーガイド > Compute > Instance > コンソール使用ガイド`を参照。           |
-| availability_zone                           | String  | -  | 作成するインスタンスのアベイラビリティゾーン                                                                                                                                                                            |
+| availability_zone                           | String  | -  | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意のゾーンが選択される<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合、元のブロックストレージのアベイラビリティゾーンと同じに設定する必要があります。同じに設定する必要があります。 |
 | network                                     | Object  | -  | 作成するインスタンスに接続するVPCネットワーク情報。<br>コンソールの**Network > VPC > Management**メニューで接続するVPCを選択すると、下部の詳細情報画面でネットワーク名とuuidを確認可。                                                                      |
 | network.name                                | String  | -  | VPCネットワーク名。 <br>network.name、network.uuid、network.portのうち、いずれか1つを明示                                                                                                                       |
 | network.uuid                                | String  | -  | VPCネットワークID                                                                                                                                                                                  |
@@ -698,12 +712,12 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | security_groups                             | Array   | -  | インスタンスで使用するセキュリティグループの名前リスト <br>コンソールの**Network > VPC > Security Groups**メニューで使用するセキュリティグループを選択すると、下部の詳細情報画面で情報を確認可                                                                            |
 | user_data                                   | String  | -  | インスタンスの起動後に実行するスクリプトと設定<br>base64でエンコードされた文字列で65535バイトまで許容。<br>                                                                                                                              |
 | block_device                                | Object  | O  | インスタンスのブロックストレージ情報オブジェクト |
-| block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージを作成(ルートブロックストレージとして使用不可) |
-| block_device.uuid                           | String  | -  | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない                           |
+| block_device.source_type                    | String  | O  | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`:空のブロックストレージ作成(ルートブロックストレージとして使用できない)<br>- `volume`:既存のブロックストレージを使用<br>- `snapshot`:スナップショットを利用してブロックストレージ作成 |
+| block_device.uuid                           | String  | -  | ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
 | block_device.boot_index                     | Integer | O  | 指定したブロックストレージの起動順序<br>- `0`の場合はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序は低くなる<br>                                                                                                            |
 | block_device.destination_type               | String  | O  | インスタンスブロックストレージの位置                                                                                |
-| block_device.volume_size                    | Integer | O  | 作成するブロックストレージサイズ<br>`GB`単位<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は「ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージのサイズ」を参照してください。 |
-| block_device.volume_type               | Enum    | -  | ブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`の**ブロックストレージタイプリスト表示**レスポンスの`name`参考                                                                                        |
+| block_device.volume_size                    | Integer | -  | 作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合、設定不要<br>- ソースタイプが`snapshot`の場合、原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参照 |
+| block_device.volume_type               | Enum    | -  | 作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`、`snapshot`の場合は設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`を参照 |
 | block_device.delete_on_termination          | Boolean | -  | `true`：インスタンス削除時にブロックデバイスも一緒に削除<br>`false`：インスタンス削除時にブロックデバイスは一緒に削除しない                                                                                                                   |
 | block_device.nhn_encryption                 | Object  | -  | ブロックストレージ暗号化情報                                                                                                                                                                              |
 | block_device.nhn_encryption.skm_appkey      | String  | O  | Secure Key Manager商品のアプリケーションキー                                                                                                                                                                   |
@@ -733,6 +747,26 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | instance_id | String | O  | ブロックストレージを接続する対象インスタンス |
 | volume_id | String | O  | 接続するブロックストレージUUID |
 
+
+### キーペア
+```
+resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
+  name = "tf_kp_01"
+}
+# public_key指定
+resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
+  name = "tf_kp_02"
+  public_key = "ssh-rsa ... Generated-by-Nova"
+}
+```
+
+| 名前      | タイプ | 必須 | 説明                           |
+|-----------| --- |----|--------------------------------|
+| name      | String | O  | 作成するキーペア名                   |
+| public_key | String | -  | 登録する公開鍵<br>省略すると、新しい公開鍵を作成 |
+
+> [注意]
+> Terraformを通じてキーペアを作成する場合、秘密鍵は状態ファイル(terraform.tfstate)に**暗号化されていない状態**で保存されます。
 
 ## Resources - ブロックストレージ
 
@@ -990,7 +1024,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | vip_address | String | - | ロードバランサーのIP指定 |
 | security_group_ids | Object | - | ロードバランサーに適用するセキュリティグループIDリスト<br>**セキュリティグループは必ず名前ではなくIDで指定する必要があります。** |
 | admin_state_up | Boolean | - | 管理者制御状態 |
-
+| loadbalancer_type | String | - | ロードバランサータイプ<br>`shared`/`dedicated`使用可能<br>省略した場合、`shared`に設定される |
 
 ### リスナー作成
 
@@ -1046,11 +1080,10 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | sni_container_refs | Array | - | SNI証明書のパスリスト |
 | insert_headers | String | - | バックエンドメンバーにリクエストを転送する前に追加するヘッダリスト |
 | admin_state_up | Boolean | - | 管理者制御状態 |
+| keepalive_timeout | Integer | - | リスナーのkeepalive timeout |
 
 
 ### プール作成
-
-<font color='red'>**(注意) NHN Cloudは、プール作成時に`loadbalancer_id`の指定をサポートしません。**</font>
 
 ```
 resource "nhncloud_lb_pool_v2" "tf_pool_01"{
@@ -1071,12 +1104,14 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 | name | String | - | ロードバランサーの名前 |
 | description | String | - | プールの説明 |
 | protocol | String | O | プロトコル<br>`TCP`、`HTTP`、`HTTPS`、`PROXY`のうちいずれか1つ |
-| listener_id | String | O | 作成するプールが接続されるリスナーID |
+| loadbalancer_id | String | -  | 作成するプールが接続されるロードバランサーID<br>ロードバランサーIDかリスナーIDのいずれかを必ず入力     |
+| listener_id | String | -  | 作成するプールが接続されるリスナーID<br>ロードバランサーIDかリスナーIDのいずれかを必ず入力            |
 | lb_method | String | O | プールのトラフィックをメンバーに分配するロードバランシング方式<br>`ROUND_ROBIN`、`LEAST_CONNECTIONS`、`SOURCE_IP`のいずれか1つ |
 | persistence | Object | - | 作成するプールのセッション持続性 |
 | persistence.type | String | O | セッション持続性タイプ<br>`SOURCE_IP`、`HTTP_COOKIE`、`APP_COOKIE`のうちいずれか1つ<br>ロードバランシング方式が`SOURCE_IP`の場合は使用不可。<br>プロトコルが`HTTPS`または`TCP`の場合、HTTP_COOKIEとAPP_COOKIEを使用不可。 |
 | persistence.cookie_name | String | - | Cookie名<br>persistence.cookie_nameはセッション持続性タイプがAPP_COOKIEの場合にのみ使用可能。 |
 | admin_state_up | Boolean | - | 管理者制御状態 |
+| member_port | Integer | - | メンバーの受信ポート<br>トラフィックをこのポートに伝達<br>デフォルト値は`-1` |
 
 
 ### ヘルスモニター作成
@@ -1107,7 +1142,8 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | http_method | String | - | ヘルスチェックに使用するHTTP Method<br>デフォルト値はGET|
 | expected_codes | String | - | 正常状態とみなすメンバーのHTTP(S)レスポンスコード<br>expected_codesはリスト(`200,201,202`)または範囲指定(`200-202`)も可能。 |
 | admin_state_up | Boolean | - | 管理者制御状態 |
-
+| host_header | String | - | ヘルスチェックに使用するホストヘッダのフィールド値<br>ヘルスチェックタイプを`TCP`に設定した場合、このフィールドに設定した値は無視 |
+| health_check_port | Integer | - | ヘルスチェックの対象となるメンバーポート |
 
 ### メンバー作成
 

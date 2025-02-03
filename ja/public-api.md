@@ -841,8 +841,8 @@ X-Auth-Token: {tokenId}
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略する場合`default`グループが追加される |
 | server.security_groups.name | body | String | - | インスタンスに追加するセキュリティグループ名 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可 |
-| server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意で選択される |
-| server.imageRef | Body | String | O | インスタンスを作成する時に使用するイメージID |
+| server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意のゾーンが選択される<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合、元のブロックストレージのアベイラビリティゾーンと同じに設定する必要があります。 |
+| server.imageRef | Body | String | - | インスタンスを作成する際に使用するイメージID<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合は設定不要 |
 | server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、サブネットID、ポートID、固定IPの中から1つ指定 |
 | server.networks.uuid | Body | UUID | - | インスタンスを作成する時に使用するネットワークID |
@@ -852,19 +852,19 @@ X-Auth-Token: {tokenId}
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
 | server.block_device_mapping_v2 | Body | Object | O | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
-| server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージの原本のタイプ<br>- `image`:イメージを利用してブロックストレージ作成<br>- `blank`: 空のブロックストレージ作成 |
-| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージの原本イメージID <br>ルートブロックストレージの場合、必ず起動可能な原本でなければならない |
+| server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージ作成(ルートブロックストレージとして使用できない)<br>- `volume`:既存のブロックストレージを使用<br>- `snapshot`:スナップショットを利用してブロックストレージ作成 |
+| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：GPUインスタンス、U2インスタンスタイプを利用する場合。<br>- `volume`：その他のインスタンスタイプを利用する場合。 |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 作成するブロックストレージのタイプ<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`, `snapshot`の場合設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のブロックストレージ処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
-| server.block_device_mapping_v2.volume_size | Body | Integer | O | 作成するブロックストレージサイズ<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | 作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合は設定不要<br>- ソースタイプが`snapshot`の場合は原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | ブロックストレージの暗号化情報                                                                                                                                                                                       |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | Secure Key Manager商品のアプリケーションキー                                                                                                                                                                             |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID                                                                                                                                  |
 | server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
-| server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。 |
-| server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。 |
+| server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
+| server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
 | server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエスト予約ID。<br>Trueに指定すると、インスタンス作成情報の代わりに予約IDを返す。<br>デフォルト値はFalse |
 
 <details><summary>例</summary>
@@ -1533,6 +1533,182 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+
+#### レスポンス
+このAPIはレスポンス本文を返しません。
+
+
+## インスタンスメタデータ
+
+インスタンスメタデータ値に基づいてコンソールの**Compute > Instance**サービスページでインスタンス詳細情報画面の内容を決定します。インスタンスメタデータの内容は次のとおりです。
+
+| インスタンスメタデータ   | 内容                                         |
+|----------------|----------------------------------------------|
+| os_distro      | **基本情報**の**OS**の名前<br>os_versionと組み合わせて使用 |
+| os_version     | **基本情報**の**OS**のバージョン<br>os_distroと組み合わせて使用 |
+| image_name     | **基本情報**の**イメージ名**                        |
+| os_type      | **接続情報**形式                               |
+| login_username | **接続情報**のユーザー名                          |
+
+> [注意]インスタンスメタデータの変更及び削除の際、関連サービス及び機能に影響が発生する可能性があり、これによる結果に対する責任はユーザーにあります。
+### インスタンスメタデータリスト表示
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
+
+| 名前     | 種類 | 形式 | 必須 | 説明                                             |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | テナントID                                           |
+| serverId | URL | UUID | O | インスタンスID                                          |
+| tokenId  | Header | String | O | トークンID                                            |
+
+#### レスポンス
+
+| 名前     | 種類 | 形式 | 説明                                             |
+|----------|---|---|--------------------------------------------------|
+| metadata | Body | Object | インスタンスに作成または修正するメタデータオブジェクト<br>最大長さ255文字以下のキーと値のペア |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "metadata": {
+        "os_distro": "ubuntu",
+        "description": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "volume_size": "20",
+        "project_domain": "NORMAL",
+        "monitoring_agent": "sysmon",
+        "image_name": "Ubuntu Server 20.04.6 LTS (2023.11.21)",
+        "os_version": "Server 20.04 LTS",
+        "os_architecture": "amd64",
+        "login_username": "ubuntu",
+        "os_type": "linux",
+        "tc_env": "sysmon,dfeac7db42a192a73959d5646117af58"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### インスタンスメタデータ表示
+
+```
+GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
+
+| 名前     | 種類 | 形式 | 必須 | 説明                     |
+|----------|---|---|---|--------------------------|
+| tenantId | URL | String | O | テナントID                   |
+| serverId | URL | UUID | O | インスタンスID                  |
+| key      | URL | String | O | インスタンスに作成または修正するメタデータのキー |
+| tokenId  | Header | String | O | トークンID                    |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明                                             |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | インスタンスに作成または修正するメタデータオブジェクト<br>最大長さ255文字以下のキーと値のペア |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+### インスタンスメタデータを作成/修正する
+
+インスタンスのメタデータを作成または修正します。
+リクエストするキーが既存のキーと一致する場合、キーと値をリクエスト値に変更します。
+
+```
+PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+| 名前     | 種類 | 形式 | 必須 | 説明                                             |
+|----------|---|---|---|--------------------------------------------------|
+| tenantId | URL | String | O | テナントID                                           |
+| serverId | URL | UUID | O | インスタンスID                                          |
+| key      | URL | String | O | インスタンスに作成または修正するメタデータのキー                        |
+| tokenId  | Header | String | O | トークンID                                            |
+| meta     | Body | Object | O | インスタンスに作成または修正するメタデータオブジェクト<br>最大長さ255文字以下のキーと値のペア |
+
+<details>
+<summary>例</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明                                             |
+|------|---|---|--------------------------------------------------|
+| meta | Body | Object | インスタンスに作成または修正するメタデータオブジェクト<br>最大長さ255文字以下のキーと値のペア |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "meta": {
+        "os_version": "Server 20.04 LTS"
+    }
+}
+```
+
+</p>
+</details>
+
+
+### インスタンスメタデータを削除する
+
+リクエストするキーと一致するインスタンスのメタデータを削除します。
+
+```
+DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+このAPIはリクエスト本文を要求しません。
+
+| 名前     | 種類 | 形式 | 必須 | 説明                |
+|----------|---|---|---|---------------------|
+| tenantId | URL | String | O | テナントID              |
+| serverId | URL | UUID | O | インスタンスID             |
+| key      | URL | String | O | インスタンスから削除するメタデータのキー |
+| tokenId  | Header | String | O | トークンID               |
 
 #### レスポンス
 このAPIはレスポンス本文を返しません。
