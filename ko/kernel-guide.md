@@ -233,7 +233,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 
 #### Rocky 8.10 이상 버전
 
-현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안되는 문제가 있어서 아래 스크립트를 사용합니다.
+현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안되는 문제가 있어서 아래 쉘 스크립트를 사용합니다.
 
 ```bash
 #!/bin/bash
@@ -261,9 +261,9 @@ if [[ "$result" -eq "1" ]]; then
 fi
 ```
 
-##### 스크립트 실행
+##### 스크립트 사용 방법
 
-정상값 입력 시 출력되는 화면입니다.
+쉘 스크립트 실행 후 출력되는 커널 목록 중 부팅할 커널의 번호를 입력합니다.
 
 ```
 [root@rocky810 ~]# bash kernel_select.sh
@@ -277,21 +277,6 @@ Num: 2,  kernel-4.18.0-553.el8_10.x86_64
 index: 0
 Generating grub configuration file ...
 done
-```
-
-비정상값 입력 시 출력되는 화면입니다.
-
-```
-[root@rocky810 ~]# bash kernel_select.sh
-
-# Choose the kernel you want from the list below. #
-------------------------------------------------
-Num: 0,  kernel-4.18.0-553.16.1.el8_10.x86_64
-Num: 1,  kernel-4.18.0-553.8.1.el8_10.x86_64
-Num: 2,  kernel-4.18.0-553.el8_10.x86_64
-------------------------------------------------
-index: 5
-[Error] Please choose only from the indexes in the list
 ```
 
 ##### OS 재시작
