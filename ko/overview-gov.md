@@ -18,7 +18,7 @@
 
 ### 이미지
 
-이미지는 운영체제를 담고 있는 가상 디스크입니다. NHN Cloud는 현재 CentOS, Debian, Ubuntu, Rocky와 Windows를 지원하고 있습니다. 자세한 지원 운영체제 버전은 [엔에이치엔 클라우드(NHN Cloud) 서비스 소개](https://toast.com/service/compute/instance)를 참고합니다.
+이미지는 운영체제를 담고 있는 가상 디스크입니다. NHN Cloud는 현재 CentOS, Debian, Ubuntu, Rocky와 Windows를 지원하고 있습니다. 자세한 지원 운영체제 버전은 [엔에이치엔 클라우드(NHN Cloud) 서비스 소개](https://gov.toast.com/service/compute/instance)를 참고합니다.
 
 모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정돼 있으며, NHN Cloud의 보안 검증을 거쳤기 때문에 안전하게 사용할 수 있습니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/ko/overview-gov/)를 참고합니다.
 
