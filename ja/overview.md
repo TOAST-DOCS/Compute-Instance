@@ -17,7 +17,7 @@
 
 ### イメージ
 
-イメージはオペレーションシステムを含む仮想ディスクです。NHN Cloudは現在CentOS、Debian、Ubuntu、Rocky、Windowsをサポートしています。サポートしているオペレーションシステムのバージョンは[トースト(NHN Cloud)サービス紹介](https://toast.com/service/compute/instance)を参照してください。
+イメージはオペレーションシステムを含む仮想ディスクです。NHN Cloudは現在CentOS、Debian、Ubuntu、Rocky、Windowsをサポートしています。
 
 全てのイメージは、インスタンスの仮想ハードウェアで最適に実行されるよう設定されており、NHN Cloudのセキュリティ検証を経ているため、安全に使用できます。イメージの詳細な説明は[イメージ概要](/Compute/Image/ja/overview/)を参照してください。
 
