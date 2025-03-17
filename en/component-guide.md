@@ -629,7 +629,7 @@ sudo systemctl restart mariadb.service
 - After the instance creation is complete, use SSH to access the instance.
 - The instance must have a floating IP associated and TCP port 22 (SSH) must be allowed in the security group.
 - Connect to the instance using an SSH client and the set key pair.
-- For a detailed guide on SSH connection, refer to [SSH Connection Guide\](https://docs.toast.com/en/Compute/Instance/en/overview/#linux).
+- For a detailed guide on SSH connection, refer to [SSH Connection Guide](./overview/#linux).
 
 ### Install TMI
 
