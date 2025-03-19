@@ -637,8 +637,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_PORT
 
 
 ```
-[centos@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance centos]# cd
+[centos@tiberoinstance ~]$ sudo su - root
 [root@tiberoinstance ~]# pwd
 /root
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 8639
