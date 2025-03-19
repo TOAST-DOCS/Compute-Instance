@@ -649,8 +649,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 
 ##### Tibero 7 Installation
 ```
-[rocky@tiberoinstance ~]$ sudo su root
-[root@tiberoinstance rocky]# cd
+[rocky@tiberoinstance ~]$ sudo su - root
 [root@tiberoinstance ~]# pwd
 /root
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
