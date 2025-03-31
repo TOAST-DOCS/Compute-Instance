@@ -24,7 +24,7 @@ NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주�
 > |--|--|--|
 > |가용성| 이중화 지원 | 이중화 지원 안 함 |
 > |유지 관리|NHN Cloud에서 관리| 사용자가 직접 관리|
-> |보안 그룹|설정 불가| 설정 가능|액
+> |보안 그룹|설정 불가| 설정 가능|
 > |네트워크 ACL| 설정 가능 | 설정 가능|
 > |SSH|사용 불가| 사용 가능|
 
@@ -160,7 +160,7 @@ SQL Server 구성관리자의  SQL Server 구성관리자(로컬) > SQL Server �
 2. **서비스**탭에서 **General > 시작모드**를 **자동**으로 변경합니다.
 
 > [참고]
-> MS-SQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes/) 를 참고하시기 바랍니다.
+> MS-SQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes-ngsc/)를 참고하시기 바랍니다.
 ## MySQL Instance
 ### MySQL 시작/정지 방법
 
@@ -252,7 +252,7 @@ MySQL 디렉터리 및 파일 설명은 아래와 같습니다.
 | SLOW_LOG | MySQL Slow Query 파일 경로 -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
 
 
-> MySQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes/)를 참고하시기 바랍니다.
+> MySQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes-ngsc/)를 참고하시기 바랍니다.
 
 ## PostgreSQL Instance
 
