@@ -18,7 +18,7 @@ Instance properties and usage change depending on these components. While settin
 
 ### Image
 
-An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows.
+An image is a virtual disk that contains an operating system. NHN Cloud currently supports Debian, Ubuntu, Rocky, and Windows.
 
 All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
 
@@ -90,10 +90,6 @@ You can access your Linux instances using an SSH client. An instance cannot be a
 #### How to Access Linux Instances from Mac or Linux Using an SSH Client
 
 Generally, Mac and Linux have SSH clients installed by default. Use a key pair's private key to access an instance from an SSH client as shown below.
-
-CentOS instances
-
-	$ ssh -i my_private_key.pem centos@<instance IP>
 
 Ubuntu instances
 
@@ -170,10 +166,6 @@ Now that the PuTTY-compatible private key has been successfully registered, run 
 ![Image6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
 Set the **Host Name** as the following.
-
-CentOS
-
-	centos@<Instance IP>
 
 Ubuntu
 

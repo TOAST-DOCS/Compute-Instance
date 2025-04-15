@@ -18,7 +18,7 @@
 
 ### 이미지
 
-이미지는 운영체제를 담고 있는 가상 디스크입니다. NHN Cloud는 현재 CentOS, Debian, Ubuntu, Rocky와 Windows를 지원하고 있습니다.
+이미지는 운영체제를 담고 있는 가상 디스크입니다. NHN Cloud는 현재 Debian, Ubuntu, Rocky와 Windows를 지원하고 있습니다.
 
 모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정돼 있으며, NHN Cloud의 보안 검증을 거쳤기 때문에 안전하게 사용할 수 있습니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/ko/overview-ninc/)를 참고합니다.
 
@@ -90,10 +90,6 @@ Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. �
 #### Mac 또는 Linux의 SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
 
 Mac이나 Linux에는 보통 SSH 클라이언트가 기본적으로 설치되어 있습니다. SSH 클라이언트에서 아래와 같이 키페어의 개인 키를 이용하여 접속합니다.
-
-CentOS 인스턴스
-
-	$ ssh -i my_private_key.pem centos@<인스턴스의 IP>
 
 Ubuntu 인스턴스
 
@@ -170,10 +166,6 @@ PuTTY용으로 변환된 개인 키가 잘 등록되었다면 PuTTY를 실행합
 ![이미지6](http://static.toastoven.net/prod_instance/putty009.png)
 
 기본 접속 정보의 **호스트 이름**은 다음과 같이 사용합니다.
-
-CentOS
-
-	centos@<인스턴스의 IP>
 
 Ubuntu
 
