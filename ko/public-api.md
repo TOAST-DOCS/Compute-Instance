@@ -1720,3 +1720,207 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
+
+
+## 배치 정책
+
+### 배치 정책 생성하기
+
+배치 정책을 생성합니다.
+분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
+
+```
+POST /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| server_group | Body | Object | O | 서버 그룹 객체 |
+| server_group.name | Body | String | O | 배치 정책 이름 |
+| server_group.policies | Body | Array | O | 배치 정책 유형<br>`anti-affinity`만 설정 가능 |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"            
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 서버 그룹 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 목록 보기
+
+```
+GET /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_groups | Body | Array | 서버 그룹 객체 목록 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_groups": [
+        {
+            "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+            "name": "policy-test1",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [
+                "c040455d-6495-4628-ad81-ade79cf7b8d6",
+                "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+            ],
+            "metadata": {}
+        },
+        {
+            "id": "f947c657-cbe0-4bf2-a2aa-59d198f8e096",
+            "name": "policy-test2",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 보기
+
+```
+GET /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 서버 그룹 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [
+            "c040455d-6495-4628-ad81-ade79cf7b8d6",
+            "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+        ],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 삭제하기
+
+```
+DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+이 API는 응답 본문을 반환하지 않습니다.
