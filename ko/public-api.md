@@ -833,6 +833,8 @@ Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 �
 
 루트 블록 스토리지 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
 
+인스턴스 생성 요청 시 스케쥴러 힌트를 통해 배치 정책을 할당할 수 있습니다.
+
 
 ```
 POST /v2/{tenantId}/servers
@@ -845,6 +847,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
+| server | body | Object | O | 서버 객체 |
 | server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨 |
 | server.security_groups.name | body | String | - | 인스턴스에 추가할 보안 그룹 이름 |
 | server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용 |
@@ -873,6 +876,8 @@ X-Auth-Token: {tokenId}
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
+| os:scheduler_hints | Body | Object | - | 스케쥴러 힌트 객체 |
+| os:scheduler_hints.group | Body | String | - | 배치 정책 ID |
 
 <details><summary>예시</summary>
 <p>
@@ -901,6 +906,9 @@ X-Auth-Token: {tokenId}
     "security_groups": [{
       "name": "default"
     }]
+  },
+  "os:scheduler_hints": {
+    "group": "f878bd5b-49a7-499f-966e-1eceb21cb06b"
   }
 }
 ```
