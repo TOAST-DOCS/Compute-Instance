@@ -20,7 +20,7 @@ The available instance flavors vary depending on the image you choose, so we rec
 
 | OS                         | Block Storage     | Memory   |
 | -------------------------------- | ---------- | -------- |
-| Linux<br>CentOS, Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more |
+| Linux<br>Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more |
 | Windows                           | 50GB or more  | 2GB or more |
 
 
