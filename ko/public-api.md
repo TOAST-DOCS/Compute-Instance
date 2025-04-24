@@ -1747,7 +1747,7 @@ X-Auth-Token: {tokenId}
 |-----|-----|-----|-----|-----|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| server_group | Body | Object | O | 서버 그룹 객체 |
+| server_group | Body | Object | O | 배치 정책 객체 |
 | server_group.name | Body | String | O | 배치 정책 이름 |
 | server_group.policies | Body | Array | O | 배치 정책 유형<br>`anti-affinity`만 설정 가능 |
 
@@ -1773,12 +1773,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
-| server_group | Body | Object | 서버 그룹 객체 |
+| server_group | Body | Object | 배치 정책 객체 |
 | server_group.id | Body | String | 배치 정책 ID |
 | server_group.name | Body | String | 배치 정책 이름 |
 | server_group.policies | Body | Array | 배치 정책 유형 |
 | server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
-| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
 
 <details><summary>예시</summary>
 <p>
@@ -1820,12 +1820,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
-| server_groups | Body | Array | 서버 그룹 객체 목록 |
+| server_groups | Body | Array | 배치 정책 객체 목록 |
 | server_group.id | Body | String | 배치 정책 ID |
 | server_group.name | Body | String | 배치 정책 이름 |
 | server_group.policies | Body | Array | 배치 정책 유형 |
 | server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
-| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
 
 <details><summary>예시</summary>
 <p>
@@ -1882,12 +1882,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
-| server_group | Body | Object | 서버 그룹 객체 |
+| server_group | Body | Object | 배치 정책 객체 |
 | server_group.id | Body | String | 배치 정책 ID |
 | server_group.name | Body | String | 배치 정책 이름 |
 | server_group.policies | Body | Array | 배치 정책 유형 |
 | server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
-| server_group.metadata | Body | Object | 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
 
 <details><summary>예시</summary>
 <p>
