@@ -1817,11 +1817,11 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 설명 |
 |-----|-----|-----|-----|
 | server_groups | Body | Array | 배치 정책 객체 목록 |
-| server_group.id | Body | String | 배치 정책 ID |
-| server_group.name | Body | String | 배치 정책 이름 |
-| server_group.policies | Body | Array | 배치 정책 유형 |
-| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
-| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+| server_groups.id | Body | String | 배치 정책 ID |
+| server_groups.name | Body | String | 배치 정책 이름 |
+| server_groups.policies | Body | Array | 배치 정책 유형 |
+| server_groups.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_groups.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
 
 <details><summary>예시</summary>
 <p>
