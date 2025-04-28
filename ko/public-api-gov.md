@@ -833,6 +833,7 @@ Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 �
 
 루트 블록 스토리지 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
 
+인스턴스 생성 요청 시 스케쥴러 힌트를 통해 배치 정책을 할당할 수 있습니다.
 
 ```
 POST /v2/{tenantId}/servers
@@ -845,6 +846,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | tenantId | URL | String | O | 테넌트 ID                                                                                                                                                                                    |
 | tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                     |
+| server | body | Object | O | 서버 객체 |
 | server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨                                                                                                                                                   |
 | server.security_groups.name | body | String | - | **(조건부 필수)** 인스턴스에 추가할 보안 그룹 이름                                                                                                                                                                        |
 | server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용                                                                                                                                |
@@ -870,6 +872,8 @@ X-Auth-Token: {tokenId}
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False                                                                                                                    |
+| os:scheduler_hints | Body | Object | - | 스케쥴러 힌트 객체 |
+| os:scheduler_hints.group | Body | String | - | 배치 정책 ID |
 
 <details><summary>예시</summary>
 <p>
@@ -898,6 +902,9 @@ X-Auth-Token: {tokenId}
     "security_groups": [{
       "name": "default"
     }]
+  },
+  "os:scheduler_hints": {
+    "group": "f878bd5b-49a7-499f-966e-1eceb21cb06b"
   }
 }
 ```
@@ -1716,4 +1723,208 @@ X-Auth-Token: {tokenId}
 | tokenId  | Header | String | O | 토큰 ID               |
 
 #### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
+
+## 배치 정책
+
+### 배치 정책 생성하기
+
+배치 정책을 생성합니다.
+분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
+
+```
+POST /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| server_group | Body | Object | O | 배치 정책 객체 |
+| server_group.name | Body | String | O | 배치 정책 이름 |
+| server_group.policies | Body | Array | O | 배치 정책 유형<br>`anti-affinity`만 설정 가능 |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"            
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 배치 정책 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 목록 보기
+
+```
+GET /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_groups | Body | Array | 배치 정책 객체 목록 |
+| server_groups.id | Body | String | 배치 정책 ID |
+| server_groups.name | Body | String | 배치 정책 이름 |
+| server_groups.policies | Body | Array | 배치 정책 유형 |
+| server_groups.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_groups.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_groups": [
+        {
+            "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+            "name": "policy-test1",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [
+                "c040455d-6495-4628-ad81-ade79cf7b8d6",
+                "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+            ],
+            "metadata": {}
+        },
+        {
+            "id": "f947c657-cbe0-4bf2-a2aa-59d198f8e096",
+            "name": "policy-test2",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 보기
+
+```
+GET /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 배치 정책 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [
+            "c040455d-6495-4628-ad81-ade79cf7b8d6",
+            "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+        ],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 삭제하기
+
+```
+DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
 이 API는 응답 본문을 반환하지 않습니다.
