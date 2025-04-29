@@ -429,6 +429,7 @@ NHN Cloud Windows에서 시스템 로캘을 변경하는 방법은 다음과 같
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 
+<a id='restarting-guide-for-maintenance'></a>
 ## 부록 4. 하이퍼바이저 점검을 위한 인스턴스 재시작 가이드
 NHN Cloud는 주기적으로 하이퍼바이저 소프트웨어를 업데이트하여 기본 인프라 서비스의 보안과 안정성을 향상시키고 있습니다.
 점검 대상 하이퍼바이저에서 구동 중인 인스턴스는 재시작을 통해 점검이 완료된 하이퍼바이저로 이동해야 합니다.
