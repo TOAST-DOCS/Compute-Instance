@@ -593,7 +593,7 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 
 ##### OS 재시작
 
-부팅 순서 변경 적용을 위해 OS를 재시작 합니다.
+부팅 순서 변경 적용을 위해 OS를 재시작합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
