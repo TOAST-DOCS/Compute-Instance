@@ -343,7 +343,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
   * 패키지 서명을 검증할 GPG 키 파일의 경로입니다.
 
 > [참고]
-> **mirrorlist**와 **baseurl**이 모두 설정 되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
+> **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
 ### 업데이트 전 캐시 삭제
 
