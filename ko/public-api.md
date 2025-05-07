@@ -878,7 +878,8 @@ X-Auth-Token: {tokenId}
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
-| os:scheduler_hints | Body | Object | - | 스케쥴러 힌트 객체 |
+| os:scheduler_hints | Body | Object | - | 스케줄러 힌트 객체 |
+
 | os:scheduler_hints.group | Body | String | - | 배치 정책 ID |
 
 <details><summary>예시</summary>
