@@ -430,7 +430,7 @@ System locale in NHN Cloud Windows instances can be changed as follows.
 ![Image 1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 
-<a id='restarting-guide-for-maintenance'></a>
+<a id="restarting-guide-for-maintenance"></a>
 ## Appendix 4. Restarting Instances for Hypervisor Maintenance
 NHN Cloud updates hypervisor software on a regular basis to enhance the security and stability of infrastructure services that we provide.
 Instances running on a hypervisor that requires maintenance must be restarted and migrated to a hypervisor which has completed maintenance.
