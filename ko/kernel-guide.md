@@ -40,7 +40,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
   * GPG(GNU Privacy Guard) 키가 들어 있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는 데 사용하는 암호화 서명입니다.
 
 > [참고]
-> **mirrorlist**와 **baseurl**이 모두 설정 되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
+> **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
 ### 업데이트 전 캐시 삭제
 
