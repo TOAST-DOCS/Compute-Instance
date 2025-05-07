@@ -558,6 +558,8 @@ X-Auth-Token: {tokenId}
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
 | servers.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관                                                                                                                                                                   |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | 인스턴스에 연결된 추가 로컬 블록 스토리지 크기                                                                                                                                                                   |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | 인스턴스 삭제 보호 여부                                                                                                                                                                   |
 
 <details><summary>예시</summary>
 <p>
@@ -646,7 +648,9 @@ X-Auth-Token: {tokenId}
         "login_username": "Administrator",
         "os_type": "Windows",
         "tc_env": "sysmon"
-      }
+      },
+      "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+      "NHN-EXT-ATTR:protect": false
     }
   ]
 }
@@ -711,6 +715,8 @@ X-Auth-Token: {tokenId}
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | 인스턴스에 연결된 추가 블록 스토리지 ID                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | 인스턴스의 전원 상태<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
 | server.metadata | Body | Object | 인스턴스 메타데이터 객체<br>인스턴스 메타데이터를 키-값 쌍으로 보관                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | 인스턴스에 연결된 추가 로컬 블록 스토리지 크기                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | 인스턴스 삭제 보호 여부                                                                                                                                                                  |
 
 <details><summary>예시</summary>
 <p>
@@ -798,7 +804,9 @@ X-Auth-Token: {tokenId}
       "login_username": "Administrator",
       "os_type": "Windows",
       "tc_env": "sysmon"
-    }
+    },
+    "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+    "NHN-EXT-ATTR:protect": false
   }
 }
 ```
@@ -825,6 +833,8 @@ Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 �
 
 루트 블록 스토리지 크기는 Linux는 10GB, Windows는 50GB부터 지정할 수 있습니다.
 
+인스턴스 생성 요청 시 스케줄러 힌트를 통해 배치 정책을 할당할 수 있습니다.
+
 
 ```
 POST /v2/{tenantId}/servers
@@ -837,31 +847,35 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | tenantId | URL | String | O | 테넌트 ID                                                                                                                                                                                    |
 | tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                     |
+| server | body | Object | O | 서버 객체 |
 | server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨                                                                                                                                                   |
-| server.security_groups.name | body | String | - | 인스턴스에 추가할 보안 그룹 이름                                                                                                                                                                        |
+| server.security_groups.name | body | String | - | **(조건부 필수)** 인스턴스에 추가할 보안 그룹 이름                                                                                                                                                                        |
 | server.user_data | body | String | - | 인스턴스 부팅 후 실행할 스크립트 및 설정<br>base64 인코딩된 문자열로 65535 바이트까지 허용                                                                                                                                |
 | server.availability_zone | body | String | - | 인스턴스를 생성할 가용성 영역<br>지정하지 않을 경우 임의로 선택됨<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 원본 블록 스토리지의 가용성 영역과 동일하게 설정 필요 |
 | server.imageRef | Body | String | - | 인스턴스를 생성할 때 사용할 이미지 ID<br>루트 블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요 |
 | server.flavorRef | Body | String | O | 인스턴스를 생성할 때 사용할 인스턴스 타입 ID                                                                                                                                                                |
 | server.networks | Body | Object | O | 인스턴스를 생성할 때 사용할 네트워크 정보 객체<br>지정한 개수만큼 NIC가 추가되며, 네트워크 ID, 서브넷 ID, 포트 ID, 고정 IP 중 하나로 지정                                                                                                  |
-| server.networks.uuid | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크 ID                                                                                                                                                                   |
-| server.networks.subnet | Body | UUID | - | 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID                                                                                                                                                              |
-| server.networks.port | Body | UUID | - | 인스턴스를 생성할 때 사용할 포트 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                     |
-| server.networks.fixed_ip | Body | String | - | 인스턴스를 생성할 때 사용할 고정 IP                                                                                                                                                                     |
+| server.networks.uuid | Body | UUID | - | **(조건부 필수)** 인스턴스를 생성할 때 사용할 네트워크 ID                                                                                                                                                                   |
+| server.networks.subnet | Body | UUID | - | **(조건부 필수)** 인스턴스를 생성할 때 사용할 네트워크의 서브넷 ID                                                                                                                                                              |
+| server.networks.port | Body | UUID | - | **(조건부 필수)** 인스턴스를 생성할 때 사용할 포트 ID<br>포트 ID 지정 시 요청한 보안 그룹은 지정한 기존 포트에 적용되지 않음                                                                                                                                                                     |
+| server.networks.fixed_ip | Body | String | - | **(조건부 필수)** 인스턴스를 생성할 때 사용할 고정 IP                                                                                                                                                                     |
 | server.name | Body | String | O | 인스턴스의 이름<br>영문자 기준 255자까지 허용되지만, Windows 이미지의 경우 15자 이하여야 함                                                                                                                               |
 | server.metadata | Body | Object | - | 인스턴스에 추가할 메타데이터 객체<br>최대 길이 255자 이하의 키-값 쌍                                                                                                                                                |
 | server.block_device_mapping_v2 | Body | Object | O | 인스턴스의 블록 스토리지 정보 객체 |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 생성할 블록 스토리지 원본의 타입<br>- `image`: 이미지를 이용해 블록 스토리지 생성<br>- `blank`: 빈 블록 스토리지 생성(루트 블록 스토리지로 사용할 수 없음)<br>- `volume`: 기존에 생성된 블록 스토리지를 사용<br>- `snapshot`: 스냅숏을 이용해 블록 스토리지 생성 |
-| server.block_device_mapping_v2.uuid | Body | String | - | 블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `image`인 경우 이미지 ID를 설정<br>- 소스 타입이 `volume`인 경우 기존에 생성된 블록 스토리지 ID를 설정<br>- 소스 타입이 `snapshot`인 경우 스냅숏 ID를 설정<br>- 소스 타입이 `blank`인 경우 설정 불필요<br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
+| server.block_device_mapping_v2.uuid | Body | String | - | **(조건부 필수)** 블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `image`인 경우 이미지 ID를 설정<br>- 소스 타입이 `volume`인 경우 기존에 생성된 블록 스토리지 ID를 설정<br>- 소스 타입이 `snapshot`인 경우 스냅숏 ID를 설정<br>- 소스 타입이 `blank`인 경우 설정 불필요<br>루트 블록 스토리지인 경우 반드시 부팅 가능한 원본이어야 함 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 지정한 블록 스토리지의 부팅 순서<br>-`0`이면 루트 블록 스토리지<br>- 그 외는 추가 블록 스토리지<br>크기가 클수록 부팅 순서는 낮아짐                                                                                                                         |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | 인스턴스 블록 스토리지의 위치, 인스턴스 타입에 따라 다르게 설정 필요.<br>- `local`: GPU 인스턴스, U2 인스턴스 타입을 이용하는 경우<br>- `volume`: 그 외의 인스턴스 타입을 이용하는 경우 |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 생성할 블록 스토리지의 타입<br>블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | **(조건부 필수)** 생성할 블록 스토리지의 타입<br>블록 스토리지의 소스 타입이 `volume`, `snapshot`인 경우 설정 불필요<br>`사용자 가이드 > Storage > Block Storage > API v2 가이드`에서 **블록 스토리지 타입 목록 보기** 응답의 `name` 참고 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | 인스턴스 삭제 시 블록 스토리지 처리 여부, 기본값은 `false`.<br>`true`면 삭제, `false`면 유지                                                                                                                         |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | **(조건부 필수)** 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어                                                                                                                                                                          |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False                                                                                                                    |
+| os:scheduler_hints | Body | Object | - | 스케줄러 힌트 객체 |
+
+| os:scheduler_hints.group | Body | String | - | 배치 정책 ID |
 
 <details><summary>예시</summary>
 <p>
@@ -890,6 +904,9 @@ X-Auth-Token: {tokenId}
     "security_groups": [{
       "name": "default"
     }]
+  },
+  "os:scheduler_hints": {
+    "group": "f878bd5b-49a7-499f-966e-1eceb21cb06b"
   }
 }
 ```
@@ -1708,4 +1725,208 @@ X-Auth-Token: {tokenId}
 | tokenId  | Header | String | O | 토큰 ID               |
 
 #### 응답
+이 API는 응답 본문을 반환하지 않습니다.
+
+
+## 배치 정책
+
+### 배치 정책 생성하기
+
+배치 정책을 생성합니다.
+분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
+
+```
+POST /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| server_group | Body | Object | O | 배치 정책 객체 |
+| server_group.name | Body | String | O | 배치 정책 이름 |
+| server_group.policies | Body | Array | O | 배치 정책 유형<br>`anti-affinity`만 설정 가능 |
+
+<details>
+<summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"            
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 배치 정책 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 목록 보기
+
+```
+GET /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_groups | Body | Array | 배치 정책 객체 목록 |
+| server_groups.id | Body | String | 배치 정책 ID |
+| server_groups.name | Body | String | 배치 정책 이름 |
+| server_groups.policies | Body | Array | 배치 정책 유형 |
+| server_groups.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_groups.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_groups": [
+        {
+            "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+            "name": "policy-test1",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [
+                "c040455d-6495-4628-ad81-ade79cf7b8d6",
+                "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+            ],
+            "metadata": {}
+        },
+        {
+            "id": "f947c657-cbe0-4bf2-a2aa-59d198f8e096",
+            "name": "policy-test2",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 보기
+
+```
+GET /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
+| 이름 | 종류 | 형식 | 설명 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 배치 정책 객체 |
+| server_group.id | Body | String | 배치 정책 ID |
+| server_group.name | Body | String | 배치 정책 이름 |
+| server_group.policies | Body | Array | 배치 정책 유형 |
+| server_group.members | Body | Array | 배치 정책에 할당된 인스턴스 ID 목록 |
+| server_group.metadata | Body | Object | 배치 정책 메타데이터 객체<br>항상 빈 값으로 표시됨 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [
+            "c040455d-6495-4628-ad81-ade79cf7b8d6",
+            "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+        ],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 배치 정책 삭제하기
+
+```
+DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+이 API는 요청 본문을 요구하지 않습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | 테넌트 ID |
+| servergroupId | URL | String | O | 배치 정책 ID |
+| tokenId | Header | String | O | 토큰 ID |
+
+#### 응답
+
 이 API는 응답 본문을 반환하지 않습니다.
