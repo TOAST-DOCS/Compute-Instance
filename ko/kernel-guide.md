@@ -241,7 +241,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 
 #### Rocky 8.10 이상 버전
 
-현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안되는 문제가 있어서 아래 쉘 스크립트를 사용합니다.
+현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안 되는 문제가 있어 아래 쉘 스크립트를 사용합니다.
 
 ```bash
 #!/bin/bash
