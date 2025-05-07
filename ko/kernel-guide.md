@@ -1,7 +1,7 @@
 ## Compute > Instance > 커널 버전업 가이드
 
 > [주의] 
-> 커널 업데이트 시 OS 훼손되거나 부팅이 실패할 수 있으며, 이에 따른 결과에 대한 책임은 사용자에게 있습니다.
+> 커널 업데이트 시 OS가 훼손되거나 부팅을 실패할 수 있으며, 이에 따른 결과에 대한 책임은 사용자에게 있습니다.
 
 ## Rocky Linux 8
 
@@ -37,10 +37,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 * **baseurl**
   * 패키지를 다운로드할 기본 URL을 지정합니다. 이 URL은 단일 서버를 가리키며, 해당 서버에서 직접 패키지를 다운로드합니다.
 * **gpgcheck**
-  * GPG(GNU Privacy Guard) 키가 들어있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는데 사용하는 암호화 서명입니다.
+  * GPG(GNU Privacy Guard) 키가 들어 있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는 데 사용하는 암호화 서명입니다.
 
 > [참고]
-> **mirrorlist**와 **baseurl**이 모두 설정 되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
+> **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
 ### 업데이트 전 캐시 삭제
 
@@ -170,7 +170,7 @@ kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    
 
 ### OS 재시작
 
-커널 업데이트를 적용하기 위해 OS를 재시작 합니다.
+커널 업데이트를 적용하기 위해 OS를 재시작합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -187,7 +187,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 
 #### 커널 업데이트 확인
 
-커널 버전이 정상적으로 업데이트 되었는지 확인합니다.
+커널 버전이 정상적으로 업데이트되었는지 확인합니다.
 
 ```
 [root@rocky810 ~]# uname -r
@@ -233,7 +233,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 
 ##### OS 재시작
 
-부팅 순서 변경 적용을 위해 OS를 재시작 합니다.
+부팅 순서 변경 적용을 위해 OS를 재시작합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -241,7 +241,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 
 #### Rocky 8.10 이상 버전
 
-현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안되는 문제가 있어서 아래 쉘 스크립트를 사용합니다.
+현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안 되는 문제가 있어 아래 쉘 스크립트를 사용합니다.
 
 ```bash
 #!/bin/bash
@@ -289,7 +289,7 @@ done
 
 ##### OS 재시작
 
-부팅 순서 변경 적용을 위해 OS를 재시작 합니다.
+부팅 순서 변경 적용을 위해 OS를 재시작합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -330,7 +330,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 * **baseurl**
   * 패키지를 다운로드할 기본 URL을 지정합니다. 이 URL은 단일 서버를 가리키며, 해당 서버에서 직접 패키지를 다운로드합니다.
 * **gpgcheck**
-  * GPG(GNU Privacy Guard) 키가 들어있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는데 사용하는 암호화 서명입니다.
+  * GPG(GNU Privacy Guard) 키가 들어 있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는 데 사용하는 암호화 서명입니다.
 * **enabled**
   * 이 저장소를 활성화 여부를 설정합니다.
   * 값이 1인 경우 활성화, 0인 경우 비활성화입니다.
@@ -343,7 +343,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
   * 패키지 서명을 검증할 GPG 키 파일의 경로입니다.
 
 > [참고]
-> **mirrorlist**와 **baseurl**이 모두 설정 되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
+> **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
 ### 업데이트 전 캐시 삭제
 
@@ -531,7 +531,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 
 ### OS 재시작
 
-커널 업데이트를 적용하기 위해 OS를 재시작 합니다.
+커널 업데이트를 적용하기 위해 OS를 재시작합니다.
 
 ```
 [root@rocky95 ~]# sync; reboot
@@ -548,7 +548,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 
 #### 커널 업데이트 확인
 
-커널 버전이 정상적으로 업데이트 되었는지 확인합니다.
+커널 버전이 정상적으로 업데이트되었는지 확인합니다.
 
 ```
 [root@rocky810 ~]# uname -r
@@ -593,7 +593,7 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 
 ##### OS 재시작
 
-부팅 순서 변경 적용을 위해 OS를 재시작 합니다.
+부팅 순서 변경 적용을 위해 OS를 재시작합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
