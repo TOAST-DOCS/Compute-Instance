@@ -531,7 +531,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 
 ### OS 재시작
 
-커널 업데이트를 적용하기 위해 OS를 재시작 합니다.
+커널 업데이트를 적용하기 위해 OS를 재시작합니다.
 
 ```
 [root@rocky95 ~]# sync; reboot
