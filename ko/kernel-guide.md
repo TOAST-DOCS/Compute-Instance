@@ -37,7 +37,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 * **baseurl**
   * 패키지를 다운로드할 기본 URL을 지정합니다. 이 URL은 단일 서버를 가리키며, 해당 서버에서 직접 패키지를 다운로드합니다.
 * **gpgcheck**
-  * GPG(GNU Privacy Guard) 키가 들어있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는데 사용하는 암호화 서명입니다.
+  * GPG(GNU Privacy Guard) 키가 들어 있는 저장소의 URL 또는 경로를 설정합니다. GPG 키는 rpm 패키지를 인증하는 데 사용하는 암호화 서명입니다.
 
 > [참고]
 > **mirrorlist**와 **baseurl**이 모두 설정 되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
