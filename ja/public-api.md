@@ -558,6 +558,8 @@ X-Auth-Token: {tokenId}
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ブロックストレージID                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
 | servers.metadata | Body | Object | インスタンスメタデータオブジェクト<br>インスタンスメタデータをキーと値のペアで保管                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | インスタンスに接続された追加ローカルブロックストレージサイズ                                                                                                                                                                 |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | インスタンス削除保護の有無      
 
 <details><summary>例</summary>
 <p>
@@ -646,7 +648,9 @@ X-Auth-Token: {tokenId}
         "login_username": "Administrator",
         "os_type": "Windows",
         "tc_env": "sysmon"
-      }
+      },
+      "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+      "NHN-EXT-ATTR:protect": false
     }
   ]
 }
@@ -711,7 +715,8 @@ X-Auth-Token: {tokenId}
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | インスタンスに接続された追加ブロックストレージID                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | インスタンスの電源の状態<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
 | server.metadata | Body | Object | インスタンスメタデータオブジェクト<br>インスタンスメタデータをキーと値のペアで保管                                                                                                                                                                 |
-| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | インスタンスに接続された追加ローカルブロックストレージサイズ                                                                                                                                                                              |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | インスタンスに接続された追加ローカルブロックストレージサイズ                                                                                                                                                                |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | インスタンス削除保護の有無                                                                                                                                                                 |
 
 <details><summary>例</summary>
 <p>
@@ -799,7 +804,9 @@ X-Auth-Token: {tokenId}
       "login_username": "Administrator",
       "os_type": "Windows",
       "tc_env": "sysmon"
-    }
+    },
+    "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+    "NHN-EXT-ATTR:protect": false
   }
 }
 ```
@@ -826,6 +833,9 @@ X-Auth-Token: {tokenId}
 
 ルートブロックストレージサイズは、Linuxは10GB、Windowsは50GBから指定できます。
 
+インスタンス作成リクエスト時にスケジューラヒントで配置ポリシーを割り当てることができます。
+
+
 
 ```
 POST /v2/{tenantId}/servers
@@ -838,34 +848,39 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| server | body | Object | O | サーバーオブジェクト |
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略する場合`default`グループが追加される |
-| server.security_groups.name | body | String | - | インスタンスに追加するセキュリティグループ名 |
+| server.security_groups.name | body | String | - | **(条件付き必須)** インスタンスに追加するセキュリティグループ名 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可 |
 | server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意のゾーンが選択される<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合、元のブロックストレージのアベイラビリティゾーンと同じに設定する必要があります。 |
 | server.imageRef | Body | String | - | インスタンスを作成する際に使用するイメージID<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合は設定不要 |
 | server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、サブネットID、ポートID、固定IPの中から1つ指定 |
-| server.networks.uuid | Body | UUID | - | インスタンスを作成する時に使用するネットワークID |
-| server.networks.subnet | Body | UUID | - | インスタンスを作成する時に使用するネットワークのサブネットID |
-| server.networks.port | Body | UUID | - | インスタンスを作成する際に使用するポートID<br>ポートIDを指定する際に要求したセキュリティグループは、指定した既存のポートには適用されない。 |
-| server.networks.fixed_ip | Body | String | - | インスタンスを作成する時に使用する固定IP |
+| server.networks.uuid | Body | UUID | - |  **(条件付き必須)**インスタンスを作成する時に使用するネットワークID |
+| server.networks.subnet | Body | UUID | - |  **(条件付き必須)**インスタンスを作成する時に使用するネットワークのサブネットID |
+| server.networks.port | Body | UUID | - |  **(条件付き必須)**インスタンスを作成する際に使用するポートID<br>ポートIDを指定する際に要求したセキュリティグループは、指定した既存のポートには適用されない。 |
+| server.networks.fixed_ip | Body | String | - |  **(条件付き必須)**インスタンスを作成する時に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
 | server.block_device_mapping_v2 | Body | Object | O | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージ作成(ルートブロックストレージとして使用できない)<br>- `volume`:既存のブロックストレージを使用<br>- `snapshot`:スナップショットを利用してブロックストレージ作成 |
-| server.block_device_mapping_v2.uuid | Body | String | - | ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
+| server.block_device_mapping_v2.uuid | Body | String | - |  **(条件付き必須)**ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：GPUインスタンス、U2インスタンスタイプを利用する場合。<br>- `volume`：その他のインスタンスタイプを利用する場合。 |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | 作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`, `snapshot`の場合設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - |  **(条件付き必須)**作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`, `snapshot`の場合設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のブロックストレージ処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | 作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合は設定不要<br>- ソースタイプが`snapshot`の場合は原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
-| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | ブロックストレージの暗号化情報                                                                                                                                                                                       |
-| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | Secure Key Manager商品のアプリケーションキー                                                                                                                                                                             |
-| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID                                                                                                                                  |
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | **(条件付き必須)**作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合は設定不要<br>- ソースタイプが`snapshot`の場合は原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(条件付き必須)**ブロックストレージの暗号化情報                                                                                                                                                                                      |
+| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(条件付き必須)**Secure Key Managerサービスのアプリケーションキー                                                                                                                                                                            |
+
+| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(条件付き必須)**暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID                                                                                                                                  |
 | server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
 | server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
 | server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
 | server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエスト予約ID。<br>Trueに指定すると、インスタンス作成情報の代わりに予約IDを返す。<br>デフォルト値はFalse |
+| os:scheduler_hints | Body | Object | - | スケジューラヒントオブジェクト |
+
+| os:scheduler_hints.group | Body | String | - | 配置ポリシーID |
 
 <details><summary>例</summary>
 <p>
@@ -894,6 +909,9 @@ X-Auth-Token: {tokenId}
     "security_groups": [{
       "name": "default"
     }]
+  },
+  "os:scheduler_hints": {
+    "group": "f878bd5b-49a7-499f-966e-1eceb21cb06b"    
   }
 }
 ```
@@ -1711,4 +1729,208 @@ X-Auth-Token: {tokenId}
 | tokenId  | Header | String | O | トークンID               |
 
 #### レスポンス
+このAPIはレスポンス本文を返しません。
+
+
+## 配置ポリシー
+
+### 配置ポリシーを作成する
+
+配置ポリシーを作成します。
+分散バッチのための`anti-affinity`配置ポリシータイプのみ提供します。
+
+```
+POST /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+| server_group | Body | Object | O | 配置ポリシーオブジェクト |
+| server_group.name | Body | String | O | 配置ポリシー名 |
+| server_group.policies | Body | Array | O | 配置ポリシータイプ<br>`anti-affinity`のみ設定可能 |
+
+<details>
+<summary>例</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"            
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 配置ポリシーオブジェクト |
+| server_group.id | Body | String | 配置ポリシーID |
+| server_group.name | Body | String | 配置ポリシー名 |
+| server_group.policies | Body | Array | 配置ポリシータイプ |
+| server_group.members | Body | Array | 配置ポリシーに割り当てられたインスタンスIDリスト |
+| server_group.metadata | Body | Object | 配置ポリシーメタデータオブジェクト<br>常に空の値で表示されます |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 配置ポリシーリスト表示
+
+```
+GET /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| server_groups | Body | Array | 配置ポリシーオブジェクトリスト |
+| server_groups.id | Body | String | 配置ポリシーID |
+| server_groups.name | Body | String | 配置ポリシー名 |
+| server_groups.policies | Body | Array | 配置ポリシータイプ |
+| server_groups.members | Body | Array | 配置ポリシーに割り当てられたインスタンスIDリスト |
+| server_groups.metadata | Body | Object | 配置ポリシーメタデータオブジェクト<br>常に空の値で表示されます |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "server_groups": [
+        {
+            "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+            "name": "policy-test1",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [
+                "c040455d-6495-4628-ad81-ade79cf7b8d6",
+                "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+            ],
+            "metadata": {}
+        },
+        {
+            "id": "f947c657-cbe0-4bf2-a2aa-59d198f8e096",
+            "name": "policy-test2",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+### 配置ポリシー表示
+
+```
+GET /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | テナントID |
+| servergroupId | URL | String | O | 配置ポリシーID |
+| tokenId | Header | String | O | トークンID |
+
+#### レスポンス
+
+| 名前 | 種類 | 形式 | 説明 |
+|-----|-----|-----|-----|
+| server_group | Body | Object | 配置ポリシーオブジェクト |
+| server_group.id | Body | String | 配置ポリシーID |
+| server_group.name | Body | String | 配置ポリシー名 |
+| server_group.policies | Body | Array | 配置ポリシータイプ |
+| server_group.members | Body | Array | 配置ポリシーに割り当てられたインスタンスIDリスト |
+| server_group.metadata | Body | Object | 配置ポリシーメタデータオブジェクト<br>常に空の値で表示されます |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [
+            "c040455d-6495-4628-ad81-ade79cf7b8d6",
+            "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+        ],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### 配置ポリシーを削除する
+
+```
+DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+
+このAPIはリクエスト本文を要求しません。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | テナントID |
+| servergroupId | URL | String | O | 配置ポリシーID |
+| tokenId | Header | String | O | トークンID |
+
+#### レスポンス
+
 このAPIはレスポンス本文を返しません。
