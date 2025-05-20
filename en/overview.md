@@ -5,6 +5,7 @@ An instance is a virtual server composed of virtual CPUs, memory, and root block
 
 ## Components
 
+abcd
 An instance consists of the following components:
 
 - **Image**: Virtual disk that contains the operating system of an instance

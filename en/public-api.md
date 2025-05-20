@@ -4,6 +4,7 @@ To use the APIs listed in this document, you will need the appropriate API endpo
 
 The Instance API uses the `compute` type endpoint. For the exact endpoint, see `serviceCatalog` from the token issue response.
 
+abcd
 | Type | Region | Endpoint |
 |---|---|---|
 | compute | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region<br>Japan Region<br>US (California) Region | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com<br>https://us1-api-instance-infrastructure.nhncloudservice.com |
