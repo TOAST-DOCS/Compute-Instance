@@ -558,6 +558,8 @@ The request format is the same as List Instances.
 | servers.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                   |
 | servers.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                    |
 | servers.metadata | Body | Object | Instance metadata object<br>Stores instance metadata as key-value pairs                                                                                                                                                                   |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | Size of an additional local block storage attached to the instance                                                                                                                                                                   |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | Whether to protect instance deletion                                                                                                                                                                   |
 
 <details><summary>Example</summary>
 <p>
@@ -646,7 +648,9 @@ The request format is the same as List Instances.
         "login_username": "Administrator",
         "os_type": "Windows",
         "tc_env": "sysmon"
-      }
+      },
+      "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+      "NHN-EXT-ATTR:protect": false
     }
   ]
 }
@@ -711,7 +715,8 @@ This API does not require a request body.
 | server.os-extended-volumes:volumes_attached.id | Body | UUID | ID of additional block storage attached to the instance                                                                                                                                                                                  |
 | server.OS-EXT-STS:power_state | Body | Integer | Power state of instance<br>- `1`: On<br>- `4`: Off                                                                                                                                                                   |
 | server.metadata | Body | Object | Instance metadata object<br>Stores instance metadata as key-value pairs                                                                                                                                                                  |
-| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | Size of an additional local block storage attached to the instance                                                                                                                                                                               |
+| server.NHN-EXT-ATTR:ephemeral_disk_size | Body | Integer | Size of an additional local block storage attached to the instance                                                                                                                                                                  |
+| server.NHN-EXT-ATTR:protect | Body | Boolean | Whether to protect instance deletion                                                                                                                                                                  |
 
 <details><summary>Example</summary>
 <p>
@@ -799,7 +804,9 @@ This API does not require a request body.
       "login_username": "Administrator",
       "os_type": "Windows",
       "tc_env": "sysmon"
-    }
+    },
+    "NHN-EXT-ATTR:ephemeral_disk_size": 0,
+    "NHN-EXT-ATTR:protect": false
   }
 }
 ```
@@ -826,6 +833,8 @@ Windows instances have the following additional restrictions that apply to facil
 
 The root block storage size that can be specified is 10GB for Linux and 50GB for Windows.
 
+You can assign placement policies via scheduler hints when requesting instance creation.
+
 
 ```
 POST /v2/{tenantId}/servers
@@ -839,33 +848,36 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
-| server.security_groups.name | body | String | - | Name of security group to be added to instance |
+| server | body | Object | O | Server Objects |
+| server.security_groups.name | body | String | - | **(Conditionally required)** Name of security group to be added to instance |
 | server.user_data | body | String | - | Script to be executed or settings to apply after instance boot<br>Allows up to 65535 bytes of base 64-encoded character strings |
 | server.availability_zone | body | String | - | Availability zone where instance will be created<br>If left blank, a random zone will be selected<br>If the source type of the root block storage is `volume`, `snapshot`, it must be set to the same availability zone as the source block storage |
 | server.imageRef | Body | String | - | Image ID to create instance<br>No configuration required if the source type of the root block storage is `volume`, `snapshot` |
 | server.flavorRef | Body | String | O | Instance flavor ID to create instance |
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
-| server.networks.uuid | Body | UUID | - | Network ID to create instance |
-| server.networks.subnet | Body | UUID | - | Subnet ID within network to create instance |
-| server.networks.port | Body | UUID | - | Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
-| server.networks.fixed_ip | Body | String | - | Fixed IP to create instance |
+| server.networks.uuid | Body | UUID | - | **(Conditionally required)** Network ID to create instance |
+| server.networks.subnet | Body | UUID | - | **(Conditionally required)** Subnet ID within network to create instance |
+| server.networks.port | Body | UUID | - | **(Conditionally required)** Port ID to create instance<br>Security groups requested when specifying a port ID are not applied to existing specified ports |
+| server.networks.fixed_ip | Body | String | - | **(Conditionally required)** Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
 | server.block_device_mapping_v2 | Body | Object | O | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage)<br>- `volume`: Use previously created block storage<br>- `snapshot`: Create block storage with snapshots |
-| server.block_device_mapping_v2.uuid | Body | String | - | Different settings required for different types of block storage sources<br>- Set the image ID if the source type is `image`<br>- Set an existing created block storage ID if the source type is `volume`<br>- Set `snapshot` ID if the source type is `snapshot`<br>- No settings required if source type is ` blank`<br>For root block storage, it must be a bootable source. |
+| server.block_device_mapping_v2.uuid | Body | String | - | **(Conditionally required)** Different settings required for different types of block storage sources<br>- Set the image ID if the source type is `image`<br>- Set an existing created block storage ID if the source type is `volume`<br>- Set `snapshot` ID if the source type is `snapshot`<br>- No settings required if source type is ` blank`<br>For root block storage, it must be a bootable source. |
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For GPU and U2 instance flavors<br>- `volume`: For other instance flavors |
-| server.block_device_mapping_v2.volume_type | Body | Enum    | - | Type of block storage to create<br>No configuration required if the source type of block storage is `volume`, `snapshot`<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
+| server.block_device_mapping_v2.volume_type | Body | Enum    | - | **(Conditionally required)** Type of block storage to create<br>No configuration required if the source type of block storage is `volume`, `snapshot`<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
-| server.block_device_mapping_v2.volume_size | Body | Integer | - | Size of block storage to create<br>Different settings required for different types of block storage sources<br>- No configuration required if source type is `volume`<br>- Set equal to or larger than the original block storage size if the source type is `snapshot`<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
-| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | Block storage encryption information                                                                                                                                                                                        |
-| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | AppKeys for Secure Key Manager products                                                                                                                                                                              |
-| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
+| server.block_device_mapping_v2.volume_size | Body | Integer | - | **(Conditionally required)** Size of block storage to create<br>Different settings required for different types of block storage sources<br>- No configuration required if source type is `volume`<br>- Set equal to or larger than the original block storage size if the source type is `snapshot`<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
+| server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(Conditionally required)** Block storage encryption information                                                                                                                                                                                        |
+| server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(Conditionally required)** AppKeys for Secure Key Manager products                                                                                                                                                                              |
+| server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(Conditionally required)** Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
 | server.key_name | Body | String | O | Key pair to access instance |
 | server.min_count | Body | Integer | - | Minimum number of instances to create with this request.<br>Default value is 1.<br>Can only be set to `1` if the source type of the block storage is `volume` |
 | server.max_count | Body | Integer | - | Maximum number of instances to create with this request.<br>Default value is min_count, max value is 10.<br>Can only be set to `1` if the source type of the block storage is `volume` |
 | server.return_reservation_id | Body | Boolean | - | Instance creation request reservation ID.<br>If set to True, reservation ID is returned instead of instance creation information.<br>Default value is False |
+| os:scheduler_hints | Body | Object | - | Scheduler Hint Objects |
+| os:scheduler_hints.group | Body | String | - | Placement Policy ID |
 
 <details><summary>Example</summary>
 <p>
@@ -894,6 +906,9 @@ X-Auth-Token: {tokenId}
     "security_groups": [{
       "name": "default"
     }]
+  },
+  "os:scheduler_hints": {
+    "group": "f878bd5b-49a7-499f-966e-1eceb21cb06b"
   }
 }
 ```
@@ -1712,4 +1727,208 @@ This API does not require a request body.
 | tokenId  | Header | String | O | Token ID               |
 
 #### Response
+This API does not return a response body.
+
+
+## Placement Policy
+
+### Create a Placement policy
+
+Creates a placement policy.
+Provides only the `anti-affinity` placement policy type for distributed placement.
+
+```
+POST /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| server_group | Body | Object | O | Placement policy object |
+| server_group.name | Body | String | O | Placement policy name |
+| server_group.policies | Body | Array | O | Placement policy type<br>`Only anti-affinity` can be set |
+
+<details>
+<summary>Example</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"            
+        ]
+    }
+}
+```
+
+</p>
+</details>
+
+#### Response
+
+| Name | Type | Format | Description |
+|-----|-----|-----|-----|
+| server_group | Body | Object | Placement policy object |
+| server_group.id | Body | String | Placement policy ID |
+| server_group.name | Body | String | Placement policy name |
+| server_group.policies | Body | Array | Placement policy type |
+| server_group.members | Body | Array | List of instance IDs assigned to the placement policy |
+| server_group.metadata | Body | Object | Placement policy metadata object<br>Always displayed as an empty value |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### View the list of Placement policies
+
+```
+GET /v2/{tenantId}/os-server-groups
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+
+This API does not require a request body.
+
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+
+#### Response
+
+| Name | Type | Format | Description |
+|-----|-----|-----|-----|
+| server_groups | Body | Array | List of placement policy objects |
+| server_groups.id | Body | String | Placement policy ID |
+| server_groups.name | Body | String | Placement policy name |
+| server_groups.policies | Body | Array | Placement policy type |
+| server_groups.members | Body | Array | List of instance IDs assigned to the placement policy |
+| server_groups.metadata | Body | Object | Placement policy metadata object<br>Always displayed as an empty value |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "server_groups": [
+        {
+            "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+            "name": "policy-test1",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [
+                "c040455d-6495-4628-ad81-ade79cf7b8d6",
+                "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+            ],
+            "metadata": {}
+        },
+        {
+            "id": "f947c657-cbe0-4bf2-a2aa-59d198f8e096",
+            "name": "policy-test2",
+            "policies": [
+                "anti-affinity"
+            ],
+            "members": [],
+            "metadata": {}
+        }
+    ]
+}
+```
+
+</p>
+</details>
+
+### View Placement Policies
+
+```
+GET /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+
+This API does not require a request body.
+
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | Tenant ID |
+| servergroupId | URL | String | O | Placement policy ID |
+| tokenId | Header | String | O | Token ID |
+
+#### Response
+
+| Name | Type | Format | Description |
+|-----|-----|-----|-----|
+| server_group | Body | Object | Placement policy object |
+| server_group.id | Body | String | Placement policy ID |
+| server_group.name | Body | String | Placement policy name |
+| server_group.policies | Body | Array | Placement policy type |
+| server_group.members | Body | Array | List of instance IDs assigned to the placement policy |
+| server_group.metadata | Body | Object | Placement policy metadata object<br>Always displayed as an empty value |
+
+<details><summary>Example</summary>
+<p>
+
+```json
+{
+    "server_group": {
+        "id": "11f5a850-9ecc-4895-af77-de6ea471b65a",
+        "name": "policy-test1",
+        "policies": [
+            "anti-affinity"
+        ],
+        "members": [
+            "c040455d-6495-4628-ad81-ade79cf7b8d6",
+            "524e7d81-f373-43a0-b2ff-0a15f8255bb5"            
+        ],
+        "metadata": {}
+    }
+}
+```
+
+</p>
+</details>
+
+### Deleting a Placement policy
+
+```
+DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
+X-Auth-Token: {tokenId}
+```
+
+#### Request
+
+This API does not require a request body.
+
+| Name | Type | Format | Required | Description |
+|-----|-----|-----|-----|-----|
+| tenantId | URL | String | O | Tenant ID |
+| servergroupId | URL | String | O | Placement policy ID |
+| tokenId | Header | String | O | Token ID |
+
+#### Response
+
 This API does not return a response body.

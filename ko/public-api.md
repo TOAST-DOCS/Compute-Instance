@@ -872,14 +872,12 @@ X-Auth-Token: {tokenId}
 | server.block_device_mapping_v2.volume_size | Body | Integer | - | **(조건부 필수)** 생성할 블록 스토리지 크기<br>블록 스토리지의 소스 타입에 따라 다르게 설정 필요<br>- 소스 타입이 `volume`인 경우 설정 불필요<br>- 소스 타입이 `snapshot`인 경우 원본 블록 스토리지 크기보다 같거나 크게 설정<br>`GB` 단위<br>U2 인스턴스 타입을 사용하고 루트 블록 스토리지를 생성하는 경우에는 U2 인스턴스 타입에 명시된 크기로 생성되며 이 값은 무시됨<br>인스턴스 타입에 따라 생성할 수 있는 루트 블록 스토리지의 크기가 다르므로 자세한 내용은 `사용자 가이드 > Compute > Instance > 콘솔 사용 가이드 > 인스턴스 생성 > 블록 스토리지 크기`를 참고 |
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(조건부 필수)** 블록 스토리지의 암호화 정보                                                                                                                                                                                        |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(조건부 필수)** Secure Key Manager 서비스의 앱키                                                                                                                                                                              |
-
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(조건부 필수)** 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID                                                                                                                                  |
 | server.key_name | Body | String | O | 인스턴스 접속에 사용할 키페어 |
 | server.min_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최솟값.<br>기본값은 1.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.max_count | Body | Integer | - | 현재 요청으로 생성할 인스턴스 개수의 최댓값.<br>기본값은 min_count, 최댓값은 10.<br>블록 스토리지의 소스 타입이 `volume`인 경우 `1`로만 설정 가능 |
 | server.return_reservation_id | Body | Boolean | - | 인스턴스 생성 요청 예약 ID.<br>True로 지정하면 인스턴스 생성 정보 대신 예약 ID를 반환.<br>기본값은 False |
 | os:scheduler_hints | Body | Object | - | 스케줄러 힌트 객체 |
-
 | os:scheduler_hints.group | Body | String | - | 배치 정책 ID |
 
 <details><summary>예시</summary>

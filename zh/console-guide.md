@@ -132,6 +132,13 @@ By using the root block storage only for the OS and storing your frequently used
 
 Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
+### Placement Policy
+
+You can use placement policies to place instances on different hypervisors. When you set a placement policy at instance creation time, instances assigned to the same placement policy are created on different hypervisors.
+ 
+> [Caution]
+> Instance creation may fail in situations where distributed deployment is not possible.
+
 ### User Script
 
 You can specify a script to be executed after instance creation. The user script is executed following the instance's initial boot and after the initialization process including network configuration has completed. User scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
@@ -266,6 +273,14 @@ Change the key pair of the instance default account to the selected key pair. Th
 > [Note] Only project members with the ADMIN permissions for the basic infrastructure can change the instance key pair, which cannot be changed if it is a Windows OS instance.
 
 > [Note] If the image version used to create the instance is low, the feature to change key pairs may not be available.
+
+### Manage Placement Policies
+
+You can create and delete placement policies and view a list of instances assigned to placement policies.
+
+Only the `anti-affinity` placement policy type for distributed placement is provided.
+
+You can delete a placement policy even if instances are assigned to it, in which case the instances are not deleted.
 
 ## Key Pairs
 
