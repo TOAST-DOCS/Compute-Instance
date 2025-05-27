@@ -20,7 +20,7 @@ The available instance flavors vary depending on the image you choose, so we rec
 
 | OS                         | Block Storage     | Memory   |
 | -------------------------------- | ---------- | -------- |
-| Linux<br>CentOS, Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more |
+| Linux<br>Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more |
 | Windows                           | 50GB or more  | 2GB or more |
 
 
@@ -430,6 +430,7 @@ System locale in NHN Cloud Windows instances can be changed as follows.
 ![Image 1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 
+<a id='restarting-guide-for-maintenance'></a>
 ## Appendix 4. Restarting Instances for Hypervisor Maintenance
 NHN Cloud updates hypervisor software on a regular basis to enhance the security and stability of infrastructure services that we provide.
 Instances running on a hypervisor that requires maintenance must be restarted and migrated to a hypervisor which has completed maintenance.

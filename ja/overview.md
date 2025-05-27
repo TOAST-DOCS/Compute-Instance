@@ -17,7 +17,7 @@
 
 ### イメージ
 
-イメージはオペレーションシステムを含む仮想ディスクです。NHN Cloudは現在CentOS、Debian、Ubuntu、Rocky、Windowsをサポートしています。
+イメージはオペレーションシステムを含む仮想ディスクです。NHN Cloudは現在Debian、Ubuntu、Rocky、Windowsをサポートしています。
 
 全てのイメージは、インスタンスの仮想ハードウェアで最適に実行されるよう設定されており、NHN Cloudのセキュリティ検証を経ているため、安全に使用できます。イメージの詳細な説明は[イメージ概要](/Compute/Image/ja/overview/)を参照してください。
 
@@ -88,10 +88,6 @@ Linuxインスタンスに接続する時はSSHクライアントを利用しま
 #### MacまたはLinuxのSSHクライアントでLinuxインスタンスに接続する方法
 
 MacやLinuxには通常、SSHクライアントがデフォルトでインストールされています。SSHクライアントで下記のようにキーペアの秘密鍵を利用して接続します。
-
-CentOSインスタンス
-
-	$ ssh -i my_private_key.pem centos@<インスタンスのIP>
 
 Ubuntuインスタンス
 
@@ -168,10 +164,6 @@ PuTTY用に変換された秘密鍵が登録されたらPuTTYを実行します�
 ![イメージ6](http://static.toastoven.net/prod_instance/putty009-en.png)
 
 基本接続情報の**ホスト名**は次のように使用します。
-
-CentOS
-
-	centos@<インスタンスのIP>
 
 Ubuntu
 
