@@ -79,7 +79,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 * 인스턴스가 중지되면 90일 동안 홈페이지 요금 기준으로 90% 할인된 금액을 적용합니다. 중지 상태가 90일을 초과하면 중지 상태를 유지하면서 정상 요금으로 전환됩니다.
 * 종료된 인스턴스는 과금되지 않습니다.
 
-과금에 대한 더 자세한 사항은 서비스별 [요금 페이지](https://www.ngoic.go.kr/kr/service/compute/instance#price)를 참고합니다.
+과금에 대한 더 자세한 사항은 서비스별 [요금 페이지](https://www.ngoic.com/kr/service/compute/instance#price)를 참고합니다.
 
 ## 인스턴스 접속 방법
 
