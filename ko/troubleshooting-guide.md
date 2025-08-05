@@ -45,7 +45,9 @@ CentOS 인스턴스에서 root 권한을 얻으려면 다음과 같이 `sudo` �
 <br>
 <br>
 
+<a id="proxy">
 <h3>프락시를 사용하는 인스턴스에서의 동작이 이상합니다.</h3>
+</a>
 
 프락시를 사용하는 인스턴스에서 NHN Cloud의 Monitoring 서비스(System Monitoring, Service Monitoring, Cloud Monitoring)가 정상적으로 동작하지 않을 수 있습니다. 또한 Windows 운영체제의 경우 비밀번호 초기화 등의 문제가 발생할 수 있습니다.
 
