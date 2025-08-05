@@ -45,7 +45,7 @@ CentOS 인스턴스에서 root 권한을 얻으려면 다음과 같이 `sudo` �
 <br>
 <br>
 
-<a id="proxy">
+<a id="proxy-instance-issue">
 <h3>프락시를 사용하는 인스턴스에서의 동작이 이상합니다.</h3>
 </a>
 
