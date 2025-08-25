@@ -45,7 +45,9 @@ CentOSインスタンスでroot権限を取得するには、次のように`sud
 <br>
 <br>
 
+<a id="proxy-instance-issue">
 <h3>プロキシを使用しているインスタンスでの動作がおかしいです。</h3>
+</a>
 
 プロキシを使用するインスタンスでNHN CloudのMonitoringサービス(System Monitoring, Service Monitoring, Cloud Monitoring)が正常に動作しない場合があります。また、Windows OSの場合、パスワード初期化どの問題が発生する可能性があります。
 
