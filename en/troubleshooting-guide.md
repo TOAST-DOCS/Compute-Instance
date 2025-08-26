@@ -45,7 +45,9 @@ It happens when DNS is blocked at the receiving part of the security group to wh
 <br>
 <br>
 
+<a id="proxy-instance-issue">
 <h3>Something goes wrong on instances using proxies</h3>
+</a>
 
 NHN Cloud's Monitoring services (System Monitoring, Service Monitoring, Cloud Monitoring) may not work properly on instances that use proxies. Also, in the case of Windows operating systems, problems such as password reset may occur.
 
