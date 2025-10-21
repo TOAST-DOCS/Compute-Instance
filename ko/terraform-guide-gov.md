@@ -577,8 +577,8 @@ data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_01" {
 
 # 이름으로 조회
 data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
-  cluster_id = nhncloud_kubernetes_cluster_v1.cluster_01.id
-  name       = "default-worker"
+  cluster_id = "my-nks-cluster"
+  name       = "my-nks-worker"
 }
 ```
 
