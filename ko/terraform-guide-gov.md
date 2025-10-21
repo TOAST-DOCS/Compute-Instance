@@ -45,6 +45,11 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * Object Storage
     * nhncloud_objectstorage_container_v1
     * nhncloud_objectstorage_object_v1
+* Container
+    * nhncloud_kubernetes_cluster_v1
+    * nhncloud_kubernetes_nodegroup_v1
+    * nhncloud_kubernetes_cluster_resize_v1
+    * nhncloud_kubernetes_nodegroup_upgrade_v1
 
 #### Data sources 지원
 
@@ -59,7 +64,8 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * nhncloud_networking_secgroup_v2
 * nhncloud_keymanager_secret_v1
 * nhncloud_keymanager_container_v1
-
+* nhncloud_kubernetes_cluster_v1
+* nhncloud_kubernetes_nodegroup_v1
 
 ### 알아두기
 
@@ -539,6 +545,49 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 | --- | --- |---|-------------------------|
 | region | String | - | 조회할 시크릿 컨테이너가 속한 리전 이름  |
 | name | String | - | 조회할 시크릿 컨테이너 이름         |
+
+
+### 클러스터
+```
+# UUID로 조회
+data "nhncloud_kubernetes_cluster_v1" "cluster_01" {
+  uuid = "azcd1334-efgh-5678-ijkl-9012mnop3456"
+}
+
+# 이름으로 조회
+data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
+  name = "my-nks-cluster"
+}
+```
+
+| 이름 | 타입 | 필수 | 설명                              |
+| --- | --- |---|---------------------------------|
+| region | String | - | 조회할 클러스터가 속한 리전 이름              |
+| uuid | UUID | - | 클러스터 UUID(UUID 또는 name 중 하나 필수) |
+| name | String | - | 클러스터 이름(UUID 또는 name 중 하나 필수)   |
+
+
+### 노드 그룹
+```
+# UUID로 조회
+data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_01" {
+  cluster_id = "azcd1334-efgh-5678-ijkl-9012mnop3456"
+  uuid       = "mnop3456-ijkl-5678-efgh-1234abcd9012"
+}
+
+# 이름으로 조회
+data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
+  cluster_id = nhncloud_kubernetes_cluster_v1.cluster_01.id
+  name       = "default-worker"
+}
+```
+
+| 이름 | 형식 | 필수 | 설명                               |
+| --- | --- | --- |----------------------------------|
+| region | String | - | 조회할 노드 그룹가 속한 리전 이름              |
+| cluster_id | UUID | O | 소속 클러스터 UUID                     |
+| uuid | UUID | - | 노드 그룹 UUID(UUID 또는 name 중 하나 필수) |
+| name | String | - | 노드 그룹 이름(UUID 또는 name 중 하나 필수)   |
 
 
 ## Resources
@@ -1176,6 +1225,145 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 | security_group_id | UUID | O | 보안 규칙이 속한 보안 그룹 ID |
 | remote_ip_prefix | Enum | - | 보안 규칙의 목적지 IP 접두사 |
 | description | String | - | 보안 규칙 설명 |
+
+## Resources - 컨테이너
+
+### 클러스터 생성
+
+```
+data "nhncloud_networking_vpc_v2" "default_network" {
+  ...
+}
+
+data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
+  ...
+}
+
+data "nhncloud_compute_flavor_v2" "m2_c2m4" {
+  ...
+}
+
+data "nhncloud_images_image_v2" "nks_image" {
+  ...
+}
+
+resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
+  name                = "tf-cluster"
+  cluster_template_id = "iaas_console"
+  fixed_network       = data.nhncloud_networking_vpc_v2.default_network.id
+  fixed_subnet        = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
+  flavor_id           = data.nhncloud_compute_flavor_v2.m2_c2m4.id
+  keypair             = "key-real1"
+  node_count          = 1
+
+  labels = {
+    kube_tag             = "v1.30.3"
+    availability_zone    = "kr-pub-a"
+    node_image           = data.nhncloud_images_image_v2.nks_image.id
+    boot_volume_size     = "50"
+    boot_volume_type     = "General HDD"
+    cert_manager_api	 = "True"
+    ca_enable		 = "False"
+    master_lb_floating_ip_enabled = "False"
+  }
+
+  addons {
+    name    = "calico"
+    version = "v3.28.2-nks1"
+  }
+
+  addons {
+    name    = "coredns"
+    version = "1.8.4-nks1"
+  }
+}
+```
+
+| 이름                       | 형식       | 필수 | 설명                                  |
+|--------------------------|----------|----|-------------------------------------|
+| name                     | String   | O  | 클러스터 이름                             |
+| cluster_template_id      | String   | O  | 클러스터 템플릿 ID. 반드시 "iaas_console"로 설정 |
+| fixed_network            | UUID     | O  | VPC 네트워크 UUID                       |
+| fixed_subnet             | UUID     | O  | VPC 서브넷 UUID                        |
+| flavor_id                | UUID     | O  | 기본 워커 노드의 인스턴스 타입 UUID              |
+| keypair                  | String   | O  | 기본 워커 노드 그룹에 적용할 키페어 UUID           |
+| node_count               | Integer  | O  | 	전체 워커 노드 수                         |
+| addons                   | Object | -  | 설치할 애드온 정보 목록. 여러개 설치할 경우 중복하여 입력   |
+| addons.name              | String | O  | 애드온 이름                              |
+| addons.version           | String | O  | 애드온 버전                              |
+| addons.options           | String | -  | 애드온 별 옵션                            |
+| labels                   | Object   | O  | 노드 그룹 생성 정보 개체         |
+| labels.node_image        | Object   | O  | 기본 워커 노드 그룹 적용 : 베이스 이미지 UUID         |
+| labels.availability_zone | Object   | O  | 기본 워커 노드 그룹 적용 : 가용성 영역          |
+| labels.boot_volume_type  | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류      |
+| labels.boot_volume_size  | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB) |
+
+### 노드 그룹 생성
+
+```
+resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.id
+  name       = "add-nodegroup"
+  node_count = 1
+  flavor_id  = data.nhncloud_compute_flavor_v2.m2_c2m4.id
+  image_id   = data.nhncloud_images_image_v2.nks_image.id
+
+  labels = {
+    availability_zone = "kr-pub-a"
+    boot_volume_size  = "50"
+    boot_volume_type  = "General HDD"
+    ca_enable = "False"
+  }
+}
+```
+
+| 이름                        | 형식 | 필수 | 설명                               |
+|---------------------------| --- | --- |----------------------------------|
+| cluster_id                | UUID or String	 | O | 클러스터 UUID 또는 클러스터 이름             |
+| name                      | String | O | 노드 그룹 이름                         |
+| node_count                | Integer | O | 노드 그룹 노드 수                       |
+| flavor_id                 | UUID | O | 노드 그룹 인스턴스 타입 UUID               |
+| image_id                  | UUID | O | 노드 그룹 베이스 이미지 UUID               |
+| labels                    | Object   | O  | 노드 그룹 생성 정보 개체                   |
+| labels.availability_zone  | Object   | O  | 기본 워커 노드 그룹 적용 : 가용성 영역          |
+| labels.boot_volume_type   | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류      |
+| labels.boot_volume_size   | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB) |
+
+### 클러스터 리사이즈
+
+```
+resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
+  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
+  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  node_count = 1
+  nodes_to_remove = ["c500fc8c-c898-44ef-a6e3-476e386524b6"]
+}
+```
+
+| 이름 | 형식             | 필수 | 설명                        |
+| --- |----------------| --- |---------------------------|
+| cluster_id | UUID or String | O | 대상 클러스터 UUID 또는 클러스터 이름   |
+| nodegroup_id | UUID or String | O | 대상 노드 그룹 UUID 또는 노드 그룹 이름 |
+| node_count | Integer        | O | 변경하고자 하는 워커 노드 수          |
+| nodes_to_remove | List(String)   | - | 삭제하고자 하는 노드 UUID          |
+
+### 클러스터 업그레이드
+
+```
+resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "nodegroup_upgrade" {
+  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
+  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  version      = "v1.32.3"
+}
+```
+
+| 이름 | 형식 | 필수 | 설명                      |
+| --- | --- | --- |-------------------------|
+| cluster_id | UUID or String | O | 대상 클러스터 UUID 또는 클러스터 이름   |
+| nodegroup_id | UUID or String | O | 대상 노드 그룹 UUID 또는 노드 그룹 이름 |
+| version | String | O | 목표 Kubernetes 버전        |
+| num_buffer_nodes | Integer | - | 버퍼 노드 수. 최솟값: 0, 최댓값: (워커 노드 그룹당 최대 노드 수 쿼터-해당 워커 노드 그룹의 현재 노드 수), 기본값: 1 |
+| num_max_unavailable_nodes | Integer | - | 최대 서비스 불가 노드 수. 최솟값: 1, 최댓값: 해당 워커 노드 그룹의 현재 노드 수, 기본값: 1 |
 
 ## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
