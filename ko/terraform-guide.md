@@ -1233,7 +1233,11 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 
 ## Resources - 컨테이너
 
+> [주의]  
+> 컨테이너 관련 기능은 일회성으로 동작입니다. 중복으로 apply 명령을 실행하는 경우 기존 리소스를 삭제하고 새로운 리소스를 생성합니다.
+
 ### 클러스터 생성
+
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
