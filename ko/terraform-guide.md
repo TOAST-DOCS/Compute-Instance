@@ -1234,7 +1234,7 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 ## Resources - 컨테이너
 
 > [주의]  
-> 컨테이너 관련 기능은 일회성으로 동작입니다. 중복으로 apply 명령을 실행하는 경우 기존 리소스를 삭제하고 새로운 리소스를 생성합니다.
+> 컨테이너 관련 기능은 일회성으로 동작합니다. 중복으로 apply 명령을 실행하는 경우 기존 리소스를 삭제하고 새로운 리소스를 생성합니다.
 
 ### 클러스터 생성
 
@@ -1288,24 +1288,24 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 }
 ```
 
-| 이름                       | 형식       | 필수 | 설명                                    |
-|--------------------------|----------|----|---------------------------------------|
-| name                     | String   | O  | 클러스터 이름                               |
-| cluster_template_id      | String   | O  | 클러스터 템플릿 ID. 반드시 "iaas_console"로 설정   |
-| fixed_network            | UUID     | O  | VPC 네트워크 UUID                         |
-| fixed_subnet             | UUID     | O  | VPC 서브넷 UUID                          |
-| flavor_id                | UUID     | O  | 기본 워커 노드의 인스턴스 타입 UUID                |
-| keypair                  | String   | O  | 기본 워커 노드 그룹에 적용할 키페어 UUID             |
-| node_count               | Integer  | O  | 	전체 워커 노드 수                           |
-| addons                   | Object | -  | 설치할 애드온 정보 목록. 여러개 설치할 경우 중복하여 입력<br>애드온 항목에 대한 자세한 내용은 `사용자 가이드 > Container > NHN Kubernetes Service(NKS) > 사용 가이드 > 애드온 관리 기능`을 참고 |
-| addons.name              | String | O  | 애드온 이름                                |
-| addons.version           | String | O  | 애드온 버전                                |
-| addons.options           | String | -  | 애드온 별 옵션                              |
-| labels                   | Object   | O  | 노드 그룹 생성 정보 개체                        |
-| labels.node_image        | Object   | O  | 기본 워커 노드 그룹 적용 : 베이스 이미지 UUID         |
-| labels.availability_zone | Object   | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
-| labels.boot_volume_type  | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
-| labels.boot_volume_size  | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
+| 이름                       | 형식      | 필수 | 설명                                    |
+|--------------------------|---------|----|---------------------------------------|
+| name                     | String  | O  | 클러스터 이름                               |
+| cluster_template_id      | String  | O  | 클러스터 템플릿 ID. 반드시 "iaas_console"로 설정   |
+| fixed_network            | UUID    | O  | VPC 네트워크 UUID                         |
+| fixed_subnet             | UUID    | O  | VPC 서브넷 UUID                          |
+| flavor_id                | UUID    | O  | 기본 워커 노드의 인스턴스 타입 UUID                |
+| keypair                  | String  | O  | 기본 워커 노드 그룹에 적용할 키페어 UUID             |
+| node_count               | Integer | O  | 	전체 워커 노드 수                           |
+| addons                   | Object  | -  | 설치할 애드온 정보 목록. 여러개 설치할 경우 중복하여 입력<br>애드온 항목에 대한 자세한 내용은 `사용자 가이드 > Container > NHN Kubernetes Service(NKS) > 사용 가이드 > 애드온 관리 기능`을 참고 |
+| addons.name              | String  | O  | 애드온 이름                                |
+| addons.version           | String  | O  | 애드온 버전                                |
+| addons.options           | String  | -  | 애드온 별 옵션                              |
+| labels                   | Object  | O  | 노드 그룹 생성 정보 개체                        |
+| labels.node_image        | UUID    | O  | 기본 워커 노드 그룹 적용 : 베이스 이미지 UUID         |
+| labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
+| labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
+| labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
 
 ### 노드 그룹 생성
 
@@ -1334,9 +1334,9 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | flavor_id                 | UUID | O | 노드 그룹 인스턴스 타입 UUID               |
 | image_id                  | UUID | O | 노드 그룹 베이스 이미지 UUID               |
 | labels                    | Object   | O  | 노드 그룹 생성 정보 개체                   |
-| labels.availability_zone  | Object   | O  | 기본 워커 노드 그룹 적용 : 가용성 영역          |
-| labels.boot_volume_type   | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류      |
-| labels.boot_volume_size   | Object   | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB) |
+| labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
+| labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
+| labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
 
 ### 리사이즈
 
