@@ -675,10 +675,6 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
     uuid = data.nhncloud_networking_vpc_v2.default_network.id
   }
 
-  network {
-    port = nhncloud_networking_port_v2.port_1.id
-  }
-
   block_device {
     uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
@@ -939,10 +935,6 @@ resource "nhncloud_networking_port_v2" "port_1" {
 
 # インスタンス作成
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
-...
-    network {
-    port = nhncloud_networking_port_v2.port_1.id
-  }
   ...
 }
 
