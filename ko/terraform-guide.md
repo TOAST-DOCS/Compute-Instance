@@ -584,7 +584,7 @@ data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
 
 | 이름 | 형식 | 필수 | 설명                               |
 | --- | --- | --- |----------------------------------|
-| region | String | - | 조회할 노드 그룹가 속한 리전 이름              |
+| region | String | - | 조회할 노드 그룹이 속한 리전 이름              |
 | cluster_id | UUID | O | 소속 클러스터 UUID                     |
 | uuid | UUID | - | 노드 그룹 UUID(UUID 또는 name 중 하나 필수) |
 | name | String | - | 노드 그룹 이름(UUID 또는 name 중 하나 필수)   |
@@ -1289,10 +1289,10 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | flavor_id                | UUID    | O  | 기본 워커 노드의 인스턴스 타입 UUID                |
 | keypair                  | String  | O  | 기본 워커 노드 그룹에 적용할 키페어 UUID             |
 | node_count               | Integer | O  | 	전체 워커 노드 수                           |
-| addons                   | Object  | -  | 설치할 애드온 정보 목록. 여러개 설치할 경우 중복하여 입력<br>애드온 항목에 대한 자세한 내용은 `사용자 가이드 > Container > NHN Kubernetes Service(NKS) > 사용 가이드 > 애드온 관리 기능`을 참고 |
+| addons                   | Object  | -  | 설치할 애드온 정보 목록. 여러 개 설치할 경우 중복하여 입력<br>애드온 항목에 대한 자세한 내용은 `사용자 가이드 > Container > NHN Kubernetes Service(NKS) > 사용 가이드 > 애드온 관리 기능`을 참고 |
 | addons.name              | String  | O  | 애드온 이름                                |
 | addons.version           | String  | O  | 애드온 버전                                |
-| addons.options           | String  | -  | 애드온 별 옵션                              |
+| addons.options           | String  | -  | 애드온별 옵션                              |
 | labels                   | Object  | O  | 노드 그룹 생성 정보 개체                        |
 | labels.node_image        | UUID    | O  | 기본 워커 노드 그룹 적용 : 베이스 이미지 UUID         |
 | labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
