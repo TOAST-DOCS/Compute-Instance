@@ -45,6 +45,11 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * Object Storage
     * nhncloud_objectstorage_container_v1
     * nhncloud_objectstorage_object_v1
+* Container
+    * nhncloud_kubernetes_cluster_v1
+    * nhncloud_kubernetes_nodegroup_v1
+    * nhncloud_kubernetes_cluster_resize_v1
+    * nhncloud_kubernetes_nodegroup_upgrade_v1
 
 #### Supported Data Sources
 
@@ -59,6 +64,8 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * nhncloud_networking_secgroup_v2
 * nhncloud_keymanager_secret_v1
 * nhncloud_keymanager_container_v1
+* nhncloud_kubernetes_cluster_v1
+* nhncloud_kubernetes_nodegroup_v1
 
 
 ### Note
@@ -540,6 +547,48 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 | name | String | - | Secret container name to query         |
 
 
+### Cluster
+```
+# Search by UUID
+data "nhncloud_kubernetes_cluster_v1" "cluster_01" {
+  uuid = "azcd1334-efgh-5678-ijkl-9012mnop3456"
+}
+
+# Search by Name
+data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
+  name = "my-nks-cluster"
+}
+```
+
+| Name | Type | Required | Description                              |
+| --- | --- |---|---------------------------------|
+| region | String | - | The region name of the cluster to be retrieved              |
+| uuid | UUID | - | Cluster UUID (either UUID or name is required) |
+| name | String | - | Cluster name (either UUID or name is required)   |
+
+### Node Group
+```
+# Search by UUID
+data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_01" {
+  cluster_id = "azcd1334-efgh-5678-ijkl-9012mnop3456"
+  uuid       = "mnop3456-ijkl-5678-efgh-1234abcd9012"
+}
+
+# Search by Name
+data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
+  cluster_id = "my-nks-cluster"
+  name       = "my-nks-worker"
+}
+```
+
+| Name | Format | Required | Description                               |
+| --- | --- | --- |----------------------------------|
+| region | String | - | Region name to which the node group to be retrieved belongs              |
+| cluster_id | UUID | O | Cluster UUID to which it belongs                     |
+| uuid | UUID | - | Node group UUID (either UUID or name is required) |
+| name | String | - | Node group name (either UUID or name is required)   |
+
+
 ## Resources
 
 You can create, modify, or delete resources with Terraform resources. NHN Cloud supports management of the following resources using Terraform:
@@ -552,6 +601,7 @@ You can create, modify, or delete resources with Terraform resources. NHN Cloud 
 * Network port
 * Load balancer
 * Security group
+* Container
 
 The following sections describe how to use each resource.
 
@@ -1174,6 +1224,149 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 | security_group_id | UUID | O | Security group ID containing the security rule |
 | remote_ip_prefix | Enum | - | Destination IP prefix of the security rule |
 | description | String | - | Security rule description |
+
+## Resources - Container
+
+> [Caution]  
+> Container-related functions operate on a one-time basis. If you run the apply command multiple times, the existing resource will be deleted and a new one will be created.
+
+### Create a Cluster
+
+
+```
+data "nhncloud_networking_vpc_v2" "default_network" {
+  ...
+}
+
+data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
+  ...
+}
+
+data "nhncloud_compute_flavor_v2" "m2_c2m4" {
+  ...
+}
+
+data "nhncloud_images_image_v2" "nks_image" {
+  ...
+}
+
+resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
+  name                = "tf-cluster"
+  cluster_template_id = "iaas_console"
+  fixed_network       = data.nhncloud_networking_vpc_v2.default_network.id
+  fixed_subnet        = data.nhncloud_networking_vpcsubnet_v2.default_subnet.id
+  flavor_id           = data.nhncloud_compute_flavor_v2.m2_c2m4.id
+  keypair             = "tf-keypair"
+  node_count          = 1
+
+  labels = {
+    kube_tag             = "v1.30.3"
+    availability_zone    = "kr-pub-a"
+    node_image           = data.nhncloud_images_image_v2.nks_image.id
+    boot_volume_size     = "50"
+    boot_volume_type     = "General HDD"
+    cert_manager_api	 = "True"
+    ca_enable		 = "False"
+    master_lb_floating_ip_enabled = "False"
+  }
+
+  addons {
+    name    = "calico"
+    version = "v3.28.2-nks1"
+  }
+
+  addons {
+    name    = "coredns"
+    version = "1.8.4-nks1"
+  }
+}
+```
+
+| Name                       | Format      | Required | Description                                    |
+|--------------------------|---------|----|---------------------------------------|
+| name                     | String  | O  | Cluster name                               |
+| cluster_template_id      | String  | O  | Cluster template ID. Must be set to "iaas_console"   |
+| fixed_network            | UUID    | O  | VPC network UUID                         |
+| fixed_subnet             | UUID    | O  | VPC subnet UUID                          |
+| flavor_id                | UUID    | O  | Instance flavor UUID of the default worker node              |
+| keypair                  | String  | O  | Keypair to be applied in the default worker node             |
+| node_count | Integer | O | Total number of worker nodes |
+| addons | Object | - | List of add-on information to be installed. Enter multiple entries if installing multiple add-ons.<br>For more information on add-ons, refer to `User Guide > Container > NHN Kubernetes Service (NKS) > User Guide > Add-on Management` |
+| addons.name | String | O | Addon name |
+| addons.version | String | O | Addon version |
+| addons.options | String | - | Add-on-specific options |
+| labels | Object | O | Node group creation information object |
+| labels.node_image | UUID | O | Default worker node group: base image UUID |
+| labels.availability_zone | String | O | Default worker node group: availability zone |
+| labels.boot_volume_type | String | O | Default worker node group: block storage type |
+| labels.boot_volume_size | String | O | Apply default worker node group: block storage size (GB) |
+
+### Create a Node Group
+
+```
+resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.id
+  name       = "add-nodegroup"
+  node_count = 1
+  flavor_id  = data.nhncloud_compute_flavor_v2.m2_c2m4.id
+  image_id   = data.nhncloud_images_image_v2.nks_image.id
+
+  labels = {
+    availability_zone = "kr-pub-a"
+    boot_volume_size  = "50"
+    boot_volume_type  = "General HDD"
+    ca_enable = "False"
+  }
+}
+```
+
+| Name                        | Format | Required | Description                               |
+|---------------------------| --- | --- |----------------------------------|
+| cluster_id                | UUID or String	 | O | Cluster UUID or cluster name             |
+| name                      | String | O | Node group name |
+| node_count | Integer | O | Number of nodes in the node group |
+| flavor_id | UUID | O | Node group instance type UUID |
+| image_id | UUID | O | Node group base image UUID |
+| labels | Object | O | Node group creation information object |
+| labels.availability_zone | String | O | Default worker node group applies: availability zone |
+| labels.boot_volume_type | String | O | Default worker node group applies: block storage type |
+| labels.boot_volume_size | String | O | Default worker node group applies: block storage size (GB)      |
+
+### Resize
+
+```
+resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
+  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
+  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  node_count = 1
+  nodes_to_remove = ["c500fc8c-c898-44ef-a6e3-476e386524b6"]
+}
+```
+
+| Name | Format             | Required | Description                        |
+| --- |----------------| --- |---------------------------|
+| cluster_id | UUID or String | O | Target cluster UUID or cluster name |
+| nodegroup_id | UUID or String | O | Target node group UUID or node group name |
+| node_count | Integer | O | Number of worker nodes to change |
+| nodes_to_remove | List(String) | - | Node UUIDs to delete         |
+
+### Cluster Upgrade
+
+```
+resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
+  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
+  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  version      = "v1.32.3"
+}
+```
+
+| Name | Format | Required | Description                      |
+| --- | --- | --- |-------------------------|
+| cluster_id | UUID or String | O | Target cluster UUID or cluster name |
+| nodegroup_id | UUID or String | O | Target node group UUID or node group name |
+| version | String | O | Target Kubernetes version |
+| num_buffer_nodes | Integer | - | Number of buffer nodes. Minimum: 0, Maximum: (maximum node quota per worker node group - current number of nodes in that worker node group), Default: 1 |
+| num_max_unavailable_nodes | Integer | - | Maximum number of unavailable nodes. Minimum: 1, Maximum: current number of nodes in that worker node group, Default: 1 |
 
 ## Reference
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
