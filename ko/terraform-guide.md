@@ -1225,11 +1225,7 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 
 ## Resources - 컨테이너
 
-> [주의]  
-> 컨테이너 관련 기능은 일회성으로 동작합니다. 중복으로 apply 명령을 실행하는 경우 기존 리소스를 삭제하고 새로운 리소스를 생성합니다.
-
 ### 클러스터 생성
-
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
@@ -1298,12 +1294,16 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
 | labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
 | labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
+| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러: 기능 활성화 여부<br>("True" / "False")    |
+| labels.cert_manager_api  | String  | O  | CSR(Certificate Signing Request) 기능 활성화 여부. 반드시 "True" 로 설정     |
+| labels.kube_tag  | String  | O  | Kubernetes 버전     |
+| labels.master_lb_floating_ip_enabled  | String  | O  | Kubernetes API 엔드포인트에 공인 도메인 주소 생성 여부 ("True" / "False")<br>labels.external_network_id와 external_subnet_id_list가 설정된 경우에만 "True"로 설정 가능   |
 
 ### 노드 그룹 생성
 
 ```
 resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
-  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.id
+  cluster_id = "d6075d02-a8d1-4b5a-b6e2-95d7ac8f99a4"
   name       = "add-nodegroup"
   node_count = 1
   flavor_id  = data.nhncloud_compute_flavor_v2.m2_c2m4.id
@@ -1329,13 +1329,34 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
 | labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
 | labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
+| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러: 기능 활성화 여부<br>("True" / "False")      |
 
 ### 리사이즈
 
+!!! tip "알아두기"
+  Terraform으로 생성한 리소스에 대해 리사이즈 수행 시 변경되는 node_count는 tf 파일 내 nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 자동으로 적용되지 않습니다.
+  Terraform이 의도하지 않은 변경 시도하는 것을 방지하려면, nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 `lifecycle { ignore_changes = [node_count] }`를 설정하는 것을 권장합니다.
+
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+  
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
 resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   node_count = 1
   nodes_to_remove = ["c500fc8c-c898-44ef-a6e3-476e386524b6"]
 }
@@ -1351,9 +1372,17 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 ### 클러스터 업그레이드
 
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+}
+
 resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   version      = "v1.32.3"
 }
 ```
