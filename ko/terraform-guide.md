@@ -1334,8 +1334,8 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 ### 리사이즈
 
 !!! tip "알아두기"
-  Terraform으로 생성한 리소스에 대해 리사이즈 수행 시 변경되는 node_count는 tf 파일 내 nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 자동으로 적용되지 않습니다.
-  Terraform이 의도하지 않은 변경 시도하는 것을 방지하려면, nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 `lifecycle { ignore_changes = [node_count] }`를 설정하는 것을 권장합니다.
+    Terraform으로 생성한 리소스에 대해 리사이즈 수행 시 변경되는 node_count는 tf 파일 내 nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 자동으로 적용되지 않습니다.
+    Terraform이 의도하지 않은 변경 시도하는 것을 방지하려면, nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 `lifecycle { ignore_changes = [node_count] }`를 설정하는 것을 권장합니다.
 
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
