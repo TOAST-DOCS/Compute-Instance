@@ -1227,9 +1227,6 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 
 ## Resources - Container
 
-> [Caution]  
-> Container-related functions operate on a one-time basis. If you run the apply command multiple times, the existing resource will be deleted and a new one will be created.
-
 ### Create a Cluster
 
 
@@ -1282,14 +1279,14 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 }
 ```
 
-| Name                       | Format      | Required | Description                                    |
-|--------------------------|---------|----|---------------------------------------|
-| name                     | String  | O  | Cluster name                               |
-| cluster_template_id      | String  | O  | Cluster template ID. Must be set to "iaas_console"   |
-| fixed_network            | UUID    | O  | VPC network UUID                         |
-| fixed_subnet             | UUID    | O  | VPC subnet UUID                          |
-| flavor_id                | UUID    | O  | Instance flavor UUID of the default worker node              |
-| keypair                  | String  | O  | Keypair to be applied in the default worker node             |
+| Name                       | Format      | Required | Description                                  |
+|--------------------------|---------|----|--------------------------------------|
+| name                     | String  | O  | Cluster name                              |
+| cluster_template_id      | String  | O  | Cluster template ID. Must be set to "iaas_console" |
+| fixed_network            | UUID    | O  | VPC network UUID                        |
+| fixed_subnet             | UUID    | O  | VPC subnet UUID                         |
+| flavor_id                | UUID    | O  | Instance flavor UUID of the default worker node            |
+| keypair                  | String  | O  | Keypair to be applied in the default worker node           |
 | node_count | Integer | O | Total number of worker nodes |
 | addons | Object | - | List of add-on information to be installed. Enter multiple entries if installing multiple add-ons.<br>For more information on add-ons, refer to `User Guide > Container > NHN Kubernetes Service (NKS) > User Guide > Add-on Management` |
 | addons.name | String | O | Addon name |
@@ -1300,12 +1297,18 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.availability_zone | String | O | Default worker node group: availability zone |
 | labels.boot_volume_type | String | O | Default worker node group: block storage type |
 | labels.boot_volume_size | String | O | Apply default worker node group: block storage size (GB) |
+| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") |
+| labels.cert_manager_api  | String  | O  | Whether to enable the certificate signing request (CSR) feature. Must be set to "True"   |
+| labels.kube_tag  | String  | O  | Kubernetes Version     |
+| labels.master_lb_floating_ip_enabled  | String  | O  | Whether to create a public domain address for Kubernetes API endpoint<br>("True" / "False") |
+
+
 
 ### Create a Node Group
 
 ```
 resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
-  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.id
+  cluster_id = "d6075d02-a8d1-4b5a-b6e2-95d7ac8f99a4"
   name       = "add-nodegroup"
   node_count = 1
   flavor_id  = data.nhncloud_compute_flavor_v2.m2_c2m4.id
@@ -1330,14 +1333,30 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels | Object | O | Node group creation information object |
 | labels.availability_zone | String | O | Default worker node group applies: availability zone |
 | labels.boot_volume_type | String | O | Default worker node group applies: block storage type |
-| labels.boot_volume_size | String | O | Default worker node group applies: block storage size (GB)      |
+| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: block storage size (GB)      |
+
 
 ### Resize
 
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+  
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
 resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   node_count = 1
   nodes_to_remove = ["c500fc8c-c898-44ef-a6e3-476e386524b6"]
 }
@@ -1353,9 +1372,17 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 ### Cluster Upgrade
 
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+}
+
 resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   version      = "v1.32.3"
 }
 ```
