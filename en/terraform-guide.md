@@ -1339,8 +1339,8 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 ### Resize
 
 !!! tip "Notice"
-  When resizing resources created with Terraform, the changed node_count is not applied to nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 resource contents in the tf file.
-  To prevent Terraform from being changed accidentally, we recommend you to set `lifecycle { ignore_changes = [node_count] }` in the nhncloud_kubernetes_cluster_v1 and nhncloud_kubernetes_nodegroup_v1 resources.
+    When resizing resources created with Terraform, the changed node_count is not applied to nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 resource contents in the tf file.
+    To prevent Terraform from being changed accidentally, we recommend you to set `lifecycle { ignore_changes = [node_count] }` in the nhncloud_kubernetes_cluster_v1 and nhncloud_kubernetes_nodegroup_v1 resources.
 
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {

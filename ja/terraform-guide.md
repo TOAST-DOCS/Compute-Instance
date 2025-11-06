@@ -1412,6 +1412,10 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 
 ### リサイズ
 
+!!! tip "「ポイント」"
+    Terraformで作成したリソースに対してリサイズを実行すると、変更される`node_count`は、tfファイル内の`nhncloud_kubernetes_cluster_v1`、`nhncloud_kubernetes_nodegroup_v1`リソースの内容に自動的には適用されません。
+    Terraformが意図しない変更を試行するのを防ぐには、`nhncloud_kubernetes_cluster_v1`、`nhncloud_kubernetes_nodegroup_v1`リソースの内容に`lifecycle { ignore_changes = [node_count] }`を設定することを推奨します。
+
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
   ...

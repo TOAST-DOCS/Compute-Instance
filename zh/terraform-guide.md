@@ -1332,11 +1332,15 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | image_id | UUID | O | Node group base image UUID |
 | labels | Object | O | Node group creation information object |
 | labels.availability_zone | String | O | Default worker node group applies: availability zone |
-| labels.boot_volume_type | String | O | Default worker node group applies: block storage type |
-| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: block storage size (GB)      |
+| labels.boot_volume_type | String | O | Default worker node group applies: block storage size (GB) |
+| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: whether to enable the feature<br>("True" / "False")      |
 
 
 ### Resize
+
+!!! tip "Notice"
+    When resizing resources created with Terraform, the changed node_count is not applied to nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 resource contents in the tf file.
+    To prevent Terraform from being changed accidentally, we recommend you to set `lifecycle { ignore_changes = [node_count] }` in the nhncloud_kubernetes_cluster_v1 and nhncloud_kubernetes_nodegroup_v1 resources.
 
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
