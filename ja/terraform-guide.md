@@ -1307,24 +1307,25 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 
 ## Resources - コンテナ
 
-> [注意]
-> コンテナ関連機能は1回限りで動作します。重複してapplyコマンドを実行した場合、既存のリソースを削除して新しいリソースを作成します。
 ### クラスター作成
-
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
   ...
 }
+
 data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
   ...
 }
+
 data "nhncloud_compute_flavor_v2" "m2_c2m4" {
   ...
 }
+
 data "nhncloud_images_image_v2" "nks_image" {
   ...
 }
+
 resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
   name                = "tf-cluster"
   cluster_template_id = "iaas_console"
@@ -1354,30 +1355,35 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 }
 ```
 
-| 名前                      | 形式     | 必須 | 説明                                   |
-|--------------------------|---------|----|---------------------------------------|
-| name                     | String  | O  | クラスター名                              |
+| 名前                      | 形式     | 必須 | 説明                                  |
+|--------------------------|---------|----|--------------------------------------|
+| name                     | String  | O  | クラスター名                             |
 | cluster_template_id | String | O | クラスターテンプレートID。必ず「iaas_console」に設定 |
-| fixed_network            | UUID    | O  | VPCネットワークUUID                         |
-| fixed_subnet             | UUID    | O  | VPCサブネットUUID                          |
-| flavor_id                | UUID    | O  | 基本ワーカーノードのインスタンスタイプUUID                |
-| keypair                  | String  | O  | 基本ワーカーノードグループに適用するキーペアUUID             |
-| node_count               | Integer | O  | 	全ワーカーノード数                          |
+| fixed_network            | UUID    | O  | VPCネットワークUUID                        |
+| fixed_subnet             | UUID    | O  | VPCサブネットUUID                         |
+| flavor_id                | UUID    | O  | 基本ワーカーノードのインスタンスタイプUUID               |
+| keypair                  | String  | O  | 基本ワーカーノードグループに適用するキーペアUUID            |
+| node_count               | Integer | O  | 	全ワーカーノード数                         |
 | addons | Object | - | インストールするアドオン情報一覧。複数インストールする場合は重複して入力<br>アドオン項目に関する詳細は、`ユーザーガイド > Container > NHN Kubernetes Service(NKS) > 利用ガイド > アドオン管理機能`を参照 |
-| addons.name              | String  | O  | アドオン名                               |
-| addons.version           | String  | O  | アドオンのバージョン                               |
-| addons.options           | String  | -  | アドオン別オプション                             |
-| labels                   | Object  | O  | ノードグループ作成情報オブジェクト                       |
-| labels.node_image        | UUID    | O  | 基本ワーカーノードグループ適用:ベースイメージUUID         |
-| labels.availability_zone | String  | O  | 基本ワーカーノードグループ適用:アベイラビリティゾーン              |
-| labels.boot_volume_type  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージ種類          |
-| labels.boot_volume_size  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージサイズ(GB)      |
+| addons.name              | String  | O  | アドオン名                              |
+| addons.version           | String  | O  | アドオンのバージョン                              |
+| addons.options           | String  | -  | アドオン別オプション                            |
+| labels                   | Object  | O  | ノードグループ作成情報オブジェクト                      |
+| labels.node_image        | UUID    | O  | 基本ワーカーノードグループ適用:ベースイメージUUID        |
+| labels.availability_zone | String  | O  | 基本ワーカーノードグループ適用:アベイラビリティゾーン             |
+| labels.boot_volume_type  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージ種類         |
+| labels.boot_volume_size  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージサイズ(GB)     |
+| labels.ca_enable  | String  | O  | 基本ワーカーノードグループ適用:クラスターオートスケーラー:機能有効かどうか("True" / "False")   |
+| labels.cert_manager_api  | String  | O  | CSR(Certificate Signing Request)機能を有効にするかどうか。必ず"True"に設定   |
+| labels.kube_tag  | String  | O  | Kubernetesバージョン     |
+| labels.master_lb_floating_ip_enabled  | String  | O  | Kubernetes APIエンドポイントに公認ドメインアドレスを作成するかどうか("True" / "False")<br>labels.external_network_idとexternal_subnet_id_listが設定されている場合にのみ"True"に設定可能 |
+
 
 ### ノードグループ作成
 
 ```
 resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
-  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.id
+  cluster_id = "d6075d02-a8d1-4b5a-b6e2-95d7ac8f99a4"
   name       = "add-nodegroup"
   node_count = 1
   flavor_id  = data.nhncloud_compute_flavor_v2.m2_c2m4.id
@@ -1402,13 +1408,33 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.availability_zone | String  | O  | 基本ワーカーノードグループ適用:アベイラビリティゾーン              |
 | labels.boot_volume_type  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージ種類          |
 | labels.boot_volume_size  | String  | O  | 基本ワーカーノードグループ適用:ブロックストレージサイズ(GB)      |
+| labels.ca_enable  | String  | O  | 基本ワーカーノードグループ適用:クラスターオートスケーラー:機能有効かどうか("True" / "False")   |
 
 ### リサイズ
 
+!!! tip "「ポイント」"
+    Terraformで作成したリソースに対してリサイズを実行すると、変更される`node_count`は、tfファイル内の`nhncloud_kubernetes_cluster_v1`、`nhncloud_kubernetes_nodegroup_v1`リソースの内容に自動的には適用されません。
+    Terraformが意図しない変更を試行するのを防ぐには、`nhncloud_kubernetes_cluster_v1`、`nhncloud_kubernetes_nodegroup_v1`リソースの内容に`lifecycle { ignore_changes = [node_count] }`を設定することを推奨します。
+
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+  
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
 resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   node_count = 1
   nodes_to_remove = ["c500fc8c-c898-44ef-a6e3-476e386524b6"]
 }
@@ -1424,9 +1450,24 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 ### クラスターアップグレード
 
 ```
+resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
+  ...
+  
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
+resource "nhncloud_kubernetes_nodegroup_v1" "new_nodegroup" {
+  ...
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+}
+
 resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
-  cluster_id = "b1659f3a-b2f0-42a9-ad59-02d3b8d0cee1"
-  nodegroup_id = "f2128aa6-d373-4f1d-95d7-e93ccf8f9577"
+  cluster_id = nhncloud_kubernetes_cluster_v1.test_cluster.uuid
+  nodegroup_id = nhncloud_kubernetes_nodegroup_v1.new_nodegroup.uuid
   version      = "v1.32.3"
 }
 ```

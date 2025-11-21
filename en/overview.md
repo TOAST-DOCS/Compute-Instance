@@ -193,39 +193,3 @@ To access your Windows server, select a Windows instance to access from the NHN 
 Your key pair's private key that you input in **Confirm Password** is not sent to the server, but is instead only used in your browser to decrypt the password.
 
 Click **Connect** next to **Confirm Password** to receive the rdp file configured for remote desktop access and run it to access your Windows server. Use `Administrator` for your Windows server ID, and use the password that you checked from the NHN Cloud console.
-
-
-### How to Connect Serial Console
-
-You can connect to your instance via the serial console in situations where the SSH client is unavailable, such as a boot failure or network configuration issue.
-
-The serial console feature has the following limitations:
-
-* Only one serial console connection is allowed per instance, and multiple connection attempts may not connect properly.
-* Serial console access is not guaranteed for instances created with personally uploaded images or instances created with personal images.
-* Serial console connections last up to 10 minutes.
-* Windows instances do not support the serial console feature.
-* Instances created before the November 25, 2025 release require **Stop the instance** and **Start the instance**. **Reboot the instance** feature does not apply.
-
-> [Caution]
-> Changing the boot method while accessing an instance via the serial console may result in a boot failure, and users are responsible for any resulting consequences.
-> Under normal circumstances, we recommend using an SSH client connection.
-
-#### Change GRUB Bootloader Settings
-
-GRUB configuration is required to manipulate the bootloader on instances created before the November 26, 2024 deployment.
-
-Edit the GRUB configuration file.
-
-```
-$ sudo vi /etc/default/grub.d/50-cloudimg-settings.cfg
-GRUB_TIMEOUT=3
-GRUB_TERMINAL="console serial"
-GRUB_SERIAL_COMMAND="serial --speed=9600 --unit=0 --word=8 --parity=no --stop=1"
-```
-
-Apply the changed setting. The command to apply GRUB settings may vary depending on the OS.
-
-```
-$ sudo update-grub
-```
