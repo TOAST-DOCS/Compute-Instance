@@ -67,6 +67,7 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 * nhncloud_kubernetes_cluster_v1
 * nhncloud_kubernetes_nodegroup_v1
 
+
 ### 알아두기
 
 * **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
@@ -85,7 +86,6 @@ $ export PATH="${PATH}:$(pwd)"
 $ terraform -v
 Terraform v1.0.0
 ```
-
 
 ## Terraform provider 제공
 
@@ -114,8 +114,8 @@ provider "nhncloud" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
-  auth_url    = "https://api-identity-infrastructure.gov-nhncloudservice.com/v2.0"
-  region      = "KR1"
+  auth_url    = "https://api-identity-infrastructure.ngoic.com"
+  region      = "KR4"
 }
 ```
 * **user_name**
@@ -130,7 +130,7 @@ provider "nhncloud" {
     * NHN Cloud 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 신원 서비스(identity) URL을 확인합니다.
 * **region**
     * NHN Cloud 리소스를 관리할 리전 정보를 입력합니다.
-    * **KR1**: 한국(판교) 리전
+    * **KR4**: 한국(대구) 리전
 
 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
@@ -165,7 +165,6 @@ $ terraform apply
 
 다음 섹션에서는 이 단계들을 예제와 함께 더 자세히 설명합니다.
 
-
 ### tf 파일 작성
 
 공급자 설정 파일이 있는 경로에 tf 파일을 작성합니다. 여러 리소스 설정을 하나의 tf 파일에 모아두거나, 리소스별로 별도의 tf 파일로도 작성 가능합니다. Terraform은 작성된 전체 tf 파일을 한번에 읽어서 구축 계획을 수립합니다.
@@ -178,7 +177,7 @@ instance.tf provider.tf
 $ cat instance.tf
 resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   name      = "terraform-instance-01"
-  region    = "KR1"
+  region    = "KR4"
   flavor_id = "da74152c-0167-4ce9-b391-8a88a8ff2754"
   key_pair  = "terraform-keypair"
   network {
@@ -195,6 +194,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
   }
 }
 ```
+
 
 ### 구축 계획 확인
 
@@ -218,12 +218,11 @@ $ terraform apply
 ...
 nhncloud_compute_instance_v2.terraform-instance-01: Creating...
 nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-...
-nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [50s elapsed]
-nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 53s [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-...
 ```
 
 `apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB 파일(terraform.tfstate)이 현재 디렉터리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
@@ -255,7 +254,7 @@ Terraform will perform the following actions:
 
   # nhncloud_compute_instance_v2.terraform-instance-01 will be updated in-place
   ~ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
-        id                  = "8a8c5516-6762-4592-97ab-db8d3af629e6"
+        id                  = "1e846787-04e9-4701-957c-78001b4b7257"
         name                = "terraform-instance-01"
       ~ security_groups     = [
           + "terraform-sg",
@@ -274,8 +273,8 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 $ terraform apply
 ...
-nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
-nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -312,8 +311,8 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ```
 $ terraform apply
 ...
-nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=8a8c5516-6762-4592-97ab-db8d3af629e6]
-nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=8a8c5516-6762-4592-97ab-db8d3af629e6, 10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
 nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
 
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
@@ -324,11 +323,11 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
-Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.ubuntu_1804_20200218`로 가져온 이미지 정보를 참조합니다.
+Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
 
 ```
-data "nhncloud_images_image_v2" "ubuntu_1804_20200218" {
-  name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 ```
@@ -357,14 +356,14 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 이미지 정보를 가져옵니다. NHN Cloud가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
 
 ```
-data "nhncloud_images_image_v2" "ubuntu_1804_20200218" {
-  name = "Ubuntu Server 18.04.3 LTS (2020.02.18)"
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # 같은 이름의 이미지 중 가장 오래된 이미지 조회
 data "nhncloud_images_image_v2" "windows2016_20200218" {
-  name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO"
+  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
   owner = "c289b99209ca4e189095cdecebbd092d"
@@ -455,7 +454,7 @@ VPC 네트워크의 UUID는 NHN Cloud 콘솔 **Network > VPC**에서 VPC를 선�
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
-  region = "KR1"
+  region = "KR4"
   tenant_id = "ba3be1254ab141bcaef674e74630a31f"
   id = "e34fc878-89f6-4d17-a039-3830a0b78346"
   name = "Default Network"
@@ -476,7 +475,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 ```
 data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
-  region = "KR1"
+  region = "KR4"
   tenant_id = "ba3be1254ab141bcaef674e74630a31f"
   id = "05f6fdc3-641f-48df-b986-773b6489654f"
   name = "Default Network"
@@ -566,7 +565,6 @@ data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
 | uuid | UUID | - | 클러스터 UUID(UUID 또는 name 중 하나 필수) |
 | name | String | - | 클러스터 이름(UUID 또는 name 중 하나 필수)   |
 
-
 ### 노드 그룹
 ```
 # UUID로 조회
@@ -608,7 +606,7 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 
 ### 알아두기
 
-* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.gov-nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
+* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
 
 ## Resources - 인스턴스
 
@@ -618,7 +616,7 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 # 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
 resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   name      = "tf_instance_02"
-  region    = "KR1"
+  region    = "KR4"
   key_pair  = "terraform-keypair"
   flavor_id = data.nhncloud_compute_flavor_v2.m2c1m2.id
   security_groups = ["default","web"]
@@ -629,7 +627,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 
   block_device {
-    uuid                  = data.nhncloud_images_image_v2.centos_610_20200218.id
+    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -690,6 +688,9 @@ resource "nhncloud_blockstorage_volume_v2" "volume_01" {
 resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
   volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
+  vendor_options {
+    ignore_volume_confirmation = true
+  }
 }
 ```
 | 이름    | 타입 | 필수 | 설명       |
@@ -856,17 +857,17 @@ resource "nhncloud_networking_port_v2" "port_1" {
 ```
 
 | 이름    | 형식 | 필수 | 설명       |
-| ------ | ---- |----| --------- |
-| name | String | O  | 생성할 포트의 이름 |
-| description | String | -  | 포트 설명 |
-| network_id | String | O  | 포트를 생성할 VPC 네트워크 ID |
-| tenant_id | String | -  | 생성할 포트의 테넌트 ID |
-| device_id | String | -  | 생성된 포트가 연결될 장치 ID |
-| fixed_ip | Object | -  | 생성할 포트의 고정 IP 설정 정보<br>`no_fixed_ip` 속성이 없어야 함 |
-| fixed_ip.subent_id | String | O  | 고정 IP의 서브넷 ID |
-| fixed_ip.ip_address | String | -  | 설정할 고정 IP의 주소 |
-| no_fixed_ip | Boolean | -  | `true`: 고정 IP가 없는 포트<br>`fixed_ip` 속성이 없어야 함 |
-| admin_state_up | Boolean | -  | 관리자 제어 상태<br> `true`: 작동<br>`false`: 중지 |
+| ------ | ---- |---| --------- |
+| name | String | O | 생성할 포트의 이름 |
+| description | String | - | 포트 설명 |
+| network_id | String | O | 포트를 생성할 VPC 네트워크 ID |
+| tenant_id | String | - | 생성할 포트의 테넌트 ID |
+| device_id | String | - | 생성된 포트가 연결될 장치 ID |
+| fixed_ip | Object | - | 생성할 포트의 고정 IP 설정 정보<br>`no_fixed_ip` 속성이 없어야 함 |
+| fixed_ip.subent_id | String | O | 고정 IP의 서브넷 ID |
+| fixed_ip.ip_address | String | - | 설정할 고정 IP의 주소 |
+| no_fixed_ip | Boolean | - | `true`: 고정 IP가 없는 포트<br>`fixed_ip` 속성이 없어야 함 |
+| admin_state_up | Boolean | - | 관리자 제어 상태<br> `true`: 작동<br>`false`: 중지 |
 
 
 ### 플로팅 IP 생성
@@ -936,6 +937,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 
 라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
 인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
+
 ```
 resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
   ...
@@ -1008,7 +1010,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
   timeout_member_connect = 5000
   timeout_member_data = 5000
   timeout_tcp_inspect = 5000
-  default_tls_container_ref = "https://kr1-api-key-manager-infrastructure.gov-nhncloudservice.com/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
+  default_tls_container_ref = "https://kr1-api-key-manager-infrastructure.nhncloudservice.com/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
   sni_container_refs = null
   admin_state_up = true
 }
