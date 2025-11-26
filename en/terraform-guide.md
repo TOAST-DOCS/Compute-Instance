@@ -1,6 +1,8 @@
+<a id="third-party-user-guide-terraform-user-guide"></a>
 ## Third Party User Guide > Terraform User Guide
 This document describes how to use NHN Cloud with Terraform.
 
+<a id="terraform"></a>
 ## Terraform
 Terraform is an open-source tool that lets you easily build and safely change infrastructure, and also efficiently manage configuration of infrastructure. The main features of Terraform are as follows:
 
@@ -16,6 +18,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * You can automate the process so that infrastructure with the same configuration can be built and changed in multiple locations.
     * You can save time to build infrastructure and reduce mistakes.
 
+<a id="supported-resources"></a>
 #### Supported Resources
 
 * Compute
@@ -50,6 +53,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_kubernetes_cluster_resize_v1
     * nhncloud_kubernetes_nodegroup_upgrade_v1
 
+<a id="supported-data-sources"></a>
 #### Supported Data Sources
 
 * nhncloud_images_image_v2
@@ -66,11 +70,13 @@ Terraform is an open-source tool that lets you easily build and safely change in
 * nhncloud_kubernetes_cluster_v1
 * nhncloud_kubernetes_nodegroup_v1
 
+<a id="note"></a>
 ### Note
 
 * **The version of the Terraform used in the examples below is 1.0.0.**
 * **The name and number of the components including the version can be changed, so make sure you check the information before use.**
 
+<a id="terraform-installation"></a>
 ## Terraform Installation
 Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.
 
@@ -84,10 +90,12 @@ $ terraform -v
 Terraform v1.0.0
 ```
 
+<a id="terraform-provider-provided"></a>
 ## Terraform provider provided
 
 NHN Cloud is an official partner of HashiCorp and offers Terraform provider through [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest).
 
+<a id="terraform-initialization"></a>
 ## Terraform Initialization
 Before using Terraform, create a provider configuration file as follows.
 
@@ -138,6 +146,7 @@ provider.tf
 $ terraform init
 ```
 
+<a id="terraform-usage"></a>
 ## Terraform Usage
 
 Building infrastructure with Terraform has the following life cycle:
@@ -162,6 +171,7 @@ $ terraform apply
 
 The following sections describe these steps in more details with examples.
 
+<a id="create-tf-files"></a>
 ### Create tf Files
 
 Create a tf file in the path including the provider configuration file. You can aggregate multiple resource settings in a single tf file, or create separate tf files for each resource. Terraform reads the entire tf files all at once to set up an execution plan.
@@ -192,6 +202,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 }
 ```
 
+<a id="check-the-execution-plan"></a>
 ### Check the Execution plan
 
 You can use the `plan` command to check resources that will be changed in tf files. When you run the `plan` command, Terraform loads .tf files, checks if the configuration is correct, and compares the configuration with its own database and create a plan. When it finishes creating the plan, Terraform aggregates the plan by type and prints out the result in an organized form.
@@ -202,6 +213,7 @@ $ terraform plan
 
 If the created plan requires modification, correct tf files and execute the `plan` command again. The `plan` command does not change the actual NHN Cloud resources, so you can check the infrastructure changes without any burden.
 
+<a id="create-resources"></a>
 ### Create Resources
 
 After creating tf files with the plan you need, create resources with the `apply` command.
@@ -222,6 +234,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 After the `apply` command is executed, Terraform's own database file (terraform.tfstate) that records the history of plan changes is created in the current directory. Be careful not to delete this file.
 
+<a id="modify-resources"></a>
 ### Modify Resources
 
 Open the `.tf` file in which resources to change are defined, modify information, and apply the plan. Specification changes are restricted only to some attributes. If there is a change in an attribute which cannot be changed, the resource is deleted and newly created.
@@ -272,6 +285,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
+<a id="delete-resources"></a>
 ### Delete Resources
 
 To delete a resource created with Terraform, delete the corresponding `.tf`  file.
@@ -310,6 +324,7 @@ nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 1
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 ```
 
+<a id="data-sources"></a>
 ## Data Sources
 
 You can find Flavor ID or Image ID required to create tf files on the console, or import them by using data sources provided by Terraform. Data sources must be written within tf files, and imported data cannot be modified but are used only for reference. Image names are subject to change because NHN Cloud updates them on a regular basis. Refer to console and specify the exact name of the image to use.
@@ -341,6 +356,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 
 The following sections describe how to import various resources provided by NHN Cloud by using the data resources feature.
 
+<a id="image"></a>
 ### Image
 
 Imports image information. NHN Cloud's public images as well as private images are supported.
@@ -374,6 +390,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 | most_recent | Boolean | - | `true`: Select the most recently created image from the list of queried images <br>`false`: Select images in the queried order |
 | member_status | String | - | Status of image member to query <br>One among `accepted`,`pending`, `rejected`, and `all` |
 
+<a id="block-storage"></a>
 ### Block Storage
 
 ```
@@ -389,6 +406,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 | status | String | - | Status of block storage to query |
 | metadata | Object | - | Metadata related to block storage to query |
 
+<a id="instance-flavor"></a>
 ### Instance Flavor
 
 To check name of a flavor, go to **Compute > Instance** on NHN Cloud console and click **Create Instance > Select Flavor**.
@@ -403,6 +421,7 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 | ------ | ---- | ---- | --------- |
 | name | String | - | Name of flavor to query |
 
+<a id="key-pair"></a>
 ### Key Pair
 
 ```
@@ -415,6 +434,7 @@ data "nhncloud_compute_keypair_v2" "my_keypair"{
 | ------ | ---- |----|------------|
 | name | String | O  | Key pair name to query |
 
+<a id="snapshot"></a>
 ### Snapshot
 
 ```
@@ -433,6 +453,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 | status | String | - | Status of snapshot to query |
 | most_recent | Boolean | - | `true`: Select the most recently created snapshot from the queried snapshot list <br>`false`: Select snapshots in the queried order |
 
+<a id="vpc"></a>
 ### VPC
 
 To check UUID of VPC network, go to NHN Cloud console and select VPC from **Network > VPC**.
@@ -453,6 +474,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 | id | String | - | VPC ID to query |
 | name | String | - | VPC name to query |
 
+<a id="vpc-subnet"></a>
 ### VPC Subnet
 
 To check subnet ID, go to NHN Cloud console and select a subnet from **Network > VPC > Subnet**.
@@ -475,6 +497,7 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 | name | String | - | Subnet name to query |
 | shared | Bool | - | Whether to share subnet to query |
 
+<a id="routing-table"></a>
 ### Routing Table
 ```
 data "nhncloud_networking_routingtable_v2" "default_rt" {
@@ -488,6 +511,7 @@ data "nhncloud_networking_routingtable_v2" "default_rt" {
 | id | String | - | Routing table ID to query      |
 | name | String | - | Routing table name to query   |
 
+<a id="security-group"></a>
 ### Security Group
 ```
 data "nhncloud_networking_secgroup_v2" "default_sg" {
@@ -501,6 +525,7 @@ data "nhncloud_networking_secgroup_v2" "default_sg" {
 | tenant_id | String | - | Tenant ID that security group to query belongs to |
 | name | String | - | Security group name to query       |
 
+<a id="secret"></a>
 ### Secret
 ```
 data "nhncloud_keymanager_secret_v1" "secret_01" {
@@ -513,6 +538,7 @@ data "nhncloud_keymanager_secret_v1" "secret_01" {
 | region | String | - | Region name that secret to query belongs to |
 | name | String | - | Secret name to query       |
 
+<a id="secret-container"></a>
 ### Secret Container
 ```
 data "nhncloud_keymanager_container_v1" "container_01" {
@@ -525,6 +551,7 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 | region | String | - | Region name to which the secret container you want to look up belongs.  |
 | name | String | - | Secret container name to query         |
 
+<a id="cluster"></a>
 ### Cluster
 ```
 # Search by UUID
@@ -544,6 +571,7 @@ data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
 | uuid | UUID | - | Cluster UUID (either UUID or name is required) |
 | name | String | - | Cluster name (either UUID or name is required)   |
 
+<a id="node-group"></a>
 ### Node Group
 ```
 # Search by UUID
@@ -566,6 +594,7 @@ data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
 | uuid | UUID | - | Node group UUID (either UUID or name is required) |
 | name | String | - | Node group name (either UUID or name is required)   |
 
+<a id="resources"></a>
 ## Resources
 
 You can create, modify, or delete resources with Terraform resources. NHN Cloud supports management of the following resources using Terraform:
@@ -582,12 +611,15 @@ You can create, modify, or delete resources with Terraform resources. NHN Cloud 
 
 The following sections describe how to use each resource.
 
+<a id="note"></a>
 ### Note
 
 * For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/third-party-tools-guide/).
 
+<a id="resources-instance"></a>
 ## Resources - Instance
 
+<a id="create-instance"></a>
 ### Create Instance
 
 ```
@@ -649,6 +681,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 | block_device.nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                                                    |
 | block_device.nhn_encryption.skm_key_id      | String  | O  | Key ID in Secure Key Manager                                                                                                                                                                     |
 
+<a id="attach-block-storage"></a>
 ### Attach Block Storage
 ```
 # Create Instance
@@ -675,6 +708,7 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | instance_id | String | O       | Target instance to attach the block storage |
 | volume_id | String | O       | UUID of block storage to be attached |
 
+<a id="key-pair"></a>
 ### Key Pair
 ```
 resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
@@ -696,8 +730,10 @@ resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
 > [Caution]
 > When you create a key pair through Terraform, the private key is stored **unencrypted** in the state file (terraform.tfstate).
 
+<a id="resources-block-storage"></a>
 ## Resources - Block Storage
 
+<a id="create-block-storage"></a>
 ### Create Block Storage
 ```
 # Create HDD-type Empty Block Storage
@@ -737,6 +773,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 | nhn_encryption.skm_appkey      | String  | O  | AppKeys for Secure Key Manager products                                                                                                                                      |
 | nhn_encryption.skm_key_id      | String  | O  | Key ID in Secure Key Manager                                                                                                                                       |
 
+<a id="import-block-storage"></a>
 ### Import Block Storage
 
 You can import a block storage created on console or via API to Terraform and manage the block storage.
@@ -763,6 +800,7 @@ Import successful!
 ...
 ```
 
+<a id="resources-vpc"></a>
 ## Resources - VPC
 
 NHN Cloud supports creation of the following resources with Terraform:
@@ -775,6 +813,7 @@ NHN Cloud supports creation of the following resources with Terraform:
 
 Other VPC resources must be created in the console.
 
+<a id="create-vpc"></a>
 ### Create VPC
 
 Create a VPC with the specified IP range.
@@ -793,6 +832,7 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 | region | String | - | VPC region name |
 | tenant\_id | String | - | VPC tenant ID |
 
+<a id="create-vpc-subnet-and-attach-routing-table"></a>
 ### Create VPC Subnet and Attach Routing Table
 
 Create a subnet with the specified IP range in the specified VPC, and attach the existing routing table to the created subnet.
@@ -816,6 +856,7 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 | tenant\_id | String | - | Tenant ID to which subnet is assigned |
 | routingtable\_id | String | - | Routing table ID |
 
+<a id="create-network-port"></a>
 ### Create Network Port
 
 ```
@@ -839,6 +880,7 @@ resource "nhncloud_networking_port_v2" "port_1" {
 | no_fixed_ip | Boolean | - | `true`: Port without fixed IP<br>Must not include the `fixed_ip` attribute |
 | admin_state_up | Boolean | - | Administrator control status<br> `true`: Running<br>`false`: Suspended |
 
+<a id="create-floating-ip"></a>
 ### Create Floating IP
 
 ```
@@ -851,6 +893,7 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 | ------ | --- |---- | --------- |
 | pool | String | O | IP pool to create a floating IP <br>From `Network > Floating IP` on console, click `Create Floating IP` and check the IP pool. |
 
+<a id="associate-floating-ip"></a>
 ### Associate Floating IP
 ```
 # Create Network Port
@@ -881,6 +924,7 @@ resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
 | floating_ip | String | O | Floating IP to associate           |
 | port_id     | String | O | UUID of port to be associated with floating IP |
 
+<a id="create-routing-table"></a>
 ### Create Routing Table
 ```
 resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
@@ -900,6 +944,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | vpc_id | String  | O  | VPC ID to which the routing table belongs                                             |
 | distributed   | Boolean | -  | Routing method of routing table </br>`true`: decentralized, `false`: centralized (default: `true`) |
 
+<a id="associate-internet-gateway-with-routing-table"></a>
 ### Associate Internet Gateway with Routing Table
 
 Associate an Internet gateway to the routing table.
@@ -921,8 +966,10 @@ resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
 | routingtable_id   | String  | O  | Routing table ID to modify                                                                                                          |
 | gateway_id | String  | O  | Internet gateway ID to be associated with routing table<br>In the console, select the Internet gateway you want to use from the **Network > Internet Gateway** menu, and you can see the ID of the gateway in the details screen below. |
 
+<a id="resources-load-balancer"></a>
 ## Resources - Load Balancer
 
+<a id="create-load-balancer"></a>
 ### Create Load Balancer
 
 ```
@@ -945,6 +992,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 | loadbalancer_type | String | - | Load Balancer Type<br>`shared/dedicated` available<br>Set to `shared` if omitted |
 
+<a id="create-listener"></a>
 ### Create Listener
 
 ```
@@ -1001,6 +1049,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 | keepalive_timeout | Integer | - | The listener's keepalive timeout |
 
+<a id="create-pool"></a>
 ### Create Pool
 
 ```
@@ -1031,6 +1080,7 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 | admin_state_up | Boolean | - | Administrator control status |
 | member_port | Integer | - | The member's listening port<br>Forward traffic to this port<br>The default value is `-1` |
 
+<a id="create-health-monitor"></a>
 ### Create Health Monitor
 
 ```
@@ -1062,6 +1112,7 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | host_header | String | - | Field values in the host header to use for status checking<br>If you set the health check type to `TCP`, the value you set in this field is ignored. |
 | health_check_port | Integer | - | Member port targeted by health check |
 
+<a id="create-member"></a>
 ### Create Member
 
 <font color='red'>**(Caution) `subnet_id` must be specified when you create a member in NHN Cloud. Also note that `name` is not supported. **</font>
@@ -1086,6 +1137,7 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 | weight | Integer | - | Weight of traffic to receive from the pool <br>The higher the weight, the more traffic you receive. |
 | admin_state_up | Boolean | - | Administrator control status |
 
+<a id="create-a-secret"></a>
 ### Create a Secret
 
 ```
@@ -1112,6 +1164,7 @@ resource "nhncloud_keymanager_secret_v1" "secret_01" {
 | payload_content_encoding | Enum | -  | Encoding encryption key payload </br>Required if payload_content_type is not `text/plain` </br> Only supports `base64`                                                               |
 | secret_type              | Enum | -  | Secret type </br>One of the following: `symmetric`, `public`, `private`, `passphrase`, `certificate`, `opaque`                                                                      |
 
+<a id="create-secret-container"></a>
 ### Create Secret Container
 
 ```
@@ -1136,8 +1189,10 @@ resource "nhncloud_keymanager_container_v1" "container_01" {
 | secret_refs.secret_ref	 | String | -  | Secret address                                                                                                                                                                                         |
 | secret_refs.name	 | String | -  | The secret name specified by the container </br>If container type is `certificate`: Specify `as` `certificate`, `private_key`, `private_key_passphrase`, and `intermediates` </br>If container type is `rsa`: Specify `as` `private_key`, `private_key_passphrase`, and `public_key` |
 
+<a id="resources-security-groups"></a>
 ## Resources - Security Groups
 
+<a id="create-a-security-group"></a>
 ### Create a Security Group
 
 ```
@@ -1151,6 +1206,7 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | name | String | O | Security group name         |
 | region | String | - | Name of region to which security group is assigned |
 
+<a id="create-a-security-rule"></a>
 ### Create a Security Rule
 
 ```
@@ -1183,8 +1239,10 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 | remote_ip_prefix | Enum | - | Destination IP prefix of the security rule |
 | description | String | - | Security rule description |
 
+<a id="resources-container"></a>
 ## Resources - Container
 
+<a id="create-a-cluster"></a>
 ### Create a Cluster
 
 ```
@@ -1259,6 +1317,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.kube_tag  | String  | O  | Kubernetes Version     |
 | labels.master_lb_floating_ip_enabled  | String  | O  | Whether to create a public domain address for Kubernetes API endpoint<br>("True" / "False") |
 
+<a id="create-a-node-group"></a>
 ### Create a Node Group
 
 ```
@@ -1290,6 +1349,7 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.boot_volume_type | String | O | Default worker node group applies: block storage size (GB) |
 | labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: whether to enable the feature<br>("True" / "False")      |
 
+<a id="resize"></a>
 ### Resize
 
 !!! tip "Notice"
@@ -1327,6 +1387,7 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 | node_count | Integer | O | Number of worker nodes to change |
 | nodes_to_remove | List(String) | - | Node UUIDs to delete         |
 
+<a id="cluster-upgrade"></a>
 ### Cluster Upgrade
 
 ```
@@ -1353,5 +1414,6 @@ resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
 | num_buffer_nodes | Integer | - | Number of buffer nodes. Minimum: 0, Maximum: (maximum node quota per worker node group - current number of nodes in that worker node group), Default: 1 |
 | num_max_unavailable_nodes | Integer | - | Maximum number of unavailable nodes. Minimum: 1, Maximum: current number of nodes in that worker node group, Default: 1 |
 
+<a id="reference"></a>
 ## Reference
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)

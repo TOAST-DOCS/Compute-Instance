@@ -1,7 +1,9 @@
+<a id="compute-instance-overview"></a>
 ## Compute > Instance > Overview
 
 An instance is a virtual server composed of virtual CPUs, memory, and root block storage. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
 
+<a id="components"></a>
 ## Components
 
 An instance consists of the following components:
@@ -15,12 +17,14 @@ An instance consists of the following components:
 
 Instance properties and usage change depending on these components. While settings for these components, with the exception of image and availability zone, can be modified after the creation of an instance, some flavors cannot be modified after an instance has been created. For more details on modifying instance flavors, see [Modify Flavor in the Console Guide](./console-guide/#modify-flavor).
 
+<a id="image"></a>
 ### Image
 
 An image is a virtual disk that contains an operating system. NHN Cloud currently supports Debian, Ubuntu, Rocky, and Windows.
 
 All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
 
+<a id="flavor"></a>
 ### Flavor
 
 NHN Cloud provides various instance flavors to support a wide range of use cases. Instances can be created with flavors that best match the requirements of your services or applications. Flavors can be easily modified from the web console, even after an instance has been created.
@@ -34,6 +38,7 @@ NHN Cloud provides various instance flavors to support a wide range of use cases
 | u2 | The cheapest instance. Recommended for servers with low workloads.<br>This flavor utilizes local block storage, which makes it a less stable but more affordable option compared to other flavors.<br>Instances of this flavor do not guarantee I/O performance. |
 | x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance.                                                                                        |
 
+<a id="availability-zone"></a>
 ### Availability Zone
 
 NHN Cloud has divided the entire system into multiple availability zones to prepare for potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. A failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
@@ -44,6 +49,7 @@ The following properties hold across different availability zones.
 - Block storage can be shared between instances created within the same availability zone, but not between instances in different availability zones.
 - Floating IP can be shared across different availability zones. If one availability zone experiences a failure, floating IP can quickly be relocated to another availability zone in order to minimize downtime.
 
+<a id="key-pair"></a>
 ### Key Pair
 
 A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based public and private SSH keys. To access an instance created in NHN Cloud, a key pair is required instead of keyboard-inputted ID/PW authentication which is vulnerable to security attacks. You can safely access an instance once you have been authenticated after sending the instance your login information encoded by your key pair's private key. For more details on how to access instances using key pairs, see [How to Access Instances](#how-to-access-instances).
@@ -56,6 +62,7 @@ When a key pair is newly generated, its private key is downloaded. As private ke
 > [Note]
 > Key pair is a resource assigned to the user account, so it's not deleted when you delete a project.
 
+<a id="security-groups"></a>
 ### Security Groups
 
 A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
@@ -63,10 +70,12 @@ A security group is a virtual firewall that determines network traffic delivered
 > [Note]
 The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
 
+<a id="network"></a>
 ### Network
 
 An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview/).
 
+<a id="pricing"></a>
 ## Pricing
 
 Instances are charged using the following criteria.
@@ -78,12 +87,15 @@ Instances are charged using the following criteria.
 
 For more details on pricing, see [](https://www.toast.com/kr/service/compute/instance#price)Pricing[](https://www.toast.com/kr/service/compute/instance#price).
 
+<a id="how-to-access-instances"></a>
 ## How to Access Instances
 
+<a id="how-to-access-linux-instances"></a>
 ### How to Access Linux Instances
 
 You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.
 
+<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### How to Access Linux Instances from Mac or Linux Using an SSH Client
 
 Generally, Mac and Linux have SSH clients installed by default. Use a key pair's private key to access an instance from an SSH client as shown below.
@@ -100,6 +112,7 @@ Rocky instances
 
 	$ ssh -i my_private_key.pem rocky@<instance IP>
 
+<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### How to Access Linux Instances from Windows Using PuTTY SSH Client
 
 PuTTY SSH client is a widely used SSH client program for Windows. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) before proceeding to the next steps.
@@ -110,6 +123,7 @@ Follow these three steps in order to access Linux instances from Windows using t
 * Register your PuTTY-compatible private key with PuTTY
 * Access instances with PuTTY
 
+<a id="1-convert-your-key-pairs-private-key-to-a-putty-compatible-private-key"></a>
 ##### 1. Convert Your Key Pair’s Private Key to a PuTTY-Compatible Private Key
 
 In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed along with PuTTY.
@@ -125,6 +139,7 @@ Under **Actions**, click **Save private key** next to **Save the generated key**
 > [Caution]
 If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
+<a id="2-register-your-putty-compatible-private-key-with-putty"></a>
 ##### 2. Register Your PuTTY-Compatible Private Key With Putty
 
 Your PuTTY-compatible private key generated in the previous step can be registered by the following two methods.
@@ -152,6 +167,7 @@ To confirm that your private key has been added, select **View Keys**. If succes
 
 Once you run pageant, it remains running in the Windows tray, so there is no need for you to rerun it every time you access an instance. However, you must run pageant again when you restart Windows.
 
+<a id="3-access-instances-with-putty"></a>
 ##### 3. Access Instances With PuTTY
 
 Now that the PuTTY-compatible private key has been successfully registered, run PuTTY.
@@ -178,6 +194,7 @@ If all of the information is correct, save the session. Under **Load, save or de
 
 Now click **Open** to access your instance.
 
+<a id="how-to-access-windows-instances"></a>
 ### How to Access Windows Instances
 
 To access your Windows server, select a Windows instance to access from the NHN Cloud console. In the instance details page under the **Access Information** tab, click **Confirm Password** to check the password set in the Windows server.

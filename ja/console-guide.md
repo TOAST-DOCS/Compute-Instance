@@ -1,7 +1,7 @@
-<a id="console-guide"></a>
+<a id="compute-instance-console-guide"></a>
 ## Compute > Instance > コンソール使用ガイド
 
-<a id="instance-creation"></a>
+<a id="create-instances"></a>
 ## インスタンス生成
 
 インスタンスを作成するには、以下の設定を行うか、インスタンステンプレート(Instance Template)を利用します。インスタンステンプレートを利用してインスタンスを作成するにはインスタンス作成画面で**インスタンステンプレート使用**を選択します。インスタンステンプレートの作成方法は[インスタンステンプレートコンソールガイド](/Compute/Instance%20Template/ja/console-guide/)を参照します。
@@ -35,7 +35,7 @@
 - **新規作成及び設定**を選択した場合、**ブロックストレージタイプ**及び**ブロックストレージサイズ**を指定してルートブロックストレージを作成します。
 - **既存リソース指定**を選択した場合、**原本リソース**を指定してルートブロックストレージとして使用します。
 
-<a id="source-resource"></a>
+<a id="original-resource"></a>
 #### 原本リソース
 
 既存の**ブロックストレージ**または**スナップショット**のいずれかを選択できます。
@@ -84,7 +84,7 @@
 
 アベイラビリティゾーンの詳細は[インスタンス概要のアベイラビリティゾーン](./overview/#availability-zone)を参照してください。
 
-<a id="instance-flavor"></a>
+<a id="flavor"></a>
 ### タイプ(flavor)
 
 仮想ハードウェアの性能によって様々なタイプを選択できます。ただし、イメージで要求する仮想ハードウェアの性能によって選択できるタイプが制限される場合があります。詳細は[インスタンス概要](./overview)を参照してください。
@@ -92,11 +92,11 @@
 > [参考]
 > 1 vCPUは、スレッド1つとコア1つで構成されたソケット1つを意味し、ソケット1つ当たりのスレッド数とコア数はそれぞれ1つで一定です。
 
-インスタンスのタイプは、作成後もNHN Cloudコンソールで変更できます。高いタイプから低いタイプに変更することができ、低いタイプから高いタイプに変更することもできます。一部のタイプは変更できない場合もありますので、詳細は[インスタンスタイプ変更](./console-guide/#_15)を参照してください。
+インスタンスのタイプは、作成後もNHN Cloudコンソールで変更できます。高いタイプから低いタイプに変更することができ、低いタイプから高いタイプに変更することもできます。一部のタイプは変更できない場合もありますので、詳細は[インスタンスタイプ変更](./console-guide/#modify-flavor)を参照してください。
 
 > [注意]インスタンスのルートブロックストレージはタイプ変更で変更できません。
 
-<a id="instance-count"></a>
+<a id="number-of-instances"></a>
 ### インスタンス数
 
 イメージ、アベイラビリティゾーン、インスタンスタイプ、ブロックストレージサイズ、キーペア、ネットワーク設定が、全て同じインスタンスを複数生成する場合に使用します。インスタンスの名前には、設定した名前の後ろに「-1」、「-2」のような番号が振られます。例えば、インスタンス名を「my-instance」にしてインスタンスを2個生成すると、「my-instance-1」、「my-instance-2」が生成されます。一度に生成できる最大インスタンス数は10個です。
@@ -106,10 +106,10 @@
 > [参考]
 > **OS設定**で**既存リソース指定**を**ブロックストレージ**に選択した場合、または**ネットワーク設定**で**既存ネットワークインターフェイス指定**を選択した場合、インスタンス数は`1`に制限されます。
 
-<a id="keypair-settings"></a>
+<a id="key-pair"></a>
 ### キーペア
 
-既存のキーペアを使用したり、新たにキーペアを生成して使用します。既存キーペアの登録はWindowsユーザーの場合、[キーペア作成(Windowsユーザー)](./console-guide/#windows_1)、Mac、Linuxユーザーの場合は[キーペア作成(Mac、Linuxユーザー)](./console-guide/#maclinux)を参照してください。
+既存のキーペアを使用したり、新たにキーペアを生成して使用します。既存キーペアの登録はWindowsユーザーの場合、[キーペア作成(Windowsユーザー)](./console-guide/#import-key-pairs-windows)、Mac、Linuxユーザーの場合は[キーペア作成(Mac、Linuxユーザー)](./console-guide/#import-key-pairs-mac-and-linux)を参照してください。
 
 > [参考]
 > キーペアはユーザーアカウントに割り当てられたリソースなので、プロジェクトを削除しても削除されずに維持されます。
@@ -163,7 +163,7 @@ Floating IP管理は、Instance > 管理ページまたはInstance > Floating IP
 > [注意]
 > ユーザースクリプトはroot (Linux)/Administrator (Windows)ユーザー権限で実行されます。
 
-<a id="user-script-linux"></a>
+<a id="linux"></a>
 #### Linux
 ユーザースクリプトの最初の行は必ず`#!`で始まる必要があります。
 ```
@@ -173,7 +173,7 @@ Floating IP管理は、Instance > 管理ページまたはInstance > Floating IP
 
 ユーザースクリプトが正常に動作するには、インスタンス内部のログファイルを確認する必要があります。スクリプトで標準出力/エラー装置に出力したログは`/var/log/cloud-init-output.log`で確認できます。
 
-<a id="user-script-windows"></a>
+<a id="windows"></a>
 #### Windows
 
 Windowsイメージではユーザースクリプト形式にBatchスクリプト形式、 Powershellスクリプト形式をすべてサポートします。各形式は最初の行に明示する表示子により区別されます。
@@ -206,10 +206,10 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 
 ユーザースクリプト関連の詳細は、[cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html)または[Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html)ガイドを参照してください。
 
-<a id="instance-additional-features"></a>
+<a id="additional-instance-features"></a>
 ## インスタンス追加機能
 
-<a id="instance-state-change"></a>
+<a id="change-instance-status"></a>
 ### インスタンスの状態変更
 
 インスタンスの停止、終了、削除、起動でインスタンスの状態を変更できます。
@@ -224,7 +224,7 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 
 > [参考] GPU Instanceは終了することができず、停止時にも通常(100%)料金が発生します。
 
-<a id="image-creation"></a>
+<a id="create-image"></a>
 ### イメージ作成
 
 インスタンスのルートブロックストレージからイメージを作成します。イメージ作成は、データの整合性を保障するために、インスタンスを停止した状態で行うことを推奨します。
@@ -236,26 +236,26 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 > [注意]
 > 作成されたイメージのサイズはルートブロックストレージの実際の使用量より大きくなる可能性があります。
 
-<a id="floating-ip-attach-detach"></a>
+<a id="associatedisassociate-floating-ip"></a>
 ### Floating IP接続と解除
 
 インスタンスの状態にかかわらずFloating IPを接続または解除できます。使用できるFloating IPがない場合や、希望するFloating IPがない場合、**生成**ボタンをクリックしてFloating IPを生成して接続できます。また**Network > VPC > Floating IP**でFloating IPを生成して使用することもできます。
 
 Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
-<a id="security-group-modify"></a>
+<a id="modify-security-group"></a>
 ### セキュリティグループ修正
 
 インスタンスの状態に関わらずインスタンスのセキュリティグループを修正できます。修正されたセキュリティグループはすぐに適用されます。
 
-セキュリティグループの詳細については[セキュリティグループ](./console-guide/#_8)と[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+セキュリティグループの詳細については[セキュリティグループ](./console-guide/#security-group)と[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
-<a id="network-subnet-change"></a>
+<a id="change-network-subnet"></a>
 ### サブネット変更
 
 インスタンスのネットワークサブネットはインスタンスが停止した状態でのみ変更できます。サブネットを追加すると、自動的にインスタンスに該当サブネットに接続されるネットワークインターフェイスが作成されます。この時、一度に複数のサブネットを追加するとインスタンスに新たに作成されるネットワークインターフェイスの順序は任意で指定されます。サブネットをインスタンスから削除すると作成されていたネットワークインターフェイスも自動的に削除されます。
 
-<a id="instance-type-change"></a>
+<a id="modify-flavor"></a>
 ### インスタンスタイプ変更
 
 インスタンスの仕様は、インスタンスを停止した後に変更できます。インスタンスが実行中の場合は**追加機能**の**インスタンス停止**をクリックしてインスタンスを停止します。
@@ -272,7 +272,7 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 インスタンスは変更時点を基準に変更された仕様で課金されます。
 
-<a id="instance-os-info-change"></a>
+<a id="change-instance-os-details"></a>
 ### インスタンスOS情報の変更
 
 インスタンスの状態に関係なく インスタンスOS情報を変更できます。 
@@ -281,14 +281,14 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 > [参考] OS区分は変更できません。
 
-<a id="instance-description-change"></a>
+<a id="change-instance-description"></a>
 ### インスタンス説明の変更
 
 インスタンスの状態に関係なくインスタンス説明を変更できます。 
 
 **Compute > Instance**サービスページで説明を変更するインスタンスをクリックします。該当インスタンス詳細情報画面の**基本情報**タブで**説明 > 変更**をクリックします。
 
-<a id="instance-keypair-change"></a>
+<a id="change-instance-key-pair"></a>
 ### インスタンスキーペアの変更
 
 インスタンスキーペアはインスタンスが有効状態の場合にのみ変更できます。
@@ -301,7 +301,7 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 > [参考]基本インフラサービスADMIN権限を持つプロジェクトメンバーのみインスタンスキーペアを変更することができ、Windows OSインスタンスの場合は変更できません。
 > [参考]インスタンス作成に使用したイメージのバージョンが低い場合、キーペア変更機能をサポートしない場合があります。
 
-<a id="placement-policy-management"></a>
+<a id="manage-placement-policies"></a>
 ### 配置ポリシー管理
 
 配置ポリシーを作成及び削除することができ、配置ポリシーに割り当てられたインスタンスのリストを表示します。
@@ -310,10 +310,10 @@ Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参�
 
 配置ポリシーにインスタンスが割り当てられている場合でも、配置ポリシーの削除が可能で、この場合、インスタンスは削除されません。
 
-<a id="keypair"></a>
+<a id="key-pairs"></a>
 ## キーペア
 
-<a id="keypair-import-windows"></a>
+<a id="import-key-pairs-windows"></a>
 ### キーペアを作成する(Windowsユーザー)
 
 PuTTY SSHクライアントをインストールすると一緒にインストールされるputtygenプログラムでキーペアを生成し、NHN Cloudに登録して使用できます。
@@ -341,7 +341,7 @@ NHN Cloudで生成したキーペア同様、このように作成されたキ�
 
 
 
-<a id="keypair-import-mac-linux"></a>
+<a id="import-key-pairs-mac-and-linux"></a>
 ### キーペア作成(Mac、Linuxユーザー)
 
 MacやLinuxの「ssh-keygen」で作成したキーペアをNHN Cloudに登録して使用できます。キーペアは次のコマンドで作成します。
@@ -359,7 +359,7 @@ MacやLinuxの「ssh-keygen」で作成したキーペアをNHN Cloudに登録�
 
 NHN Cloudで生成したキーペア同様、このように作成されたキーペアの秘密鍵も外部に流出すると誰でも流出した秘密鍵でそのインスタンスにアクセスできるようになるので慎重に管理する必要があります。
 
-<a id="appendix-1-windows-language-pack"></a>
+<a id="appendix-1-change-language-packs-in-windows"></a>
 ## 付録1. Windows言語パックの変更
 
 NHN CloudのWindowsイメージは、英語版が基本設定になっています。他の言語を基本設定にする方法は次のとおりです。
@@ -394,7 +394,7 @@ NHN CloudのWindowsイメージは、英語版が基本設定になっていま�
 10. 再度ログインすると、ユーザーが選択した言語パックへの変更を確認できます。
 ![イメージ1](http://static.toastoven.net/prod_instance/windows10.png)
 
-<a id="appendix-2-windows-routing"></a>
+<a id="appendix-2-change-routing-in-windows"></a>
 ## 付録2. Windowsルーティングの変更
 
 NHN CloudWindowsでルーティングを変更する方法は次のとおりです。
@@ -457,7 +457,7 @@ NHN CloudWindowsでルーティングを変更する方法は次のとおりで�
 
 ![イメージ1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
-<a id="appendix-3-system-locale"></a>
+<a id="appendix-3-change-system-locale"></a>
 ## 付録3. システムロケールの変更
 
 NHN CloudのWindowsで、システムロケールを変更する方法は次の通りです。
@@ -478,7 +478,7 @@ NHN CloudのWindowsで、システムロケールを変更する方法は次の�
 ![画像1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
 
-<a id="restarting-guide-for-maintenance"></a>
+<a id="appendix-4-restarting-instances-for-hypervisor-maintenance"></a>
 ## 付録4. ハイパーバイザーのメンテナンスのためのインスタンス再起動ガイド
 NHN Cloudは周期的にハイパーバイザーのソフトウェアをアップデートして、基本インフラサービスのセキュリティと安定性を向上させています。
 メンテナンス対象のハイパーバイザーで起動中のインスタンスは再起動を行い、メンテナンスが完了したハイパーバイザーに移動する必要があります。

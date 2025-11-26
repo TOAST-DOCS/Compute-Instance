@@ -1,10 +1,13 @@
+<a id="compute-instance-kernel-version-upgrade-guide"></a>
 ## Compute > Instance > Kernel Version Upgrade Guide
 
 > [Caution]
 > Updating the kernel may damage your OS or cause it to fail to boot, and the user is responsible for the consequences.
 
+<a id="rocky-linux-8"></a>
 ## Rocky Linux 8
 
+<a id="check-the-kernel-version"></a>
 ### Check the Kernel Version
 
 Check the currently installed kernel version.
@@ -14,6 +17,7 @@ Check the currently installed kernel version.
 4.18.0-553.8.1.el8_10.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### Default Storage Settings
 
 Change the default repository for your system architecture and Rocky Linux version.
@@ -42,6 +46,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 > [Note]
 > When both**mirrorlist** and **baseurl** are set, **mirrorlist** takes precedence, with **baseurl** serving as an alternate option.
 
+<a id="clear-the-cache-before-updating"></a>
 ### Clear the cache before updating
 
 Delete the cache where metadata for existing downloaded packages is stored.
@@ -50,8 +55,10 @@ Delete the cache where metadata for existing downloaded packages is stored.
 [root@rocky810 ~]# rm -rf /var/cache/dnf
 ```
 
+<a id="install-the-kernel"></a>
 ### Install the kernel
 
+<a id="install-the-kernel-by-specifying-a-version"></a>
 #### Install the kernel by specifying a version
 
 > [Note]
@@ -87,6 +94,7 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
+<a id="install-the-kernel-without-specifying-a-version"></a>
 #### Install the kernel without specifying a version
 If you don't specify a version, the package is searched based on the latest version of the major version.
 
@@ -119,6 +127,7 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
+<a id="install-the-latest-kernel"></a>
 #### Install the latest kernel
 If you don't specify a version, the latest version is installed. 
 
@@ -155,6 +164,7 @@ Installed:
 Complete!
 ```
 
+<a id="check-package-installation"></a>
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -166,6 +176,7 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### Restart the OS
 
 Restart the OS to apply the kernel update.
@@ -174,6 +185,7 @@ Restart the OS to apply the kernel update.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[Select].**</span> Create a configuration file for the GRUB2 bootloader
 Update the system's boot menu to reflect the newly installed kernel or other boot items.
 
@@ -183,6 +195,7 @@ dnf, yum will automatically update the GRUB2 configuration file.
 [root@rocky810 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="check-for-kernel-updates"></a>
 #### Check for kernel updates
 
 Verify that the kernel version has been updated properly.
@@ -192,12 +205,15 @@ Verify that the kernel version has been updated properly.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
+<a id="change-the-kernel-boot-order"></a>
 ### Change the kernel boot order
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.
 
+<a id="rocky-versions-below-810"></a>
 #### Rocky versions below 8.10
 
+<a id="check-the-default-kernel"></a>
 ##### Check the default kernel
 
 Check the currently defaulted kernel.
@@ -207,6 +223,7 @@ Check the currently defaulted kernel.
 /boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64
 ```
 
+<a id="list-of-currently-installed-kernels"></a>
 ##### List of currently installed kernels
 
 View a list of currently installed kernels.
@@ -218,6 +235,7 @@ kernel="/boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64"
 kernel="/boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64"
 ```
 
+<a id="change-the-default-kernel"></a>
 ##### Change the default kernel
 
 Change the default kernel by selecting one of the currently installed kernel lists.
@@ -229,6 +247,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 /boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64
 ```
 
+<a id="restart-the-os"></a>
 ##### Restart the OS
 
 Restart the OS for the boot order change to take effect.
@@ -237,6 +256,7 @@ Restart the OS for the boot order change to take effect.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="rocky-810-and-later-versions"></a>
 #### Rocky 8.10 and later versions
 
 Currently, the official Rocky 8.10 image does not allow me to make kernel changes with the grubby command, so I use the shell script below.
@@ -267,6 +287,7 @@ if [[ "$result" -eq "1" ]]; then
 fi
 ```
 
+<a id="how-to-use-scripts"></a>
 ##### How to use scripts
 
 Enter the number of the kernel you want to boot from the list of kernels that is output after running the shell script.
@@ -285,6 +306,7 @@ Generating grub configuration file ...
 done
 ```
 
+<a id="restart-the-os"></a>
 ##### Restart the OS
 
 Restart the OS for the boot order change to take effect.
@@ -293,8 +315,10 @@ Restart the OS for the boot order change to take effect.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="rocky-linux-9"></a>
 ## Rocky Linux 9
 
+<a id="check-the-kernel-version"></a>
 ### Check the Kernel Version
 
 Check the currently installed kernel version.
@@ -304,6 +328,7 @@ Check the currently installed kernel version.
 5.14.0-503.14.1.el9_5.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### Default Storage Settings
 
 Change the default repository for your system architecture and Rocky Linux version.
@@ -343,6 +368,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > [Note]
 > When both**mirrorlist** and **baseurl** are set, **mirrorlist** takes precedence, with **baseurl** serving as an alternate option.
 
+<a id="clear-the-cache-before-updating"></a>
 ### Clear the cache before updating
 
 Delete the cache where metadata for existing downloaded packages is stored.
@@ -351,8 +377,10 @@ Delete the cache where metadata for existing downloaded packages is stored.
 [root@rocky95 ~]# rm -rf /var/cache/dnf
 ```
 
+<a id="install-the-kernel"></a>
 ### Install the kernel
 
+<a id="install-the-kernel-by-specifying-a-version"></a>
 #### Install the kernel by specifying a version
 
 > [Note]
@@ -403,6 +431,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="install-the-kernel-without-specifying-a-version"></a>
 #### Install the kernel without specifying a version
 If you don't specify a version, the package is searched based on the latest version of the major version.
 
@@ -451,6 +480,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="install-the-latest-kernel"></a>
 #### Install the latest kernel
 If you don't specify a version, the latest version is installed. 
 
@@ -512,6 +542,7 @@ Installed:
 Complete!
 ```
 
+<a id="check-package-installation"></a>
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -524,6 +555,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### Restart the OS
 
 Restart the OS to apply the kernel update.
@@ -532,6 +564,7 @@ Restart the OS to apply the kernel update.
 [root@rocky95 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[Select].**</span> Create a configuration file for the GRUB2 bootloader
 Update the system's boot menu to reflect the newly installed kernel or other boot items.
 
@@ -541,6 +574,7 @@ dnf, yum will automatically update the GRUB2 configuration file.
 [root@rocky95 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="check-for-kernel-updates"></a>
 #### Check for kernel updates
 
 Verify that the kernel version has been updated properly.
@@ -550,10 +584,12 @@ Verify that the kernel version has been updated properly.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
+<a id="change-the-kernel-boot-order"></a>
 ### Change the kernel boot order
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.
 
+<a id="check-the-default-kernel"></a>
 ##### Check the default kernel
 
 Check the currently defaulted kernel.
@@ -563,6 +599,7 @@ Check the currently defaulted kernel.
 /boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64
 ```
 
+<a id="list-of-currently-installed-kernels"></a>
 ##### List of currently installed kernels
 
 View a list of currently installed kernels.
@@ -573,6 +610,7 @@ kernel="/boot/vmlinuz-5.14.0-503.14.1.el9_5.x86_64"
 kernel="/boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64"
 ```
 
+<a id="change-the-default-kernel"></a>
 ##### Change the default kernel
 
 Change the default kernel by selecting one of the currently installed kernel lists.
@@ -585,6 +623,7 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 [root@rocky95 ~]# sync; reboot
 ```
 
+<a id="restart-the-os"></a>
 ##### Restart the OS
 
 Restart the OS for the boot order change to take effect.

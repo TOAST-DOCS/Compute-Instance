@@ -1,9 +1,12 @@
+<a id="compute-instance-installation-component-guide"></a>
 ## Compute > Instance > Installation Component Guide
 
+<a id="nat-instance"></a>
 ## NAT Instance
 NAT instance is an instance that allows you to access internet over a specific IP address band in the private network instance.
 This feature is only available in the Korea (Pangyo) and Korea (Pyeongchon) regions.
 
+<a id="key-features"></a>
 ### Key Features
 * The instance of a private network not connect with an internet gateway can access the internet via the NAT instance.
 * Accesses the Internet by changing the floating IP of the NAT instance to source IP.
@@ -29,12 +32,15 @@ This feature is only available in the Korea (Pangyo) and Korea (Pyeongchon) regi
 > |Network ACL| Settable | Settable|
 > |SSH|Unavailable| Available|
 
+<a id="sourcetarget-check-setting"></a>
 ### Source/target check setting
 For the NAT instance to work normally, the option of checking network source/target must be disabled in the Network Interface settings.
 
+<a id="routing-setting"></a>
 ### Routing setting
 Specifies the NAT instance as a route gateway. The packets delivered to the NAT instance are delivered according to the routing setting of the routing table connected to the subnet of NAT instance.
 
+<a id="caution-on-settings"></a>
 ### Caution on settings
 * Using only one network interface for a NAT instance is recommended. Even if you connect multiple network interfaces to a NAT instance, the NAT feature is only available for one interface (eth0).
 * Do not add a routing setting that specifies the NAT instance as a gateway in the routing table connected to the subnet of the NAT instance.
@@ -50,6 +56,7 @@ Specifies the NAT instance as a route gateway. The packets delivered to the NAT 
 >     * If NAT instance is connected to a floating IP, IP Prefix 0 (/0) can be set for the target CIDR to route.
 >     * Without using the above settings, you should not specify the NAT instance as a gateway in the routing setting of Routing Table 1.
 
+<a id="ms-sql-instance"></a>
 ## MS-SQL Instance
 After instance is created, access the instance by using Remote Desktop Protocol (RDP).
 To that end, an instance must be associated with a floating IP and TCP port 3389 (RDP) must be allowed for security group.
@@ -59,6 +66,7 @@ To that end, an instance must be associated with a floating IP and TCP port 3389
 Click **+ Check Password** to check password by using key pair configured along with instance creation.
 Click **Associate** and download .rdp file, to access the instance by using the acquired password.
 
+<a id="allow-security-group-tcp-port-3389-rdp"></a>
 ### Initial Settings after Microsoft SQL Image is Created  
 
 #### 1. Set SQL Certification Mode  
@@ -98,6 +106,7 @@ Execute SQL Server configuration manager as below.
 To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules.
 Also, register Microsoft SQL service port (default port: 1433) to allow access, as well as remote IP.  
 
+<a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### Data Volume Assignment  
 
 Microsoft SQL data/log files (MDF/LDF) and backup files are recommended to be applied with separate block storages.  
@@ -184,6 +193,7 @@ shell> mysql -uroot
 
 ### Initial Settings for MySQL Instance
 
+<a id="1-set-sql-certification-mode"></a>
 #### 1\. Setting Password
 
 There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.  
@@ -197,6 +207,7 @@ Default MySQL validate_password_policy is as below:
 * validate\_password\_policy=MEDIUM
 * Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
+<a id="2-change-microsoft-sql-service-port"></a>
 #### 2\. Changing Port Number
 
 The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
@@ -274,6 +285,7 @@ shell> psql
 
 ### Create PostgreSQL instance and perform initial setup
 
+<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 1\. Change port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
@@ -374,6 +386,7 @@ host    allowed DB           allowed user          allowed address              
 shell> sudo systemctl restart postgresql-13
 ```
 
+<a id="data-volume-assignment"></a>
 ### PostgreSQL directory description
 
 PostgreSQL directory and file description is as follows:
@@ -387,6 +400,7 @@ PostgreSQL directory and file description is as follows:
 
 ## CUBRID Instance
 
+<a id="restart-microsoft-sql"></a>
 ### How to Start/Stop the CUBRID service
 
 You can start or stop the CUBRID service as follows by logging in with the “cubrid” Linux account.
@@ -413,6 +427,7 @@ shell> cubrid broker stop
 shell> cubrid broker restart
 ```
 
+<a id="checkset-automatic-microsoft-sql-service-execution"></a>
 ### Connect to CUBRID
 
 After creating an instance, initially connect as follows.
@@ -524,8 +539,10 @@ A CUBRID manager configuration file that allows you to set the port used by the 
 | support\_mon\_statistic | A parameter to set whether to use cumulative monitoring. |
 | server\_long\_query\_time | A parameter that specifies the threshold (in seconds) for a late query when the slow\_query item among the server's diagnostic items is set. |
 
+<a id="mysql-instance"></a>
 ## MariaDB Instance
 
+<a id="startingstopping-mysql"></a>
 ### How to Start/Stop MariaDB
 
 ``` sh
@@ -539,6 +556,7 @@ shell> sudo systemctl stop mariadb.service
 shell> sudo systemctl restart mariadb.service
 ```
 
+<a id="connecting-to-mysql"></a>
 ### Connect to MariaDB
 
 After creating an instance, initially connect to MariaDB as follows.
@@ -554,8 +572,10 @@ shell> mysql -u root -p
 Enter password:
 ```
 
+<a id="initial-settings-for-mysql-instance"></a>
 ### Initial Setup After Creating a MariaDB Instance
 
+<a id="1-set-the-password"></a>
 #### 1\. Set the Password
 
 After initial installation, the MariaDB root account password is not set. Therefore, you must set a password after installation.
@@ -566,6 +586,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('password');
 ```
 
+<a id="2-change-the-port"></a>
 #### 2\. Change the Port
 
 After initial installation, the port is 3306, which is MariaDB's default port. For security reasons, it is recommended to change the port.
@@ -591,6 +612,7 @@ sudo systemctl restart mariadb.service
 
 ## Tibero Instance
 
+<a id="description-of-mycnf"></a>
 ### Create a Tibero Instance
 
 #### Additional Block Storage
@@ -605,6 +627,7 @@ The instance must have a floating IP associated and TCP port 22 (SSH) must be al
 Connect to the instance using an SSH client and the set key pair.
 For a detailed guide on SSH connection, refer to [SSH Connection Guide](./overview/#linux).
 
+<a id="description-of-mysql-directory"></a>
 ### Install TMI
 
 Run the dbca command in the /root path with the root account.
@@ -762,10 +785,12 @@ The default accounts provided by Tibero are as follows.
 * OUTLN: Performs tasks such as storing related hints so that the same SQL can always be executed with the same plan.
 * TIBERO/TIBERO1: An example user with the DBA privilege.
 
+<a id="postgresql-instance"></a>
 ## Kafka Instance
 > [Note]
 > For the instance flavor, please choose c1m2 (CPU 1core,  Memory 2GB) or higher specifications.
 
+<a id="how-to-startstop-postgresql"></a>
 ### Start and Stop Zookeeper, Kafka broker
 ```
 # Start Zookeeper, Kafka broker (Zookeeper first)
@@ -781,6 +806,7 @@ shell> sudo systemctl restart zookeeper.service
 shell> sudo systemctl restart kafka.service
 ```
 
+<a id="log-in-to-postgresql"></a>
 ### Install Kafka Cluster
 - Must install in a new instance.
 - An odd number of instances (3 or more) are required, and the installation script is executed in the instance.
@@ -847,8 +873,10 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ##### Cluster Installation Complete #####
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### Initial Setup After Creating Kafka Instance
 
+<a id="1-change-the-port"></a>
 #### Change the Port
 After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
 
@@ -943,12 +971,14 @@ shell> redis-cli
 ### Initial Setup After Creating a Redis Instance
 The default configuration file for a Redis instance is the `~/redis/redis.conf` file. The description for the parameters to be changed is as follows.
 
+<a id="2-change-server-log-timezone"></a>
 #### Bind
 - Default value: `127.0.0.1 -::1`
 - Changed value: `<private ip> 127.0.0.1 -::1`
 
 Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
 
+<a id="3-cancel-public-schema-permission"></a>
 #### Port
 - Default value: `6379`
 
@@ -958,11 +988,13 @@ Port is 6379, a default value for Redis. It is recommended to change the port fo
 shell> redis-cli -p <new port>
 ```
 
+<a id="4-allow-remote-login"></a>
 #### Requirepass/masterauth
 - Default value: `nhncloud`
 
 The default password is `nhncloud`. For security reasons, it is recommended to change the password. If you are using replication connection, you must change the `requirepass` and `masterauth` values at the same time.
 
+<a id="postgresql-directory-description"></a>
 ### Automatic HA Configuration Script
 A Redis instance of NHN Cloud provides a script that automatically configures an HA environment. You can use the script only for **a new instance immediately after installation**, and cannot use after changing the set values from redis.conf.
 

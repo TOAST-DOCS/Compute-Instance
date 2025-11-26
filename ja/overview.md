@@ -1,9 +1,9 @@
-<a id="compute"></a>
+<a id="compute-instance-overview"></a>
 ## Compute > Instance > 概要
 
 インスタンスは仮想のCPU、メモリ、ルートブロックストレージで構成された仮想サーバーです。このサーバーに顧客のサービスやアプリケーションをインストールしてNHN Cloudが提供する様々なサービスを組み合わせて使用します。
 
-<a id="instance-components"></a>
+<a id="components"></a>
 ## インスタンス構成要素
 
 インスタンスを構成する要素は次のとおりです。
@@ -15,7 +15,7 @@
 - **セキュリティグループ**(security groups)：インスタンスのネットワークセキュリティ設定、アクセス制御を行う
 - **ネットワーク**：インスタンスが接続する仮想ネットワーク
 
-この情報に基づいてインスタンスの属性と使用方式が変わります。この情報のうち、イメージとアベイラビリティゾーンを除く設定はインスタンス生成後も変更できますが、一部のインスタンスの仕様(flavor)はインスタンス生成後に変更できません。インスタンス仕様変更については[コンソール使用ガイドのインスタンスタイプ変更](./console-guide/#_15)を参照してください。
+この情報に基づいてインスタンスの属性と使用方式が変わります。この情報のうち、イメージとアベイラビリティゾーンを除く設定はインスタンス生成後も変更できますが、一部のインスタンスの仕様(flavor)はインスタンス生成後に変更できません。インスタンス仕様変更については[コンソール使用ガイドのインスタンスタイプ変更](./console-guide/#modify-flavor)を参照してください。
 
 <a id="image"></a>
 ### イメージ
@@ -24,7 +24,7 @@
 
 全てのイメージは、インスタンスの仮想ハードウェアで最適に実行されるよう設定されており、NHN Cloudのセキュリティ検証を経ているため、安全に使用できます。イメージの詳細な説明は[イメージ概要](/Compute/Image/ja/overview/)を参照してください。
 
-<a id="instance-type"></a>
+<a id="flavor"></a>
 ### インスタンスタイプ(Instance flavor)
 
 NHN Cloudは顧客の使用用途に合った様々なタイプのインスタンスタイプを提供します。運営するサービスまたはアプリケーションの特性に応じて適切な仕様のインスタンスを生成できます。すでに生成されたインスタンスタイプはウェブコンソールから簡単に変更できます。
@@ -51,12 +51,12 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 - 異なるアベイラビリティゾーンでFloating IPを共有できます。もし1つのアベイラビリティゾーンで障害が発生しても、迅速に別のアベイラビリティゾーンにFloating IPを移動して障害時間を最小化できます。
 
 
-<a id="keypair"></a>
+<a id="key-pair"></a>
 ### キーペア(Key-pair)
 
 キーペアは公開鍵基盤構造([PKI](https://ja.wikipedia.org/wiki/%E5%85%AC%E9%96%8B%E9%8D%B5%E5%9F%BA%E7%9B%A4)、public key infrastructure)をベースにしたSSH公開鍵、秘密鍵のペアです。NHN Cloudで生成されたインスタンスに接続するにはセキュリティが脆弱なキーボード入力方式のID/パスワード認証の代わりにキーペアを利用する必要があります。ユーザーはキーペアの秘密鍵を利用してログイン情報をエンコードしてインスタンスに転送して接続認証を受けた後、安全にインスタンスに接続できます。キーペアを利用したインスタンス接続方法は[インスタンス接続方法](#_5)を参照してください。
 
-キーペアはインスタンスを生成する時、NHN Cloudコンソールで新しく作成することもでき、顧客が直接作成したキーペアを登録して使用することもできます。キーペアの登録方法は[コンソールガイドのキーペアをインポート](./console-guide/#_16)を参照してください。
+キーペアはインスタンスを生成する時、NHN Cloudコンソールで新しく作成することもでき、顧客が直接作成したキーペアを登録して使用することもできます。キーペアの登録方法は[コンソールガイドのキーペアをインポート](./console-guide/#import-key-pairs-windows)を参照してください。
 
 > [注意]
 > キーペアを新たに作成すると、キーペアの秘密鍵をダウンロードします。秘密鍵は再発行できないため、ダウンロードした秘密鍵は安全なディスクや外部記憶装置などに保管してください。秘密鍵が外部に流出すると、誰でもその秘密鍵で該当のインスタンスにアクセスできるので、慎重に管理する必要があります。
@@ -64,7 +64,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 > [参考]
 > キーペアはユーザーアカウントに割り当てられたリソースなので、プロジェクトを削除しても削除されずに維持されます。
 
-<a id="security-group"></a>
+<a id="security-groups"></a>
 ### セキュリティグループ(Security groups)
 
 セキュリティグループはインスタンスに伝達されるネットワークトラフィックを決定する仮想のファイアウォールです。セキュリティグループの詳細は[VPC概要](/Network/VPC/ja/overview/)を参照してください。
@@ -77,7 +77,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 
 インスタンスが外部と通信するには、VPCで定義されたネットワークのうち少なくとも1つ以上に接続されている必要があります。ネットワークに接続されていないインスタンスにはアクセスできません。ネットワークを新たに作成したり変更したりするには[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
-<a id="billing"></a>
+<a id="pricing"></a>
 ## 課金
 
 インスタンス課金方式は次の通りです。
@@ -89,15 +89,15 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 
 課金の詳細については、サービス別[料金ページ](https://www.toast.com/kr/service/compute/instance#price)を参照してください。
 
-<a id="instance-connect"></a>
+<a id="how-to-access-instances"></a>
 ## インスタンス接続方法
 
-<a id="linux-connect"></a>
+<a id="how-to-access-linux-instances"></a>
 ### Linuxインスタンス接続方法
 
 Linuxインスタンスに接続する時はSSHクライアントを利用します。インスタンスのセキュリティグループにSSHアクセスポート(デフォルト値22)が開いていない場合は接続できません。SSHアクセスを許可する方法は[VPC概要](/Network/VPC/ja/overview/)を参照してください。インスタンスにFloating IPが割り当てられていない場合は、NHN Cloud外部からアクセスできません。Floating IPを割り当てる方法については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
-<a id="linux-ssh-mac-linux"></a>
+<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### MacまたはLinuxのSSHクライアントでLinuxインスタンスに接続する方法
 
 MacやLinuxには通常、SSHクライアントがデフォルトでインストールされています。SSHクライアントで下記のようにキーペアの秘密鍵を利用して接続します。
@@ -114,7 +114,7 @@ Rockyインスタンス
 
 	$ ssh -i my_private_key.pem rocky@<インスタンスのIP>
 
-<a id="linux-ssh-putty"></a>
+<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### WindowsでPuTTY SSHクライアントでLinuxインスタンスに接続する方法
 
 PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
@@ -126,7 +126,7 @@ WindowsのPuTTY SSH クライアントでLinuxインスタンスに接続する�
 * PuTTYでインスタンスに接続
 
 
-<a id="keypair-putty-convert"></a>
+<a id="1-convert-your-key-pairs-private-key-to-a-putty-compatible-private-key"></a>
 ##### 1. キーペアの秘密鍵をPuTTY用秘密鍵に変更
 
 PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使用する必要があります。キー変換はPuTTYと一緒にインストールされているPuTTygenを利用します。
@@ -142,7 +142,7 @@ PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使�
 > [注意]
 インスタンスに自動的にログインするように設定するには、パスフレーズを使用しないでください。パスフレーズを使用すると、ログインする時に秘密鍵のパスワードを直接入力する必要があります。
 
-<a id="keypair-putty-register"></a>
+<a id="2-register-your-putty-compatible-private-key-with-putty"></a>
 ##### 2. PuTTY用秘密鍵をPuTTYに登録
 
 こうして作ったPuTTY用秘密鍵は2つの方法で登録して使用できます。
@@ -173,7 +173,7 @@ PuTTYと一緒にインポートされているpageantを実行すると、下�
 
 Pageantは一度実行されると、Windowsトレイに残って実行されるのでインスタンスに接続する度に再実行する必要がありません。ただしWindowsを再起動した場合は再度実行する必要があります。
 
-<a id="putty-connect"></a>
+<a id="3-access-instances-with-putty"></a>
 ##### 3. PuTTYでインスタンスに接続
 
 PuTTY用に変換された秘密鍵が登録されたらPuTTYを実行します。
@@ -201,7 +201,7 @@ Rocky
 **開く**をクリックするとインスタンスに接続します。
 
 
-<a id="windows-connect"></a>
+<a id="how-to-access-windows-instances"></a>
 ### Windowsインスタンス接続方法
 
 Windowsインスタンスに接続するには、NHN Cloudコンソールから接続するWindowsインスタンスを選択します。インスタンス詳細画面の**接続情報**タブで**パスワード確認**ボタンを押して、Windowsサーバーに設定されたパスワードを確認します。

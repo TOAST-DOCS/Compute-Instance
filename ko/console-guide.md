@@ -1,7 +1,7 @@
-<a id="console-guide"></a>
+<a id="compute-instance-console-guide"></a>
 ## Compute > Instance > 콘솔 사용 가이드
 
-<a id="instance-creation"></a>
+<a id="create-instances"></a>
 ## 인스턴스 생성
 
 아래 설정들을 통하여 인스턴스를 생성하거나 인스턴스 템플릿(Instance Template)을 통해 인스턴스를 생성할 수 있습니다. 인스턴스 템플릿을 통해 인스턴스를 생성하려면 인스턴스 생성 화면에서 **인스턴스 템플릿 사용**을 선택합니다. 인스턴스 템플릿 생성 방법은 [인스턴스 템플릿 콘솔 가이드](/Compute/Instance%20Template/ko/console-guide/)를 참고합니다.
@@ -35,7 +35,7 @@
 - **신규 생성 및 설정**을 선택한 경우 **블록 스토리지 타입** 및 **블록 스토리지 크기**를 지정하여 루트 블록 스토리지를 생성합니다.
 - **기존 리소스 지정**을 선택한 경우 **원본 리소스**를 지정하여 루트 블록 스토리지로 사용합니다.
 
-<a id="source-resource"></a>
+<a id="original-resource"></a>
 #### 원본 리소스
 
 기존에 생성된 **블록 스토리지** 또는 **스냅숏** 중 하나를 선택할 수 있습니다.
@@ -84,7 +84,7 @@
 
 가용성 영역에 대한 자세한 설명은 [인스턴스 개요의 가용성 영역](./overview/#availability-zone)을 참고합니다.
 
-<a id="instance-flavor"></a>
+<a id="flavor"></a>
 ### 타입(flavor)
 
 가상 하드웨어의 성능에 따라 다양한 타입을 선택할 수 있습니다. 다만, 이미지에서 요구하는 가상 하드웨어의 성능에 따라 선택할 수 있는 타입이 제한될 수 있습니다. 보다 자세한 설명은 [인스턴스 개요](./overview)를 참고합니다.
@@ -92,11 +92,11 @@
 > [참고]
 > 1 vCPU는 스레드 하나와 코어 하나로 구성된 소켓 한 개를 의미하며, 소켓 한 개당 스레드 수와 코어 수는 각각 한 개로 일정합니다.
 
-인스턴스의 타입은 생성 이후에도 NHN Cloud 콘솔에서 변경할 수 있습니다. 높은 타입에서 낮은 타입으로 변경할 수 있고, 낮은 타입에서 높은 타입으로도 변경할 수 있습니다. 일부 타입은 변경할 수 없는 경우도 있으니, 자세한 것은 [인스턴스 타입 변경](./console-guide/#instance-type-change)을 참고합니다.
+인스턴스의 타입은 생성 이후에도 NHN Cloud 콘솔에서 변경할 수 있습니다. 높은 타입에서 낮은 타입으로 변경할 수 있고, 낮은 타입에서 높은 타입으로도 변경할 수 있습니다. 일부 타입은 변경할 수 없는 경우도 있으니, 자세한 것은 [인스턴스 타입 변경](./console-guide/#modify-flavor)을 참고합니다.
 
 > [주의] 인스턴스의 루트 블록 스토리지는 타입 변경으로 바꿀 수 없습니다.
 
-<a id="instance-count"></a>
+<a id="number-of-instances"></a>
 ### 인스턴스 수
 
 이미지, 가용성 영역, 타입, 블록 스토리지 크기, 키페어, 네트워크 설정이 모두 동일한 인스턴스를 여러 개 생성할 경우에 사용합니다. 인스턴스의 이름은 설정한 이름 뒤에 `-1`, `-2`와 같이 번호가 붙어 생성됩니다. 예를 들어, 인스턴스 이름을 `my-instance`로 인스턴스를 2개 만들면, `my-instance-1`, `my-instance-2`가 생성됩니다. 한 번에 생성할 수 있는 최대 인스턴스의 개수는 10개입니다.
@@ -106,10 +106,10 @@
 > [참고]
 > **OS 설정**에서 **기존 리소스 지정**을 **블록 스토리지**로 선택하거나 **네트워크 설정**에서 **기존 네트워크 인터페이스 지정**을 선택한 경우 인스턴스 수는 `1`로 제한됩니다.
 
-<a id="keypair-settings"></a>
+<a id="key-pair"></a>
 ### 키페어
 
-기존 키페어를 사용하거나, 새로 키페어를 생성하여 사용합니다. 기존 키페어 등록은 Windows 사용자의 경우 [키페어 가져오기(Windows 사용자)](./console-guide/#keypair-import-windows), Mac과 Linux 사용자의 경우 [키페어 가져오기(Mac, Linux 사용자)](./console-guide/#keypair-import-mac-linux)를 참고합니다.
+기존 키페어를 사용하거나, 새로 키페어를 생성하여 사용합니다. 기존 키페어 등록은 Windows 사용자의 경우 [키페어 가져오기(Windows 사용자)](./console-guide/#import-key-pairs-windows), Mac과 Linux 사용자의 경우 [키페어 가져오기(Mac, Linux 사용자)](./console-guide/#import-key-pairs-mac-and-linux)를 참고합니다.
 
 > [참고]
 > 키페어는 사용자 계정에 할당된 리소스이므로 프로젝트를 삭제해도 삭제되지 않고 유지됩니다.
@@ -163,7 +163,7 @@ VPC에서 정의된 서브넷 중에서 인스턴스에 연결할 서브넷을 �
 > [주의]
 > 사용자 스크립트는 root (Linux)/Administrator (Windows) 사용자 권한으로 실행됩니다.
 
-<a id="user-script-linux"></a>
+<a id="linux"></a>
 #### Linux
 
 사용자 스크립트의 첫 번째 줄은 반드시 `#!`으로 시작해야 합니다.
@@ -174,7 +174,7 @@ VPC에서 정의된 서브넷 중에서 인스턴스에 연결할 서브넷을 �
 
 사용자 스크립트가 정상적으로 동작하기 위해서는 인스턴스 내부의 로그 파일을 확인해야 합니다. 스크립트에서 표준 출력/에러 장치로 출력한 로그는 `/var/log/cloud-init-output.log`에서 확인할 수 있습니다.
 
-<a id="user-script-windows"></a>
+<a id="windows"></a>
 #### Windows
 
 Windows 이미지에서는 사용자 스크립트 형식으로 Batch 스크립트 형식, Powershell 스크립트 형식을 모두 지원합니다. 각 형식들은 첫 번째 줄에 명시하는 지시자에 의해 구분됩니다.
@@ -207,10 +207,10 @@ rem cmd
 
 사용자 스크립트와 관련하여 보다 자세한 설명은 [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) 또는 [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) 가이드를 참고합니다.
 
-<a id="instance-additional-features"></a>
+<a id="additional-instance-features"></a>
 ## 인스턴스 추가 기능
 
-<a id="instance-state-change"></a>
+<a id="change-instance-status"></a>
 ### 인스턴스 상태 변경
 
 인스턴스 중지, 종료, 삭제, 시작을 통해 인스턴스의 상태를 변경할 수 있습니다.
@@ -225,7 +225,7 @@ rem cmd
 
 > [참고] GPU Instance는 종료할 수 없으며 중지 시에도 정상(100%) 요금이 발생합니다.
 
-<a id="image-creation"></a>
+<a id="create-image"></a>
 ### 이미지 생성
 
 인스턴스의 루트 블록 스토리지로부터 이미지를 생성합니다. 이미지 생성은 데이터 정합성을 보장하기 위해 인스턴스를 중지한 상태에서 진행하는 것을 권장합니다.
@@ -237,26 +237,26 @@ rem cmd
 > [주의]
 > 생성된 이미지의 크기는 루트 블록 스토리지의 실제 사용량보다 더 클 수 있습니다.
 
-<a id="floating-ip-attach-detach"></a>
+<a id="associatedisassociate-floating-ip"></a>
 ### 플로팅 IP 연결과 해제
 
 인스턴스의 상태에 관계없이 플로팅 IP를 연결하고 해제할 수 있습니다. 사용 가능한 플로팅 IP가 없거나 원하는 플로팅 IP가 없는 경우, **생성** 버튼을 클릭해 플로팅 IP를 생성하여 연결할 수 있습니다. 또는 **Network > VPC > Floating IP**에서 플로팅 IP를 생성하여 사용해도 됩니다.
 
 플로팅 IP에 대한 자세한 설명은 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
-<a id="security-group-modify"></a>
+<a id="modify-security-group"></a>
 ### 보안 그룹 수정
 
 인스턴스의 상태에 관계없이 인스턴스의 보안 그룹을 수정할 수 있습니다. 수정된 보안 그룹은 바로 적용됩니다.
 
 보안 그룹에 대한 자세한 설명은 [보안 그룹](./console-guide/#security-group)과 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
-<a id="network-subnet-change"></a>
+<a id="change-network-subnet"></a>
 ### 네트워크 서브넷 변경
 
 인스턴스의 네트워크 서브넷은 인스턴스가 중지된 상태에서만 변경할 수 있습니다. 서브넷을 추가하면 자동으로 인스턴스에 해당 서브넷에 연결될 네트워크 인터페이스가 만들어집니다. 이 때, 한 번에 여러 서브넷을 추가하면 인스턴스에 새로 생성되는 네트워크 인터페이스 순서는 임의로 지정됩니다. 서브넷을 인스턴스에서 삭제하면 생성되었던 네트워크 인터페이스도 자동으로 삭제됩니다.
 
-<a id="instance-type-change"></a>
+<a id="modify-flavor"></a>
 ### 인스턴스 타입 변경
 
 인스턴스 타입은 인스턴스를 중지한 후 변경할 수 있습니다. 인스턴스가 실행 중이면 **추가 기능**의 **인스턴스 중지**를 클릭하여 인스턴스를 중지합니다.
@@ -273,7 +273,7 @@ rem cmd
 
 인스턴스는 변경 시점을 기준으로 변경된 타입으로 과금됩니다.
 
-<a id="instance-os-info-change"></a>
+<a id="change-instance-os-details"></a>
 ### 인스턴스 OS 정보 변경
 
 인스턴스의 상태에 관계없이 인스턴스 OS 정보를 변경할 수 있습니다. 
@@ -282,14 +282,14 @@ rem cmd
 
 > [참고] OS 구분은 변경할 수 없습니다.
 
-<a id="instance-description-change"></a>
+<a id="change-instance-description"></a>
 ### 인스턴스 설명 변경
 
 인스턴스의 상태에 관계없이 인스턴스 설명을 변경할 수 있습니다. 
 
 **Compute > Instance** 서비스 페이지에서 설명을 변경할 인스턴스를 클릭합니다. 해당 인스턴스 상세 정보 화면의 **기본 정보** 탭에서 **설명 > 변경**을 클릭합니다.
 
-<a id="instance-keypair-change"></a>
+<a id="change-instance-key-pair"></a>
 ### 인스턴스 키페어 변경
 
 인스턴스 키페어는 인스턴스가 활성 상태인 경우에만 변경할 수 있습니다.
@@ -304,7 +304,7 @@ rem cmd
 
 > [참고] 인스턴스 생성에 사용한 이미지 버전이 낮은 경우 키페어 변경 기능을 지원하지 않을 수 있습니다.
 
-<a id="placement-policy-management"></a>
+<a id="manage-placement-policies"></a>
 ### 배치 정책 관리
 
 배치 정책을 생성 및 삭제할 수 있으며 배치 정책에 할당된 인스턴스 목록을 보여줍니다.
@@ -313,10 +313,10 @@ rem cmd
 
 배치 정책에 인스턴스가 할당된 경우에도 배치 정책 삭제가 가능하며 이 경우 인스턴스는 삭제되지 않습니다.
 
-<a id="keypair"></a>
+<a id="key-pairs"></a>
 ## 키페어
 
-<a id="keypair-import-windows"></a>
+<a id="import-key-pairs-windows"></a>
 ### 키페어 가져오기(Windows 사용자)
 
 PuTTY SSH 클라이언트를 설치하면 함께 설치되는 puttygen 프로그램으로 키페어를 생성하고 NHN Cloud에 등록하여 사용할 수 있습니다.
@@ -342,7 +342,7 @@ puttygen을 실행합니다.
 
 NHN Cloud에서 생성한 키페어와 마찬가지로 이렇게 만든 키페어의 개인 키도 외부 유출 시에 누구나 유출된 개인 키로 해당 인스턴스에 접근할 수 있게 되므로 신중하게 관리해야 합니다.
 
-<a id="keypair-import-mac-linux"></a>
+<a id="import-key-pairs-mac-and-linux"></a>
 ### 키페어 가져오기(Mac, Linux 사용자)
 
 Mac이나 Linux의 `ssh-keygen`으로 만든 키페어를 NHN Cloud에 등록하여 사용할 수 있습니다. 키페어는 다음 명령으로 생성합니다.
@@ -360,7 +360,7 @@ Mac이나 Linux의 `ssh-keygen`으로 만든 키페어를 NHN Cloud에 등록하
 
 NHN Cloud에서 생성한 키페어와 마찬가지로 이렇게 만든 키페어의 개인 키도 외부 유출 시에 누구나 유출된 개인 키로 해당 인스턴스에 접근할 수 있게 되므로 신중하게 관리해야 합니다.
 
-<a id="appendix-1-windows-language-pack"></a>
+<a id="appendix-1-change-language-packs-in-windows"></a>
 ## 부록 1. Windows 언어팩 변경
 
 NHN Cloud Windows 이미지는 영문판을 기본으로 제공하고 있습니다. 다른 언어를 기본으로 사용하기 원하는 사용자는 다음의 방법에 따라 사용이 가능합니다.
@@ -395,7 +395,7 @@ NHN Cloud Windows 이미지는 영문판을 기본으로 제공하고 있습니�
 10. 다시 로그인 하시면 사용자가 선택한 언어팩으로 변경 되어있는것을 볼수있습니다.
 ![이미지1](http://static.toastoven.net/prod_instance/windows10.png)
 
-<a id="appendix-2-windows-routing"></a>
+<a id="appendix-2-change-routing-in-windows"></a>
 ## 부록 2. Windows 라우팅 변경
 
 NHN Cloud Windows 에서 라우팅을 변경하는 방법은 다음과 같은 방법 등이 있습니다.
@@ -452,7 +452,7 @@ Case 3 - 특정 경로 제거
 
 ![이미지1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
-<a id="appendix-3-system-locale"></a>
+<a id="appendix-3-change-system-locale"></a>
 ## 부록 3. 시스템 로캘 변경
 
 NHN Cloud Windows에서 시스템 로캘을 변경하는 방법은 다음과 같습니다.
@@ -472,7 +472,7 @@ NHN Cloud Windows에서 시스템 로캘을 변경하는 방법은 다음과 같
 5. 적용하려면 시스템을 재시작합니다.
 ![이미지1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
-<a id="restarting-guide-for-maintenance"></a>
+<a id="appendix-4-restarting-instances-for-hypervisor-maintenance"></a>
 ## 부록 4. 하이퍼바이저 점검을 위한 인스턴스 재시작 가이드
 
 NHN Cloud는 주기적으로 하이퍼바이저 소프트웨어를 업데이트하여 기본 인프라 서비스의 보안과 안정성을 향상시키고 있습니다.
