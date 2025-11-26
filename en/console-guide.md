@@ -1,12 +1,9 @@
-<a id="console-guide"></a>
 ## Compute > Instance > Console Guide
 
-<a id="instance-creation"></a>
 ## Create Instances
 
 You can create instances either by using the settings below or by using instance templates. To create instances using instance templates, select **Use instance template** from the Create Instance page. To learn how to create instance templates, see [Instance Template Console Guide](/Compute/Instance%20Template/en/console-guide/).
 
-<a id="os-settings"></a>
 ### OS Settings
 
 Determine how the root block storage is created that will be used when an instance is created.
@@ -15,7 +12,6 @@ Determine how the root block storage is created that will be used when an instan
 - If you select **Create New and Set up**, create root block storage using an image.
 - If you select **Use Existing Resource**, use a previously created block storage or snapshot.
 
-<a id="image"></a>
 ### Image
 
 Select the image that contains the operating system you need. You can choose between public images provided by NHN Cloud, images you've previously created, or shared images.
@@ -27,8 +23,6 @@ The available instance flavors vary depending on the image you choose, so we rec
 | Linux<br>Ubuntu, Debian, Rocky | 20GB or more  | 1GB or more |
 | Windows                           | 50GB or more  | 2GB or more |
 
-
-<a id="root-block-storage"></a>
 ### Root Block Storage
 
 Set up root block storage according to the **OS settings**.
@@ -36,7 +30,6 @@ Set up root block storage according to the **OS settings**.
 - If you select **Create New and Set up**, create the root block store by specifying the **block storage type** and **block storage size**.
 - If you select **Use Existing Resource**, specify the **original resource** to use as root block storage.
 
-<a id="source-resource"></a>
 #### Original Resource
 
 You can select either a previously created **block storage** or **snapshot**.
@@ -44,7 +37,6 @@ You can select either a previously created **block storage** or **snapshot**.
 - When you select **block storage**, use the previously created block storage as the root block storage.
 - When you select **snapshot**, the root block storage is created using a previously created snapshot.
 
-<a id="block-storage-size"></a>
 #### Block Storage Size
 
 Specify the root block storage size of an instance.
@@ -63,7 +55,6 @@ The root block storage size varies depending on instance flavor.
 > If you select **block storage** for **Use Existing Resource** in the **OS settings**, you can't change the block storage size.
 > If you select **snapshot** for **Use Existing Resource** in the **OS settings**, block storage size must be set equal to or larger than the original block storage size.
 
-<a id="block-storage-type"></a>
 #### Block Storage Type
 
 Determines the default block storage type of an instance.
@@ -74,7 +65,6 @@ Determines the default block storage type of an instance.
 > [Note]
 > If you select **Use Existing Resource** in the **OS settings**, you can't change the block storage type.
 
-<a id="availability-zone"></a>
 ### Availability Zone
 
 If an availability zone is not specified, a random zone is selected. An instance can use a block storage only if they both exist in the same availability zone. If the block storage you wish to use exists in a particular availability zone, then select that zone.
@@ -85,7 +75,6 @@ If an availability zone is not specified, a random zone is selected. An instance
 
 For more details on availability zones, see [Availability Zone in Instance Overview](./overview/#availability-zone).
 
-<a id="instance-flavor"></a>
 ### Flavor
 
 You can select various flavors depending on virtual hardware performance specifications. However, the choice of some flavors may be limited depending on the virtual hardware performance that your image requires. For more details, see [Instance Overview](./overview).
@@ -97,7 +86,6 @@ Instance flavors can be changed in the NHN Cloud console even after instance cre
 
 > [Caution] An instance's root block storagecannot be changed by changing instance flavors.
 
-<a id="instance-count"></a>
 ### Number of Instances
 
 You can specify the number of instances you want to create when creating multiple instances with the same image, availability zone, flavor, block storage size, key pair, and network settings. The instance names will be the name you specified, with numbers such as `-1` and `-2` appended to the end. For example, creating two instances named `my-instance` will result in `my-instance-1` and `my-instance-2`. The maximum number of instances you can create at once is 10.
@@ -107,7 +95,6 @@ When you create multiple instances without specifying an availability zone, each
 > [Note]
 > If you select **block storage** for **Use Existing Resource** in the **OS settings** or **Use Existing Network Interface** in the **network settings**, the number of instances is limited to `1`.
 
-<a id="keypair-settings"></a>
 ### Key Pair
 
 Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users.
@@ -115,21 +102,18 @@ Use an existing key pair or create a new key pair. To register an existing key p
 > [Note]
 > Key Pair is a resource assigned to the user account, so it's not deleted when you delete a project.
 
-<a id="network"></a>
 ### Network
 
 Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface (`eth0`) will be set as the default gateway.
 
 For more details on creating and managing networks, refer to [VPC Overview](/Network/VPC/en/overview/).
 
-<a id="floating-ip"></a>
 ### Floating IP
 
 Select whether you will use a floating IP after instance creation. If you enable this option, a new floating IP is created and connected to the first network interface. Note that the first network interface must be connected to a subnet where an internet gateway is configured.
 
 Floating IP can be managed from Instance > Management, or Instance > Floating IP. For more details on floating IP, see [VPC Console Guide](/Network/VPC/en/console-guide/).
 
-<a id="security-group"></a>
 ### Security Group
 
 Select security groups that the instance will be included in. One instance can be included in multiple security groups, in which case,
@@ -139,7 +123,6 @@ Select security groups that the instance will be included in. One instance can b
 
 For more details on security groups, see [VPC Console Guide](/Network/VPC/en/console-guide/).
 
-<a id="additional-block-storage"></a>
 ### Additional Block Storage
 
 Select whether you will attach an additional block storage after instance creation. If you enable this option, a new block storage separate from the root block storage is created and attached to the instance. As with the root block storage, you can specify the name, storage type, and size of the additional block storage you create.
@@ -148,7 +131,6 @@ By using the root block storage only for the OS and storing your frequently used
 
 Block storage can also be managed from Instance > Block Storage. For more details on block storage, see [Block Storage Guide](/Storage/Block%20Storage/en/overview/).
 
-<a id="placement-policy"></a>
 ### Placement Policy
 
 You can use placement policies to place instances on different hypervisors. When you set a placement policy at instance creation time, instances assigned to the same placement policy are created on different hypervisors.
@@ -156,7 +138,6 @@ You can use placement policies to place instances on different hypervisors. When
 > [Caution]
 > Instance creation may fail in situations where distributed deployment is not possible.
 
-<a id="user-script"></a>
 ### User Script
 
 You can specify a script to be executed after instance creation. The user script is executed following the instance's initial boot and after the initialization process including network configuration has completed. User scripts in NHN Cloud are executed by automated tools such as cloud-init (Linux) and Cloudbase-init (Windows), which are embedded in the official images.
@@ -164,7 +145,6 @@ You can specify a script to be executed after instance creation. The user script
 > [Caution]
 > User scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
-<a id="user-script-linux"></a>
 #### Linux
 The first line of a user script must begin with `#!`.
 ```
@@ -174,7 +154,6 @@ The first line of a user script must begin with `#!`.
 
 For a user script to run successfully, log files in the instance must be checked. You can check output logs printed by standard output/error from the script in `/var/log/cloud-init-output.log`.
 
-<a id="user-script-windows"></a>
 #### Windows
 
 Windows images support both Batch and PowerShell formats for user scripts. The format is determined by an indicator specified in the first line.
@@ -207,10 +186,8 @@ Logs from user scripts can be found in `C:\Program Files\Cloudbase Solutions\Clo
 
 For more details regarding user scripts, see the [cloud-init](https://cloudinit.readthedocs.io/en/latest/topics/format.html) or [Cloudbase-init](https://cloudbase-init.readthedocs.io/en/latest/userdata.html) guides.
 
-<a id="instance-additional-features"></a>
 ## Additional Instance Features
 
-<a id="instance-state-change"></a>
 ### Change Instance Status
 
 An instance’s status can be changed by stopping, terminating, deleting, and starting it.
@@ -225,7 +202,6 @@ For more details on hypervisor resources and fees for stopping, terminating, and
 
 > [Note] GPU Instances cannot be terminated and will incur normal (100%) rates when stopped.
 
-<a id="image-creation"></a>
 ### Create Image
 
 Create an image from an instance's root block storage. It is recommended to stop instances before creating an image in order to ensure data integrity.
@@ -237,26 +213,22 @@ Created images are registered as private images in **Compute > Image**. You can 
 > [Caution]
 > The size of the created image may be larger than the actual usage of the root block storage.
 
-<a id="floating-ip-attach-detach"></a>
 ### Associate/Disassociate Floating IP
 
 Floating IP can be associated with or disassociated from an instance, regardless of the instance's status. If you have no available floating IP or if the floating IP you want is not available, you can create one by clicking **Create**. Alternatively, floating IP can also be created from **Network > VPC > Floating IP**.
 
 For more details on floating IP, see [VPC Overview](/Network/VPC/en/overview/).
 
-<a id="security-group-modify"></a>
 ### Modify Security Group
 
 An instance's security groups can be modified regardless of the instance's status. Modified security groups are applied immediately.
 
 For more details on security groups, see [Security Group](./console-guide/#security-group) and [VPC Overview](/Network/VPC/en/overview/).
 
-<a id="network-subnet-change"></a>
 ### Change Network Subnet
 
 An instance's network subnet can only be changed while the instance is stopped. When you add a subnet, a network interface that will be connected to that subnet is automatically created on your instance. If you add multiple subnets at once, the order of the newly created network interfaces on the instance is set randomly. Deleting a subnet from an instance automatically deletes the network interface that was created along with the subnet.
 
-<a id="instance-type-change"></a>
 ### Modify Flavor
 
 Instance flavors can be changed once an instance has been stopped. If an instance is running, click **Stop Instance** in **Additional Features** to stop the instance.
@@ -273,7 +245,6 @@ When you modify flavors, instance resize and resize confirmation tasks proceed. 
 
 Instances will be charged using the new flavor from the moment the modification completes.
 
-<a id="instance-os-info-change"></a>
 ### Change Instance OS Details
 
 You can change instance OS information regardless of the state of the instance. 
@@ -282,14 +253,12 @@ On the **Compute > Instance** page, click the instance whose OS information you 
 
 > [Note] You can't change the OS type.
 
-<a id="instance-description-change"></a>
 ### Change Instance Description
  
 You can change instance description regardless of the state of the instance. 
  
 On the **Compute > Instance** page, click the instance whose information you want to change. On the **Basic Information** tab of that instance's details screen, click **Description > Change**.
 
-<a id="instance-keypair-change"></a>
 ### Change Instance Key Pair
 
 You can change the instance key pair only if the instance is active.
@@ -304,7 +273,6 @@ Change the key pair of the instance default account to the selected key pair. Th
 
 > [Note] If the image version used to create the instance is low, the feature to change key pairs may not be available.
 
-<a id="placement-policy-management"></a>
 ### Manage Placement Policies
 
 You can create and delete placement policies and view a list of instances assigned to placement policies.
@@ -313,10 +281,8 @@ Only the `anti-affinity` placement policy type for distributed placement is prov
 
 You can delete a placement policy even if instances are assigned to it, in which case the instances are not deleted.
 
-<a id="keypair"></a>
 ## Key Pairs
 
-<a id="keypair-import-windows"></a>
 ### Import Key Pairs (Windows)
 
 You can use puttygen, which is installed when you install the PuTTY SSH client, to create a key pair and register it with NHN Cloud.
@@ -342,9 +308,6 @@ The registered key pair can be used to create instances, and the key pair's priv
 
 Just as with key pairs created from NHN Cloud, imported key pairs also need to be managed cautiously since exposed private keys can be abused by anyone to access instances.
 
-
-
-<a id="keypair-import-mac-linux"></a>
 ### Import Key Pairs (Mac and Linux)
 
 Key pairs created using `ssh-keygen` in Mac or Linux can be registered with NHN Cloud. Use the following command to create a key pair.
@@ -362,7 +325,6 @@ The registered key pair can be used to create instances, and the key pair's priv
 
 Just as with key pairs created from NHN Cloud, imported key pairs also need to be managed cautiously since exposed private keys can be abused by anyone to access instances.
 
-<a id="appendix-1-windows-language-pack"></a>
 ## Appendix 1. Change Language Packs in Windows
 
 NHN Cloud provides Windows images with English as the primary language. You may change your language preferences with the following steps.
@@ -397,14 +359,11 @@ NHN Cloud provides Windows images with English as the primary language. You may 
 10. Log in again, and you can see Windows is displayed using the language pack of your choice.
 ![Image1](http://static.toastoven.net/prod_instance/windows10.png)
 
-<a id="appendix-2-windows-routing"></a>
 ## Appendix 2. Change Routing in Windows
 
 Routing in NHN Cloud Windows instances can be changed as follows.
 
-
 * Press **Windows Key + R** to open an execution window, and enter `cmd` and execute to open a command prompt window. You can enter route commands here.
-
 
 Route commands
 
@@ -414,10 +373,8 @@ Route commands
 * Delete : route delete "Destination" mask "Destination subnet" "gateway" metric "Metric value" if "Interface number"
 * Option : -p (specify as persistent route)
 
-
   
 Description
-
 
 ![Image1](http://static.toastoven.net/prod_instance/windows_route1.png)
 
@@ -451,7 +408,6 @@ Example 2 - Setting routes for a particular address range
 
 ![Image 1](http://static.toastoven.net/prod_instance/windows_route6.png)
 
-
 Example 3 - Removing a particular route
 
 * Use the route delete command to remove specified routes.
@@ -460,8 +416,6 @@ Example 3 - Removing a particular route
 
 ![Image 1](http://static.toastoven.net/prod_instance/windows_route7.png)
 
-
-<a id="appendix-3-system-locale"></a>
 ## Appendix 3. Change System Locale
 
 System locale in NHN Cloud Windows instances can be changed as follows.
@@ -481,8 +435,6 @@ System locale in NHN Cloud Windows instances can be changed as follows.
 5. Restart the system to apply the changes.
 ![Image 1](http://static.toastoven.net/prod_instance/win_locale5.png)
 
-
-<a id="restarting-guide-for-maintenance"></a>
 ## Appendix 4. Restarting Instances for Hypervisor Maintenance
 NHN Cloud updates hypervisor software on a regular basis to enhance the security and stability of infrastructure services that we provide.
 Instances running on a hypervisor that requires maintenance must be restarted and migrated to a hypervisor which has completed maintenance.
@@ -515,7 +467,6 @@ If there is no way to do so without impacting your service, please contact NHN C
 **5. Wait until the instance status turns green and the [! Restart] button disappers.**
 
 If the status does not change or the **! Restart** button is not disabled, try refreshing the page.
-
 
 You cannot operate or modify the instance while a restart is underway.
 If an instance restart does not complete successfully, the administrator will automatically be notified and you'll also be contacted by NHN Cloud.
