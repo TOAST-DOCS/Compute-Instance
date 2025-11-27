@@ -1,9 +1,12 @@
+<a id="compute-instance-installation-component-guide"></a>
 ## Compute > Instance > インストールコンポーネントガイド
 
+<a id="nat-instance"></a>
 ## NAT Instance
 NATインスタンスは、プライベートネットワークインスタンスから特定IPアドレス帯域にインターネットアクセスできるようにするインスタンスです。
 韓国(パンギョ)、韓国(ピョンチョン)リージョンでのみ提供する機能です。
 
+<a id="key-features"></a>
 ### 主な機能
 * インターネットゲートウェイが接続されていないプライベートネットワークのインスタンスがNATインスタンスを介してインターネットにアクセスできます。
 * NATインスタンスのFloating IPをソースIPに変更してインターネットにアクセスします。
@@ -29,12 +32,15 @@ NATインスタンスは、プライベートネットワークインスタン�
 > |ネットワークACL| 設定可 | 設定可|
 > |SSH|使用不可| 使用可|
 
+<a id="sourcetarget-check-setting"></a>
 ### ソース/対象確認設定
 NATインスタンスが正常に動作するには、ネットワークインターフェイス設定でネットワークソース/対象確認を無効化する必要があります。
 
+<a id="routing-setting"></a>
 ### ルート設定
 NATインスタンスをルートゲートウェイに指定します。 NATインスタンスまで転送されたパケットは、NATインスタンスのサブネットに接続されたルーティングテーブルのルート設定に基づいてパケットを転送します。
 
+<a id="caution-on-settings"></a>
 ### 設定注意事項
 * NATインスタンスは、1つのネットワークインタフェースのみ使用することを推奨します。 NATインスタンスに複数のネットワークインタフェースを接続しても、1つのインタフェース(eth0)だけがNAT機能を持つことができます。
 * NATインスタンスのサブネットに接続されたルーティングテーブルには、該当NATインスタンスをゲートウェイにするルート設定を追加してはいけません。
@@ -51,6 +57,7 @@ NATインスタンスをルートゲートウェイに指定します。 NATイ�
 >     * 上の設定の他には、ルーティングテーブル1のルーティング設定にNATインスタンスをゲートウェイとして指定してはいけません。
 
 
+<a id="ms-sql-instance"></a>
 ## MS-SQL Instance
 インスタンス作成完了後、RDP(リモートデスクトップププロトコル)を通じてインスタンスにアクセスします。
 インスタンスにFloating IPが接続されている必要があり、セキュリティーグループでTCPポート3389(RDP)が許可されている必要があります。
@@ -60,6 +67,7 @@ NATインスタンスをルートゲートウェイに指定します。 NATイ�
 
 **接続** ボタンをクリックし、.rdpファイルをダウンロードした後に、獲得したパスワードを使用してインスタンスに接続します。
 
+<a id="allow-security-group-tcp-port-3389-rdp"></a>
 ### MS-SQLイメージ作成後の初期設定
 
 #### 1. SQL認証モード設定
@@ -101,6 +109,7 @@ SQL Server構成管理者を実行します。
 外部からMS-SQLデータベースに接続するために、 **Network > Security Group** でMS-SQLサービスポートをSecurity Groupsに追加する必要があります。
 Security Groupsに追加する時、接続を許可するMS-SQLサービスポート(基本ポート：1433)および遠隔IPを登録します。
 
+<a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### データボリューム割り当て
 
 MS-SQLのデータ/ログファイル(MDF/LDF)、バックアップファイルは別途のBlock Storageの使用を推奨します。
@@ -187,6 +196,7 @@ shell> mysql -uroot
 
 ### MySQLインスタンス作成後の初期設定
 
+<a id="1-set-sql-certification-mode"></a>
 #### 1\.パスワード設定
 
 初期インストール後、MySQL ROOTアカウントパスワードは指定されていません。したがってインストール後、すぐにパスワードを設定する必要があります。
@@ -200,6 +210,7 @@ MySQL基本validate\_password\_policyは下記の通りです。
 * validate\_password\_policy=MEDIUM
 * 基本**8文字以上、数字、大文字、小文字、特殊文字**を含める必要がある
 
+<a id="2-change-microsoft-sql-service-port"></a>
 #### 2\.ポート(port)変更
 
 提供されるイメージポートはMySQL基本ポートの3306です。セキュリティー上、ポートの変更を推奨します。
@@ -283,6 +294,7 @@ shell> psql
 
 ### PostgreSQLインスタンス作成後、初期設定
 
+<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 1\. ポート\(port\)変更
 
 提供されるイメージポートはPostgreSQL基本ポート5432です。セキュリティ上、ポートの変更を推奨します。
@@ -395,6 +407,7 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 ```
 
+<a id="data-volume-assignment"></a>
 ### PostgreSQLディレクトリ説明
 
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
@@ -406,6 +419,8 @@ PostgreSQLディレクトリおよびファイルの説明は下記のとおり�
 | LOG | PostgreSQL logファイルパス | /var/lib/postgresql/${version}/main/log/\*.log |
 
 ## CUBRID Instance
+
+<a id="restart-microsoft-sql"></a>
 ### CUBRIDサービスの起動/停止方法
 
 “cubrid” LinuxアカウントにログインしてCUBRIDサービスを次のように開始または終了できます。
@@ -432,6 +447,7 @@ shell> cubrid broker stop
 shell> cubrid broker restart
 ```
 
+<a id="checkset-automatic-microsoft-sql-service-execution"></a>
 ### CUBRID接続
 
 イメージ作成後、最初は以下のように接続します。
@@ -544,7 +560,10 @@ CUBRIDマネージャ設定ファイルです。運営するマネージャサ�
 | server\_long\_query\_time | サーバーの診断項目のうちslow\_query項目を設定する場合、何秒以上を遅いクエリと判別するかを決定するパラメータです。 |
 
 
+<a id="mysql-instance"></a>
 ## MariaDB Instance
+
+<a id="startingstopping-mysql"></a>
 ### MariaDB 起動/停止方法
 
 ``` sh
@@ -558,6 +577,7 @@ shell> sudo systemctl stop mariadb.service
 shell> sudo systemctl restart mariadb.service
 ```
 
+<a id="connecting-to-mysql"></a>
 ### MariaDB接続
 
 イメージ作成後、最初は以下のように接続します。
@@ -573,8 +593,10 @@ shell> mysql -u root -p
 Enter password:
 ```
 
+<a id="initial-settings-for-mysql-instance"></a>
 ### MariaDBインスタンス作成後の初期設定
 
+<a id="1-set-the-password"></a>
 #### 1\. パスワード設定
 
 初期インストール後、MariaDB rootアカウントパスワードは指定されていません。そのため、インストール後に必ずパスワードを設定する必要があります。
@@ -585,6 +607,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('パスワード');
 ```
 
+<a id="2-change-the-port"></a>
 #### 2\. ポート\(port\)の変更
 
 初期インストール後のポートはMariaDBのデフォルトポートである3306です。セキュリティ上、ポートの変更を推奨します。
@@ -610,6 +633,7 @@ sudo systemctl restart mariadb.service
 
 ## Tibero Instance
 
+<a id="description-of-mycnf"></a>
 ### Tibero Instance作成
 
 #### 最小推奨仕様
@@ -625,12 +649,13 @@ sudo systemctl restart mariadb.service
 - ルートボリューム以外の追加ボリュームを作成します。
     - TMI(Tibero Machine Image)は追加ボリューム150GBを必要とするため、**追加ブロックストレージ150G以上**を必ず設定する必要があります
 
+<a id="description-of-mysql-directory"></a>
 ### インスタンス接続
 
 - インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
 - インスタンスにFloating IPが接続されていて、セキュリティグループでTCPポート22(SSH)が許可されている必要があります。
 - SSHクライアントと設定したキーペアを利用してインスタンスに接続します。
-- SSH接続の詳細については[SSH接続ガイド](./overview/#linux)を参照してください。
+- SSH接続の詳細については[SSH接続ガイド](./overview/#how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client)を参照してください。
 
 ### TMIインストール
 
@@ -804,10 +829,12 @@ Tiberoで提供する基本アカウントは次のとおりです。
 * OUTLN：同じSQLを実行するときに常に同じプランで実行できるように関連ヒントを保存するなどのタスクを実行します。
 * TIBERO/TIBERO1：example userであり、DBA権限を持っています。
 
+<a id="postgresql-instance"></a>
 ## Kafka Instance
 > [参考]
 > インスタンスタイプはc1m2(CPU 1core、Memory 2GB)以上の仕様で作成してください。
 
+<a id="how-to-startstop-postgresql"></a>
 ### Zookeeper、Kafka broker起動/停止
 ```
 # Zookeeper、Kafka broker起動(Zookeeperを先に起動)
@@ -821,6 +848,7 @@ shell> sudo systemctl restart zookeeper.service
 shell> sudo systemctl restart kafka.service
 ```
 
+<a id="log-in-to-postgresql"></a>
 ### Kafka Clusterインストール
 - 必ず新規インスタンスにインストールします。
 - インスタンスは3台以上、奇数で必要です。インスタンス1台でインストールスクリプトを実行します。
@@ -886,7 +914,10 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ##### Cluster Installation Complete #####
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### Kafkaインスタンス作成後の初期設定
+
+<a id="1-change-the-port"></a>
 #### ポート(port)変更
 最初のインストール後、ポートはKafkaデフォルトポート9092、Zookeeperデフォルトポート2181です。セキュリティのためにポートを変更することを推奨します。
 
@@ -975,12 +1006,14 @@ shell> redis-cli
 ### Redisインスタンス作成後の初期設定
 Redisインスタンスの基本設定ファイルは`~/redis/redis.conf`です。変更が必要なパラメータの説明は次のとおりです。
 
+<a id="2-change-server-log-timezone"></a>
 #### bind
 - 基本値：`127.0.0.1 -::1`
 - 変更値：`<private ip> 127.0.0.1 -::1`
 
 Redisが使用するipの値です。サーバー外部からRedisインスタンスへのアクセスを許可するには該当パラメータにprivate ipを追加する必要があります。 private ipは`hostname -I`コマンドで確認できます。
 
+<a id="3-cancel-public-schema-permission"></a>
 #### port
 - 基本値：`6379`
 
@@ -990,11 +1023,13 @@ Redisが使用するipの値です。サーバー外部からRedisインスタ�
 shell> redis-cli -p <新しいポート>
 ```
 
+<a id="4-allow-remote-login"></a>
 #### requirepass/masterauth
 - 基本値：`nhncloud`
 
 基本パスワードは`nhncloud`です。セキュリティ上、パスワードを変更することを推奨します。複製接続を使用する場合、`requirepass`と`masterauth`値を同時に変更する必要があります。
 
+<a id="postgresql-directory-description"></a>
 ### 自動HA構成スクリプト
 NHN CloudのRedisインスタンスは自動的にHA環境を構成するスクリプトを提供します。スクリプトは必ず**インストール直後の新規インスタンス**でのみ使用することができ、redis.confで設定値を変更した場合には使用できません。
 

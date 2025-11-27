@@ -1014,6 +1014,7 @@ This API does not return a response body.
 ---
 
 ## Manage Block Storage Attachment
+
 ### List additional block storage attached to the instance
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
@@ -1303,6 +1304,7 @@ This API does not return a response body.
 
 ---
 
+<a id="terminate-instance"></a>
 ## Terminate Instance
 
 Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
@@ -1312,6 +1314,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="request"></a>
 #### Request
 | Name | Type | Format | Required | Description          |
 |---|---|---|---|-------------|
@@ -1332,6 +1335,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="response"></a>
 #### Response
 This API does not return a response body.
 
@@ -1426,7 +1430,7 @@ This API does not return a response body.
 
 ### Create Instance Image
 
-Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/ko/public-api/#_22).
+Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/ko/public-api/#create-image-with-block-storage).
 
 Images can only be created when an instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to stop instances before creating images to ensure data integrity.
 
@@ -1553,6 +1557,7 @@ X-Auth-Token: {tokenId}
 This API does not return a response body.
 
 
+<a id="instance-metadata"></a>
 ## Instance Metadata
 
 The values of the instance metadata determine the content of the instance details screen on the **Compute > Instance** service page in the console. The contents by instance metadata are as follows
@@ -1614,6 +1619,7 @@ This API does not require a request body.
 </details>
 
 
+<a id="view-instance-metadata"></a>
 ### View Instance Metadata
 
 ```
@@ -1621,6 +1627,7 @@ GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1631,6 +1638,7 @@ This API does not require a request body.
 | key      | URL | String | O | Key for metadata to create or modify on the instance |
 | tokenId  | Header | String | O | Token ID                    |
 
+<a id="response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1651,6 +1659,7 @@ This API does not require a request body.
 </p>
 </details>
 
+<a id="createmodify-instance-metadata"></a>
 ### Create/Modify Instance Metadata
 
 Create or modify metadata for the instance.
@@ -1661,6 +1670,7 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="request"></a>
 #### Request
 | Name       | Type | Format | Required | Description                                               |
 |----------|---|---|---|--------------------------------------------------|
@@ -1686,6 +1696,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1707,6 +1718,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="delete-instance-metadata"></a>
 ### Delete Instance Metadata
 
 Delete metadata for instances that match the key you're requesting.
@@ -1716,6 +1728,7 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1726,6 +1739,7 @@ This API does not require a request body.
 | key      | URL | String | O | The key to the metadata you want to delete from the instance |
 | tokenId  | Header | String | O | Token ID               |
 
+<a id="response"></a>
 #### Response
 This API does not return a response body.
 
