@@ -694,7 +694,7 @@ sudo systemctl restart mariadb.service
 - 인스턴스 생성 완료 후 SSH를 사용하여 인스턴스에 접근합니다.
 - 인스턴스에 플로팅 IP가 연결되어 있어야 하며 보안 그룹에서 TCP 포트 22(SSH)가 허용되어야 합니다.
 - SSH 클라이언트와 설정한 키페어를 이용해 인스턴스에 접속합니다.
-- SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](./overview-gov/#linux)를 참고하시기 바랍니다.
+- SSH 연결에 대한 자세한 가이드는 [SSH 연결 가이드](./overview-gov/#how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client)를 참고하시기 바랍니다.
 
 <a id="install-tmi"></a>
 ### TMI 설치

@@ -655,7 +655,7 @@ sudo systemctl restart mariadb.service
 - インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
 - インスタンスにFloating IPが接続されていて、セキュリティグループでTCPポート22(SSH)が許可されている必要があります。
 - SSHクライアントと設定したキーペアを利用してインスタンスに接続します。
-- SSH接続の詳細については[SSH接続ガイド](./overview/#linux)を参照してください。
+- SSH接続の詳細については[SSH接続ガイド](./overview/#how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client)を参照してください。
 
 ### TMIインストール
 
