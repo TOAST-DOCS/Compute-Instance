@@ -78,7 +78,6 @@ NAT 인스턴스를 라우트 게이트웨이로 지정합니다. NAT 인스턴�
 <a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### MS-SQL 이미지 생성 후 초기 설정
 
-<a id="1-set-sql-certification-mode"></a>
 #### 1. SQL 인증모드 설정
 
 서버의 기본 인증 모드가 "Windows 인증 모드"로 되어 있습니다.
@@ -95,7 +94,6 @@ Microsoft SQL Server Management Studio를 실행하여 인스턴스 이름으로
 
 ※ SQL 인증모드 설정후 적용을 위해 MS-SQL 서비스를 재시작해야 됩니다.
 
-<a id="2-change-microsoft-sql-service-port"></a>
 #### 2. MS-SQL 서비스 포트 변경
 
 MS-SQL의 기본 서비스 포트 1433은 널리 알려진 포트로 보안 취약점이 될 수 있습니다.
@@ -114,7 +112,6 @@ SQL Server 구성관리자를 실행합니다.
 
 ※ MS-SQL 서비스 포트 변경후 적용을 위해 MS-SQL 서비스를 재시작해야 됩니다.
 
-<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 3. 외부에서 MS-SQL Database 접속허용 설정
 
 외부에서 MS-SQL Database에 접속하기 위해서 **Network > VPC** 의 **Security Group**탭에서 MS-SQL 서비스 포트를 Security Rule로 추가해야 합니다.
@@ -215,7 +212,6 @@ shell> mysql -uroot
 <a id="initial-settings-for-mysql-instance"></a>
 ### MySQL 인스턴스 생성 후 초기 설정
 
-<a id="1-set-the-password"></a>
 #### 1\. 비밀번호 설정
 
 초기 설치 후 MySQL ROOT 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 바로 비밀번호를 설정해야 합니다. 비밀번호는 아래와 같이 변경할 수 있습니다.
@@ -228,7 +224,6 @@ MySQL의 기본 validate\_password\_policy는 아래와 같습니다.
 * validate\_password\_policy=MEDIUM
 * 기본 **8자 이상, 숫자, 소문자, 대문자, 특수문자**를 포함해야 함
 
-<a id="2-change-the-port"></a>
 #### 2\. 포트(port) 변경
 
 제공되는 이미지 포트는 MySQL 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
@@ -319,7 +314,6 @@ shell> psql
 <a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### PostgreSQL 인스턴스 생성 후 초기 설정
 
-<a id="1-change-the-port"></a>
 #### 1\. 포트\(port\) 변경
 
 제공되는 이미지 포트는 PostgreSQL 기본 포트인 5432입니다. 보안상 포트 변경을 권장합니다.
@@ -343,7 +337,6 @@ shell> sudo systemctl restart postgresql
 shell> psql -p[변경된 포트 번호]
 ```
 
-<a id="2-change-server-log-timezone"></a>
 #### 2\. 서버 로그 타임 존 변경
 
 서버 로그에 기록되는 기본 시간대가 UTC로 설정되어 있습니다. SYSTEM 로컬 시간과 동일하게 변경할 것을 권장합니다.
@@ -375,7 +368,6 @@ shell> psql
 postgres=# SHOW log_timezone;
 ```
 
-<a id="3-cancel-public-schema-permission"></a>
 #### 3\. public 스키마 권한 취소
 
 기본적으로 모든 사용자에게 public 스키마에 대한 CREATE 및 USAGE 권한을 부여하고 있으므로 데이터베이스에 접속할 수 있는 사용자는 public 스키마에서 객체를 생성할 수 있습니다. 모든 사용자가 public 스키마에서 객체를 생성하지 못하도록 권한 취소를 권장합니다.
@@ -391,7 +383,6 @@ shell> psql
 postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ```
 
-<a id="4-allow-remote-login"></a>
 #### 4\. 원격 접속 허용
 
 로컬 호스트 이외의 접속을 허용하려면 listen_addresses 변수와 클라이언트 인증 설정 파일을 변경해야 합니다.
@@ -485,7 +476,6 @@ shell> csql -u dba demodb@localhost
 <a id="initial-setup-after-creating-a-cubrid-instance"></a>
 ### CUBRID 인스턴스 생성 후 초기 설정
 
-<a id="1-set-the-password"></a>
 #### 1\. 비밀번호 설정
 
 초기 설치 후 CUBRID dba 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 비밀번호를 설정해야 합니다.
@@ -493,7 +483,6 @@ shell> csql -u dba demodb@localhost
 shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 ```
 
-<a id="2-change-the-broker-port"></a>
 #### 2\. 브로커 포트\(port\) 변경
 
 **query_editor**의 브로커 포트는 기본값이 **30000**으로 설정되며, **broker1**의 브로커 포트는 기본값이 **33000**으로 설정됩니다.
@@ -519,7 +508,6 @@ BROKER_PORT             =[변경할 port 주소]
 shell> cubrid broker restart
 ```
 
-<a id="3-change-the-manager-server-port"></a>
 #### 3\. 매니저 서버 포트\(port\) 변경
 
 매니저 서버 포트는 기본값이 **8001**으로 설정됩니다. 
@@ -556,7 +544,6 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 | ERROR\_LOG | CUBRID ERROR SQL Query 파일 경로 - /opt/cubrid/log/broker/error\_log |
 | SLOW\_LOG | CUBRID Slow Query 파일 경로 - /opt/cubrid/log/broker/sql\_log |
 
-<a id="cubridconf-description"></a>
 #### cubrid.conf 설명
 
 서버 설정용 파일로, 운영하려는 데이터베이스의 메모리, 동시 사용자 수에 따른 스레드 수, 브로커와 서버 사이의 통신 포트 등을 설정 가능합니다.
@@ -568,7 +555,6 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 | max\_clients | 데이터베이스 서버 프로세스 하나당 동시에 접속할 수 있는 클라이언트의 최대 개수입니다. |
 | data\_buffer\_size | 데이터베이스 서버가 메모리 내에 캐시하는 데이터 버퍼의 크기를 설정하기 위한 파라미터입니다. <br>필요한 메모리 크기가 시스템 메모리의 2/3 이내가 되도록 설정할 것을 권장합니다. |
 
-<a id="brokerconf-description"></a>
 #### broker.conf 설명
 
 브로커 설정 파일로, 운영하려는 브로커가 사용하는 포트, 응용서버(CAS) 수, SQL LOG 등을 설정 가능합니다.
@@ -581,7 +567,6 @@ CUBRID 디렉터리 및 파일 설명은 아래와 같습니다.
 | LOG\_DIR | SQL 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
 | ERROR\_LOG\_DIR | 브로커에 대한 에러 로그가 저장되는 디렉터리를 지정하는 파라미터입니다. |
 
-<a id="cmconf-description"></a>
 #### cm.conf 설명
 
 CUBRID 매니저 설정 파일로, 운영하려는 매니저 서버 프로세스가 사용하는 포트, 모니터링 수집 주기 등을 설정 가능합니다.
@@ -629,7 +614,6 @@ Enter password:
 <a id="initial-setup-after-creating-a-mariadb-instance"></a>
 ### MariaDB 인스턴스 생성 후 초기 설정
 
-<a id="1-set-the-password"></a>
 #### 1\. 비밀번호 설정
 
 초기 설치 후 MariaDB root 계정 비밀번호는 지정되어 있지 않습니다. 그러므로 설치 후 반드시 비밀번호를 설정해야 합니다.
@@ -640,12 +624,10 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('비밀번호');
 ```
 
-<a id="2-change-the-port"></a>
 #### 2\. 포트\(port\) 변경
 
 초기 설치 후 포트는 MariaDB의 기본 포트인 3306입니다. 보안상 포트 변경을 권장합니다.
 
-<a id="1-modify-the-etcmycnfdservercnf-file"></a>
 ##### 1) `/etc/my.cnf.d/server.cnf` 파일 수정
 
 `/etc/my.cnf.d/server.cnf` 파일을 열어서 [mariadb] 밑에 아래와 같이 변경할 포트 주소를 입력합니다.
@@ -659,7 +641,6 @@ shell> sudo vi /etc/my.cnf.d/server.cnf
 port=[변경할 port 주소]
 ```
 
-<a id="2-restart-the-instance"></a>
 ##### 2) 인스턴스 재시작
 
 포트 변경이 적용되도록 인스턴스를 재시작합니다.
@@ -673,7 +654,6 @@ sudo systemctl restart mariadb.service
 <a id="create-a-tibero-instance"></a>
 ### Tibero Instance 생성
 
-<a id="minimum-recommended-specifications"></a>
 #### 최소 권장 사양
 
 - 루트 블록 스토리지 
@@ -682,7 +662,6 @@ sudo systemctl restart mariadb.service
 - 최소 권장 사양: 4vCore/8GB
     - **권장 사양 미만 사용 시 DBMS 설치가 제한될 수 있습니다.**
 
-<a id="additional-block-storage"></a>
 #### 추가 블록 스토리지
 
 - 루트 볼륨 이외의 추가 볼륨을 생성합니다.
@@ -712,7 +691,6 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 4 | DB\_TYPE | 이미지에 지정된 인스턴스 타입 ($TYPE) |
 | 5 | DB\_PORT | Tibero에서 사용하는 서비스 IP의 포트 |
 
-<a id="tibero-7-installation"></a>
 ##### Tibero 7 설치
 
 ```
@@ -722,7 +700,6 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
-<a id="complete-installation"></a>
 #### 설치 완료
 
 dbca 명령어 수행 시 진행 상황이 출력되며 nomount 모드에서 데이터베이스가 생성됩니다. 소요 시간은 10분 이하입니다. 
@@ -739,7 +716,6 @@ SQL> Disconnected.
 [root@tiberoinstance ~]#
 ```
 
-<a id="check-the-operation-and-the-installation-log"></a>
 #### 구동 확인 및 설치 로그 확인
 
 Tibero가 구동 중인지 확인합니다.
@@ -789,7 +765,6 @@ drwx------   2 root root   29 10월 17 14:04 .ssh
 <a id="connect-to-tibero"></a>
 ### Tibero 접속
 
-<a id="change-the-account"></a>
 #### 계정 변경
 
 dbca 명령어로 생성한 OS\_ACCOUNT로 로그인합니다.
@@ -811,7 +786,6 @@ dbca 명령어로 생성한 OS\_ACCOUNT로 로그인합니다.
 
 ```
 
-<a id="check-connection"></a>
 #### 접속 확인
 
 ```
@@ -968,12 +942,10 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 <a id="initial-setup-after-creating-a-kafka-instance"></a>
 ### Kafka 인스턴스 생성 후 초기 설정
 
-<a id="change-the-port"></a>
 #### 포트(port) 변경
 
 최초 설치 후 포트는 Kafka 기본 포트인 9092, Zookeeper 기본 포트인 2181입니다. 보안을 위해 포트를 변경할 것을 권장합니다.
 
-<a id="1-modify-the-kafkaconfigzookeeperproperties-file"></a>
 ##### 1) ~/kafka/config/zookeeper.properties 파일 수정
 
 ~/kafka/config/zookeeper.properties 파일을 열어서 clientPort에 변경할 Zookeeper port를 입력합니다.
@@ -983,7 +955,6 @@ shell> vi ~/kafka/config/zookeeper.properties
 clientPort=변경할 zookeeper port
 ```
 
-<a id="2-modify-the-kafkaconfigserverproperties-file"></a>
 ##### 2) ~/kafka/config/server.properties 파일 수정
 
 ~/kafka/config/server.properties 파일을 열어서 listeners에 변경할 Kafka port를 입력합니다.
@@ -1004,7 +975,6 @@ zookeeper.connect=인스턴스 IP:변경할 zookeeper port
 ---> 클러스터인 경우, 각 인스턴스 IP의 Zookeeper port 변경
 ```
 
-<a id="3-restart-zookeeper-kafka-broker"></a>
 ##### 3) Zookeeper, Kafka broker 재시작
 
 ```
@@ -1015,7 +985,6 @@ shell> sudo systemctl start zookeeper.service
 shell> sudo systemctl start kafka.service
 ```
 
-<a id="4-check-zookeeper-kafka-port-change"></a>
 ##### 4) Zookeeper, Kafka port 변경 확인
 
 변경된 포트가 사용되고 있는지 확인합니다.
@@ -1081,7 +1050,6 @@ shell> redis-cli
 
 Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. 변경해야 할 파라미터에 대한 설명은 아래와 같습니다.
 
-<a id="bind"></a>
 #### bind
 
 - 기본 값: `127.0.0.1 -::1`
@@ -1089,7 +1057,6 @@ Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. �
 
 Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스턴스로의 접근을 허용하려면 해당 파라미터에 private ip를 추가해야 합니다. private ip는 `hostname -I` 커맨드로 확인할 수 있습니다.
 
-<a id="port"></a>
 #### port
 
 - 기본 값: `6379`
@@ -1100,7 +1067,6 @@ Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스�
 shell> redis-cli -p <새로운 포트>
 ```
 
-<a id="requirepassmasterauth"></a>
 #### requirepass/masterauth
 
 - 기본 값: `nhncloud`
@@ -1114,7 +1080,6 @@ NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 �
 
 스크립트를 사용하기 위해서는 다음 설정이 필수적으로 필요합니다.
 
-<a id="copy-key-pair"></a>
 ##### 키 페어 복사
 
 설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키 페어(PEM 파일)가 있어야 합니다. 키 페어는 다음과 같이 복사할 수 있습니다.
@@ -1126,7 +1091,6 @@ local> scp -i <키 페어>.pem <키 페어>.pem ubuntu@<floating ip>:/home/ubunt
 
 생성한 인스턴스들의 키 페어는 모두 동일해야 합니다.
 
-<a id="set-security-group"></a>
 ##### 보안 그룹 설정
 
 Redis 인스턴스간의 통신을 위해 보안 그룹(**Network** > **Security Groups**) 설정이 필요합니다. 아래 규칙으로 보안 그룹을 생성한 뒤 Redis 인스턴스에 적용하세요.
@@ -1137,7 +1101,6 @@ Redis 인스턴스간의 통신을 위해 보안 그룹(**Network** > **Security
 | 수신|TCP | 16379| IPv4| 인스턴스 IP(CIDR)|
 | 수신|TCP | 26379| IPv4| 인스턴스 IP(CIDR)|
 
-<a id="sentinel-automatic-configuration"></a>
 #### Sentinel 자동구성
 
 Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
@@ -1161,7 +1124,6 @@ Enter Replica-2's IP: 192.168.0.97
 shell> Enter Pemkey's name: <키 페어>.pem
 ```
 
-<a id="cluster-automatic-configuration"></a>
 #### Cluster 자동 구성
 
 Cluster 구성을 위해 6개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
