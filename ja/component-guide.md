@@ -196,7 +196,6 @@ shell> mysql -uroot
 
 ### MySQLインスタンス作成後の初期設定
 
-<a id="1-set-sql-certification-mode"></a>
 #### 1\.パスワード設定
 
 初期インストール後、MySQL ROOTアカウントパスワードは指定されていません。したがってインストール後、すぐにパスワードを設定する必要があります。
@@ -210,7 +209,6 @@ MySQL基本validate\_password\_policyは下記の通りです。
 * validate\_password\_policy=MEDIUM
 * 基本**8文字以上、数字、大文字、小文字、特殊文字**を含める必要がある
 
-<a id="2-change-microsoft-sql-service-port"></a>
 #### 2\.ポート(port)変更
 
 提供されるイメージポートはMySQL基本ポートの3306です。セキュリティー上、ポートの変更を推奨します。
@@ -294,7 +292,6 @@ shell> psql
 
 ### PostgreSQLインスタンス作成後、初期設定
 
-<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 1\. ポート\(port\)変更
 
 提供されるイメージポートはPostgreSQL基本ポート5432です。セキュリティ上、ポートの変更を推奨します。
@@ -596,7 +593,6 @@ Enter password:
 <a id="initial-settings-for-mysql-instance"></a>
 ### MariaDBインスタンス作成後の初期設定
 
-<a id="1-set-the-password"></a>
 #### 1\. パスワード設定
 
 初期インストール後、MariaDB rootアカウントパスワードは指定されていません。そのため、インストール後に必ずパスワードを設定する必要があります。
@@ -607,7 +603,6 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('パスワード');
 ```
 
-<a id="2-change-the-port"></a>
 #### 2\. ポート\(port\)の変更
 
 初期インストール後のポートはMariaDBのデフォルトポートである3306です。セキュリティ上、ポートの変更を推奨します。
@@ -917,7 +912,6 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 <a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### Kafkaインスタンス作成後の初期設定
 
-<a id="1-change-the-port"></a>
 #### ポート(port)変更
 最初のインストール後、ポートはKafkaデフォルトポート9092、Zookeeperデフォルトポート2181です。セキュリティのためにポートを変更することを推奨します。
 
@@ -1006,14 +1000,12 @@ shell> redis-cli
 ### Redisインスタンス作成後の初期設定
 Redisインスタンスの基本設定ファイルは`~/redis/redis.conf`です。変更が必要なパラメータの説明は次のとおりです。
 
-<a id="2-change-server-log-timezone"></a>
 #### bind
 - 基本値：`127.0.0.1 -::1`
 - 変更値：`<private ip> 127.0.0.1 -::1`
 
 Redisが使用するipの値です。サーバー外部からRedisインスタンスへのアクセスを許可するには該当パラメータにprivate ipを追加する必要があります。 private ipは`hostname -I`コマンドで確認できます。
 
-<a id="3-cancel-public-schema-permission"></a>
 #### port
 - 基本値：`6379`
 
@@ -1023,7 +1015,6 @@ Redisが使用するipの値です。サーバー外部からRedisインスタ�
 shell> redis-cli -p <新しいポート>
 ```
 
-<a id="4-allow-remote-login"></a>
 #### requirepass/masterauth
 - 基本値：`nhncloud`
 

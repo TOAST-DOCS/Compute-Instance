@@ -35,7 +35,6 @@ Set up root block storage according to the **OS settings**.
 - If you select **Create New and Set up**, create the root block store by specifying the **block storage type** and **block storage size**.
 - If you select **Use Existing Resource**, specify the **original resource** to use as root block storage.
 
-<a id="original-resource"></a>
 #### Original Resource
 
 You can select either a previously created **block storage** or **snapshot**.
@@ -43,7 +42,6 @@ You can select either a previously created **block storage** or **snapshot**.
 - When you select **block storage**, use the previously created block storage as the root block storage.
 - When you select **snapshot**, the root block storage is created using a previously created snapshot.
 
-<a id="block-storage-size"></a>
 #### Block Storage Size
 
 Specify the root block storage size of an instance.
@@ -62,7 +60,6 @@ The root block storage size varies depending on instance flavor.
 > If you select **block storage** for **Use Existing Resource** in the **OS settings**, you can't change the block storage size.
 > If you select **snapshot** for **Use Existing Resource** in the **OS settings**, block storage size must be set equal to or larger than the original block storage size.
 
-<a id="block-storage-type"></a>
 #### Block Storage Type
 
 Determines the default block storage type of an instance.
@@ -163,7 +160,6 @@ You can specify a script to be executed after instance creation. The user script
 > [Caution]
 > User scripts are executed with root (Linux)/Administrator (Windows) privileges.
 
-<a id="linux"></a>
 #### Linux
 The first line of a user script must begin with `#!`.
 ```
@@ -173,7 +169,6 @@ The first line of a user script must begin with `#!`.
 
 For a user script to run successfully, log files in the instance must be checked. You can check output logs printed by standard output/error from the script in `/var/log/cloud-init-output.log`.
 
-<a id="windows"></a>
 #### Windows
 
 Windows images support both Batch and PowerShell formats for user scripts. The format is determined by an indicator specified in the first line.

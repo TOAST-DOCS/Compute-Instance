@@ -1314,7 +1314,6 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="request"></a>
 #### Request
 | Name | Type | Format | Required | Description          |
 |---|---|---|---|-------------|
@@ -1335,7 +1334,6 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="response"></a>
 #### Response
 This API does not return a response body.
 
@@ -1627,7 +1625,6 @@ GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1638,7 +1635,6 @@ This API does not require a request body.
 | key      | URL | String | O | Key for metadata to create or modify on the instance |
 | tokenId  | Header | String | O | Token ID                    |
 
-<a id="response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1670,7 +1666,6 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="request"></a>
 #### Request
 | Name       | Type | Format | Required | Description                                               |
 |----------|---|---|---|--------------------------------------------------|
@@ -1696,7 +1691,6 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1728,7 +1722,6 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1739,7 +1732,6 @@ This API does not require a request body.
 | key      | URL | String | O | The key to the metadata you want to delete from the instance |
 | tokenId  | Header | String | O | Token ID               |
 
-<a id="response"></a>
 #### Response
 This API does not return a response body.
 

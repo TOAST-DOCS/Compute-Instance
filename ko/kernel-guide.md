@@ -58,7 +58,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 <a id="install-the-kernel"></a>
 ### 커널 설치
 
-<a id="install-the-kernel-by-specifying-a-version"></a>
 #### 버전 지정하여 커널 설치
 
 > [참고]
@@ -94,7 +93,6 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
-<a id="install-the-kernel-without-specifying-a-version"></a>
 #### 버전 지정하지 않고 커널 설치
 버전을 지정하지 않으면 major 버전의 최신 버전 기준으로 패키지를 검색합니다.
 
@@ -128,7 +126,6 @@ kernelshark.x86_64
 ```
 
 
-<a id="install-the-latest-kernel"></a>
 #### 최신 커널 설치
 별도의 버전을 지정하지 않으면 최신 버전으로 설치합니다. 
 
@@ -166,7 +163,6 @@ Complete!
 ```
 
 
-<a id="check-package-installation"></a>
 #### 패키지 설치 확인
 
 커널 패키지가 정상적으로 설치되었는지 확인합니다.
@@ -197,7 +193,6 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 [root@rocky810 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
-<a id="check-for-kernel-updates"></a>
 #### 커널 업데이트 확인
 
 커널 버전이 정상적으로 업데이트되었는지 확인합니다.
@@ -212,10 +207,8 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.
 
-<a id="rocky-versions-below-810"></a>
 #### Rocky 8.10 미만 버전
 
-<a id="check-the-default-kernel"></a>
 ##### 기본 커널 확인
 
 현재 기본 설정된 커널을 확인합니다.
@@ -225,7 +218,6 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 /boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64
 ```
 
-<a id="list-of-currently-installed-kernels"></a>
 ##### 현재 설치된 커널 목록
 
 현재 설치된 커널 목록을 확인합니다.
@@ -237,7 +229,6 @@ kernel="/boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64"
 kernel="/boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64"
 ```
 
-<a id="change-the-default-kernel"></a>
 ##### 기본 커널 변경
 
 현재 설치된 커널 목록 중 하나를 선택하여 기본 커널을 변경합니다.
@@ -249,7 +240,6 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 /boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64
 ```
 
-<a id="restart-the-os"></a>
 ##### OS 재시작
 
 부팅 순서 변경 적용을 위해 OS를 재시작합니다.
@@ -258,7 +248,6 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 [root@rocky810 ~]# sync; reboot
 ```
 
-<a id="rocky-810-and-later-versions"></a>
 #### Rocky 8.10 이상 버전
 
 현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안 되는 문제가 있어 아래 쉘 스크립트를 사용합니다.
@@ -289,7 +278,6 @@ if [[ "$result" -eq "1" ]]; then
 fi
 ```
 
-<a id="how-to-use-scripts"></a>
 ##### 스크립트 사용 방법
 
 쉘 스크립트 실행 후 출력되는 커널 목록 중 부팅할 커널의 번호를 입력합니다.
@@ -308,7 +296,6 @@ Generating grub configuration file ...
 done
 ```
 
-<a id="restart-the-os"></a>
 ##### OS 재시작
 
 부팅 순서 변경 적용을 위해 OS를 재시작합니다.
@@ -383,7 +370,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 <a id="install-the-kernel"></a>
 ### 커널 설치
 
-<a id="install-the-kernel-by-specifying-a-version"></a>
 #### 버전 지정하여 커널 설치
 
 > [참고]
@@ -435,7 +421,6 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
-<a id="install-the-kernel-without-specifying-a-version"></a>
 #### 버전 지정하지 않고 커널 설치
 버전을 지정하지 않으면 major 버전의 최신 버전 기준으로 패키지를 검색합니다.
 
@@ -484,7 +469,6 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
-<a id="install-the-latest-kernel"></a>
 #### 최신 커널 설치
 별도의 버전을 지정하지 않으면 최신 버전으로 설치합니다. 
 
@@ -548,7 +532,6 @@ Complete!
 
 
 
-<a id="check-package-installation"></a>
 #### 패키지 설치 확인
 
 커널 패키지가 정상적으로 설치되었는지 확인합니다.
@@ -580,7 +563,6 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 [root@rocky95 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
-<a id="check-for-kernel-updates"></a>
 #### 커널 업데이트 확인
 
 커널 버전이 정상적으로 업데이트되었는지 확인합니다.
@@ -596,7 +578,6 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.
 
-<a id="check-the-default-kernel"></a>
 ##### 기본 커널 확인
 
 현재 기본 설정된 커널을 확인합니다.
@@ -606,7 +587,6 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 /boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64
 ```
 
-<a id="list-of-currently-installed-kernels"></a>
 ##### 현재 설치된 커널 목록
 
 현재 설치된 커널 목록을 확인합니다.
@@ -617,7 +597,6 @@ kernel="/boot/vmlinuz-5.14.0-503.14.1.el9_5.x86_64"
 kernel="/boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64"
 ```
 
-<a id="change-the-default-kernel"></a>
 ##### 기본 커널 변경
 
 현재 설치된 커널 목록 중 하나를 선택하여 기본 커널을 변경합니다.
@@ -630,7 +609,6 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 [root@rocky95 ~]# sync; reboot
 ```
 
-<a id="restart-the-os"></a>
 ##### OS 재시작
 
 부팅 순서 변경 적용을 위해 OS를 재시작합니다.

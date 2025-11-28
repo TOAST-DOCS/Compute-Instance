@@ -193,7 +193,6 @@ shell> mysql -uroot
 
 ### Initial Settings for MySQL Instance
 
-<a id="1-set-sql-certification-mode"></a>
 #### 1\. Setting Password
 
 There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible.  
@@ -207,7 +206,6 @@ Default MySQL validate_password_policy is as below:
 * validate\_password\_policy=MEDIUM
 * Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
-<a id="2-change-microsoft-sql-service-port"></a>
 #### 2\. Changing Port Number
 
 The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
@@ -285,7 +283,6 @@ shell> psql
 
 ### Create PostgreSQL instance and perform initial setup
 
-<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 1\. Change port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
@@ -575,7 +572,6 @@ Enter password:
 <a id="initial-settings-for-mysql-instance"></a>
 ### Initial Setup After Creating a MariaDB Instance
 
-<a id="1-set-the-password"></a>
 #### 1\. Set the Password
 
 After initial installation, the MariaDB root account password is not set. Therefore, you must set a password after installation.
@@ -586,7 +582,6 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('password');
 ```
 
-<a id="2-change-the-port"></a>
 #### 2\. Change the Port
 
 After initial installation, the port is 3306, which is MariaDB's default port. For security reasons, it is recommended to change the port.
@@ -876,7 +871,6 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 <a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### Initial Setup After Creating Kafka Instance
 
-<a id="1-change-the-port"></a>
 #### Change the Port
 After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
 
@@ -971,14 +965,12 @@ shell> redis-cli
 ### Initial Setup After Creating a Redis Instance
 The default configuration file for a Redis instance is the `~/redis/redis.conf` file. The description for the parameters to be changed is as follows.
 
-<a id="2-change-server-log-timezone"></a>
 #### Bind
 - Default value: `127.0.0.1 -::1`
 - Changed value: `<private ip> 127.0.0.1 -::1`
 
 Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
 
-<a id="3-cancel-public-schema-permission"></a>
 #### Port
 - Default value: `6379`
 
@@ -988,7 +980,6 @@ Port is 6379, a default value for Redis. It is recommended to change the port fo
 shell> redis-cli -p <new port>
 ```
 
-<a id="4-allow-remote-login"></a>
 #### Requirepass/masterauth
 - Default value: `nhncloud`
 

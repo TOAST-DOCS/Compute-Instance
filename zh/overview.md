@@ -95,7 +95,6 @@ For more details on pricing, see [](https://www.toast.com/kr/service/compute/ins
 
 You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.
 
-<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### How to Access Linux Instances from Mac or Linux Using an SSH Client
 
 Generally, Mac and Linux have SSH clients installed by default. Use a key pair's private key to access an instance from an SSH client as shown below.
@@ -112,7 +111,6 @@ Rocky instances
 
 	$ ssh -i my_private_key.pem rocky@<instance IP>
 
-<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### How to Access Linux Instances from Windows Using PuTTY SSH Client
 
 PuTTY SSH client is a widely used SSH client program for Windows. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) before proceeding to the next steps.
@@ -123,7 +121,6 @@ Follow these three steps in order to access Linux instances from Windows using t
 * Register your PuTTY-compatible private key with PuTTY
 * Access instances with PuTTY
 
-<a id="1-convert-your-key-pairs-private-key-to-a-putty-compatible-private-key"></a>
 ##### 1. Convert Your Key Pair’s Private Key to a PuTTY-Compatible Private Key
 
 In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed along with PuTTY.
@@ -139,7 +136,6 @@ Under **Actions**, click **Save private key** next to **Save the generated key**
 > [Caution]
 If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
 
-<a id="2-register-your-putty-compatible-private-key-with-putty"></a>
 ##### 2. Register Your PuTTY-Compatible Private Key With Putty
 
 Your PuTTY-compatible private key generated in the previous step can be registered by the following two methods.
@@ -167,7 +163,6 @@ To confirm that your private key has been added, select **View Keys**. If succes
 
 Once you run pageant, it remains running in the Windows tray, so there is no need for you to rerun it every time you access an instance. However, you must run pageant again when you restart Windows.
 
-<a id="3-access-instances-with-putty"></a>
 ##### 3. Access Instances With PuTTY
 
 Now that the PuTTY-compatible private key has been successfully registered, run PuTTY.
