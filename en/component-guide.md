@@ -173,7 +173,7 @@ When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
 > [Note]
-> For the release status of Microsoft SQL Instance, see [Instance Release Note](/Compute/Compute/ko/release-notes/).
+> For the release status of Microsoft SQL Instance, see [Instance Release Note](/Compute/Compute/en/release-notes/).
 
 <a id="mysql-instance"></a>
 ## MySQL Instance
@@ -646,7 +646,7 @@ sudo systemctl restart mariadb.service
 - After the instance creation is complete, use SSH to access the instance.
 - The instance must have a floating IP associated and TCP port 22 (SSH) must be allowed in the security group.
 - Connect to the instance using an SSH client and the set key pair.
-- For a detailed guide on SSH connection, refer to [SSH Connection Guide](./overview/#how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client).
+- For a detailed guide on SSH connection, refer to [SSH Connection Guide](./overview/#how-to-access-linux-instances).
 
 <a id="install-tmi"></a>
 ### Install TMI

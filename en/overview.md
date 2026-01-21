@@ -85,7 +85,7 @@ Instances are charged using the following criteria.
 * When an instance is stopped, a 90% discount based on the website rate is applied for 90 days. If your suspension exceeds 90 days, you will revert to normal rates while maintaining your suspension.
 * Terminated instances are not billed.
 
-For more details on pricing, see [](https://www.toast.com/kr/service/compute/instance#price)Pricing[](https://www.toast.com/kr/service/compute/instance#price).
+For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
 
 <a id="how-to-access-instances"></a>
 ## How to Access Instances
