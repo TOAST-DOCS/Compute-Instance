@@ -171,7 +171,7 @@ SQL Server構成管理者のSQL Server構成管理者(ローカル) > SQL Server
 2. **サービス**タブで **General > 起動モード**を **自動**に変更します。
 
 > [参考]
-> MS-SQL Instanceのリリース状況は、[インスタンスリリースノート](/Compute/Compute/ko/release-notes/)を参照してください。
+> MS-SQL Instanceのリリース状況は、[インスタンスリリースノート](/Compute/Compute/ja/release-notes/)を参照してください。
 
 
 <a id="mysql-instance"></a>
@@ -655,7 +655,7 @@ sudo systemctl restart mariadb.service
 - インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
 - インスタンスにFloating IPが接続されていて、セキュリティグループでTCPポート22(SSH)が許可されている必要があります。
 - SSHクライアントと設定したキーペアを利用してインスタンスに接続します。
-- SSH接続の詳細については[SSH接続ガイド](./overview/#how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client)を参照してください。
+- SSH接続の詳細については[SSH接続ガイド](./overview/#how-to-access-linux-instances)を参照してください。
 
 ### TMIインストール
 
