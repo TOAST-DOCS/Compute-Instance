@@ -95,7 +95,6 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 
 Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 NHN Cloud 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
-<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### Mac 또는 Linux의 SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
 
 Mac이나 Linux에는 보통 SSH 클라이언트가 기본적으로 설치되어 있습니다. SSH 클라이언트에서 아래와 같이 키페어의 개인 키를 이용하여 접속합니다.
@@ -112,7 +111,6 @@ Rocky 인스턴스
 
 	$ ssh -i my_private_key.pem rocky@<인스턴스의 IP>
 
-<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### Windows에서 PuTTY SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
 
 PuTTY SSH 클라이언트는 Windows에서 많이 사용되는 SSH 클라이언트 프로그램입니다. [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 또는 한글 패치가 적용된 [iPuTTY](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)를 설치합니다.
@@ -123,7 +121,6 @@ Windows에서 PuTTY SSH 클라이언트로 Linux 인스턴스에 접속하려면
 * PuTTY용 개인 키를 PuTTY에 등록
 * PuTTY로 인스턴스에 접속
 
-<a id="1-convert-your-key-pairs-private-key-to-a-putty-compatible-private-key"></a>
 ##### 1. 키페어의 개인 키를 PuTTY용 개인 키로 변경
 
 PuTTY에서는 키페어 개인 키를 PuTTY의 개인 키 형식으로 바꿔서 사용해야 합니다. 키 변환은 PuTTY와 함께 설치되는 puttygen을 이용합니다.
@@ -139,7 +136,6 @@ PuTTY에서는 키페어 개인 키를 PuTTY의 개인 키 형식으로 바꿔�
 > [주의]
 인스턴스에 자동으로 로그인하도록 설정하려면 암호어구를 사용하지 않아야 합니다. 암호어구를 사용하면 로그인할 때 개인 키에 대한 비밀번호를 직접 입력해야 합니다.
 
-<a id="2-register-your-putty-compatible-private-key-with-putty"></a>
 ##### 2. PuTTY용 개인 키를 PuTTY에 등록
 
 이렇게 만들어진 PuTTY용 개인 키는 2가지 방법으로 등록하여 사용할 수 있습니다.
@@ -170,7 +166,6 @@ PuTTY와 함께 설치되는 pageant를 실행하면, 아래 그림과 같이 Wi
 
 pageant는 한 번 실행되면, Windows 트레이에 계속 남아서 실행되므로 인스턴스에 접속할 때마다 다시 실행할 필요가 없습니다. 다만 Windows를 새로 시작한 경우에는 다시 실행해야 합니다.
 
-<a id="3-access-instances-with-putty"></a>
 ##### 3. PuTTY로 인스턴스에 접속
 
 PuTTY용으로 변환된 개인 키가 잘 등록되었다면 PuTTY를 실행합니다.

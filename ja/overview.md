@@ -97,7 +97,6 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 
 Linuxインスタンスに接続する時はSSHクライアントを利用します。インスタンスのセキュリティグループにSSHアクセスポート(デフォルト値22)が開いていない場合は接続できません。SSHアクセスを許可する方法は[VPC概要](/Network/VPC/ja/overview/)を参照してください。インスタンスにFloating IPが割り当てられていない場合は、NHN Cloud外部からアクセスできません。Floating IPを割り当てる方法については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
-<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### MacまたはLinuxのSSHクライアントでLinuxインスタンスに接続する方法
 
 MacやLinuxには通常、SSHクライアントがデフォルトでインストールされています。SSHクライアントで下記のようにキーペアの秘密鍵を利用して接続します。
@@ -114,7 +113,6 @@ Rockyインスタンス
 
 	$ ssh -i my_private_key.pem rocky@<インスタンスのIP>
 
-<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### WindowsでPuTTY SSHクライアントでLinuxインスタンスに接続する方法
 
 PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
@@ -126,7 +124,6 @@ WindowsのPuTTY SSH クライアントでLinuxインスタンスに接続する�
 * PuTTYでインスタンスに接続
 
 
-<a id="1-convert-your-key-pairs-private-key-to-a-putty-compatible-private-key"></a>
 ##### 1. キーペアの秘密鍵をPuTTY用秘密鍵に変更
 
 PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使用する必要があります。キー変換はPuTTYと一緒にインストールされているPuTTygenを利用します。
@@ -142,7 +139,6 @@ PuTTYではキーペアの秘密鍵をPuTTYの秘密鍵形式に変更して使�
 > [注意]
 インスタンスに自動的にログインするように設定するには、パスフレーズを使用しないでください。パスフレーズを使用すると、ログインする時に秘密鍵のパスワードを直接入力する必要があります。
 
-<a id="2-register-your-putty-compatible-private-key-with-putty"></a>
 ##### 2. PuTTY用秘密鍵をPuTTYに登録
 
 こうして作ったPuTTY用秘密鍵は2つの方法で登録して使用できます。
@@ -173,7 +169,6 @@ PuTTYと一緒にインポートされているpageantを実行すると、下�
 
 Pageantは一度実行されると、Windowsトレイに残って実行されるのでインスタンスに接続する度に再実行する必要がありません。ただしWindowsを再起動した場合は再度実行する必要があります。
 
-<a id="3-access-instances-with-putty"></a>
 ##### 3. PuTTYでインスタンスに接続
 
 PuTTY用に変換された秘密鍵が登録されたらPuTTYを実行します。

@@ -58,7 +58,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 <a id="install-the-kernel"></a>
 ### カーネルインストール
 
-<a id="install-the-kernel-by-specifying-a-version"></a>
 #### バージョンを指定してカーネルをインストール
 
 > [参考]
@@ -94,7 +93,6 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
-<a id="install-the-kernel-without-specifying-a-version"></a>
 #### バージョンを指定せずにカーネルをインストール
 バージョンを指定しない場合、majorバージョンの最新バージョンを基準にパッケージを検索します。
 
@@ -128,7 +126,6 @@ kernelshark.x86_64
 ```
 
 
-<a id="install-the-latest-kernel"></a>
 #### 最新カーネルインストール
 バージョンを指定しない場合、最新バージョンでインストールします。
 
@@ -166,7 +163,6 @@ Complete!
 ```
 
 
-<a id="check-package-installation"></a>
 #### パッケージのインストール確認
 
 カーネルパッケージが正常にインストールされたか確認します。
@@ -197,7 +193,6 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 [root@rocky810 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
-<a id="check-for-kernel-updates"></a>
 #### カーネルアップデート確認
 
 カーネルバージョンが正常にアップデートされたか確認します。
@@ -212,10 +207,8 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 
 複数のカーネルがインストールされている場合、希望のカーネルで起動できるように起動順序を変更します。
 
-<a id="rocky-versions-below-810"></a>
 #### Rocky 8.10未満のバージョン
 
-<a id="check-the-default-kernel"></a>
 ##### 基本カーネルの確認
 
 現在基本設定されているカーネルを確認します。
@@ -225,7 +218,6 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 /boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64
 ```
 
-<a id="list-of-currently-installed-kernels"></a>
 ##### 現在インストールされているカーネルリスト
 
 現在インストールされているカーネルリストを確認します。
@@ -237,7 +229,6 @@ kernel="/boot/vmlinuz-4.18.0-553.16.1.el8_10.x86_64"
 kernel="/boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64"
 ```
 
-<a id="change-the-default-kernel"></a>
 ##### 基本カーネル変更
 
 現在インストールされているカーネルリストの1つを選択して基本カーネルを変更します。
@@ -249,7 +240,6 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 /boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64
 ```
 
-<a id="restart-the-os"></a>
 ##### OS再起動
 
 起動順序の変更を適用するためにOSを再起動します。
@@ -258,7 +248,6 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 [root@rocky810 ~]# sync; reboot
 ```
 
-<a id="rocky-810-and-later-versions"></a>
 #### Rocky 8.10以上バージョン
 
 現在Rocky 8.10公式イメージでgrubbyコマンドでカーネルを変更できない問題があるので、下記のシェルスクリプトを使います。
@@ -289,7 +278,6 @@ if [[ "$result" -eq "1" ]]; then
 fi
 ```
 
-<a id="how-to-use-scripts"></a>
 ##### スクリプトの使い方
 
 シェルスクリプト実行後、出力されるカーネルリストの中で起動するカーネルの番号を入力します。
@@ -308,7 +296,6 @@ Generating grub configuration file ...
 done
 ```
 
-<a id="restart-the-os"></a>
 ##### OS再起動
 
 起動順序の変更を適用するためにOSを再起動します。
@@ -383,7 +370,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 <a id="install-the-kernel"></a>
 ### カーネルインストール
 
-<a id="install-the-kernel-by-specifying-a-version"></a>
 #### バージョンを指定してカーネルをインストール
 
 > [参考]
@@ -435,7 +421,6 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
-<a id="install-the-kernel-without-specifying-a-version"></a>
 #### バージョンを指定せずにカーネルをインストール
 バージョンを指定しない場合、majorバージョンの最新バージョンを基準にパッケージを検索します。
 
@@ -484,7 +469,6 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
-<a id="install-the-latest-kernel"></a>
 #### 最新カーネルインストール
 バージョンを指定しない場合、最新バージョンでインストールします。
 
@@ -548,7 +532,6 @@ Complete!
 
 
 
-<a id="check-package-installation"></a>
 #### パッケージのインストール確認
 
 カーネルパッケージが正常にインストールされたか確認します。
@@ -580,7 +563,6 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 [root@rocky95 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
-<a id="check-for-kernel-updates"></a>
 #### カーネルアップデート確認
 
 カーネルバージョンが正常にアップデートされたか確認します。
@@ -596,7 +578,6 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 
 複数のカーネルがインストールされている場合、希望のカーネルで起動できるように起動順序を変更します。
 
-<a id="check-the-default-kernel"></a>
 ##### 基本カーネルの確認
 
 現在基本設定されているカーネルを確認します。
@@ -606,7 +587,6 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 /boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64
 ```
 
-<a id="list-of-currently-installed-kernels"></a>
 ##### 現在インストールされているカーネルリスト
 
 現在インストールされているカーネルリストを確認します。
@@ -617,7 +597,6 @@ kernel="/boot/vmlinuz-5.14.0-503.14.1.el9_5.x86_64"
 kernel="/boot/vmlinuz-5.14.0-503.22.1.el9_5.x86_64"
 ```
 
-<a id="change-the-default-kernel"></a>
 ##### 基本カーネル変更
 
 現在インストールされているカーネルリストの1つを選択して基本カーネルを変更します。
@@ -630,7 +609,6 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 [root@rocky95 ~]# sync; reboot
 ```
 
-<a id="restart-the-os"></a>
 ##### OS再起動
 
 起動順序の変更を適用するためにOSを再起動します。

@@ -72,7 +72,6 @@ Click **Associate** and download .rdp file, to access the instance by using the 
 <a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### Initial Settings after Microsoft SQL Image is Created
 
-<a id="1-set-sql-certification-mode"></a>
 #### 1. Set SQL Certification Mode
 
 The default certification mode of the server is set with "Windows Certification Mode".
@@ -89,7 +88,6 @@ Execute Microsoft SQL Server Management Studio and associate to an object under 
 
 ※ To apply the changed SQL certification mode, restart Microsoft SQL.
 
-<a id="2-change-microsoft-sql-service-port"></a>
 #### 2. Change Microsoft SQL Service Port
 
 The default port 1433 for Microsoft SQL is widely known and might serve as a security vulnerability.
@@ -108,7 +106,6 @@ Execute SQL Server configuration manager as below.
 
 ※ To apply the changed service port, restart Microsoft SQL.
 
-<a id="3-allow-external-access-to-microsoft-sql-database"></a>
 #### 3. Allow External Access to Microsoft SQL Database
 
 To allow external access to Microsoft SQL Database, go to the **Security Group** tab of **Network > VPC** and add Microsoft SQL service port for security rules.
@@ -207,7 +204,6 @@ shell> mysql -uroot
 <a id="initial-settings-for-mysql-instance"></a>
 ### Initial Settings for MySQL Instance
 
-<a id="1-set-the-password"></a>
 #### 1\. Set the Password
 
 There's no password on root user on initial installation. Therefore, it is required to set password as soon as possible. You can change the password as follows.
@@ -220,7 +216,6 @@ Default MySQL validate\_password\_policy is as below:
 * validate\_password\_policy=MEDIUM
 * Must be more than 8 characters, and include numbers, lower/upper cases, and special characters.
 
-<a id="2-change-the-port"></a>
 #### 2\. Change the Port
 
 The default MySQL port number is 3306. It is recommended to change the port number for security reasons.
@@ -303,7 +298,6 @@ shell> psql
 <a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### Create PostgreSQL instance and perform initial setup
 
-<a id="1-change-the-port"></a>
 #### 1\. Change the Port
 
 The image port provided is 5432, the default PostgreSQL port. Port change is recommended for security purposes.
@@ -327,7 +321,6 @@ shell> sudo systemctl restart postgresql
 shell> psql -p[changed port number]
 ```
 
-<a id="2-change-server-log-timezone"></a>
 #### 2\. Change server log timezone
 
 The default timezone recorded in the server log is set to UTC. It is recommended to change it to match the local time of the SYSTEM.
@@ -355,7 +348,6 @@ shell> psql
 postgres=# SHOW log_timezone;
 ```
 
-<a id="3-cancel-public-schema-permission"></a>
 #### 3\. Cancel public schema permission
 
 Since all users are provided with CREATE and USAGE permissions for public schema by default, users who can log in to the DB can create objects in public schema. It is recommended to cancel the permissions so that no users can create objects in public schema.
@@ -370,7 +362,6 @@ shell> psql
 postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ```
 
-<a id="4-allow-remote-login"></a>
 #### 4\. Allow remote login
 
 To allow logins other than local host, you need to change the listen_addresses variable and client authentication setup file.
@@ -459,7 +450,6 @@ shell> csql -u dba demodb@localhost
 <a id="initial-setup-after-creating-a-cubrid-instance"></a>
 ### Initial Setup After Creating a CUBRID Instance
 
-<a id="1-set-the-password"></a>
 #### 1\. Set the Password
 
 After initial installation, the CUBRID dba account password is not set. Therefore, you must set a password after installation.
@@ -467,7 +457,6 @@ After initial installation, the CUBRID dba account password is not set. Therefor
 shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 ```
 
-<a id="2-change-the-broker-port"></a>
 #### 2\. Change the Broker Port
 
 The broker port for **query_editor** defaults to **30000**, and the broker port for **broker1** defaults to **33000**.
@@ -493,7 +482,6 @@ Restart the broker for the port change to take effect.
 shell> cubrid broker restart
 ```
 
-<a id="3-change-the-manager-server-port"></a>
 #### 3\. Change the Manager Server Port
 
 The manager server port defaults to **8001**.
@@ -530,7 +518,6 @@ The CUBRID directory and file descriptions are as follows.
 | ERROR\_LOG | CUBRID ERROR SQL Query file path - /opt/cubrid/log/broker/error\_log |
 | SLOW\_LOG | CUBRID Slow Query file path - /opt/cubrid/log/broker/sql\_log |
 
-<a id="cubridconf-description"></a>
 #### cubrid.conf Description
 
 A server configuration file that allows you to configure the memory of the database you want to operate, the number of threads according to the number of concurrent users, and the communication port between the broker and the server.
@@ -542,7 +529,6 @@ A server configuration file that allows you to configure the memory of the datab
 | max\_clients | The maximum number of concurrently connected clients per database server process. |
 | data\_buffer\_size | A parameter to set the size of the data buffer that the database server caches in memory.<br>It is recommended to set the required memory size to a value within 2/3 of the system memory. |
 
-<a id="brokerconf-description"></a>
 #### broker.conf Description
 
 A broker configuration file that allows you to set the port used by the broker you want to operate, the number of application servers (CAS), SQL LOG, etc.
@@ -555,7 +541,6 @@ A broker configuration file that allows you to set the port used by the broker y
 | LOG\_DIR | A parameter that specifies the directory where SQL logs are stored. |
 | ERROR\_LOG\_DIR | A parameter that specifies the directory where error logs for the broker are stored. |
 
-<a id="cmconf-description"></a>
 #### cm.conf Description
 
 A CUBRID manager configuration file that allows you to set the port used by the manager server process you want to operate, the monitoring collection cycle, etc.
@@ -603,7 +588,6 @@ Enter password:
 <a id="initial-setup-after-creating-a-mariadb-instance"></a>
 ### Initial Setup After Creating a MariaDB Instance
 
-<a id="1-set-the-password"></a>
 #### 1\. Set the Password
 
 After initial installation, the MariaDB root account password is not set. Therefore, you must set a password after installation.
@@ -614,12 +598,10 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('password');
 ```
 
-<a id="2-change-the-port"></a>
 #### 2\. Change the Port
 
 After initial installation, the port is 3306, which is MariaDB's default port. For security reasons, it is recommended to change the port.
 
-<a id="1-modify-the-etcmycnfdservercnf-file"></a>
 ##### 1) Modify the `/etc/my.cnf.d/server.cnf` file
 
 Open the `/etc/my.cnf.d/server.cnf` file and enter the port address to change under [mariadb] as follows.
@@ -633,7 +615,6 @@ shell> sudo vi /etc/my.cnf.d/server.cnf
 port=[port address to change]
 ```
 
-<a id="2-restart-the-instance"></a>
 ##### 2) Restart the instance
 Restart the instance for the port change to take effect.
 ```
@@ -646,7 +627,6 @@ sudo systemctl restart mariadb.service
 <a id="create-a-tibero-instance"></a>
 ### Create a Tibero Instance
 
-<a id="minimum-recommended-specifications"></a>
 #### Minimum Recommended Specifications
 
 - Root block storage 
@@ -655,7 +635,6 @@ sudo systemctl restart mariadb.service
 - Minimum recommended specifications: 4 vCore/8 GB
     - **Using less than the recommended specifications might limit the DBMS installation.**
 
-<a id="additional-block-storage"></a>
 #### Additional Block Storage
 
 - Create additional volumes other than the root volume.
@@ -685,7 +664,6 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 | 4 | DB\_TYPE | Instance type specified for image ($TYPE) |
 | 5 | DB\_PORT | Service IP port used by Tibero |
 
-<a id="tibero-7-installation"></a>
 ##### Tibero 7 Installation
 ```
 [rocky@tiberoinstance ~]$ sudo su - root
@@ -694,7 +672,6 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
-<a id="complete-installation"></a>
 #### Complete Installation
 
 When the dbca command is run, the progress is output and the database is created in the nomount mode. It takes less than 10 minutes. 
@@ -711,7 +688,6 @@ SQL> Disconnected.
 [root@tiberoinstance ~]#
 ```
 
-<a id="check-the-operation-and-the-installation-log"></a>
 #### Check the Operation and the Installation Log
 
 Check if Tibero is running.
@@ -761,7 +737,6 @@ drwx------ 2 root root 29 Oct 17 14:04 .ssh
 <a id="connect-to-tibero"></a>
 ### Connect to Tibero
 
-<a id="change-the-account"></a>
 #### Change the Account
 
 Log in with the OS\_ACCOUNT created with the dbca command.
@@ -782,7 +757,6 @@ Log in with the OS\_ACCOUNT created with the dbca command.
 
 ```
 
-<a id="check-connection"></a>
 #### Check Connection
 
 ```
@@ -935,11 +909,9 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 <a id="initial-setup-after-creating-a-kafka-instance"></a>
 ### Initial Setup After Creating a Kafka Instance
 
-<a id="change-the-port"></a>
 #### Change the Port
 After initial installation, the ports are 9092, which is the Kafka default port, and 2181, which is the Zookeeper default port. It is recommended to change the port for security.
 
-<a id="1-modify-the-kafkaconfigzookeeperproperties-file"></a>
 ##### 1) Modify the ~/kafka/config/zookeeper.properties file
 Open the ~/kafka/config/zookeeper.properties file and enter the Zookeeper port to change in clientPort.
 ```
@@ -948,7 +920,6 @@ shell> vi ~/kafka/config/zookeeper.properties
 clientPort=zookeeper port to change
 ```
 
-<a id="2-modify-the-kafkaconfigserverproperties-file"></a>
 ##### 2) Modify the ~/kafka/config/server.properties file
 Open the ~/kafka/config/server.properties file and enter the Kafka port to change in listeners.
 
@@ -968,7 +939,6 @@ zookeeper.connect=Instance IP:zookeeper port to change
 ---> If it is a cluster, change Zookeeper port of each instance IP
 ```
 
-<a id="3-restart-zookeeper-kafka-broker"></a>
 ##### 3) Restart Zookeeper, Kafka broker
 ```
 shell> sudo systemctl stop kafka.service
@@ -978,7 +948,6 @@ shell> sudo systemctl start zookeeper.service
 shell> sudo systemctl start kafka.service
 ```
 
-<a id="4-check-zookeeper-kafka-port-change"></a>
 ##### 4) Check Zookeeper, Kafka Port Change
 Check if the changed port is in use.
 ```
@@ -1040,14 +1009,12 @@ shell> redis-cli
 ### Initial Setup After Creating a Redis Instance
 The default configuration file for a Redis instance is the `~/redis/redis.conf` file. The description for the parameters to be changed is as follows.
 
-<a id="bind"></a>
 #### Bind
 - Default value: `127.0.0.1 -::1`
 - Changed value: `<private ip> 127.0.0.1 -::1`
 
 Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
 
-<a id="port"></a>
 #### Port
 - Default value: `6379`
 
@@ -1057,7 +1024,6 @@ Port is 6379, a default value for Redis. It is recommended to change the port fo
 shell> redis-cli -p <new port>
 ```
 
-<a id="requirepassmasterauth"></a>
 #### Requirepass/masterauth
 - Default value: `nhncloud`
 
@@ -1069,7 +1035,6 @@ A Redis instance of NHN Cloud provides a script that automatically configures an
 
 To use the script, the following settings are required.
 
-<a id="copy-key-pair"></a>
 ##### Copy key pair
 The instance running the installation script must have a key pair (PEM file) required to connect to other instances. The key pair can be copied as follows.
 
@@ -1080,7 +1045,6 @@ local> scp -i <key pair>.pem <key pair>.pem ubuntu@<floating ip>:/home/ubuntu/
 
 The key pairs for created instances must be the same.
 
-<a id="set-security-group"></a>
 ##### Set security group
 You must set a security group (**Network** > **Security Groups**) for communication between Redis instances. Create a security group with the following rules and apply it to a Redis instance.
 
@@ -1090,7 +1054,6 @@ You must set a security group (**Network** > **Security Groups**) for communicat
 | Inbound|TCP | 16379| IPv4| Instance IP (CIDR)|
 | Inbound|TCP | 26379| IPv4| Instance IP (CIDR)|
 
-<a id="sentinel-automatic-configuration"></a>
 #### Sentinel Automatic Configuration
 You will need 3 Redis instances to configure Sentinel. After copying the key pair to the instance used as the master, run the script as follows.
 
@@ -1112,7 +1075,6 @@ Enter the file name of the copied key pair.
 shell> Enter Pemkey's name: <key pair>.pem
 ```
 
-<a id="cluster-automatic-configuration"></a>
 #### Cluster Automatic Configuration
 6 Redis instances are required for Cluster configuration. After copying the key pair to the instance used as the master, run the script as follows.
 
