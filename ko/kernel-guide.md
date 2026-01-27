@@ -1,10 +1,13 @@
+<a id="compute-instance-kernel-version-upgrade-guide"></a>
 ## Compute > Instance > 커널 버전업 가이드
 
 > [주의] 
 > 커널 업데이트 시 OS가 훼손되거나 부팅을 실패할 수 있으며, 이에 따른 결과에 대한 책임은 사용자에게 있습니다.
 
+<a id="rocky-linux-8"></a>
 ## Rocky Linux 8
 
+<a id="check-the-kernel-version"></a>
 ### 커널 버전 확인
 
 현재 설치된 커널 버전을 확인합니다.
@@ -14,6 +17,7 @@
 4.18.0-553.8.1.el8_10.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### 기본 저장소 설정
 
 시스템 아키텍처와 Rocky Linux 버전에 맞는 기본 저장소를 변경합니다.
@@ -42,6 +46,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 > [참고]
 > **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
+<a id="clear-the-cache-before-updating"></a>
 ### 업데이트 전 캐시 삭제
 
 기존 다운로드된 패키지의 메타데이터가 저장된 캐시를 삭제합니다.
@@ -50,6 +55,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 [root@rocky810 ~]# rm -rf /var/cache/dnf
 ```
 
+<a id="install-the-kernel"></a>
 ### 커널 설치
 
 #### 버전 지정하여 커널 설치
@@ -168,6 +174,7 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### OS 재시작
 
 커널 업데이트를 적용하기 위해 OS를 재시작합니다.
@@ -176,6 +183,7 @@ kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[선택]**</span> GRUB2 부트로더의 설정 파일 생성
 시스템의 부트 메뉴를 업데이트하여, 새로 설치된 커널이나 기타 부팅 항목을 반영합니다.
 
@@ -194,6 +202,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
+<a id="change-the-kernel-boot-order"></a>
 ### 커널 부팅 순서 변경
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.
@@ -295,8 +304,10 @@ done
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="rocky-linux-9"></a>
 ## Rocky Linux 9
 
+<a id="check-the-kernel-version"></a>
 ### 커널 버전 확인
 
 현재 설치된 커널 버전을 확인합니다.
@@ -306,6 +317,7 @@ done
 5.14.0-503.14.1.el9_5.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### 기본 저장소 설정
 
 시스템 아키텍처와 Rocky Linux 버전에 맞는 기본 저장소를 변경합니다.
@@ -345,6 +357,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > [참고]
 > **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
+<a id="clear-the-cache-before-updating"></a>
 ### 업데이트 전 캐시 삭제
 
 기존 다운로드된 패키지의 메타데이터가 저장된 캐시를 삭제합니다.
@@ -353,6 +366,8 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 ```
 [root@rocky95 ~]# rm -rf /var/cache/dnf
 ```
+
+<a id="install-the-kernel"></a>
 ### 커널 설치
 
 #### 버전 지정하여 커널 설치
@@ -529,6 +544,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### OS 재시작
 
 커널 업데이트를 적용하기 위해 OS를 재시작합니다.
@@ -537,6 +553,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 [root@rocky95 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[선택]**</span> GRUB2 부트로더의 설정 파일 생성
 시스템의 부트 메뉴를 업데이트하여, 새로 설치된 커널이나 기타 부팅 항목을 반영합니다.
 
@@ -556,6 +573,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 ```
 
 
+<a id="change-the-kernel-boot-order"></a>
 ### 커널 부팅 순서 변경
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.
