@@ -208,7 +208,7 @@ The serial console feature has the following limitations:
 * Serial console access is not guaranteed for instances created with personally uploaded images or instances created with personal images.
 * Serial console connections last up to 10 minutes.
 * Windows instances do not support the serial console feature.
-* Instances created before the November 25, 2025 release require **Stop the instance** and **Start the instance**. **Reboot the instance** feature does not apply.
+* Instances created before the January 27, 2026 release require **Stop the instance** and **Start the instance**. **Reboot the instance** feature does not apply.
 
 > [Caution]
 > Changing the boot method while accessing an instance via the serial console may result in a boot failure, and users are responsible for any resulting consequences.
