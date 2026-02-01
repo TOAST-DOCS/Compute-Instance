@@ -1,10 +1,13 @@
+<a id="compute-instance-kernel-version-upgrade-guide"></a>
 ## Compute > Instance > Kernel Version Upgrade Guide
 
 > [Caution]
 > Updating the kernel may damage your OS or cause it to fail to boot, and the user is responsible for the consequences.
 
+<a id="rocky-linux-8"></a>
 ## Rocky Linux 8
 
+<a id="check-the-kernel-version"></a>
 ### Check the Kernel Version
 
 Check the currently installed kernel version.
@@ -14,6 +17,7 @@ Check the currently installed kernel version.
 4.18.0-553.8.1.el8_10.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### Default Storage Settings
 
 Change the default repository for your system architecture and Rocky Linux version.
@@ -42,6 +46,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 > [Note]
 > When both**mirrorlist** and **baseurl** are set, **mirrorlist** takes precedence, with **baseurl** serving as an alternate option.
 
+<a id="clear-the-cache-before-updating"></a>
 ### Clear the cache before updating
 
 Delete the cache where metadata for existing downloaded packages is stored.
@@ -50,6 +55,7 @@ Delete the cache where metadata for existing downloaded packages is stored.
 [root@rocky810 ~]# rm -rf /var/cache/dnf
 ```
 
+<a id="install-the-kernel"></a>
 ### Install the kernel
 
 #### Install the kernel by specifying a version
@@ -119,7 +125,6 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
-
 #### Install the latest kernel
 If you don't specify a version, the latest version is installed. 
 
@@ -156,7 +161,6 @@ Installed:
 Complete!
 ```
 
-
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -168,6 +172,7 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### Restart the OS
 
 Restart the OS to apply the kernel update.
@@ -176,6 +181,7 @@ Restart the OS to apply the kernel update.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[Select].**</span> Create a configuration file for the GRUB2 bootloader
 Update the system's boot menu to reflect the newly installed kernel or other boot items.
 
@@ -194,6 +200,7 @@ Verify that the kernel version has been updated properly.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
+<a id="change-the-kernel-boot-order"></a>
 ### Change the kernel boot order
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.
@@ -295,8 +302,10 @@ Restart the OS for the boot order change to take effect.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="rocky-linux-9"></a>
 ## Rocky Linux 9
 
+<a id="check-the-kernel-version"></a>
 ### Check the Kernel Version
 
 Check the currently installed kernel version.
@@ -306,6 +315,7 @@ Check the currently installed kernel version.
 5.14.0-503.14.1.el9_5.x86_64
 ```
 
+<a id="default-storage-settings"></a>
 ### Default Storage Settings
 
 Change the default repository for your system architecture and Rocky Linux version.
@@ -345,21 +355,22 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > [Note]
 > When both**mirrorlist** and **baseurl** are set, **mirrorlist** takes precedence, with **baseurl** serving as an alternate option.
 
+<a id="clear-the-cache-before-updating"></a>
 ### Clear the cache before updating
 
 Delete the cache where metadata for existing downloaded packages is stored.
 
-
 ```
 [root@rocky95 ~]# rm -rf /var/cache/dnf
 ```
+
+<a id="install-the-kernel"></a>
 ### Install the kernel
 
 #### Install the kernel by specifying a version
 
 > [Note]
 Currently, the Rocky Linux 9 package is only available for version 9.5.
-
 
 ```
 [root@rocky95 ~]# dnf --releasever=9.5 list kernel*
@@ -515,8 +526,6 @@ Installed:
 Complete!
 ```
 
-
-
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -529,6 +538,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
+<a id="restart-the-os"></a>
 ### Restart the OS
 
 Restart the OS to apply the kernel update.
@@ -537,6 +547,7 @@ Restart the OS to apply the kernel update.
 [root@rocky95 ~]# sync; reboot
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[Select].**</span> Create a configuration file for the GRUB2 bootloader
 Update the system's boot menu to reflect the newly installed kernel or other boot items.
 
@@ -555,7 +566,7 @@ Verify that the kernel version has been updated properly.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
-
+<a id="change-the-kernel-boot-order"></a>
 ### Change the kernel boot order
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.

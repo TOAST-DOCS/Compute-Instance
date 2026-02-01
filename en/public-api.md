@@ -1,3 +1,4 @@
+<a id="compute-instance-api-v2-guide"></a>
 ## Compute > Instance > API v2 Guide
 
 To use the APIs listed in this document, you will need the appropriate API endpoint and token. See [API v2 Preparations](/Compute/Compute/en/identity-api/) to prepare the necessary information for using APIs.
@@ -10,8 +11,10 @@ The Instance API uses the `compute` type endpoint. For the exact endpoint, see `
 
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, and as such refrain from using them since they may be changed without prior notice.
 
+<a id="instance-flavors"></a>
 ## Instance Flavors
 
+<a id="list-flavors"></a>
 ### List Flavors
 
 ```
@@ -83,6 +86,7 @@ This API does not require a request body.
 
 ---
 
+<a id="list-flavors-with-details"></a>
 ### List Flavors with Details
 
 ```
@@ -184,8 +188,10 @@ This API does not require a request body.
 
 ---
 
+<a id="availability-zones"></a>
 ## Availability Zones
 
+<a id="list-availability-zones"></a>
 ### List Availability Zones
 
 ```
@@ -236,8 +242,10 @@ This API does not require a request body.
 
 ---
 
+<a id="key-pairs"></a>
 ## Key Pairs
 
+<a id="list-key-pairs"></a>
 ### List Key Pairs
 ```
 GET /v2/{tenantId}/os-keypairs
@@ -284,6 +292,7 @@ This API does not require a request body.
 
 ---
 
+<a id="show-key-pair"></a>
 ### Show Key Pair
 ```
 GET /v2/{tenantId}/os-keypairs/{keypairName}
@@ -338,6 +347,7 @@ This API does not require a request body.
 
 ---
 
+<a id="createregister-key-pair"></a>
 ### Create/Register Key Pair
 
 ```
@@ -400,6 +410,7 @@ X-Auth-Token: {tokenId}
 
 ---
 
+<a id="delete-key-pair"></a>
 ### Delete Key Pair
 ```
 DELETE /v2/{tenantId}/os-keypairs/{keypairName}
@@ -421,6 +432,7 @@ This API does not return a response body.
 
 ## Instance
 
+<a id="instance-status"></a>
 ### Instance Status
 
 Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
@@ -446,6 +458,7 @@ Instances exist in various statuses, and each status defines its own set of perm
 | `SUSPENDED` | Instance has entered maximum power saving mode by the administrator |
 | `UNKNOWN` | Instance status is unknown<br>`Contact the administrator if the instance is in this status.` | 
 
+<a id="list-instances"></a>
 ### List Instances
 
 ```
@@ -508,6 +521,7 @@ This API does not require a request body.
 
 ---
 
+<a id="list-instances-with-details"></a>
 ### List Instances with Details
 
 Return the list of instances created in the current tenant, same as List Instances. However, detailed instance information is returned.
@@ -816,6 +830,7 @@ This API does not require a request body.
 
 ---
 
+<a id="create-instance"></a>
 ### Create Instance
 
 Create an instance.
@@ -954,6 +969,7 @@ X-Auth-Token: {tokenId}
 
 ---
 
+<a id="modify-instance"></a>
 ### Modify Instance
 Modify created instance. Only some attributes are allowed to be modified.
 
@@ -991,6 +1007,7 @@ Same as Get Instance.
 
 ---
 
+<a id="delete-instance"></a>
 ### Delete Instance
 Delete a created instance.
 
@@ -1013,7 +1030,9 @@ This API does not return a response body.
 
 ---
 
+<a id="manage-block-storage-attachment"></a>
 ## Manage Block Storage Attachment
+
 ### List additional block storage attached to the instance
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
@@ -1193,6 +1212,7 @@ This API does not return a response body.
 
 ---
 
+<a id="additional-instance-features"></a>
 ## Additional Instance Features
 NHN Cloud provides the following additional features to handle instances.
 
@@ -1269,6 +1289,7 @@ This API does not return a response body.
 
 ---
 
+<a id="stop-instance"></a>
 ### Stop Instance
 
 Stop instance and change its status to **SHUTOFF**. To call this API, the instance status must be either **ACTIVE** or **ERROR**.
@@ -1303,6 +1324,7 @@ This API does not return a response body.
 
 ---
 
+<a id="terminate-instance"></a>
 ## Terminate Instance
 
 Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
@@ -1337,6 +1359,7 @@ This API does not return a response body.
 
 ---
 
+<a id="restart-instance"></a>
 ### Restart Instance
 
 Restart an instance. An instance can be restarted using either a **SOFT** restart or a **HARD** restart.
@@ -1384,6 +1407,7 @@ This API does not return a response body.
 
 ---
 
+<a id="change-instance-flavor"></a>
 ### Change Instance Flavor
 
 Change the flavor of an instance. Flavors can only be changed when an instance is **ACTIVE** or **SHUTOFF**. If an instance is **ACTIVE**, the instance is stopped and restarted while changing flavors.
@@ -1424,9 +1448,10 @@ This API does not return a response body.
 
 ---
 
+<a id="create-instance-image"></a>
 ### Create Instance Image
 
-Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/ko/public-api/#_22).
+Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/en/public-api/#create-image-with-block-storage).
 
 Images can only be created when an instance is **ACTIVE**, **SHUTOFF**, **SUSPENDED**, or **PAUSED**. It is recommended to stop instances before creating images to ensure data integrity.
 
@@ -1478,6 +1503,7 @@ This API does not return a response body. Check the `Location` response header f
 
 ---
 
+<a id="add-security-group"></a>
 ### Add Security Group
 
 Add a security group to an instance. The added security group is applied to all ports of the instance.
@@ -1516,6 +1542,7 @@ This API does not return a response body.
 
 ---
 
+<a id="delete-security-group"></a>
 ### Delete Security Group
 
 Delete a security group from an instance. The specified security group is deleted from all ports of the instance.
@@ -1553,6 +1580,7 @@ X-Auth-Token: {tokenId}
 This API does not return a response body.
 
 
+<a id="instance-metadata"></a>
 ## Instance Metadata
 
 The values of the instance metadata determine the content of the instance details screen on the **Compute > Instance** service page in the console. The contents by instance metadata are as follows
@@ -1614,6 +1642,7 @@ This API does not require a request body.
 </details>
 
 
+<a id="view-instance-metadata"></a>
 ### View Instance Metadata
 
 ```
@@ -1651,6 +1680,7 @@ This API does not require a request body.
 </p>
 </details>
 
+<a id="createmodify-instance-metadata"></a>
 ### Create/Modify Instance Metadata
 
 Create or modify metadata for the instance.
@@ -1707,6 +1737,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="delete-instance-metadata"></a>
 ### Delete Instance Metadata
 
 Delete metadata for instances that match the key you're requesting.
