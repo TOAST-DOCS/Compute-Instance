@@ -1349,13 +1349,13 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
 | labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
 | labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
-| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러: 기능 활성화 여부<br>("True" / "False")    |
-| labels.cert_manager_api  | String  | O  | CSR(Certificate Signing Request) 기능 활성화 여부. 반드시 "True" 로 설정     |
+| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러 기능 활성화 여부<br>("True" / "False")   |
+| labels.cert_manager_api  | String  | O  | CSR(Certificate Signing Request) 기능 활성화 여부. 반드시 "True"로 설정     |
 | labels.kube_tag  | String  | O  | Kubernetes 버전     |
-| labels.master_lb_floating_ip_enabled  | String  | O  | Kubernetes API 엔드포인트에 공인 도메인 주소 생성 여부 ("True" / "False")<br>labels.external_network_id와 external_subnet_id_list가 설정된 경우에만 "True"로 설정 가능   |
+| labels.master_lb_floating_ip_enabled  | String  | O  | Kubernetes API 엔드포인트에 공인 도메인 주소 생성 여부("True" / "False")<br>labels.external_network_id와 external_subnet_id_list가 설정된 경우에만 "True"로 설정 가능 |
 
 > [참고]
-> NHN Cloud가 제공하는 NKS 클러스터 애드온 상세 목록은 API 가이드의 [NHN Cloud에서 제공하는 애드온 목록 보기](/Container/NKS/ko/public-api-gov/#nhn-cloud_3) 및 사용 가이드의 [애드온 목록](/Container/NKS/ko/user-guide-gov#addon-mgmt-addon-list) 항목을 참고해 주시기 바랍니다.
+> NHN Cloud가 제공하는 NKS 클러스터 애드온 상세 목록은 API 가이드의 [NHN Cloud에서 제공하는 애드온 목록 보기](/Container/NKS/ko/public-api-gov/#nhn-cloud_3) 및 사용 가이드의 [애드온 목록](/Container/NKS/ko/user-guide-gov#addon-mgmt-addon-list) 항목을 참고하세요.
 
 <a id="create-a-node-group"></a>
 ### 노드 그룹 생성
@@ -1388,7 +1388,7 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.availability_zone | String  | O  | 기본 워커 노드 그룹 적용 : 가용성 영역               |
 | labels.boot_volume_type  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 종류           |
 | labels.boot_volume_size  | String  | O  | 기본 워커 노드 그룹 적용 : 블록 스토리지 사이즈(GB)      |
-| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러: 기능 활성화 여부<br>("True" / "False")      |
+| labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러 기능 활성화 여부<br>("True" / "False")      |
 
 <a id="resize"></a>
 ### 리사이즈
