@@ -80,14 +80,14 @@ Terraform is an open-source tool that lets you easily build and safely change in
 ## Terraform Installation
 Go to [Download Terraform](https://www.terraform.io/downloads.html) and download the file suitable for the operating system of your local PC. Decompress the file to an appropriate path and add the path to your environment setting, and the installation is complete.
 
-See the following example for installation.
+See the following example for Linux(Ubuntu/Debian) installation.
 
 ```
-$ wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
-$ unzip terraform_1.0.0_linux_amd64.zip
-$ export PATH="${PATH}:$(pwd)"
+$ wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+$ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+$ sudo apt update && sudo apt install terraform
 $ terraform -v
-Terraform v1.0.0
+Terraform v1.14.2
 ```
 
 <a id="terraform-provider-provided"></a>
@@ -101,14 +101,15 @@ Before using Terraform, create a provider configuration file as follows.
 
 The name of the provider file can be set randomly. This example uses `provider.tf` as the filename.
 
+For provider version, please write it based on the [NHN Cloud Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)'s `VERSION` information.
+
 ```
 # Define required providers
 terraform {
-required_version = ">= 1.0.0"
   required_providers {
     nhncloud = {
-      source  = "nhn-cloud/nhncloud"
-      version = "1.0.2"
+      source = "nhn-cloud/nhncloud"
+      version = "{VERSION}"
     }
   }
 }
@@ -122,6 +123,7 @@ provider "nhncloud" {
   region      = "KR1"
 }
 ```
+
 * **user_name**
     * Use the NHN Cloud ID.
 * **tenant_id**
@@ -1303,7 +1305,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | flavor_id                | UUID    | O  | Instance flavor UUID of the default worker node            |
 | keypair                  | String  | O  | Keypair to be applied in the default worker node           |
 | node_count | Integer | O | Total number of worker nodes |
-| addons | Object | - | List of add-on information to be installed. Enter multiple entries if installing multiple add-ons.<br>For more information on add-ons, refer to `User Guide > Container > NHN Kubernetes Service (NKS) > User Guide > Add-on Management` |
+| addons | Object | - | List of add-on information to be installed. Enter multiple entries if installing multiple add-ons. |
 | addons.name | String | O | Addon name |
 | addons.version | String | O | Addon version |
 | addons.options | String | - | Add-on-specific options |
@@ -1312,10 +1314,14 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.availability_zone | String | O | Default worker node group: availability zone |
 | labels.boot_volume_type | String | O | Default worker node group: block storage type |
 | labels.boot_volume_size | String | O | Apply default worker node group: block storage size (GB) |
-| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") |
+| labels.ca_enable  | String  | O  | Applied to the worker node group: whether to enable the feature<br>("True" / "False") |
 | labels.cert_manager_api  | String  | O  | Whether to enable the certificate signing request (CSR) feature. Must be set to "True"   |
 | labels.kube_tag  | String  | O  | Kubernetes Version     |
 | labels.master_lb_floating_ip_enabled  | String  | O  | Whether to create a public domain address for Kubernetes API endpoint<br>("True" / "False") |
+
+
+> [Note]
+> For a detailed list of NKS cluster add-ons provided by NHN Cloud, please refer to the [View List of Add-ons Provided by NHN Cloud](/Container/NKS/ko/public-api/#nhn-cloud_3) section in the API Guide and the [Add-on List](/Container/NKS/ko/user-guide#addon-mgmt-addon-list) section in the User Guide.
 
 <a id="create-a-node-group"></a>
 ### Create a Node Group
@@ -1347,7 +1353,7 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels | Object | O | Node group creation information object |
 | labels.availability_zone | String | O | Default worker node group applies: availability zone |
 | labels.boot_volume_type | String | O | Default worker node group applies: block storage size (GB) |
-| labels.ca_enable  | String  | O  | Applied to the worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: whether to enable the feature<br>("True" / "False")      |
+| labels.ca_enable  | String  | O  | Applied to the worker node group: Whether Cluster Autoscaler is enabled Cluster Autoscaler activation status<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: whether to enable the feature<br>("True" / "False")      |
 
 <a id="resize"></a>
 ### Resize
