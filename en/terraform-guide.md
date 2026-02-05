@@ -101,7 +101,7 @@ Before using Terraform, create a provider configuration file as follows.
 
 The name of the provider file can be set randomly. This example uses `provider.tf` as the filename.
 
-FOr provider version, please write it based on the [NHN Cloud Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)'s `VERSION` information.
+For provider version, please write it based on the [NHN Cloud Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)'s `VERSION` information.
 
 ```
 # Define required providers
