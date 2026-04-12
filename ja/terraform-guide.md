@@ -213,7 +213,7 @@ provider "nhncloud" {
     * NHN Cloudコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンを押してテナントIDを確認します。
 * **password**
     * **API Endpoint設定**ウィンドウで保存した**APIパスワード**を使用します。
-    * APIパスワードの設定方法は**ユーザーガイド > Compute > Instance > API使用準備**を参照します。
+    * APIパスワードの設定方法は[IaaSトークン](/nhncloud/ja/public-api/iaas-token)を参照してください。
 * **auth_url**
     * NHN Cloud身元サービスアドレスを明示します。
     * NHN Cloudコンソールの**Compute > Instance > 管理**メニューで**APIエンドポイント設定**ボタンをクリックして身元サービス(identity) URLを確認します。
