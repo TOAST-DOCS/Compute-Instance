@@ -174,10 +174,10 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
-<a id="restart-the-os"></a>
-### OS 재시작
+<a id="reboot-the-os"></a>
+### OS 재부팅
 
-커널 업데이트를 적용하기 위해 OS를 재시작합니다.
+커널 업데이트를 적용하기 위해 OS를 재부팅합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -240,9 +240,9 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 /boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64
 ```
 
-##### OS 재시작
+##### OS 재부팅
 
-부팅 순서 변경 적용을 위해 OS를 재시작합니다.
+부팅 순서 변경 적용을 위해 OS를 재부팅합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -296,9 +296,9 @@ Generating grub configuration file ...
 done
 ```
 
-##### OS 재시작
+##### OS 재부팅
 
-부팅 순서 변경 적용을 위해 OS를 재시작합니다.
+부팅 순서 변경 적용을 위해 OS를 재부팅합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -544,10 +544,10 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
-<a id="restart-the-os"></a>
-### OS 재시작
+<a id="reboot-the-os"></a>
+### OS 재부팅
 
-커널 업데이트를 적용하기 위해 OS를 재시작합니다.
+커널 업데이트를 적용하기 위해 OS를 재부팅합니다.
 
 ```
 [root@rocky95 ~]# sync; reboot
@@ -609,9 +609,9 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 [root@rocky95 ~]# sync; reboot
 ```
 
-##### OS 재시작
+##### OS 재부팅
 
-부팅 순서 변경 적용을 위해 OS를 재시작합니다.
+부팅 순서 변경 적용을 위해 OS를 재부팅합니다.
 
 ```
 [root@rocky810 ~]# sync; reboot
