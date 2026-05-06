@@ -172,10 +172,10 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
-<a id="restart-the-os"></a>
-### Restart the OS
+<a id="reboot-the-os"></a>
+### Reboot the OS
 
-Restart the OS to apply the kernel update.
+Reboot the OS to apply the kernel update.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -238,9 +238,9 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 /boot/vmlinuz-4.18.0-553.8.1.el8_10.x86_64
 ```
 
-##### Restart the OS
+##### Reboot the OS
 
-Restart the OS for the boot order change to take effect.
+Reboot the OS for the boot order change to take effect.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -294,9 +294,9 @@ Generating grub configuration file ...
 done
 ```
 
-##### Restart the OS
+##### Reboot the OS
 
-Restart the OS for the boot order change to take effect.
+Reboot the OS for the boot order change to take effect.
 
 ```
 [root@rocky810 ~]# sync; reboot
@@ -538,10 +538,10 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
-<a id="restart-the-os"></a>
-### Restart the OS
+<a id="reboot-the-os"></a>
+### Reboot the OS
 
-Restart the OS to apply the kernel update.
+Reboot the OS to apply the kernel update.
 
 ```
 [root@rocky95 ~]# sync; reboot
@@ -602,9 +602,9 @@ The default is /boot/loader/entries/858382f092494811bf89e090de079ab1-5.14.0-503.
 [root@rocky95 ~]# sync; reboot
 ```
 
-##### Restart the OS
+##### Reboot the OS
 
-Restart the OS for the boot order change to take effect.
+Reboot the OS for the boot order change to take effect.
 
 ```
 [root@rocky810 ~]# sync; reboot

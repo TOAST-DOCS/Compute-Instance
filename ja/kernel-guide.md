@@ -174,7 +174,7 @@ kernel-core.x86_64                    4.18.0-553.16.1.el8_10                    
 kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    @baseos
 ```
 
-<a id="restart-the-os"></a>
+<a id="reboot-the-os"></a>
 ### OS再起動
 
 カーネルアップデートを適用するためにOSを再起動します。
@@ -544,7 +544,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
-<a id="restart-the-os"></a>
+<a id="reboot-the-os"></a>
 ### OS再起動
 
 カーネルアップデートを適用するためにOSを再起動します。
