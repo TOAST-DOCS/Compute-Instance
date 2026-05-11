@@ -3,11 +3,13 @@
 
 <a id="nat-instance"></a>
 ## NAT Instance
+
 NAT instance is an instance that allows you to access internet over a specific IP address band in the private network instance.
 This feature is available only in the Korea (Pangyo) and Korea (Pyeongchon) regions.
 
 <a id="key-features"></a>
 ### Key Features
+
 * The instance of a private network not connect with an internet gateway can access the internet via the NAT instance.
 * Accesses the Internet by changing the floating IP of the NAT instance to source IP.
 * The packets delivered to the NAT instance are delivered according to the routing setting of the routing table connected to the subnet of NAT instance.
@@ -18,7 +20,7 @@ This feature is available only in the Korea (Pangyo) and Korea (Pyeongchon) regi
 * Sets security group.
 * Sets network ACL.
 * Redundancy not supported.
-* The option of checking network source/target must be disabled in the Network Interface settings for the NAT instance to work.
+* The option of **Anti-Spoofing** must be set to **Disabled** in the Network Interface settings for the NAT instance to work.
 * If a private image is created with NAT instance, the function might not work normally.
 * A NAT instance provides the NAT feature on only one network interface.
 
@@ -33,8 +35,8 @@ This feature is available only in the Korea (Pangyo) and Korea (Pyeongchon) regi
 > |SSH|Unavailable| Available|
 
 <a id="sourcetarget-check-setting"></a>
-### Source/target check setting
-For the NAT instance to work normally, the option of checking network source/target must be disabled in the Network Interface settings.
+### Anti-spoofing Setting
+For the NAT instance to work normally, the option of **Anti-Spoofing** must be set to **Disabled** in the Network Interface settings.
 
 <a id="routing-setting"></a>
 ### Routing setting
@@ -164,7 +166,7 @@ From SQL Server Configuration Manager, go to **SQL Server Configuration Manager 
 ### Check/Set Automatic Microsoft SQL  Service Execution
 Check if Microsoft SQL is set for automatic start with OS running.
 
-Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Server Configuration Manager to find **Start Mode**.
+Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Server Configuration Manager to find Start Mode.
 
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
@@ -241,7 +243,7 @@ shell> mysql -uroot -P[changed port number]
 <a id="description-of-mycnf"></a>
 ### Description of my.cnf
 
-The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables are set as below:
+The default path of my.cnf is `/etc/my.cnf`, and NHN Cloud recommended variables are set as below:
 
 | Name | Description |
 | --- | --- |
@@ -414,7 +416,7 @@ PostgreSQL directory and file description is as follows:
 <a id="how-to-startstop-the-cubrid-service"></a>
 ### How to Start/Stop the CUBRID service
 
-You can start or stop the CUBRID service as follows by logging in with the “cubrid” Linux account.
+You can start or stop the CUBRID service as follows by logging in with the `cubrid` Linux account.
 ```
 # Start the CUBRID service/server
 shell> sudo su - cubrid
@@ -459,7 +461,7 @@ shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 
 #### 2\. Change the Broker Port
 
-The broker port for **query_editor** defaults to **30000**, and the broker port for **broker1** defaults to **33000**.
+The broker port for `query_editor` defaults to `30000`, and the broker port for `broker1` defaults to `33000`.
 For security reasons, it is recommended to change the port.
 
 ###### 1) Modify the broker file
@@ -484,7 +486,7 @@ shell> cubrid broker restart
 
 #### 3\. Change the Manager Server Port
 
-The manager server port defaults to **8001**.
+The manager server port defaults to `8001`.
 For security reasons, it is recommended to change the port.
 
 ###### 1)  Modify the cm.conf file
@@ -630,15 +632,15 @@ sudo systemctl restart mariadb.service
 #### Minimum Recommended Specifications
 
 - Root block storage 
-    - SSD is recommended for speed, and we recommend setting it to at least **50GB**to avoid root disk full.
+    - SSD is recommended for speed, and we recommend setting it to at least 50 GBto avoid root disk full.
 
 - Minimum recommended specifications: 4 vCore/8 GB
-    - **Using less than the recommended specifications might limit the DBMS installation.**
+    - Using less than the recommended specifications might limit the DBMS installation.
 
 #### Additional Block Storage
 
 - Create additional volumes other than the root volume.
-    - Tibero Machine Image (TMI) requires 150GB of additional volume, so you must set up **at least 150 GB of additional block storage**.
+    - Tibero Machine Image (TMI) requires 150GB of additional volume, so you must set up at least 150 GB of additional block storage.
 
 <a id="connect-to-instance"></a>
 ### Connect to Instance
