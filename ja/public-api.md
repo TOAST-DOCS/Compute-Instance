@@ -481,7 +481,7 @@ X-Auth-Token: {tokenId}
 | flavor | Query | UUID | - | インスタンスタイプID<br>指定されたタイプを使用しているインスタンスリストを返す |
 | name | Query | String | - | インスタンス名<br>指定された名前のインスタンスリストを返す。正規表現を使用可能。|
 | status | Query | Enum | - | インスタンスの状態<br>指定された状態のインスタンスリストを返す |
-| limit | Query | Integer | - | インスタンスリスト数<br>指定された数のインスタンスリストを返す |
+| limit | Query | Integer | - | 返すインスタンスの個数<br>基本値は100、最大1000 |
 | marker | Query | UUID | - | リストの最初のインスタンスUUID<br>ソート基準に従って`marker`に指定されたインスタンスから`limit`数分のインスタンスリストを返す |
 
 #### レスポンス
