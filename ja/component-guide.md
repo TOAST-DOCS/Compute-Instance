@@ -166,7 +166,7 @@ SQL Server構成管理者のSQL Server構成管理者(ローカル) > SQL Server
 
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
-**SQL SERVER (MSSSQLSERVER)** および **SQL Serverエージェント(MSSQLSERVER)** などのサービス起動モードが **自動**ではない場合：
+**SQL SERVER (MSSQLSERVER)** および **SQL Serverエージェント(MSSQLSERVER)** などのサービス起動モードが **自動**ではない場合：
 1. サービスをマウスの右ボタンでクリックした後、 **プロパティ**を選択します。
 2. **サービス**タブで **General > 起動モード**を **自動**に変更します。
 
@@ -210,7 +210,7 @@ mysql> ALTER USER USER() IDENTIFIED BY '新しいパスワード';
 MySQL基本validate\_password\_policyは下記の通りです。
 
 * validate\_password\_policy=MEDIUM
-* 基本**8文字以上、数字、大文字、小文字、特殊文字**を含める必要がある
+* 基本8文字以上、数字、大文字、小文字、特殊文字を含める必要がある
 
 #### 2\.ポート(port)変更
 
