@@ -1,7 +1,7 @@
 <a id="compute-instance-api-v2-guide"></a>
 ## Compute > Instance > API v2 Guide
 
-To use the APIs listed in this document, you will need the appropriate API endpoint and token. See [API v2 Preparations](/Compute/Compute/en/identity-api/) to prepare the necessary information for using APIs.
+Instance uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
 The Instance API uses the `compute` type endpoint. For the exact endpoint, see `serviceCatalog` from the token issue response.
 
@@ -480,7 +480,7 @@ This API does not require a request body.
 | flavor | Query | UUID | - | Instance flavor ID<br>Return list of instances with specified flavor |
 | name | Query | String | - | Instance name<br>Return list of instances with specified name, regex is supported |
 | status | Query | Enum | - | Instance status<br>Return list of instances with specified status |
-| limit | Query | Integer | - | Number of instances to query<br>Return list with up to specified number of instances |
+| limit | Query | Integer | - | Number of instances to return<br>Default is 100, up to max 1000 |
 | marker | Query | UUID | - | UUID of first instance in the list <br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
 
 #### Response

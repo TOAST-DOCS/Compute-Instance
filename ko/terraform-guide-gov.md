@@ -132,7 +132,7 @@ provider "nhncloud" {
     * NHN Cloud 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 테넌트 ID를 확인합니다.
 * **password**
     * **API Endpoint 설정** 대화 상자에서 저장한 **API 비밀번호**를 사용합니다.
-    * API 비밀번호 설정 방법은 **사용자 가이드 > Compute > Instance > API 사용 준비**를 참고합니다.
+    * API 비밀번호 설정 방법은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token-gov)을 참고합니다.
 * **auth_url**
     * NHN Cloud 신원 서비스 주소를 명시합니다.
     * NHN Cloud 콘솔의 **Compute > Instance > 관리** 메뉴에서 **API 엔드포인트 설정** 버튼을 클릭해 신원 서비스(identity) URL을 확인합니다.
