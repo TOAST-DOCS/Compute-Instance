@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=660ef5a6860f -->
+
 <a id="third-party-user-guide-terraform-user-guide"></a>
 ## 서드파티 사용 가이드 > Terraform 사용 가이드 { #third-party-user-guide-terraform-user-guide }
 이 문서는 Terraform으로 NHN Cloud를 사용하는 방법을 설명합니다.
