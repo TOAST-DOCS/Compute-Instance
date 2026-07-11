@@ -1,10 +1,12 @@
+<!-- pre-align:aligned sig=f2414300858d -->
+
 <a id="compute-instance-overview"></a>
-## Compute > Instance > 개요
+## Compute > Instance > 개요 { #compute-instance-overview }
 
 인스턴스는 가상의 CPU, 메모리, 루트 블록 스토리지로 구성된 가상 서버입니다. 이 서버에 고객의 서비스나 애플리케이션을 설치하고 NHN Cloud가 제공하는 다양한 서비스를 조합하여 사용합니다.
 
 <a id="components"></a>
-## 인스턴스 구성 요소
+## 인스턴스 구성 요소 { #components }
 
 인스턴스를 구성하는 요소는 다음과 같습니다.
 
@@ -18,14 +20,14 @@
 이 정보에 따라 인스턴스의 속성과 사용 방식이 바뀝니다. 이 정보 중, 이미지와 가용성 영역을 제외한 설정은 인스턴스 생성 이후에도 변경할 수 있으나, 일부 인스턴스 타입(flavor)은 인스턴스 생성 이후에 변경할 수 없습니다. 인스턴스 타입 변경에 대한 자세한 설명은 [콘솔 사용 가이드의 인스턴스 타입 변경](./console-guide/#modify-flavor)을 참고합니다.
 
 <a id="image"></a>
-### 이미지
+### 이미지 { #image }
 
 이미지는 운영체제를 담고 있는 가상 디스크입니다. NHN Cloud는 현재 Debian, Ubuntu, Rocky와 Windows를 지원하고 있습니다.
 
 모든 이미지는 인스턴스의 가상 하드웨어에서 최적으로 실행되도록 설정돼 있으며, NHN Cloud의 보안 검증을 거쳤기 때문에 안전하게 사용할 수 있습니다. 이미지에 대한 자세한 설명은 [이미지 개요](/Compute/Image/ko/overview/)를 참고합니다.
 
 <a id="flavor"></a>
-### 인스턴스 타입(Instance flavor)
+### 인스턴스 타입(Instance flavor) { #flavor }
 
 NHN Cloud는 고객의 사용 용도에 맞는 다양한 인스턴스 타입을 제공합니다. 운용할 서비스 또는 애플리케이션의 특성에 따라 적절한 타입의 인스턴스를 생성할 수 있습니다. 이미 생성된 인스턴스의 타입도 웹 콘솔에서 쉽게 변경할 수 있습니다.
 
@@ -39,7 +41,7 @@ NHN Cloud는 고객의 사용 용도에 맞는 다양한 인스턴스 타입을 
 | x1 | 고사양의 CPU와 메모리를 지원하는 타입입니다. 높은 성능이 필요한 서비스나 애플리케이션에 사용합니다.                                                                                        |
 
 <a id="availability-zone"></a>
-### 가용성 영역(Availability zone)
+### 가용성 영역(Availability zone) { #availability-zone }
 
 NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위해 전체 시스템을 여러 개의 가용성 영역으로 나누어 두었습니다. 이 가용성 영역별로 저장 시스템, 네트워크 스위치, 상면, 전원 장치가 모두 별도로 구성돼 있습니다. 한 가용성 영역 내에서 생기는 장애는 다른 가용성 영역에 영향을 주지 않으므로 서비스 전체의 가용성이 높아집니다. 인스턴스를 여러 가용성 영역에 나눠 구축한다면 서비스의 가용성을 더욱 높일 수 있습니다.
 
@@ -50,7 +52,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 - 서로 다른 가용성 영역에서 플로팅 IP를 공유할 수 있습니다. 만약 한 가용성 영역에 장애가 생겼을 때에도 빠르게 다른 가용성 영역으로 플로팅 IP를 이동하여 장애 시간을 최소화할 수 있습니다.
 
 <a id="key-pair"></a>
-### 키페어(Key-pair)
+### 키페어(Key-pair) { #key-pair }
 
 키페어는 공개 키 기반 구조([PKI](https://ko.wikipedia.org/wiki/%EA%B3%B5%EA%B0%9C_%ED%82%A4_%EA%B8%B0%EB%B0%98_%EA%B5%AC%EC%A1%B0), public key infrastructure)를 바탕으로 한 SSH 공개 키, 개인 키 쌍입니다. NHN Cloud에서 생성한 인스턴스에 접속하려면 보안에 취약한 키보드 입력 방식의 아이디/비밀번호 인증 대신 키페어를 이용해야 합니다. 사용자는 키페어의 개인 키를 이용해 로그인 정보를 인코딩하여 인스턴스로 전송해 접속 인증을 받은 후, 안전하게 인스턴스에 접속할 수 있습니다. 키페어를 이용한 인스턴스 접속 방법은 [인스턴스 접속 방법](#how-to-access-instances)을 참고합니다.
 
@@ -63,7 +65,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 > 키페어는 사용자 계정에 할당된 리소스이므로 프로젝트를 삭제해도 삭제되지 않고 유지됩니다.
 
 <a id="security-groups"></a>
-### 보안 그룹(Security groups)
+### 보안 그룹(Security groups) { #security-groups }
 
 보안 그룹은 인스턴스에 전달되는 네트워크 트래픽을 결정하는 가상의 방화벽입니다. 보안 그룹에 대한 자세한 설명은 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
@@ -71,12 +73,12 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 > 기본 보안 그룹은 외부에서 들어오는 인바운드(in-bound) 네트워크 트래픽을 모두 무시하도록 되어 있습니다. SSH로 인스턴스에 접속할 때 인스턴스가 속한 보안 그룹에 SSH 포트를 열도록 설정한 뒤에 인스턴스에 접속합니다.
 
 <a id="network"></a>
-### 네트워크
+### 네트워크 { #network }
 
 인스턴스가 외부와 통신하려면 VPC에서 정의된 네트워크 중 적어도 하나 이상에 연결되어 있어야 합니다. 네트워크에 연결되어 있지 않은 인스턴스에는 접근할 수 없습니다. 네트워크를 새로 생성하거나 변경하려면 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
 <a id="pricing"></a>
-## 과금
+## 과금 { #pricing }
 
 인스턴스 과금 방식은 다음과 같습니다.
 
@@ -88,13 +90,14 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 과금에 대한 더 자세한 사항은 서비스별 [요금 페이지](https://www.toast.com/kr/service/compute/instance#price)를 참고합니다.
 
 <a id="how-to-access-instances"></a>
-## 인스턴스 접속 방법
+## 인스턴스 접속 방법 { #how-to-access-instances }
 
 <a id="how-to-access-linux-instances"></a>
-### Linux 인스턴스 접속 방법
+### Linux 인스턴스 접속 방법 { #how-to-access-linux-instances }
 
 Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 NHN Cloud 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
 
+<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### Mac 또는 Linux의 SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
 
 Mac이나 Linux에는 보통 SSH 클라이언트가 기본적으로 설치되어 있습니다. SSH 클라이언트에서 아래와 같이 키페어의 개인 키를 이용하여 접속합니다.
@@ -111,6 +114,7 @@ Rocky 인스턴스
 
 	$ ssh -i my_private_key.pem rocky@<인스턴스의 IP>
 
+<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### Windows에서 PuTTY SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
 
 PuTTY SSH 클라이언트는 Windows에서 많이 사용되는 SSH 클라이언트 프로그램입니다. [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 또는 한글 패치가 적용된 [iPuTTY](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)를 설치합니다.
@@ -193,7 +197,7 @@ Rocky
 이제 **열기**를 클릭하면 인스턴스에 접속합니다.
 
 <a id="how-to-access-windows-instances"></a>
-### Windows 인스턴스 접속 방법
+### Windows 인스턴스 접속 방법 { #how-to-access-windows-instances }
 
 Windows 서버에 접속하려면, NHN Cloud 콘솔에서 접속하려는 Windows 인스턴스를 선택합니다. 인스턴스 상세 화면의 **접속 정보** 탭에서 **비밀번호 확인** 버튼을 클릭하여 Windows 서버에 설정된 비밀번호를 확인합니다.
 
@@ -201,7 +205,8 @@ Windows 서버에 접속하려면, NHN Cloud 콘솔에서 접속하려는 Window
 
 **비밀번호 확인** 옆의 **연결** 버튼을 클릭해 원격 데스크톱 접속 설정이 저장된 .rdp 파일을 받아서 실행하면 Windows 서버에 접속합니다. Windows 서버의 ID는 `Administrator`이며, 비밀번호는 NHN Cloud 콘솔에서 확인한 비밀번호를 이용합니다.
 
-### 시리얼 콘솔 접속 방법
+<a id="how-to-connect-serial-console"></a>
+### 시리얼 콘솔 접속 방법 { #how-to-connect-serial-console }
 
 부팅 실패, 네트워크 구성 문제와 같이 SSH 클라이언트를 사용할 수 없는 상황에서 시리얼 콘솔에 연결하여 인스턴스에 접속할 수 있습니다. 
 
@@ -217,6 +222,7 @@ Windows 서버에 접속하려면, NHN Cloud 콘솔에서 접속하려는 Window
 > 시리얼 콘솔로 인스턴스에 접속하여 부팅 방법 변경 시 부팅에 실패할 수 있으며, 이에 따른 결과에 대한 책임은 사용자에게 있습니다.
 > 일반적인 상황에서는 SSH 클라이언트 접속 사용을 권장합니다.
 
+<a id="how-to-connect-serial-console-change-grub-bootloader-settings"></a>
 #### GRUB 부트로더 설정 변경
 
 2024년 11월 26일 배포 이전에 생성한 인스턴스에서 부트로더를 조작하기 위해서는 GRUB 설정이 필요합니다.
