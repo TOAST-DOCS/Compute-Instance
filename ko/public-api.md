@@ -1375,8 +1375,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="additional-instance-features-1"></a>
-### 인스턴스 종료 { #additional-instance-features-1 }
+<a id="terminate-instance"></a>
+### 인스턴스 종료 { #terminate-instance }
 
 인스턴스를 종료하고 상태를 **SHELVED_OFFLOADED**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE**여야 합니다.
 
@@ -1385,7 +1385,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-1-request"></a>
+<a id="terminate-instance-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명          |
 |---|---|---|---|-------------|
@@ -1406,14 +1406,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-1-response"></a>
+<a id="terminate-instance-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="additional-instance-features-2"></a>
-### 인스턴스 재시작 { #additional-instance-features-2 }
+<a id="restart-instance"></a>
+### 인스턴스 재시작 { #restart-instance }
 
 인스턴스를 재시작합니다. 재시작 방식은 **SOFT**와 **HARD**로 나눌 수 있습니다.
 
@@ -1432,7 +1432,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-2-request"></a>
+<a id="restart-instance-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
@@ -1456,14 +1456,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-2-response"></a>
+<a id="restart-instance-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="additional-instance-features-3"></a>
-### 인스턴스 타입 변경 { #additional-instance-features-3 }
+<a id="change-instance-flavor"></a>
+### 인스턴스 타입 변경 { #change-instance-flavor }
 
 인스턴스 타입을 변경합니다. 인스턴스가 **ACTIVE**이거나 **SHUTOFF** 상태일 때만 인스턴스 타입 변경할 수 있습니다. 인스턴스의 상태가 **ACTIVE**인 경우에는 인스턴스 타입 변경 과정에서 인스턴스는 중지되고 다시 시작됩니다.
 
@@ -1475,7 +1475,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-3-request"></a>
+<a id="change-instance-flavor-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                                 |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1499,14 +1499,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-3-response"></a>
+<a id="change-instance-flavor-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="additional-instance-features-4"></a>
-### 인스턴스 이미지 생성 { #additional-instance-features-4 }
+<a id="create-instance-image"></a>
+### 인스턴스 이미지 생성 { #create-instance-image }
 
 인스턴스로부터 이미지를 생성합니다. `U2` 타입의 인스턴스만 이 API를 통해 이미지를 생성할 수 있습니다. `U2` 타입 이외의 인스턴스 이미지 생성은 [블록 스토리지 API](/Storage/Block Storage/ko/public-api/#create-image-with-block-storage)를 참고합니다.
 
@@ -1522,7 +1522,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-4-request"></a>
+<a id="create-instance-image-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
@@ -1551,7 +1551,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-4-response"></a>
+<a id="create-instance-image-response"></a>
 #### 응답
 
 이 API는 응답 본문을 반환하지 않습니다. 생성된 이미지는 응답 헤더의 `Location`으로 확인합니다.
@@ -1562,8 +1562,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="additional-instance-features-5"></a>
-### 보안 그룹 추가 { #additional-instance-features-5 }
+<a id="add-security-group"></a>
+### 보안 그룹 추가 { #add-security-group }
 
 인스턴스에 보안 그룹을 추가합니다. 추가한 보안 그룹은 인스턴스의 모든 포트에 적용됩니다.
 
@@ -1572,7 +1572,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-5-request"></a>
+<a id="add-security-group-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
@@ -1597,14 +1597,14 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-5-response"></a>
+<a id="add-security-group-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
 ---
 
-<a id="additional-instance-features-6"></a>
-### 보안 그룹 삭제 { #additional-instance-features-6 }
+<a id="delete-security-group"></a>
+### 보안 그룹 삭제 { #delete-security-group }
 
 인스턴스에서 보안 그룹을 삭제합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 삭제됩니다.
 
@@ -1613,7 +1613,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-6-request"></a>
+<a id="delete-security-group-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
@@ -1638,7 +1638,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-6-response"></a>
+<a id="delete-security-group-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
@@ -1836,8 +1836,8 @@ X-Auth-Token: {tokenId}
 <a id="placement-policy"></a>
 ## 배치 정책 { #placement-policy }
 
-<a id="create-placement-policy"></a>
-### 배치 정책 생성하기 { #create-placement-policy }
+<a id="create-a-placement-policy"></a>
+### 배치 정책 생성하기 { #create-a-placement-policy }
 
 배치 정책을 생성합니다.
 분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
@@ -1847,7 +1847,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-placement-policy-request"></a>
+<a id="create-a-placement-policy-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
@@ -1875,7 +1875,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="create-placement-policy-response"></a>
+<a id="create-a-placement-policy-response"></a>
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |
@@ -1907,15 +1907,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="list-placement-policies"></a>
-### 배치 정책 목록 보기 { #list-placement-policies }
+<a id="view-the-list-of-placement-policies"></a>
+### 배치 정책 목록 보기 { #view-the-list-of-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="list-placement-policies-request"></a>
+<a id="view-the-list-of-placement-policies-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1925,7 +1925,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
-<a id="list-placement-policies-response"></a>
+<a id="view-the-list-of-placement-policies-response"></a>
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |

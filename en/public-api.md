@@ -1374,8 +1374,8 @@ This API does not return a response body.
 
 ---
 
-<a id="additional-instance-features-1"></a>
-### Terminate Instance { #additional-instance-features-1 }
+<a id="terminate-instance"></a>
+### Terminate Instance { #terminate-instance }
 
 Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
 
@@ -1384,7 +1384,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-1-request"></a>
+<a id="terminate-instance-request"></a>
 #### Request
 | Name | Type | Format | Required | Description          |
 |---|---|---|---|-------------|
@@ -1405,14 +1405,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-1-response"></a>
+<a id="terminate-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="additional-instance-features-2"></a>
-### Restart Instance { #additional-instance-features-2 }
+<a id="restart-instance"></a>
+### Restart Instance { #restart-instance }
 
 Restart an instance. An instance can be restarted using either a **SOFT** restart or a **HARD** restart.
 
@@ -1431,7 +1431,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-2-request"></a>
+<a id="restart-instance-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1455,14 +1455,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-2-response"></a>
+<a id="restart-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="additional-instance-features-3"></a>
-### Change Instance Flavor { #additional-instance-features-3 }
+<a id="change-instance-flavor"></a>
+### Change Instance Flavor { #change-instance-flavor }
 
 Change the flavor of an instance. Flavors can only be changed when an instance is **ACTIVE** or **SHUTOFF**. If an instance is **ACTIVE**, the instance is stopped and restarted while changing flavors.
 
@@ -1474,7 +1474,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-3-request"></a>
+<a id="change-instance-flavor-request"></a>
 #### Request
 | Name | Type | Format | Required | Description                                                                                                                                                                                                                 |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1498,14 +1498,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-3-response"></a>
+<a id="change-instance-flavor-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="additional-instance-features-4"></a>
-### Create Instance Image { #additional-instance-features-4 }
+<a id="create-instance-image"></a>
+### Create Instance Image { #create-instance-image }
 
 Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/en/public-api/#create-image-with-block-storage).
 
@@ -1521,7 +1521,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-4-request"></a>
+<a id="create-instance-image-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1550,7 +1550,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-4-response"></a>
+<a id="create-instance-image-response"></a>
 #### Response
 
 This API does not return a response body. Check the `Location` response header for the created image.
@@ -1561,8 +1561,8 @@ This API does not return a response body. Check the `Location` response header f
 
 ---
 
-<a id="additional-instance-features-5"></a>
-### Add Security Group { #additional-instance-features-5 }
+<a id="add-security-group"></a>
+### Add Security Group { #add-security-group }
 
 Add a security group to an instance. The added security group is applied to all ports of the instance.
 
@@ -1571,7 +1571,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-5-request"></a>
+<a id="add-security-group-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1596,14 +1596,14 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-5-response"></a>
+<a id="add-security-group-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="additional-instance-features-6"></a>
-### Delete Security Group { #additional-instance-features-6 }
+<a id="delete-security-group"></a>
+### Delete Security Group { #delete-security-group }
 
 Delete a security group from an instance. The specified security group is deleted from all ports of the instance.
 
@@ -1612,7 +1612,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-6-request"></a>
+<a id="delete-security-group-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1637,7 +1637,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-6-response"></a>
+<a id="delete-security-group-response"></a>
 #### Response
 This API does not return a response body.
 
@@ -1835,8 +1835,8 @@ This API does not return a response body.
 <a id="placement-policy"></a>
 ## Placement Policy { #placement-policy }
 
-<a id="create-placement-policy"></a>
-### Create a Placement policy { #create-placement-policy }
+<a id="create-a-placement-policy"></a>
+### Create a Placement policy { #create-a-placement-policy }
 
 Creates a placement policy.
 Provides only the `anti-affinity` placement policy type for distributed placement.
@@ -1846,7 +1846,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-placement-policy-request"></a>
+<a id="create-a-placement-policy-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
@@ -1874,7 +1874,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="create-placement-policy-response"></a>
+<a id="create-a-placement-policy-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1906,15 +1906,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="list-placement-policies"></a>
-### View the list of Placement policies { #list-placement-policies }
+<a id="view-the-list-of-placement-policies"></a>
+### View the list of Placement policies { #view-the-list-of-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="list-placement-policies-request"></a>
+<a id="view-the-list-of-placement-policies-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -1924,7 +1924,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
-<a id="list-placement-policies-response"></a>
+<a id="view-the-list-of-placement-policies-response"></a>
 #### Response
 
 | Name | Type | Format | Description |

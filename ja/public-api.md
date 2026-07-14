@@ -1375,8 +1375,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="additional-instance-features-1"></a>
-### インスタンス停止 { #additional-instance-features-1 }
+<a id="terminate-instance"></a>
+### インスタンス停止 { #terminate-instance }
 
 インスタンスを終了し、状態を**SHELVED_OFFLOADED**に変更します。このAPIを呼び出すためには、インスタンスの状態が**ACTIVE**でなければなりません。
 
@@ -1385,7 +1385,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-1-request"></a>
+<a id="terminate-instance-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明         |
 |---|---|---|---|-------------|
@@ -1406,14 +1406,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-1-response"></a>
+<a id="terminate-instance-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
 ---
 
-<a id="additional-instance-features-2"></a>
-### インスタンス再起動 { #additional-instance-features-2 }
+<a id="restart-instance"></a>
+### インスタンス再起動 { #restart-instance }
 
 インスタンスを再起動します。再起動の方法は**SOFT**と**HARD**があります。
 
@@ -1432,7 +1432,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-2-request"></a>
+<a id="restart-instance-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
@@ -1456,14 +1456,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-2-response"></a>
+<a id="restart-instance-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
 ---
 
-<a id="additional-instance-features-3"></a>
-### インスタンスタイプ変更 { #additional-instance-features-3 }
+<a id="change-instance-flavor"></a>
+### インスタンスタイプ変更 { #change-instance-flavor }
 
 インスタンスタイプを変更します。インスタンスが**ACTIVE**または**SHUTOFF**状態の時のみインスタンスタイプを変更できます。インスタンスの状態が**ACTIVE**の場合はインスタンスタイプ変更過程でインスタンスは停止し、再起動します。
 
@@ -1475,7 +1475,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-3-request"></a>
+<a id="change-instance-flavor-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1499,14 +1499,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="additional-instance-features-3-response"></a>
+<a id="change-instance-flavor-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
 ---
 
-<a id="additional-instance-features-4"></a>
-### インスタンスイメージ作成 { #additional-instance-features-4 }
+<a id="create-instance-image"></a>
+### インスタンスイメージ作成 { #create-instance-image }
 
 インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するには[ブロックストレージAPI](/Storage/Block Storage/ja/public-api/#create-image-with-block-storage)を参照します。
 
@@ -1522,7 +1522,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-4-request"></a>
+<a id="create-instance-image-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
@@ -1551,7 +1551,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-4-response"></a>
+<a id="create-instance-image-response"></a>
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。作成されたイメージはレスポンスヘッダの`Location`で確認します。
@@ -1562,8 +1562,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="additional-instance-features-5"></a>
-### セキュリティグループ追加 { #additional-instance-features-5 }
+<a id="add-security-group"></a>
+### セキュリティグループ追加 { #add-security-group }
 
 インスタンスにセキュリティグループを追加します。追加したセキュリティグループはインスタンスのすべてのポートに適用されます。
 
@@ -1572,7 +1572,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-5-request"></a>
+<a id="add-security-group-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
@@ -1597,14 +1597,14 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-5-response"></a>
+<a id="add-security-group-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
 ---
 
-<a id="additional-instance-features-6"></a>
-### セキュリティグループ削除 { #additional-instance-features-6 }
+<a id="delete-security-group"></a>
+### セキュリティグループ削除 { #delete-security-group }
 
 インスタンスからセキュリティグループを削除します。インスタンスのすべてのポートから指定したセキュリティグループが削除されます。
 
@@ -1613,7 +1613,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
-<a id="additional-instance-features-6-request"></a>
+<a id="delete-security-group-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
@@ -1638,7 +1638,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="additional-instance-features-6-response"></a>
+<a id="delete-security-group-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
@@ -1835,8 +1835,8 @@ X-Auth-Token: {tokenId}
 <a id="placement-policy"></a>
 ## 配置ポリシー { #placement-policy }
 
-<a id="create-placement-policy"></a>
-### 配置ポリシーを作成する { #create-placement-policy }
+<a id="create-a-placement-policy"></a>
+### 配置ポリシーを作成する { #create-a-placement-policy }
 
 配置ポリシーを作成します。
 分散バッチのための`anti-affinity`配置ポリシータイプのみ提供します。
@@ -1846,7 +1846,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-placement-policy-request"></a>
+<a id="create-a-placement-policy-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
@@ -1874,7 +1874,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="create-placement-policy-response"></a>
+<a id="create-a-placement-policy-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
@@ -1906,15 +1906,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="list-placement-policies"></a>
-### 配置ポリシーリスト表示 { #list-placement-policies }
+<a id="view-the-list-of-placement-policies"></a>
+### 配置ポリシーリスト表示 { #view-the-list-of-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="list-placement-policies-request"></a>
+<a id="view-the-list-of-placement-policies-request"></a>
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
@@ -1924,7 +1924,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
-<a id="list-placement-policies-response"></a>
+<a id="view-the-list-of-placement-policies-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
