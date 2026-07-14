@@ -1121,14 +1121,14 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance"></a>
-### インスタンスに接続されたブロックストレージ表示 { #manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance }
+<a id="show-additional-block-storage-attached-to-the-instance"></a>
+### インスタンスに接続されたブロックストレージ表示 { #show-additional-block-storage-attached-to-the-instance }
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-request"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-request"></a>
 #### リクエスト
 このAPIはリクエスト本文を要求しません。
 
@@ -1139,7 +1139,7 @@ X-Auth-Token: {tokenId}
 | volumeId | URL | UUID | O | 照会するブロックストレージID |
 | tokenId | Header | String | O | トークンID |
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-response"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
