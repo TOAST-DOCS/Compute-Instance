@@ -1642,8 +1642,8 @@ X-Auth-Token: {tokenId}
 This API does not return a response body.
 
 
-<a id="terminate-instance"></a>
-## Instance Metadata { #terminate-instance }
+<a id="instance-metadata"></a>
+## Instance Metadata { #instance-metadata }
 
 The values of the instance metadata determine the content of the instance details screen on the **Compute > Instance** service page in the console. The contents by instance metadata are as follows
 
@@ -1707,15 +1707,15 @@ This API does not require a request body.
 </details>
 
 
-<a id="restart-instance"></a>
-### View Instance Metadata { #restart-instance }
+<a id="view-instance-metadata"></a>
+### View Instance Metadata { #view-instance-metadata }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="restart-instance-request"></a>
+<a id="view-instance-metadata-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1726,7 +1726,7 @@ This API does not require a request body.
 | key      | URL | String | O | Key for metadata to create or modify on the instance |
 | tokenId  | Header | String | O | Token ID                    |
 
-<a id="restart-instance-response"></a>
+<a id="view-instance-metadata-response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1747,8 +1747,8 @@ This API does not require a request body.
 </p>
 </details>
 
-<a id="change-instance-flavor"></a>
-### Create/Modify Instance Metadata { #change-instance-flavor }
+<a id="createmodify-instance-metadata"></a>
+### Create/Modify Instance Metadata { #createmodify-instance-metadata }
 
 Create or modify metadata for the instance.
 If the key you are requesting matches an existing key, change the key-value to the requested value.
@@ -1758,7 +1758,7 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="change-instance-flavor-request"></a>
+<a id="createmodify-instance-metadata-request"></a>
 #### Request
 | Name       | Type | Format | Required | Description                                               |
 |----------|---|---|---|--------------------------------------------------|
@@ -1784,7 +1784,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="change-instance-flavor-response"></a>
+<a id="createmodify-instance-metadata-response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1806,8 +1806,8 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="create-instance-image"></a>
-### Delete Instance Metadata { #create-instance-image }
+<a id="delete-instance-metadata"></a>
+### Delete Instance Metadata { #delete-instance-metadata }
 
 Delete metadata for instances that match the key you're requesting.
 
@@ -1816,7 +1816,7 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-instance-image-request"></a>
+<a id="delete-instance-metadata-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1827,7 +1827,7 @@ This API does not require a request body.
 | key      | URL | String | O | The key to the metadata you want to delete from the instance |
 | tokenId  | Header | String | O | Token ID               |
 
-<a id="create-instance-image-response"></a>
+<a id="delete-instance-metadata-response"></a>
 #### Response
 This API does not return a response body.
 
@@ -1835,8 +1835,8 @@ This API does not return a response body.
 <a id="placement-policy"></a>
 ## Placement Policy { #placement-policy }
 
-<a id="add-security-group"></a>
-### Create a Placement policy { #add-security-group }
+<a id="create-placement-policy"></a>
+### Create a Placement policy { #create-placement-policy }
 
 Creates a placement policy.
 Provides only the `anti-affinity` placement policy type for distributed placement.
@@ -1846,7 +1846,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="add-security-group-request"></a>
+<a id="create-placement-policy-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
@@ -1874,7 +1874,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="add-security-group-response"></a>
+<a id="create-placement-policy-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1906,15 +1906,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="delete-security-group"></a>
-### View the list of Placement policies { #delete-security-group }
+<a id="list-placement-policies"></a>
+### View the list of Placement policies { #list-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="delete-security-group-request"></a>
+<a id="list-placement-policies-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -1924,7 +1924,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
-<a id="delete-security-group-response"></a>
+<a id="list-placement-policies-response"></a>
 #### Response
 
 | Name | Type | Format | Description |

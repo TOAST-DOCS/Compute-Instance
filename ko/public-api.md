@@ -1643,8 +1643,8 @@ X-Auth-Token: {tokenId}
 이 API는 응답 본문을 반환하지 않습니다.
 
 
-<a id="terminate-instance"></a>
-## 인스턴스 메타데이터 { #terminate-instance }
+<a id="instance-metadata"></a>
+## 인스턴스 메타데이터 { #instance-metadata }
 
 인스턴스 메타데이터 값에 따라 콘솔의 **Compute > Instance** 서비스 페이지에서 인스턴스 상세 정보 화면의 내용을 결정합니다. 인스턴스 메타데이터별 내용은 다음과 같습니다.
 
@@ -1708,15 +1708,15 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="restart-instance"></a>
-### 인스턴스 메타데이터 보기 { #restart-instance }
+<a id="view-instance-metadata"></a>
+### 인스턴스 메타데이터 보기 { #view-instance-metadata }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="restart-instance-request"></a>
+<a id="view-instance-metadata-request"></a>
 #### 요청
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1727,7 +1727,7 @@ X-Auth-Token: {tokenId}
 | key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키 |
 | tokenId  | Header | String | O | 토큰 ID                    |
 
-<a id="restart-instance-response"></a>
+<a id="view-instance-metadata-response"></a>
 #### 응답
 
 | 이름   | 종류 | 형식 | 설명                                               |
@@ -1748,8 +1748,8 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="change-instance-flavor"></a>
-### 인스턴스 메타데이터 생성/수정하기 { #change-instance-flavor }
+<a id="createmodify-instance-metadata"></a>
+### 인스턴스 메타데이터 생성/수정하기 { #createmodify-instance-metadata }
 
 인스턴스의 메타데이터를 생성하거나 수정합니다.
 요청하는 키가 기존 키와 일치하는 경우 키-값을 요청 값으로 변경합니다.
@@ -1759,7 +1759,7 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="change-instance-flavor-request"></a>
+<a id="createmodify-instance-metadata-request"></a>
 #### 요청
 | 이름       | 종류 | 형식 | 필수 | 설명                                               |
 |----------|---|---|---|--------------------------------------------------|
@@ -1785,7 +1785,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="change-instance-flavor-response"></a>
+<a id="createmodify-instance-metadata-response"></a>
 #### 응답
 
 | 이름   | 종류 | 형식 | 설명                                               |
@@ -1807,8 +1807,8 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="create-instance-image"></a>
-### 인스턴스 메타데이터 삭제하기 { #create-instance-image }
+<a id="delete-instance-metadata"></a>
+### 인스턴스 메타데이터 삭제하기 { #delete-instance-metadata }
 
 요청하는 키와 일치하는 인스턴스의 메타데이터를 삭제합니다.
 
@@ -1817,7 +1817,7 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-instance-image-request"></a>
+<a id="delete-instance-metadata-request"></a>
 #### 요청
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1828,7 +1828,7 @@ X-Auth-Token: {tokenId}
 | key      | URL | String | O | 인스턴스에서 삭제할 메타데이터의 키 |
 | tokenId  | Header | String | O | 토큰 ID               |
 
-<a id="create-instance-image-response"></a>
+<a id="delete-instance-metadata-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
@@ -1836,8 +1836,8 @@ X-Auth-Token: {tokenId}
 <a id="placement-policy"></a>
 ## 배치 정책 { #placement-policy }
 
-<a id="add-security-group"></a>
-### 배치 정책 생성하기 { #add-security-group }
+<a id="create-placement-policy"></a>
+### 배치 정책 생성하기 { #create-placement-policy }
 
 배치 정책을 생성합니다.
 분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
@@ -1847,7 +1847,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="add-security-group-request"></a>
+<a id="create-placement-policy-request"></a>
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
@@ -1875,7 +1875,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="add-security-group-response"></a>
+<a id="create-placement-policy-response"></a>
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |
@@ -1907,15 +1907,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="delete-security-group"></a>
-### 배치 정책 목록 보기 { #delete-security-group }
+<a id="list-placement-policies"></a>
+### 배치 정책 목록 보기 { #list-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="delete-security-group-request"></a>
+<a id="list-placement-policies-request"></a>
 #### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
@@ -1925,7 +1925,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
-<a id="delete-security-group-response"></a>
+<a id="list-placement-policies-response"></a>
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |

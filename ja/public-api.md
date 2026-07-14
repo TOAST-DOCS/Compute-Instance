@@ -1643,8 +1643,8 @@ X-Auth-Token: {tokenId}
 このAPIはレスポンス本文を返しません。
 
 
-<a id="terminate-instance"></a>
-## インスタンスメタデータ { #terminate-instance }
+<a id="instance-metadata"></a>
+## インスタンスメタデータ { #instance-metadata }
 
 インスタンスメタデータ値に基づいてコンソールの**Compute > Instance**サービスページでインスタンス詳細情報画面の内容を決定します。インスタンスメタデータの内容は次のとおりです。
 
@@ -1707,15 +1707,15 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="restart-instance"></a>
-### インスタンスメタデータ表示 { #restart-instance }
+<a id="view-instance-metadata"></a>
+### インスタンスメタデータ表示 { #view-instance-metadata }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="restart-instance-request"></a>
+<a id="view-instance-metadata-request"></a>
 #### リクエスト
 このAPIはリクエスト本文を要求しません。
 
@@ -1726,7 +1726,7 @@ X-Auth-Token: {tokenId}
 | key      | URL | String | O | インスタンスに作成または修正するメタデータのキー |
 | tokenId  | Header | String | O | トークンID                    |
 
-<a id="restart-instance-response"></a>
+<a id="view-instance-metadata-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明                                             |
@@ -1747,8 +1747,8 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="change-instance-flavor"></a>
-### インスタンスメタデータを作成/修正する { #change-instance-flavor }
+<a id="createmodify-instance-metadata"></a>
+### インスタンスメタデータを作成/修正する { #createmodify-instance-metadata }
 
 インスタンスのメタデータを作成または修正します。
 リクエストするキーが既存のキーと一致する場合、キーと値をリクエスト値に変更します。
@@ -1758,7 +1758,7 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="change-instance-flavor-request"></a>
+<a id="createmodify-instance-metadata-request"></a>
 #### リクエスト
 | 名前     | 種類 | 形式 | 必須 | 説明                                             |
 |----------|---|---|---|--------------------------------------------------|
@@ -1784,7 +1784,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="change-instance-flavor-response"></a>
+<a id="createmodify-instance-metadata-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明                                             |
@@ -1806,8 +1806,8 @@ X-Auth-Token: {tokenId}
 </details>
 
 
-<a id="create-instance-image"></a>
-### インスタンスメタデータを削除する { #create-instance-image }
+<a id="delete-instance-metadata"></a>
+### インスタンスメタデータを削除する { #delete-instance-metadata }
 
 リクエストするキーと一致するインスタンスのメタデータを削除します。
 
@@ -1816,7 +1816,7 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="create-instance-image-request"></a>
+<a id="delete-instance-metadata-request"></a>
 #### リクエスト
 このAPIはリクエスト本文を要求しません。
 
@@ -1827,7 +1827,7 @@ X-Auth-Token: {tokenId}
 | key      | URL | String | O | インスタンスから削除するメタデータのキー |
 | tokenId  | Header | String | O | トークンID               |
 
-<a id="create-instance-image-response"></a>
+<a id="delete-instance-metadata-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
 
@@ -1835,8 +1835,8 @@ X-Auth-Token: {tokenId}
 <a id="placement-policy"></a>
 ## 配置ポリシー { #placement-policy }
 
-<a id="add-security-group"></a>
-### 配置ポリシーを作成する { #add-security-group }
+<a id="create-placement-policy"></a>
+### 配置ポリシーを作成する { #create-placement-policy }
 
 配置ポリシーを作成します。
 分散バッチのための`anti-affinity`配置ポリシータイプのみ提供します。
@@ -1846,7 +1846,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="add-security-group-request"></a>
+<a id="create-placement-policy-request"></a>
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
@@ -1874,7 +1874,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="add-security-group-response"></a>
+<a id="create-placement-policy-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
@@ -1906,15 +1906,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-<a id="delete-security-group"></a>
-### 配置ポリシーリスト表示 { #delete-security-group }
+<a id="list-placement-policies"></a>
+### 配置ポリシーリスト表示 { #list-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
-<a id="delete-security-group-request"></a>
+<a id="list-placement-policies-request"></a>
 #### リクエスト
 
 このAPIはリクエスト本文を要求しません。
@@ -1924,7 +1924,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
-<a id="delete-security-group-response"></a>
+<a id="list-placement-policies-response"></a>
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
