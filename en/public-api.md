@@ -1,5 +1,7 @@
+<!-- pre-align:aligned sig=41074081f05b -->
+
 <a id="compute-instance-api-v2-guide"></a>
-## Compute > Instance > API v2 Guide
+## Compute > Instance > API v2 Guide { #compute-instance-api-v2-guide }
 
 Instance uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
@@ -12,16 +14,17 @@ The Instance API uses the `compute` type endpoint. For the exact endpoint, see `
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, and as such refrain from using them since they may be changed without prior notice.
 
 <a id="instance-flavors"></a>
-## Instance Flavors
+## Instance Flavors { #instance-flavors }
 
 <a id="list-flavors"></a>
-### List Flavors
+### List Flavors { #list-flavors }
 
 ```
 GET /v2/{tenantId}/flavors
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-flavors-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -33,6 +36,7 @@ This API does not require a request body.
 | minDisk | Query | Integer | - | Minimum block storage size (GB)<br>Returns only flavors with block storage sizes greater than specified value |
 | minRam | Query | Integer | - | Minimum RAM Size (MB)<br>Returns only flavors with RAM sizes greater than specified value |
 
+<a id="list-flavors-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -87,13 +91,14 @@ This API does not require a request body.
 ---
 
 <a id="list-flavors-with-details"></a>
-### List Flavors with Details
+### List Flavors with Details { #list-flavors-with-details }
 
 ```
 GET /v2/{tenantId}/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-flavors-with-details-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -105,6 +110,7 @@ This API does not require a request body.
 | minDisk | Query | Integer | - | Minimum block storage size (GB)<br/>Returns only flavors with block storage sizes greater than specified value |
 | minRam | Query | Integer | - | Minimum RAM Size (MB)<br/>Returns only flavors with RAM sizes greater than specified value |
 
+<a id="list-flavors-with-details-response"></a>
 #### Response
 
 | Name | Type | Format | Description             |
@@ -189,16 +195,17 @@ This API does not require a request body.
 ---
 
 <a id="availability-zones"></a>
-## Availability Zones
+## Availability Zones { #availability-zones }
 
 <a id="list-availability-zones"></a>
-### List Availability Zones
+### List Availability Zones { #list-availability-zones }
 
 ```
 GET /v2/{tenantId}/os-availability-zone
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-availability-zones-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -207,6 +214,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-availability-zones-response"></a>
 #### Response
 | Name | Type | Format | Description |
 |---|---|---|---|
@@ -243,15 +251,16 @@ This API does not require a request body.
 ---
 
 <a id="key-pairs"></a>
-## Key Pairs
+## Key Pairs { #key-pairs }
 
 <a id="list-key-pairs"></a>
-### List Key Pairs
+### List Key Pairs { #list-key-pairs }
 ```
 GET /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-key-pairs-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -260,6 +269,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-key-pairs-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -293,12 +303,13 @@ This API does not require a request body.
 ---
 
 <a id="show-key-pair"></a>
-### Show Key Pair
+### Show Key Pair { #show-key-pair }
 ```
 GET /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="show-key-pair-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -308,6 +319,7 @@ This API does not require a request body.
 | keypairName | URL | String | O | Key pair name |
 | tokenId | Header | String | O | Token ID |
 
+<a id="show-key-pair-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -348,13 +360,14 @@ This API does not require a request body.
 ---
 
 <a id="createregister-key-pair"></a>
-### Create/Register Key Pair
+### Create/Register Key Pair { #createregister-key-pair }
 
 ```
 POST /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
+<a id="createregister-key-pair-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description |
@@ -380,6 +393,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="createregister-key-pair-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -411,12 +425,13 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-key-pair"></a>
-### Delete Key Pair
+### Delete Key Pair { #delete-key-pair }
 ```
 DELETE /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="delete-key-pair-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -426,14 +441,16 @@ This API does not require a request body.
 | keypairName | URL | String | O | Key pair name |
 | tokenId | Header | String | O | Token ID |
 
+<a id="delete-key-pair-response"></a>
 #### Response
 This API does not return a response body.
 
 
-## Instance
+<a id="instance"></a>
+## Instance { #instance }
 
 <a id="instance-status"></a>
-### Instance Status
+### Instance Status { #instance-status }
 
 Instances exist in various statuses, and each status defines its own set of permissible operations. See the following list of instance statuses.
 
@@ -459,13 +476,14 @@ Instances exist in various statuses, and each status defines its own set of perm
 | `UNKNOWN` | Instance status is unknown<br>`Contact the administrator if the instance is in this status.` | 
 
 <a id="list-instances"></a>
-### List Instances
+### List Instances { #list-instances }
 
 ```
 GET /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-instances-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -483,6 +501,7 @@ This API does not require a request body.
 | limit | Query | Integer | - | Number of instances to query<br>Return list with up to specified number of instances |
 | marker | Query | UUID | - | UUID of first instance in the list <br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
 
+<a id="list-instances-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -522,7 +541,7 @@ This API does not require a request body.
 ---
 
 <a id="list-instances-with-details"></a>
-### List Instances with Details
+### List Instances with Details { #list-instances-with-details }
 
 Return the list of instances created in the current tenant, same as List Instances. However, detailed instance information is returned.
 
@@ -531,10 +550,12 @@ GET /v2/{tenantId}/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-instances-with-details-request"></a>
 #### Request
 
 The request format is the same as List Instances.
 
+<a id="list-instances-with-details-response"></a>
 #### Response
 
 | Name | Type | Format | Description                                                                                                                                                                                                        |
@@ -675,13 +696,15 @@ The request format is the same as List Instances.
 
 ---
 
-### Get Instance
+<a id="get-instance"></a>
+### Get Instance { #get-instance }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="get-instance-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -692,6 +715,7 @@ This API does not require a request body.
 | serverId | URL | UUID | O | Instance ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="get-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description                                                                                                                                                                                                       |
@@ -831,7 +855,7 @@ This API does not require a request body.
 ---
 
 <a id="create-instance"></a>
-### Create Instance
+### Create Instance { #create-instance }
 
 Create an instance.
 
@@ -856,6 +880,7 @@ POST /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
 ```
 
+<a id="create-instance-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description |
@@ -931,6 +956,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="create-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description                                                                                                                                                                                                           |
@@ -970,7 +996,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="modify-instance"></a>
-### Modify Instance
+### Modify Instance { #modify-instance }
 Modify created instance. Only some attributes are allowed to be modified.
 
 ```
@@ -978,6 +1004,7 @@ PUT /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="modify-instance-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description |
@@ -1002,13 +1029,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="modify-instance-response"></a>
 #### Response
 Same as Get Instance.
 
 ---
 
 <a id="delete-instance"></a>
-### Delete Instance
+### Delete Instance { #delete-instance }
 Delete a created instance.
 
 ```
@@ -1016,6 +1044,7 @@ DELETE /v2/{tenantId}/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="delete-instance-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1025,20 +1054,23 @@ This API does not require a request body.
 | serverId | URL | UUID | O | Deleting instance ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="delete-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
 <a id="manage-block-storage-attachment"></a>
-## Manage Block Storage Attachment
+## Manage Block Storage Attachment { #manage-block-storage-attachment }
 
-### List additional block storage attached to the instance
+<a id="list-additional-block-storage-attached-to-the-instance"></a>
+### List additional block storage attached to the instance { #list-additional-block-storage-attached-to-the-instance }
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-additional-block-storage-attached-to-the-instance-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1050,6 +1082,7 @@ This API does not require a request body.
 | limit | Query | Integer | - | Number of volumes to query |
 | offset | Query | Integer | - | Start point of returned list<br>Return block storage starting from offset of the entire list |
 
+<a id="list-additional-block-storage-attached-to-the-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1087,12 +1120,14 @@ This API does not require a request body.
 
 ---
 
-### List additional block storage attached to the instance
+<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance"></a>
+### List additional block storage attached to the instance { #manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance }
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1103,6 +1138,7 @@ This API does not require a request body.
 | volumeId | URL | UUID | O | ID of block storage to query |
 | tokenId | Header | String | O | Token ID |
 
+<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1132,12 +1168,14 @@ This API does not require a request body.
 
 ---
 
-### Attach additional block storage to the instance
+<a id="attach-additional-block-storage-to-the-instance"></a>
+### Attach additional block storage to the instance { #attach-additional-block-storage-to-the-instance }
 ```
 POST /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
+<a id="attach-additional-block-storage-to-the-instance-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description |
@@ -1162,6 +1200,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="attach-additional-block-storage-to-the-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1191,12 +1230,14 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### Detach block storage from the instance
+<a id="detach-block-storage-from-the-instance"></a>
+### Detach block storage from the instance { #detach-block-storage-from-the-instance }
 ```
 DELETE /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="detach-block-storage-from-the-instance-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1207,13 +1248,14 @@ This API does not require a request body.
 | volumeId | URL | UUID | O | ID of block storage to detach |
 | tokenId | Header | String | O | Token ID |
 
+<a id="detach-block-storage-from-the-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
 <a id="additional-instance-features"></a>
-## Additional Instance Features
+## Additional Instance Features { #additional-instance-features }
 NHN Cloud provides the following additional features to handle instances.
 
 * Start, Stop, Terminate, and Restart Instance
@@ -1221,7 +1263,8 @@ NHN Cloud provides the following additional features to handle instances.
 * Create Instance Image
 * Add/Delete Security Group
 
-### Start Stopped Instance
+<a id="start-stopped-instance"></a>
+### Start Stopped Instance { #start-stopped-instance }
 
 Restart a stopped instance and change its status to **ACTIVE**. To call this API, the instance status must be **SHUTOFF**.
 
@@ -1230,6 +1273,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="start-stopped-instance-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1250,12 +1294,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="start-stopped-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-### Start Terminated Instance
+<a id="start-terminated-instance"></a>
+### Start Terminated Instance { #start-terminated-instance }
 
 Restart a terminated instance and changes its status to **ACTIVE**. To call this API, the instance's state must be **SHELVED_OFFLOADED**.
 
@@ -1264,6 +1310,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="start-terminated-instance-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |--|---|---|---|--|
@@ -1284,13 +1331,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="start-terminated-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
 <a id="stop-instance"></a>
-### Stop Instance
+### Stop Instance { #stop-instance }
 
 Stop instance and change its status to **SHUTOFF**. To call this API, the instance status must be either **ACTIVE** or **ERROR**.
 
@@ -1299,6 +1347,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="stop-instance-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1319,13 +1368,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="stop-instance-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="terminate-instance"></a>
-## Terminate Instance
+<a id="additional-instance-features-1"></a>
+### Terminate Instance { #additional-instance-features-1 }
 
 Terminate the instance and change its status to **SHELVED_OFFLOADED**. The instance's status must be **ACTIVE** to call this API.
 
@@ -1334,6 +1384,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-1-request"></a>
 #### Request
 | Name | Type | Format | Required | Description          |
 |---|---|---|---|-------------|
@@ -1354,13 +1405,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="additional-instance-features-1-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="restart-instance"></a>
-### Restart Instance
+<a id="additional-instance-features-2"></a>
+### Restart Instance { #additional-instance-features-2 }
 
 Restart an instance. An instance can be restarted using either a **SOFT** restart or a **HARD** restart.
 
@@ -1379,6 +1431,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-2-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1402,13 +1455,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="additional-instance-features-2-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="change-instance-flavor"></a>
-### Change Instance Flavor
+<a id="additional-instance-features-3"></a>
+### Change Instance Flavor { #additional-instance-features-3 }
 
 Change the flavor of an instance. Flavors can only be changed when an instance is **ACTIVE** or **SHUTOFF**. If an instance is **ACTIVE**, the instance is stopped and restarted while changing flavors.
 
@@ -1420,6 +1474,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-3-request"></a>
 #### Request
 | Name | Type | Format | Required | Description                                                                                                                                                                                                                 |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1443,13 +1498,14 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="additional-instance-features-3-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="create-instance-image"></a>
-### Create Instance Image
+<a id="additional-instance-features-4"></a>
+### Create Instance Image { #additional-instance-features-4 }
 
 Create an image from an instance. Only `U2` flavor instances can create images via this API. To create images of non-`U2` flavor instances, see [Block Storage API\](/Storage/Block Storage/en/public-api/#create-image-with-block-storage).
 
@@ -1465,6 +1521,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-4-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1493,6 +1550,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="additional-instance-features-4-response"></a>
 #### Response
 
 This API does not return a response body. Check the `Location` response header for the created image.
@@ -1503,8 +1561,8 @@ This API does not return a response body. Check the `Location` response header f
 
 ---
 
-<a id="add-security-group"></a>
-### Add Security Group
+<a id="additional-instance-features-5"></a>
+### Add Security Group { #additional-instance-features-5 }
 
 Add a security group to an instance. The added security group is applied to all ports of the instance.
 
@@ -1513,6 +1571,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-5-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1537,13 +1596,14 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="additional-instance-features-5-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
-<a id="delete-security-group"></a>
-### Delete Security Group
+<a id="additional-instance-features-6"></a>
+### Delete Security Group { #additional-instance-features-6 }
 
 Delete a security group from an instance. The specified security group is deleted from all ports of the instance.
 
@@ -1552,6 +1612,7 @@ POST /v2/{tenantId}/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="additional-instance-features-6-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |---|---|---|---|--|
@@ -1576,12 +1637,13 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="additional-instance-features-6-response"></a>
 #### Response
 This API does not return a response body.
 
 
 <a id="instance-metadata"></a>
-## Instance Metadata
+## Instance Metadata { #instance-metadata }
 
 The values of the instance metadata determine the content of the instance details screen on the **Compute > Instance** service page in the console. The contents by instance metadata are as follows
 
@@ -1595,13 +1657,15 @@ The values of the instance metadata determine the content of the instance detail
 
 > [Caution] Changing and deleting instance metadata can affect related services and features, and you are responsible for the consequences.
 
-### View a List of Instance Metadata
+<a id="view-a-list-of-instance-metadata"></a>
+### View a List of Instance Metadata { #view-a-list-of-instance-metadata }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata
 X-Auth-Token: {tokenId}
 ```
 
+<a id="view-a-list-of-instance-metadata-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1611,6 +1675,7 @@ This API does not require a request body.
 | serverId | URL | UUID | O | Instance ID                                          |
 | tokenId  | Header | String | O | Token ID                                            |
 
+<a id="view-a-list-of-instance-metadata-response"></a>
 #### Response
 
 | Name       | Type | Format | Description                                               |
@@ -1643,13 +1708,14 @@ This API does not require a request body.
 
 
 <a id="view-instance-metadata"></a>
-### View Instance Metadata
+### View Instance Metadata { #view-instance-metadata }
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="view-instance-metadata-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1660,6 +1726,7 @@ This API does not require a request body.
 | key      | URL | String | O | Key for metadata to create or modify on the instance |
 | tokenId  | Header | String | O | Token ID                    |
 
+<a id="view-instance-metadata-response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1681,7 +1748,7 @@ This API does not require a request body.
 </details>
 
 <a id="createmodify-instance-metadata"></a>
-### Create/Modify Instance Metadata
+### Create/Modify Instance Metadata { #createmodify-instance-metadata }
 
 Create or modify metadata for the instance.
 If the key you are requesting matches an existing key, change the key-value to the requested value.
@@ -1691,6 +1758,7 @@ PUT /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="createmodify-instance-metadata-request"></a>
 #### Request
 | Name       | Type | Format | Required | Description                                               |
 |----------|---|---|---|--------------------------------------------------|
@@ -1716,6 +1784,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 
+<a id="createmodify-instance-metadata-response"></a>
 #### Response
 
 | Name   | Type | Format | Description                                               |
@@ -1738,7 +1807,7 @@ X-Auth-Token: {tokenId}
 
 
 <a id="delete-instance-metadata"></a>
-### Delete Instance Metadata
+### Delete Instance Metadata { #delete-instance-metadata }
 
 Delete metadata for instances that match the key you're requesting.
 
@@ -1747,6 +1816,7 @@ DELETE /v2/{tenantId}/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="delete-instance-metadata-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1757,13 +1827,16 @@ This API does not require a request body.
 | key      | URL | String | O | The key to the metadata you want to delete from the instance |
 | tokenId  | Header | String | O | Token ID               |
 
+<a id="delete-instance-metadata-response"></a>
 #### Response
 This API does not return a response body.
 
 
-## Placement Policy
+<a id="placement-policy"></a>
+## Placement Policy { #placement-policy }
 
-### Create a Placement policy
+<a id="create-placement-policy"></a>
+### Create a Placement policy { #create-placement-policy }
 
 Creates a placement policy.
 Provides only the `anti-affinity` placement policy type for distributed placement.
@@ -1773,6 +1846,7 @@ POST /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
+<a id="create-placement-policy-request"></a>
 #### Request
 | Name | Type | Format | Required | Description |
 |-----|-----|-----|-----|-----|
@@ -1800,6 +1874,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="create-placement-policy-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1831,13 +1906,15 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-### View the list of Placement policies
+<a id="list-placement-policies"></a>
+### View the list of Placement policies { #list-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-placement-policies-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -1847,6 +1924,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-placement-policies-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1892,13 +1970,15 @@ This API does not require a request body.
 </p>
 </details>
 
-### View Placement Policies
+<a id="view-placement-policies"></a>
+### View Placement Policies { #view-placement-policies }
 
 ```
 GET /v2/{tenantId}/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="view-placement-policies-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -1909,6 +1989,7 @@ This API does not require a request body.
 | servergroupId | URL | String | O | Placement policy ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="view-placement-policies-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -1943,13 +2024,15 @@ This API does not require a request body.
 </p>
 </details>
 
-### Deleting a Placement policy
+<a id="deleting-a-placement-policy"></a>
+### Deleting a Placement policy { #deleting-a-placement-policy }
 
 ```
 DELETE /v2/{tenantId}/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="deleting-a-placement-policy-request"></a>
 #### Request
 
 This API does not require a request body.
@@ -1960,6 +2043,7 @@ This API does not require a request body.
 | servergroupId | URL | String | O | Placement policy ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="deleting-a-placement-policy-response"></a>
 #### Response
 
 This API does not return a response body.
