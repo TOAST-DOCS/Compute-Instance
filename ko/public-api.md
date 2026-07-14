@@ -1121,14 +1121,14 @@ X-Auth-Token: {tokenId}
 
 ---
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance"></a>
-### 인스턴스에 연결된 블록 스토리지 보기 { #manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance }
+<a id="show-additional-block-storage-attached-to-the-instance"></a>
+### 인스턴스에 연결된 블록 스토리지 보기 { #show-additional-block-storage-attached-to-the-instance }
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-request"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-request"></a>
 #### 요청
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1139,7 +1139,7 @@ X-Auth-Token: {tokenId}
 | volumeId | URL | UUID | O | 조회할 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-response"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-response"></a>
 #### 응답
 
 | 이름 | 종류 | 형식 | 설명 |

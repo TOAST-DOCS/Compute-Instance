@@ -1120,14 +1120,14 @@ This API does not require a request body.
 
 ---
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance"></a>
-### List additional block storage attached to the instance { #manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance }
+<a id="show-additional-block-storage-attached-to-the-instance"></a>
+### List additional block storage attached to the instance { #show-additional-block-storage-attached-to-the-instance }
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-request"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -1138,7 +1138,7 @@ This API does not require a request body.
 | volumeId | URL | UUID | O | ID of block storage to query |
 | tokenId | Header | String | O | Token ID |
 
-<a id="manage-block-storage-attachment-list-additional-block-storage-attached-to-the-instance-response"></a>
+<a id="show-additional-block-storage-attached-to-the-instance-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
