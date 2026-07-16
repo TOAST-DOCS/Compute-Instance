@@ -1180,3 +1180,158 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
 ```
+
+<a id="valkey-instance"></a>
+## Valkey Instance { #valkey-instance }
+
+<a id="startstop-valkey"></a>
+### Valkeyの起動/停止 { #startstop-valkey }
+```
+# Valkeyサービスの起動
+shell> sudo systemctl start valkey
+
+# Valkeyサービスの停止
+shell> sudo systemctl stop valkey
+
+# Valkeyサービスの再起動
+shell> sudo systemctl restart valkey
+```
+
+<a id="connect-to-valkey"></a>
+### Valkeyへの接続 { #connect-to-valkey }
+`valkey-cli`コマンドを使用してValkeyインスタンスに接続できます。
+```
+shell> valkey-cli
+```
+
+<a id="initial-setup-after-creating-a-valkey-instance"></a>
+### Valkeyインスタンス作成後の初期設定 { #initial-setup-after-creating-a-valkey-instance }
+Valkeyインスタンスのデフォルト設定ファイルは `~/valkey/valkey.conf` です。変更が必要なパラメータについての説明は以下のとおりです。
+
+<a id="initial-setup-after-creating-a-valkey-instance-bind"></a>
+#### bind
+- デフォルト値：`127.0.0.1 -::1`
+- 変更値：`<private ip> 127.0.0.1 -::1`
+
+Valkeyが使用するIPアドレスです。サーバーの外部からValkeyインスタンスにアクセスするには、このパラメータにプライベートIPを追加する必要があります。プライベートIPは`hostname -I`コマンドで確認できます。
+
+<a id="initial-setup-after-creating-a-valkey-instance-port"></a>
+#### port
+- デフォルト値：`6379`
+
+ポートはValkeyのデフォルト値である6379です。セキュリティ上、ポートの変更を推奨します。ポートを変更した後は、以下のコマンドでValkeyに接続できます。
+
+```
+shell> valkey-cli -p <新しいポート>
+```
+
+<a id="initial-setup-after-creating-a-valkey-instance-requirepassmasterauth"></a>
+#### requirepass/masterauth
+- デフォルト値：`nhncloud`
+
+デフォルトのパスワードは`nhncloud`です。セキュリティ上、パスワードの変更を推奨します。レプリケーション接続を使用する場合は、`requirepass`と`masterauth`の値を同時に変更する必要があります。
+
+<a id="valkey-automatic-ha-configuration-script"></a>
+### 自動HA構成スクリプト { #valkey-automatic-ha-configuration-script }
+NHN CloudのValkeyインスタンスでは、HA環境を自動で構成するスクリプトを提供しています。このスクリプトはインストール直後の新規インスタンスでのみ使用でき、`valkey.conf`の設定値を変更した場合は使用できません。
+
+スクリプトを使用するには、以下の設定が必須となります。
+
+##### キーペアのコピー
+インストールスクリプトを実行するインスタンスには、他のインスタンスへの接続に必要なキーペア(PEMファイル)が配置されている必要があります。キーペアは次のようにコピーできます。
+
+- ubuntu
+```
+local> scp -i <キーペア>.pem <キーペア>.pem ubuntu@<floating ip>:/home/ubuntu/
+```
+
+作成したインスタンスのキーペアは、全て同一である必要があります。
+
+##### セキュリティグループの設定
+Valkeyインスタンス間で通信を行うには、セキュリティグループ(**Network** > **Security Groups**)の設定が必要です。以下のルールでセキュリティグループを作成し、Valkeyインスタンスに適用してください。
+
+| 方向 | IPプロトコル | ポート範囲 | Ether | リモート |
+| --- | --- | --- | --- | --- |
+| 受信 | TCP | 6379 | IPv4 | インスタンスIP(CIDR) |
+| 受信 | TCP | 16379 | IPv4 | インスタンスIP(CIDR) |
+| 受信 | TCP | 26379 | IPv4 | インスタンスIP(CIDR) |
+
+<a id="valkey-automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+#### Sentinelの自動構成
+Sentinel構成には、3つのValkeyインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーした後、次のようにスクリプトを実行してください。
+
+```
+shell> sh .valkey_make_sentinel.sh
+```
+
+続いて、接続情報で使用するマスター名(Master Name)と、マスター及びレプリカのプライベートIPを順に入力します。各インスタンスのプライベートIPは`hostname -I`コマンドで確認できます。
+
+```
+shell> sh .valkey_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
+Enter Master's IP: 192.168.0.33
+Enter Replica-1's IP: 192.168.0.27
+Enter Replica-2's IP: 192.168.0.97
+```
+
+コピーしたキーペアのファイル名を入力します。
+```
+shell> Enter Pemkey's name: <キーペア>.pem
+```
+
+<a id="valkey-automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+#### Clusterの自動構成
+Cluster構成には、6つのValkeyインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーした後、次のようにスクリプトを実行してください。
+
+```
+shell> sh .valkey_make_cluster.sh
+```
+
+続いて、クラスターで使用するValkeyインスタンスのプライベートIPを順に入力します。各インスタンスのプライベートIPは`hostname -I`コマンドで確認できます。
+
+```
+shell> sh .valkey_make_cluster.sh
+Enter cluster-1'IP:  192.168.0.79
+Enter cluster-2'IP:  192.168.0.10
+Enter cluster-3'IP:  192.168.0.33
+Enter cluster-4'IP:  192.168.0.116
+Enter cluster-5'IP:  192.168.0.91
+Enter cluster-6'IP:  192.168.0.32
+```
+
+コピーしたキーペアのファイル名を入力します。
+
+```
+shell> Enter Pemkey's name: <キーペア>.pem
+```
+
+`yes`を入力してクラスター構成を完了します。
+```
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.168.0.91:6379 to 192.168.0.79:6379
+Adding replica 192.168.0.32:6379 to 192.168.0.10:6379
+Adding replica 192.168.0.116:6379 to 192.168.0.33:6379
+M: 0a6ee5bf24141f0058c403d8cc42b349cdc09752 192.168.0.79:6379
+   slots:[0-5460] (5461 slots) master
+M: b5d078bd7b30ddef650d9a7fa9735e7648efc86f 192.168.0.10:6379
+   slots:[5461-10922] (5462 slots) master
+M: 0da9b78108b6581bdb90002cbdde3506e9173dd8 192.168.0.33:6379
+   slots:[10923-16383] (5461 slots) master
+S: 078b4ce014a52588e23577b3fc2dabf408723d68 192.168.0.116:6379
+   replicates 0da9b78108b6581bdb90002cbdde3506e9173dd8
+S: caaae4ebd3584c0481205e472d6bd0f9dc5c574e 192.168.0.91:6379
+   replicates 0a6ee5bf24141f0058c403d8cc42b349cdc09752
+S: ab2aa9e37cee48ef8e4237fd63e8301d81193818 192.168.0.32:6379
+   replicates b5d078bd7b30ddef650d9a7fa9735e7648efc86f
+Can I set the above configuration? (type 'yes' to accept):
+```
+
+```
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+```
