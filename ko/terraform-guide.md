@@ -1,11 +1,9 @@
-<!-- pre-align:aligned sig=660ef5a6860f -->
-
 <a id="third-party-user-guide-terraform-user-guide"></a>
-## 서드파티 사용 가이드 > Terraform 사용 가이드 { #third-party-user-guide-terraform-user-guide }
+## 서드파티 사용 가이드 > Terraform 사용 가이드
 이 문서는 Terraform으로 NHN Cloud를 사용하는 방법을 설명합니다.
 
 <a id="terraform"></a>
-## Terraform { #terraform }
+## Terraform
 Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효율적으로 인프라의 형상을 관리할 수 있는 오픈 소스 도구입니다. Terraform의 주요 특징은 다음과 같습니다.
 
 * **Infrastructure as Code**
@@ -75,14 +73,14 @@ Terraform은 인프라를 손쉽게 구축하고 안전하게 변경하고, 효�
 
 
 <a id="note"></a>
-### 알아두기 { #note }
+### 알아두기
 
 * **아래 예시에 사용된 Terraform 버전은 1.0.0입니다.**
 * **버전을 포함한 구성요소의 이름과 숫자는 변경될 수 있으니, 확인 후 사용하시기 바랍니다.**
 
 
 <a id="terraform-installation"></a>
-## Terraform 설치 { #terraform-installation }
+## Terraform 설치
 [Terraform 다운로드 페이지](https://www.terraform.io/downloads.html)에서 로컬 PC의 운영체제에 맞는 파일을 다운로드합니다. 파일의 압축을 해제하고 원하는 경로에 넣은 다음 환경 설정에 해당 경로를 추가하면 설치가 완료됩니다.
 
 다음은 Linux(Ubuntu/Debian) 설치 예시입니다.
@@ -96,13 +94,13 @@ Terraform v1.14.2
 ```
 
 <a id="terraform-provider-provided"></a>
-## Terraform provider 제공 { #terraform-provider-provided }
+## Terraform provider 제공
 
 NHN Cloud는 HashiCorp사의 공식 파트너로서 [Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)를 통해 Terraform provider를 제공합니다.
 
 
 <a id="terraform-initialization"></a>
-## Terraform 초기화 { #terraform-initialization }
+## Terraform 초기화
 Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생성합니다.
 
 공급자 파일 이름은 임의로 설정 가능하며, 이 예제에서는 `provider.tf`를 사용합니다.
@@ -156,7 +154,7 @@ $ terraform init
 
 
 <a id="terraform-usage"></a>
-## Terraform 기본 사용법 { #terraform-usage }
+## Terraform 기본 사용법
 
 Terraform을 이용한 인프라 구축은 보통 아래와 같은 수명 주기(라이프 사이클)를 가집니다.
 
@@ -181,7 +179,7 @@ $ terraform apply
 다음 섹션에서는 이 단계들을 예제와 함께 더 자세히 설명합니다.
 
 <a id="create-tf-files"></a>
-### tf 파일 작성 { #create-tf-files }
+### tf 파일 작성
 
 공급자 설정 파일이 있는 경로에 tf 파일을 작성합니다. 여러 리소스 설정을 하나의 tf 파일에 모아두거나, 리소스별로 별도의 tf 파일로도 작성 가능합니다. Terraform은 작성된 전체 tf 파일을 한번에 읽어서 구축 계획을 수립합니다.
 
@@ -213,7 +211,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 
 
 <a id="check-the-execution-plan"></a>
-### 구축 계획 확인 { #check-the-execution-plan }
+### 구축 계획 확인
 
 tf 파일에서 변경될 리소스를 `plan` 명령으로 확인할 수 있습니다. `plan` 명령을 실행하면 Terraform이 .tf 파일들을 로드해 설정이 올바른지 확인하고 자체 DB와 비교하여 플랜을 생성합니다. 플랜 생성을 완료하면 플랜을 유형별로 집계하여 보기 좋게 출력합니다.
 
@@ -225,7 +223,7 @@ $ terraform plan
 
 
 <a id="create-resources"></a>
-### 리소스 생성하기 { #create-resources }
+### 리소스 생성하기
 
 원하는 플랜으로 tf 파일을 작성한 후에, `apply` 명령으로 리소스를 생성합니다.
 
@@ -247,7 +245,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 
 <a id="modify-resources"></a>
-### 리소스 수정하기 { #modify-resources }
+### 리소스 수정하기
 
 변경할 리소스가 정의된 `.tf` 파일을 열어 원하는 정보를 수정하고 플랜을 적용합니다. 변경할 수 있는 사양은 일부 속성으로 제한됩니다. 만약 변경할 수 없는 속성을 수정하면 해당 리소스는 삭제 후 새롭게 다시 생성됩니다.
 
@@ -300,7 +298,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 
 
 <a id="delete-resources"></a>
-### 리소스 삭제하기 { #delete-resources }
+### 리소스 삭제하기
 
 Terraform으로 생성한 리소스를 지우기 위해 해당하는 `.tf` 파일을 삭제합니다.
 
@@ -340,7 +338,7 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 
 <a id="data-sources"></a>
-## Data sources { #data-sources }
+## Data sources
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
@@ -373,7 +371,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 
 
 <a id="image"></a>
-### 이미지 { #image }
+### 이미지
 
 이미지 정보를 가져옵니다. NHN Cloud가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
 
@@ -408,7 +406,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 
 
 <a id="block-storage"></a>
-### 블록 스토리지 { #block-storage }
+### 블록 스토리지
 
 ```
 data "nhncloud_blockstorage_volume_v2" "volume_00" {
@@ -425,7 +423,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 
 
 <a id="instance-flavor"></a>
-### 인스턴스 타입 { #instance-flavor }
+### 인스턴스 타입
 
 인스턴스 타입 이름은 NHN Cloud 콘솔 **Compute > Instance**에서 **인스턴스 생성 > 인스턴스 타입 선택** 버튼을 클릭해 확인할 수 있습니다.
 
@@ -441,7 +439,7 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 
 
 <a id="key-pair"></a>
-### 키페어 { #key-pair }
+### 키페어
 
 ```
 data "nhncloud_compute_keypair_v2" "my_keypair"{
@@ -455,7 +453,7 @@ data "nhncloud_compute_keypair_v2" "my_keypair"{
 
 
 <a id="snapshot"></a>
-### 스냅숏 { #snapshot }
+### 스냅숏
 
 ```
 data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
@@ -475,7 +473,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 
 
 <a id="vpc"></a>
-### VPC { #vpc }
+### VPC
 
 VPC 네트워크의 UUID는 NHN Cloud 콘솔 **Network > VPC**에서 VPC를 선택하여 확인 가능합니다.
 
@@ -497,7 +495,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 
 <a id="vpc-subnet"></a>
-### VPC 서브넷 { #vpc-subnet }
+### VPC 서브넷
 
 서브넷 ID는 NHN Cloud 콘솔 **Network > 서브넷**에서 서브넷을 선택하여 확인 가능합니다.
 
@@ -521,7 +519,7 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 
 
 <a id="routing-table"></a>
-### 라우팅 테이블 { #routing-table }
+### 라우팅 테이블
 ```
 data "nhncloud_networking_routingtable_v2" "default_rt" {
   id = "bf15f6f6-1339-4057-a7fe-5811d39bab18"
@@ -536,7 +534,7 @@ data "nhncloud_networking_routingtable_v2" "default_rt" {
 
 
 <a id="security-group"></a>
-### 보안 그룹 { #security-group }
+### 보안 그룹
 ```
 data "nhncloud_networking_secgroup_v2" "default_sg" {
   name = "default"
@@ -551,7 +549,7 @@ data "nhncloud_networking_secgroup_v2" "default_sg" {
 
 
 <a id="secret"></a>
-### 시크릿 { #secret }
+### 시크릿
 ```
 data "nhncloud_keymanager_secret_v1" "secret_01" {
   name      = "terraform_secret_01"
@@ -565,7 +563,7 @@ data "nhncloud_keymanager_secret_v1" "secret_01" {
 
 
 <a id="secret-container"></a>
-### 시크릿 컨테이너 { #secret-container }
+### 시크릿 컨테이너
 ```
 data "nhncloud_keymanager_container_v1" "container_01" {
   name      = "terraform_container_01"
@@ -579,7 +577,7 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 
 
 <a id="cluster"></a>
-### 클러스터 { #cluster }
+### 클러스터
 ```
 # UUID로 조회
 data "nhncloud_kubernetes_cluster_v1" "cluster_01" {
@@ -599,7 +597,7 @@ data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
 | name | String | - | 클러스터 이름(UUID 또는 name 중 하나 필수)   |
 
 <a id="node-group"></a>
-### 노드 그룹 { #node-group }
+### 노드 그룹
 ```
 # UUID로 조회
 data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_01" {
@@ -623,7 +621,7 @@ data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
 
 
 <a id="resources"></a>
-## Resources { #resources }
+## Resources
 
 Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습니다. NHN Cloud에서는 Terraform을 통해 다음 리소스 관리를 지원합니다.
 
@@ -640,15 +638,15 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 다음 섹션에는 각 리소스를 사용하는 방법을 설명합니다.
 
 <a id="resources-note"></a>
-### 알아두기 { #resources-note }
+### 알아두기
 
 * 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
 
 <a id="resources-instance"></a>
-## Resources - 인스턴스 { #resources-instance }
+## Resources - 인스턴스
 
 <a id="create-instance"></a>
-### 인스턴스 생성 { #create-instance }
+### 인스턴스 생성
 
 ```
 # 네트워크 추가, 블록 스토리지 추가된 인스턴스 생성
@@ -711,7 +709,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 
 
 <a id="attach-block-storage"></a>
-### 블록 스토리지 연결 { #attach-block-storage }
+### 블록 스토리지 연결
 ```
 # 인스턴스 생성
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
@@ -739,7 +737,7 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 
 
 <a id="resources-instance-key-pair"></a>
-### 키페어 { #resources-instance-key-pair }
+### 키페어
 ```
 resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
   name = "tf_kp_01"
@@ -762,10 +760,10 @@ resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
 
 
 <a id="resources-block-storage"></a>
-## Resources - 블록 스토리지 { #resources-block-storage }
+## Resources - 블록 스토리지
 
 <a id="create-block-storage"></a>
-### 블록 스토리지 생성 { #create-block-storage }
+### 블록 스토리지 생성
 ```
 # HDD 타입의 빈 블록 스토리지 생성
 resource "nhncloud_blockstorage_volume_v2" "volume_01" {
@@ -806,7 +804,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 
 
 <a id="import-block-storage"></a>
-### 블록 스토리지 불러오기 { #import-block-storage }
+### 블록 스토리지 불러오기
 
 콘솔 또는 API를 통해 생성한 블록 스토리지를 Terraform으로 불러와 관리할 수 있습니다.
 
@@ -834,7 +832,7 @@ Import successful!
 
 
 <a id="resources-vpc"></a>
-## Resources - VPC { #resources-vpc }
+## Resources - VPC
 
 NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 
@@ -848,7 +846,7 @@ NHN Cloud는 Terraform으로 아래 자원에 대한 생성을 지원합니다.
 
 
 <a id="create-vpc"></a>
-### VPC 생성 { #create-vpc }
+### VPC 생성
 
 지정한 IP 대역의 VPC를 생성합니다.
 
@@ -868,7 +866,7 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 
 
 <a id="create-vpc-subnet-and-attach-routing-table"></a>
-### VPC 서브넷 생성 및 라우팅 테이블 연결 { #create-vpc-subnet-and-attach-routing-table }
+### VPC 서브넷 생성 및 라우팅 테이블 연결
 
 지정한 VPC에 사용자가 지정한 IP 대역으로 서브넷을 생성하며, 생성한 서브넷에 기존 라우팅 테이블을 연결합니다.
 라우팅 테이블은 NHN Cloud 콘솔에서 생성할 수 있습니다.
@@ -893,7 +891,7 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 
 
 <a id="create-network-port"></a>
-### 네트워크 포트 생성 { #create-network-port }
+### 네트워크 포트 생성
 
 ```
 resource "nhncloud_networking_port_v2" "port_1" {
@@ -918,7 +916,7 @@ resource "nhncloud_networking_port_v2" "port_1" {
 
 
 <a id="create-floating-ip"></a>
-### 플로팅 IP 생성 { #create-floating-ip }
+### 플로팅 IP 생성
 
 ```
 resource "nhncloud_networking_floatingip_v2" "fip_01" {
@@ -932,7 +930,7 @@ resource "nhncloud_networking_floatingip_v2" "fip_01" {
 
 
 <a id="associate-floating-ip"></a>
-### 플로팅 IP 연결 { #associate-floating-ip }
+### 플로팅 IP 연결
 ```
 # 네트워크 포트 생성
 resource "nhncloud_networking_port_v2" "port_1" {
@@ -964,7 +962,7 @@ resource "nhncloud_networking_floatingip_associate_v2" "fip_associate" {
 
 
 <a id="create-routing-table"></a>
-### 라우팅 테이블 생성 { #create-routing-table }
+### 라우팅 테이블 생성
 ```
 resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
   ...
@@ -984,7 +982,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | distributed   | Boolean | -  | 라우팅 테이블의 라우팅 방식 </br>`true`: 분산형, `false`: 중앙 집중형(기본값: `true`) |
 
 <a id="associate-internet-gateway-with-routing-table"></a>
-### 라우팅 테이블에 인터넷 게이트웨이 연결하기 { #associate-internet-gateway-with-routing-table }
+### 라우팅 테이블에 인터넷 게이트웨이 연결하기
 
 라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
 인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
@@ -1007,10 +1005,10 @@ resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
 
 
 <a id="resources-load-balancer"></a>
-## Resources - 로드 밸런서 { #resources-load-balancer }
+## Resources - 로드 밸런서
 
 <a id="create-load-balancer"></a>
-### 로드 밸런서 생성 { #create-load-balancer }
+### 로드 밸런서 생성
 
 ```
 resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
@@ -1033,7 +1031,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | loadbalancer_type | String | - | 로드 밸런서 타입<br>`shared`/`dedicated` 사용 가능<br>생략할 경우 `shared`로 설정됨 |
 
 <a id="create-listener"></a>
-### 리스너 생성 { #create-listener }
+### 리스너 생성
 
 ```
 # HTTP 리스너
@@ -1091,7 +1089,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 
 
 <a id="create-pool"></a>
-### 풀 생성 { #create-pool }
+### 풀 생성
 
 ```
 resource "nhncloud_lb_pool_v2" "tf_pool_01"{
@@ -1123,7 +1121,7 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 
 
 <a id="create-health-monitor"></a>
-### 헬스 모니터 생성 { #create-health-monitor }
+### 헬스 모니터 생성
 
 ```
 resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
@@ -1155,7 +1153,7 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | health_check_port | Integer | - | 헬스 체크의 대상이 되는 멤버 포트 |
 
 <a id="create-member"></a>
-### 멤버 생성 { #create-member }
+### 멤버 생성
 
 <font color='red'>**(주의) NHN Cloud에서 멤버 생성 시에 `subnet_id`를 필수로 지정합니다. 또한 `name`은 지원하지 않습니다.**</font>
 
@@ -1181,7 +1179,7 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 
 
 <a id="create-a-secret"></a>
-### 시크릿 생성 { #create-a-secret }
+### 시크릿 생성
 
 ```
 resource "nhncloud_keymanager_secret_v1" "secret_01" {
@@ -1209,7 +1207,7 @@ resource "nhncloud_keymanager_secret_v1" "secret_01" {
 
 
 <a id="create-secret-container"></a>
-### 시크릿 컨테이너 생성 { #create-secret-container }
+### 시크릿 컨테이너 생성
 
 ```
 resource "nhncloud_keymanager_secret_v1" "secret_01" {
@@ -1235,10 +1233,10 @@ resource "nhncloud_keymanager_container_v1" "container_01" {
 
 
 <a id="resources-security-groups"></a>
-## Resources - 보안 그룹 { #resources-security-groups }
+## Resources - 보안 그룹
 
 <a id="create-a-security-group"></a>
-### 보안 그룹 생성 { #create-a-security-group }
+### 보안 그룹 생성
 
 ```
 resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
@@ -1252,7 +1250,7 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | region | String | - | 보안 그룹이 할당될 리전 이름 |
 
 <a id="create-a-security-rule"></a>
-### 보안 규칙 생성 { #create-a-security-rule }
+### 보안 규칙 생성
 
 ```
 resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
@@ -1285,10 +1283,10 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 | description | String | - | 보안 규칙 설명 |
 
 <a id="resources-container"></a>
-## Resources - 컨테이너 { #resources-container }
+## Resources - 컨테이너
 
 <a id="create-a-cluster"></a>
-### 클러스터 생성 { #create-a-cluster }
+### 클러스터 생성
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
@@ -1366,7 +1364,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 > NHN Cloud가 제공하는 NKS 클러스터 애드온 상세 목록은 API 가이드의 [NHN Cloud에서 제공하는 애드온 목록 보기](/Container/NKS/ko/public-api/#nhn-cloud_3) 및 사용 가이드의 [애드온 목록](/Container/NKS/ko/user-guide#addon-mgmt-addon-list) 항목을 참고하세요.
 
 <a id="create-a-node-group"></a>
-### 노드 그룹 생성 { #create-a-node-group }
+### 노드 그룹 생성
 
 ```
 resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
@@ -1399,7 +1397,7 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.ca_enable  | String  | O  | 기본 워커 노드 그룹 적용 : 클러스터 오토스케일러 기능 활성화 여부<br>("True" / "False")      |
 
 <a id="resize"></a>
-### 리사이즈 { #resize }
+### 리사이즈
 
 !!! tip "알아두기"
     Terraform으로 생성한 리소스에 대해 리사이즈 수행 시 변경되는 node_count는 tf 파일 내 nhncloud_kubernetes_cluster_v1, nhncloud_kubernetes_nodegroup_v1 리소스 내용에 자동으로 적용되지 않습니다.
@@ -1438,7 +1436,7 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 | nodes_to_remove | List(String)   | - | 삭제하고자 하는 노드 UUID          |
 
 <a id="cluster-upgrade"></a>
-### 클러스터 업그레이드 { #cluster-upgrade }
+### 클러스터 업그레이드
 
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
@@ -1465,5 +1463,5 @@ resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
 | num_max_unavailable_nodes | Integer | - | 최대 서비스 불가 노드 수. 최솟값: 1, 최댓값: 해당 워커 노드 그룹의 현재 노드 수, 기본값: 1 |
 
 <a id="reference"></a>
-## 참고 사이트 { #reference }
+## 참고 사이트
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)
