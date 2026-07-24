@@ -18,7 +18,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * You can automate the process so that infrastructure with the same configuration can be built and changed in multiple locations.
     * You can save time to build infrastructure and reduce mistakes.
 
-<a id="supported-resources"></a>
+<a id="terraform-supported-resources"></a>
 #### Supported Resources
 
 * Compute
@@ -53,7 +53,7 @@ Terraform is an open-source tool that lets you easily build and safely change in
     * nhncloud_kubernetes_cluster_resize_v1
     * nhncloud_kubernetes_nodegroup_upgrade_v1
 
-<a id="supported-data-sources"></a>
+<a id="terraform-supported-data-sources"></a>
 #### Supported Data Sources
 
 * nhncloud_images_image_v2
@@ -613,7 +613,7 @@ You can create, modify, or delete resources with Terraform resources. NHN Cloud 
 
 The following sections describe how to use each resource.
 
-<a id="note"></a>
+<a id="resources-note"></a>
 ### Note
 
 * For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/third-party-tools-guide/).
@@ -710,7 +710,7 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | instance_id | String | O       | Target instance to attach the block storage |
 | volume_id | String | O       | UUID of block storage to be attached |
 
-<a id="key-pair"></a>
+<a id="resources-instance-key-pair"></a>
 ### Key Pair
 ```
 resource "nhncloud_compute_keypair_v2" "tf_kp_01" {

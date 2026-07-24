@@ -58,6 +58,7 @@ Delete the cache where metadata for existing downloaded packages is stored.
 <a id="install-the-kernel"></a>
 ### Install the kernel
 
+<a id="install-the-kernel-by-specifying-a-version"></a>
 #### Install the kernel by specifying a version
 
 > [Note]
@@ -93,6 +94,7 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
+<a id="install-the-kernel-without-specifying-a-version"></a>
 #### Install the kernel without specifying a version
 If you don't specify a version, the package is searched based on the latest version of the major version.
 
@@ -125,6 +127,7 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
+<a id="install-the-kernel-install-the-latest-kernel"></a>
 #### Install the latest kernel
 If you don't specify a version, the latest version is installed. 
 
@@ -161,6 +164,7 @@ Installed:
 Complete!
 ```
 
+<a id="install-the-kernel-check-package-installation"></a>
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -191,6 +195,7 @@ dnf, yum will automatically update the GRUB2 configuration file.
 [root@rocky810 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader-check-for-kernel-updates"></a>
 #### Check for kernel updates
 
 Verify that the kernel version has been updated properly.
@@ -205,6 +210,7 @@ Verify that the kernel version has been updated properly.
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.
 
+<a id="change-the-kernel-boot-order-rocky-versions-below-810"></a>
 #### Rocky versions below 8.10
 
 ##### Check the default kernel
@@ -246,6 +252,7 @@ Reboot the OS for the boot order change to take effect.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="change-the-kernel-boot-order-rocky-810-and-later-versions"></a>
 #### Rocky 8.10 and later versions
 
 Currently, the official Rocky 8.10 image does not allow me to make kernel changes with the grubby command, so I use the shell script below.
@@ -305,7 +312,7 @@ Reboot the OS for the boot order change to take effect.
 <a id="rocky-linux-9"></a>
 ## Rocky Linux 9
 
-<a id="check-the-kernel-version"></a>
+<a id="rocky-linux-9-check-the-kernel-version"></a>
 ### Check the Kernel Version
 
 Check the currently installed kernel version.
@@ -315,7 +322,7 @@ Check the currently installed kernel version.
 5.14.0-503.14.1.el9_5.x86_64
 ```
 
-<a id="default-storage-settings"></a>
+<a id="rocky-linux-9-default-storage-settings"></a>
 ### Default Storage Settings
 
 Change the default repository for your system architecture and Rocky Linux version.
@@ -355,7 +362,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > [Note]
 > When both**mirrorlist** and **baseurl** are set, **mirrorlist** takes precedence, with **baseurl** serving as an alternate option.
 
-<a id="clear-the-cache-before-updating"></a>
+<a id="rocky-linux-9-clear-the-cache-before-updating"></a>
 ### Clear the cache before updating
 
 Delete the cache where metadata for existing downloaded packages is stored.
@@ -364,9 +371,10 @@ Delete the cache where metadata for existing downloaded packages is stored.
 [root@rocky95 ~]# rm -rf /var/cache/dnf
 ```
 
-<a id="install-the-kernel"></a>
+<a id="rocky-linux-9-install-the-kernel"></a>
 ### Install the kernel
 
+<a id="rocky-linux-9-install-the-kernel-install-the-kernel-by-specifying-a-version"></a>
 #### Install the kernel by specifying a version
 
 > [Note]
@@ -417,6 +425,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="rocky-linux-9-install-the-kernel-install-the-kernel-without-specifying-a-version"></a>
 #### Install the kernel without specifying a version
 If you don't specify a version, the package is searched based on the latest version of the major version.
 
@@ -465,6 +474,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="rocky-linux-9-install-the-kernel-install-the-latest-kernel"></a>
 #### Install the latest kernel
 If you don't specify a version, the latest version is installed. 
 
@@ -526,6 +536,7 @@ Installed:
 Complete!
 ```
 
+<a id="rocky-linux-9-install-the-kernel-check-package-installation"></a>
 #### Check package installation
 
 Check that the kernel packages are installed correctly.
@@ -538,7 +549,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
-<a id="reboot-the-os"></a>
+<a id="rocky-linux-9-reboot-the-os"></a>
 ### Reboot the OS
 
 Reboot the OS to apply the kernel update.
@@ -547,7 +558,7 @@ Reboot the OS to apply the kernel update.
 [root@rocky95 ~]# sync; reboot
 ```
 
-<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
+<a id="rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[Select].**</span> Create a configuration file for the GRUB2 bootloader
 Update the system's boot menu to reflect the newly installed kernel or other boot items.
 
@@ -557,6 +568,7 @@ dnf, yum will automatically update the GRUB2 configuration file.
 [root@rocky95 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader-check-for-kernel-updates"></a>
 #### Check for kernel updates
 
 Verify that the kernel version has been updated properly.
@@ -566,7 +578,7 @@ Verify that the kernel version has been updated properly.
 4.18.0-553.16.1.el8_10.x86_64
 ```
 
-<a id="change-the-kernel-boot-order"></a>
+<a id="rocky-linux-9-change-the-kernel-boot-order"></a>
 ### Change the kernel boot order
 
 If you have multiple kernels installed, change the boot order so that you can boot into the desired kernel.

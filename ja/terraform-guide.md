@@ -19,7 +19,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * インフラを構築するのにかかる時間を節約することができ、失敗も減らすことができます。
 
 
-<a id="supported-resources"></a>
+<a id="terraform-supported-resources"></a>
 #### Resourcesサポート
 
 * Compute
@@ -54,7 +54,7 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
     * nhncloud_kubernetes_cluster_resize_v1
     * nhncloud_kubernetes_nodegroup_upgrade_v1
     
-<a id="supported-data-sources"></a>
+<a id="terraform-supported-data-sources"></a>
 #### Data sourcesサポート
 
 * nhncloud_images_image_v2
@@ -116,67 +116,6 @@ Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互
   * [1.0.2](https://static.toastoven.net/prod_cloud_terraform_provider/windows_amd64/terraform-provider-nhncloud_v1.0.2)
 
 
-<a id="local-provider"></a>
-### Local provider設定
-
-Local provider設定を通じてTerraform NHN Cloud providerを使用できます。
-
-Local providerを探すためのディレクトリ構造を作成した後、ダウンロードしたバイナリファイルをプラグインのパスに追加します。バイナリファイルには実行権限が必要です。
-
-以下はOSごとのプラグイン基本パスです。より詳しい基本パスの説明は[Terraformサイト](https://developer.hashicorp.com/terraform/cli/config/config-file#provider-installation)の`Implied Local Mirror Directories
-`項目を参照してください。
-
-* **Linux / macOS** : `${HOME}/.terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-* **Windows** : `%APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/${version}/${platforms}`
-
-プラグイン基本パス構成ルールについての説明です。
-
-* **version**
-    * providerのバージョンです。
-* **platforms**
-    * パッケージがあるプラットフォームを説明するオブジェクトの配列で、OS識別キーワードとCPUアーキテクチャ識別キーワードで構成されています。
-    * **darwin_adm64** : macOS / AMD64
-    * **darwin_arm64** : macOS / Apple silicon
-    * **linux_amd64** : Linux / AMD64
-    * **windows_amd64** : Windows / AMD64
-
-以下は、バイナリダウンロード後、**OS/アーキテクチャ**ごとのプラグイン設定例です。 
-
-**プラグインを設定する際は1.0.2バージョンを使用することを推奨します。**
-
-`macOS / AMD64`プラグインの設定例です。
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_amd64/terraform-provider-nhncloud_v1.0.2
-```
-
-`macOS / Apple silicon`プラグインの設定例です。
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/darwin_arm64/terraform-provider-nhncloud_v1.0.2
-```
-
-`Linux / AMD64`プラグインの設定例です。
-
-```
-$ mkdir -p $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64
-$ chmod +x $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/linux_amd64/terraform-provider-nhncloud_v1.0.2
-```
-
-`Windows / AMD64`プラグインの設定例です。
-
-```
-$ mkdir -p %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
-$ cp terraform-provider-nhncloud_v1.0.2 $HOME/.terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
-$ copy terraform-provider-nhncloud_v1.0.2 %APPDATA%/terraform.d/plugins/terraform.local/local/nhncloud/1.0.2/windows_amd64
-```
-
-
 <a id="terraform-initialization"></a>
 ## Terraformの初期化
 Terraformを使用する前に、次のようにプロバイダー設定ファイルを作成します。
@@ -230,23 +169,6 @@ $ ls
 provider.tf
 $ terraform init
 ```
-
-### Local providerの交換
-
-新しいバージョンのlocal providerがリリースされた場合、変更するバージョンに[local provider設定](#local-provider)を行った後、`init`コマンドの`--upgrade`オプションでプラグインをアップグレードできます。
-
-```
-$ terraform init --upgrade
-Initializing the backend...
-Initializing provider plugins...
-- Finding terraform.local/local/nhncloud versions matching "1.0.2"...
-- Installing terraform.local/local/nhncloud v1.0.2...
-- Installed terraform.local/local/nhncloud v1.0.2 (unauthenticated)
-Terraform has made some changes to the provider dependency selections recorded
-in the .terraform.lock.hcl file. Review those changes and commit them to your
-version control system if they represent changes you intended to make.
-```
-
 
 <a id="terraform-usage"></a>
 ## Terraform基本使用方法
@@ -731,7 +653,7 @@ VPC
 
 次のセッションでは各リソースを使用する方法を説明します。
 
-<a id="note"></a>
+<a id="resources-note"></a>
 ### 特記事項
 
 * オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/third-party-tools-guide/)を参照してください。
@@ -828,7 +750,7 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 | volume_id | String | O  | 接続するブロックストレージUUID |
 
 
-<a id="key-pair"></a>
+<a id="resources-instance-key-pair"></a>
 ### キーペア
 ```
 resource "nhncloud_compute_keypair_v2" "tf_kp_01" {

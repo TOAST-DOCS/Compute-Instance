@@ -58,6 +58,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 <a id="install-the-kernel"></a>
 ### 커널 설치
 
+<a id="install-the-kernel-by-specifying-a-version"></a>
 #### 버전 지정하여 커널 설치
 
 > [참고]
@@ -93,6 +94,7 @@ kernel-tools-libs.x86_64                                                        
 kernelshark.x86_64
 ```
 
+<a id="install-the-kernel-without-specifying-a-version"></a>
 #### 버전 지정하지 않고 커널 설치
 버전을 지정하지 않으면 major 버전의 최신 버전 기준으로 패키지를 검색합니다.
 
@@ -126,6 +128,7 @@ kernelshark.x86_64
 ```
 
 
+<a id="install-the-kernel-install-the-latest-kernel"></a>
 #### 최신 커널 설치
 별도의 버전을 지정하지 않으면 최신 버전으로 설치합니다. 
 
@@ -163,6 +166,7 @@ Complete!
 ```
 
 
+<a id="install-the-kernel-check-package-installation"></a>
 #### 패키지 설치 확인
 
 커널 패키지가 정상적으로 설치되었는지 확인합니다.
@@ -193,6 +197,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 [root@rocky810 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="select-create-a-configuration-file-for-the-grub2-bootloader-check-for-kernel-updates"></a>
 #### 커널 업데이트 확인
 
 커널 버전이 정상적으로 업데이트되었는지 확인합니다.
@@ -207,6 +212,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.
 
+<a id="change-the-kernel-boot-order-rocky-versions-below-810"></a>
 #### Rocky 8.10 미만 버전
 
 ##### 기본 커널 확인
@@ -248,6 +254,7 @@ The default is /boot/loader/entries/ea5b6e1e7bc09da25505ebb3a26a8bf4-4.18.0-553.
 [root@rocky810 ~]# sync; reboot
 ```
 
+<a id="change-the-kernel-boot-order-rocky-810-and-later-versions"></a>
 #### Rocky 8.10 이상 버전
 
 현재 Rocky 8.10 공식 이미지에서 grubby 명령어로 커널 변경이 안 되는 문제가 있어 아래 쉘 스크립트를 사용합니다.
@@ -307,7 +314,7 @@ done
 <a id="rocky-linux-9"></a>
 ## Rocky Linux 9
 
-<a id="check-the-kernel-version"></a>
+<a id="rocky-linux-9-check-the-kernel-version"></a>
 ### 커널 버전 확인
 
 현재 설치된 커널 버전을 확인합니다.
@@ -317,7 +324,7 @@ done
 5.14.0-503.14.1.el9_5.x86_64
 ```
 
-<a id="default-storage-settings"></a>
+<a id="rocky-linux-9-default-storage-settings"></a>
 ### 기본 저장소 설정
 
 시스템 아키텍처와 Rocky Linux 버전에 맞는 기본 저장소를 변경합니다.
@@ -357,7 +364,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > [참고]
 > **mirrorlist**와 **baseurl**이 모두 설정되어 있을 때는 **mirrorlist**가 우선 적용되며, **baseurl**은 대체 옵션으로 동작합니다.
 
-<a id="clear-the-cache-before-updating"></a>
+<a id="rocky-linux-9-clear-the-cache-before-updating"></a>
 ### 업데이트 전 캐시 삭제
 
 기존 다운로드된 패키지의 메타데이터가 저장된 캐시를 삭제합니다.
@@ -367,9 +374,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 [root@rocky95 ~]# rm -rf /var/cache/dnf
 ```
 
-<a id="install-the-kernel"></a>
+<a id="rocky-linux-9-install-the-kernel"></a>
 ### 커널 설치
 
+<a id="rocky-linux-9-install-the-kernel-install-the-kernel-by-specifying-a-version"></a>
 #### 버전 지정하여 커널 설치
 
 > [참고]
@@ -421,6 +429,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="rocky-linux-9-install-the-kernel-install-the-kernel-without-specifying-a-version"></a>
 #### 버전 지정하지 않고 커널 설치
 버전을 지정하지 않으면 major 버전의 최신 버전 기준으로 패키지를 검색합니다.
 
@@ -469,6 +478,7 @@ kernel-uki-virt-addons.x86_64                                              5.14.
 kernelshark.x86_64                                                         1:1.2-10.el9                                                   appstream
 ```
 
+<a id="rocky-linux-9-install-the-kernel-install-the-latest-kernel"></a>
 #### 최신 커널 설치
 별도의 버전을 지정하지 않으면 최신 버전으로 설치합니다. 
 
@@ -532,6 +542,7 @@ Complete!
 
 
 
+<a id="rocky-linux-9-install-the-kernel-check-package-installation"></a>
 #### 패키지 설치 확인
 
 커널 패키지가 정상적으로 설치되었는지 확인합니다.
@@ -544,7 +555,7 @@ kernel-modules.x86_64                  5.14.0-503.23.2.el9_5          @baseos
 kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
-<a id="reboot-the-os"></a>
+<a id="rocky-linux-9-reboot-the-os"></a>
 ### OS 재부팅
 
 커널 업데이트를 적용하기 위해 OS를 재부팅합니다.
@@ -553,7 +564,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 [root@rocky95 ~]# sync; reboot
 ```
 
-<a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
+<a id="rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader"></a>
 ### <span style="color:#e11d21;">**[선택]**</span> GRUB2 부트로더의 설정 파일 생성
 시스템의 부트 메뉴를 업데이트하여, 새로 설치된 커널이나 기타 부팅 항목을 반영합니다.
 
@@ -563,6 +574,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 [root@rocky95 ~]# grub2-mkconfig -o /etc/grub2.cfg
 ```
 
+<a id="rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader-check-for-kernel-updates"></a>
 #### 커널 업데이트 확인
 
 커널 버전이 정상적으로 업데이트되었는지 확인합니다.
@@ -573,7 +585,7 @@ dnf, yum은 자동으로 GRUB2 설정 파일을 업데이트합니다.
 ```
 
 
-<a id="change-the-kernel-boot-order"></a>
+<a id="rocky-linux-9-change-the-kernel-boot-order"></a>
 ### 커널 부팅 순서 변경
 
 여러 개의 커널이 설치된 경우 원하는 커널로 부팅할 수 있도록 부팅 순서를 변경합니다.

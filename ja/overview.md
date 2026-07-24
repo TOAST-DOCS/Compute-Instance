@@ -97,6 +97,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 
 Linuxインスタンスに接続する時はSSHクライアントを利用します。インスタンスのセキュリティグループにSSHアクセスポート(デフォルト値22)が開いていない場合は接続できません。SSHアクセスを許可する方法は[VPC概要](/Network/VPC/ja/overview/)を参照してください。インスタンスにFloating IPが割り当てられていない場合は、NHN Cloud外部からアクセスできません。Floating IPを割り当てる方法については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
 
+<a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### MacまたはLinuxのSSHクライアントでLinuxインスタンスに接続する方法
 
 MacやLinuxには通常、SSHクライアントがデフォルトでインストールされています。SSHクライアントで下記のようにキーペアの秘密鍵を利用して接続します。
@@ -113,6 +114,7 @@ Rockyインスタンス
 
 	$ ssh -i my_private_key.pem rocky@<インスタンスのIP>
 
+<a id="how-to-access-linux-instances-from-windows-using-putty-ssh-client"></a>
 #### WindowsでPuTTY SSHクライアントでLinuxインスタンスに接続する方法
 
 PuTTY SSHクライアントはWindowsで多く使用されるSSHクライアントプログラムです。[PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)をインストールします。
@@ -205,6 +207,7 @@ Windowsインスタンスに接続するには、NHN Cloudコンソールから�
 
 **パスワード確認**横の**接続**ボタンをクリックしてリモートデスクトップ接続設定が保存された.rdpファイルをダウンロードして実行するとWindowsインスタンスに接続します。WindowsサーバーのIDは「Administrator」で、パスワードはNHN Cloudコンソールで確認したパスワードを利用します。
 
+<a id="how-to-connect-serial-console"></a>
 ### シリアルコンソール接続方法
 
 ブート失敗、ネットワーク構成の問題など、SSHクライアントを使用できない状況で、シリアルコンソールに接続してインスタンスにアクセスできます。
@@ -221,6 +224,7 @@ Windowsインスタンスに接続するには、NHN Cloudコンソールから�
 > シリアルコンソールでインスタンスにアクセスし、ブート方法を変更した場合、ブートに失敗することがあり、それに伴う結果についての責任はユーザーにあります。
 > 通常の状況では、SSHクライアント接続の使用を推奨します。
 
+<a id="how-to-connect-serial-console-change-grub-bootloader-settings"></a>
 #### GRUBブートローダーの設定変更
 
 2024年11月26日のデプロイ以前に作成したインスタンスでブートローダーを操作するには、GRUBの設定が必要です。

@@ -67,9 +67,15 @@ NATインスタンスをルートゲートウェイに指定します。 NATイ�
 
 **接続** ボタンをクリックし、.rdpファイルをダウンロードした後に、獲得したパスワードを使用してインスタンスに接続します。
 
+<a id="allow-security-group-tcp-port-3389-rdp"></a>
+### セキュリティグループTCPポート3389(RDP)許可
+
+<!-- TODO: translate body -->
+
 <a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### MS-SQLイメージ作成後の初期設定
 
+<a id="initial-settings-after-microsoft-sql-image-is-created-set-sql-certification-mode"></a>
 #### 1. SQL認証モード設定
 
 サーバーの基本認証モードが「Windows認証モード」になっています。
@@ -86,6 +92,7 @@ Microsoft SQL Server Management Studioを実行して、インスタンス名で
 
 ※ SQL認証モード設定後、適用するにはMS-SQLサービスを再起動する必要があります。
 
+<a id="initial-settings-after-microsoft-sql-image-is-created-change-microsoft-sql-service-port"></a>
 #### 2. MS-SQLサービスポート変更
 
 MS-SQLのデフォルトのサービスポート1433は、広く認知されているポートなので、セキュリティー脆弱性になることがあります。
@@ -104,6 +111,7 @@ SQL Server構成管理者を実行します。
 
 ※ MS-SQLサービスポート変更後、適用するにはMS-SQLサービスを再起動する必要があります。
 
+<a id="initial-settings-after-microsoft-sql-image-is-created-allow-external-access-to-microsoft-sql-database"></a>
 #### 3. 外部からのMS-SQLデータベース接続許可設定
 
 外部からMS-SQLデータベースに接続するには、 **Network > Security Group** でMS-SQLサービスポートをSecurity Groupsに追加する必要があります。
@@ -176,6 +184,7 @@ SQL Server構成管理者のSQL Server構成管理者(ローカル) > SQL Server
 
 <a id="mysql-instance"></a>
 ## MySQL Instance
+<a id="startingstopping-mysql"></a>
 ### MySQL起動/停止方法
 
 ```
@@ -189,6 +198,7 @@ shell> service mysqld stop
 shell> service mysqld restart
 ```
 
+<a id="connecting-to-mysql"></a>
 ### MySQL接続
 
 イメージ作成後、最初は下記のように接続します。
@@ -197,8 +207,10 @@ shell> service mysqld restart
 shell> mysql -uroot
 ```
 
+<a id="initial-settings-for-mysql-instance"></a>
 ### MySQLインスタンス作成後の初期設定
 
+<a id="initial-settings-for-mysql-instance-1-set-the-password"></a>
 #### 1\.パスワード設定
 
 初期インストール後、MySQL ROOTアカウントパスワードは指定されていません。したがってインストール後、すぐにパスワードを設定する必要があります。
@@ -212,6 +224,7 @@ MySQL基本validate\_password\_policyは下記の通りです。
 * validate\_password\_policy=MEDIUM
 * 基本8文字以上、数字、大文字、小文字、特殊文字を含める必要がある
 
+<a id="initial-settings-for-mysql-instance-2-change-the-port"></a>
 #### 2\.ポート(port)変更
 
 提供されるイメージポートはMySQL基本ポートの3306です。セキュリティー上、ポートの変更を推奨します。
@@ -240,6 +253,7 @@ shell> service mysqld restart
 shell> mysql -uroot -P[変更されたポート番号]
 ```
 
+<a id="description-of-mycnf"></a>
 ### my.cnf説明
 
 my.cnfのデフォルトのパスは `/etc/my.cnf` で、NHN Cloud推奨変数(variable)が設定されています。内容は下記の通りです。
@@ -255,6 +269,7 @@ my.cnfのデフォルトのパスは `/etc/my.cnf` で、NHN Cloud推奨変数(v
 | slow\_query\_log | slow\_query logオプションを使用します。 long\_query\_timeによる基本10秒以上のクエリーはslow\_query\_logに記録されます。 |
 | sysdate-is-now | sysdateの場合、replicationでsysdate()を使用したSQL文は、複製時にマスターとスレーブの間の時間が異なる問題があり、sysdate()とnow()の関数を同一に適用します。 |
 
+<a id="description-of-mysql-directory"></a>
 ### MySQLディレクトリ説明
 
 MySQLディレクトリおよびファイル説明は下記の通りです。
@@ -272,6 +287,7 @@ MySQLディレクトリおよびファイル説明は下記の通りです。
 
 <a id="postgresql-instance"></a>
 ## PostgreSQL Instance
+<a id="how-to-startstop-postgresql"></a>
 ### PostgreSQL開始/停止方法
 
 ```
@@ -284,6 +300,7 @@ shell> sudo systemctl stop postgresql
 shell> sudo systemctl restart postgresql
 ```
 
+<a id="log-in-to-postgresql"></a>
 ### PostgreSQL接続
 
 イメージ作成後、最初は下記のように接続します。
@@ -294,8 +311,10 @@ shell> sudo su - postgres
 shell> psql
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup"></a>
 ### PostgreSQLインスタンス作成後、初期設定
 
+<a id="create-postgresql-instance-and-perform-initial-setup-1-change-the-port"></a>
 #### 1\. ポート\(port\)変更
 
 提供されるイメージポートはPostgreSQL基本ポート5432です。セキュリティ上、ポートの変更を推奨します。
@@ -320,6 +339,7 @@ shell> sudo systemctl restart postgresql
 shell> psql -p[変更されたポート番号]
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup-2-change-server-log-timezone"></a>
 #### 2\. サーバーログタイムゾーン変更
 
 サーバーログに記録される基本時間帯がUTCに設定されています。SYSTEMローカル時間と同じタイムゾーンに変更することを推奨します。
@@ -352,6 +372,7 @@ shell> psql
 postgres=# SHOW log_timezone;
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup-3-cancel-public-schema-permission"></a>
 #### 3\. publicスキーマ権限の削除
 
 基本的にすべてのユーザーにpublicスキーマのCREATEおよびUSAGE権限を付与しているため、データベースに接続できるユーザーはpublicスキーマからオブジェクトを作成できます。すべてのユーザーがpublicスキーマからオブジェクトを作成できないように権限を削除すことを推奨します。
@@ -367,6 +388,7 @@ shell> psql
 postgres=# REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 ```
 
+<a id="create-postgresql-instance-and-perform-initial-setup-4-allow-remote-login"></a>
 #### 4\. 遠隔接続許可
 
 ローカルホスト以外の接続を許可するにはlisten_addresses変数とクライアント認証設定ファイルを変更する必要があります。
@@ -449,7 +471,7 @@ shell> cubrid broker stop
 shell> cubrid broker restart
 ```
 
-<a id="cubrid-connection"></a>
+<a id="connect-to-cubrid"></a>
 ### CUBRID接続
 
 イメージ作成後、最初は以下のように接続します。
@@ -458,8 +480,10 @@ shell> sudo su - cubrid
 shell> csql -u dba demodb@localhost
 ```
 
+<a id="initial-setup-after-creating-a-cubrid-instance"></a>
 ### CUBRIDインスタンス作成後の初期設定
 
+<a id="initial-setup-after-creating-a-cubrid-instance-1-set-the-password"></a>
 #### 1\. パスワード設定
 
 初期インストール後、CUBRID dbaアカウントのパスワードは指定されていません。そのため、インストール後に必ずパスワードを設定する必要があります。
@@ -467,6 +491,7 @@ shell> csql -u dba demodb@localhost
 shell> csql -u dba -c "ALTER USER dba PASSWORD 'new_password'" demodb@localhost
 ```
 
+<a id="initial-setup-after-creating-a-cubrid-instance-2-change-the-broker-port"></a>
 #### 2\. ブローカーポート\(port\)の変更
 
 `query_editor`のブローカーポートはデフォルト値が`30000`に設定され、`broker1`のブローカーポートはデフォルト値が`33000`に設定されます。
@@ -492,6 +517,7 @@ BROKER_PORT             =[変更するportアドレス]
 shell> cubrid broker restart
 ```
 
+<a id="initial-setup-after-creating-a-cubrid-instance-3-change-the-manager-server-port"></a>
 #### 3\. マネージャサーバーポート\(port\)変更
 
 マネージャサーバーポートはデフォルト値が`8001`に設定されます。
@@ -514,6 +540,7 @@ shell> cubrid manager stop
 shell> cubrid manager start
 ```
 
+<a id="cubrid-directory-description"></a>
 ### CUBRIDディレクトリの説明
 
 CUBRIDディレクトリおよびファイルの説明は次のとおりです。
@@ -527,6 +554,7 @@ CUBRIDディレクトリおよびファイルの説明は次のとおりです�
 | ERROR\_LOG | CUBRID ERROR SQL Queryファイルパス - /opt/cubrid/log/broker/error\_log |
 | SLOW\_LOG | CUBRID Slow Queryファイルパス - /opt/cubrid/log/broker/sql\_log |
 
+<a id="cubrid-directory-description-cubridconf-description"></a>
 #### cubrid.conf説明
 
 サーバー設定用ファイルです。運営するデータベースのメモリ、同時ユーザー数に応じたスレッド数、ブローカーとサーバー間の通信ポートなどを設定できます。
@@ -538,6 +566,7 @@ CUBRIDディレクトリおよびファイルの説明は次のとおりです�
 | max\_clients | 1つデータベースサーバープロセスが同時に接続できるクライアントの最大数です。 |
 | data\_buffer\_size | データベースサーバーがメモリ内にキャッシュするデータバッファのサイズを設定するためのパラメータです。 <br>必要なメモリサイズがシステムメモリの2/3以内になるように設定することを推奨します。 |
 
+<a id="cubrid-directory-description-brokerconf-description"></a>
 #### broker.confの説明
 
 ブローカー設定ファイルです。運営するブローカーが使用するポート、応用サーバー(CAS)数、SQL LOGなどを設定できます。
@@ -550,6 +579,7 @@ CUBRIDディレクトリおよびファイルの説明は次のとおりです�
 | LOG\_DIR | SQLログが保存されるディレクトリを指定するパラメータです。 |
 | ERROR\_LOG\_DIR | ブローカーのエラーログが保存されるディレクトリを指定するパラメータです。 |
 
+<a id="cubrid-directory-description-cmconf-description"></a>
 #### cm.confの説明
 
 CUBRIDマネージャ設定ファイルです。運営するマネージャサーバープロセスが使用するポート、モニタリング収集サイクルなどを設定できます。
@@ -565,7 +595,7 @@ CUBRIDマネージャ設定ファイルです。運営するマネージャサ�
 <a id="mariadb-instance"></a>
 ## MariaDB Instance
 
-<a id="startingstopping-mysql"></a>
+<a id="how-to-startstop-mariadb"></a>
 ### MariaDB 起動/停止方法
 
 ``` sh
@@ -579,7 +609,7 @@ shell> sudo systemctl stop mariadb.service
 shell> sudo systemctl restart mariadb.service
 ```
 
-<a id="connecting-to-mysql"></a>
+<a id="connect-to-mariadb"></a>
 ### MariaDB接続
 
 イメージ作成後、最初は以下のように接続します。
@@ -595,9 +625,10 @@ shell> mysql -u root -p
 Enter password:
 ```
 
-<a id="initial-settings-for-mysql-instance"></a>
+<a id="initial-setup-after-creating-a-mariadb-instance"></a>
 ### MariaDBインスタンス作成後の初期設定
 
+<a id="initial-setup-after-creating-a-mariadb-instance-1-set-the-password"></a>
 #### 1\. パスワード設定
 
 初期インストール後、MariaDB rootアカウントパスワードは指定されていません。そのため、インストール後に必ずパスワードを設定する必要があります。
@@ -608,6 +639,7 @@ SET PASSWORD [FOR user] = password_option
 MariaDB> SET PASSWORD = PASSWORD('パスワード');
 ```
 
+<a id="initial-setup-after-creating-a-mariadb-instance-2-change-the-port"></a>
 #### 2\. ポート\(port\)の変更
 
 初期インストール後のポートはMariaDBのデフォルトポートである3306です。セキュリティ上、ポートの変更を推奨します。
@@ -631,11 +663,13 @@ port=[変更するportアドレス]
 sudo systemctl restart mariadb.service
 ```
 
+<a id="tibero-instance"></a>
 ## Tibero Instance
 
-<a id="description-of-mycnf"></a>
+<a id="create-a-tibero-instance"></a>
 ### Tibero Instance作成
 
+<a id="create-a-tibero-instance-minimum-recommended-specifications"></a>
 #### 最小推奨仕様
 
 - ルートブロックストレージ
@@ -644,12 +678,13 @@ sudo systemctl restart mariadb.service
 - 最小推奨仕様: 4vCore/8GB
     - 推奨仕様未満の場合、DBMSのインストールが制限される場合があります。
 
+<a id="create-a-tibero-instance-additional-block-storage"></a>
 #### 追加ブロックストレージ
 
 - ルートボリューム以外の追加ボリュームを作成します。
     - TMI(Tibero machine image)は追加ボリューム150GBを必要とするため、追加ブロックストレージ150GB以上を必ず設定する必要があります
 
-<a id="description-of-mysql-directory"></a>
+<a id="connect-to-instance"></a>
 ### インスタンス接続
 
 - インスタンスの作成が完了したら、SSHを使用してインスタンスにアクセスします。
@@ -657,6 +692,7 @@ sudo systemctl restart mariadb.service
 - SSHクライアントと設定したキーペアを使用してインスタンスに接続します。
 - 詳細なSSH接続ガイドは[SSH接続ガイド](./overview/#how-to-access-linux-instances)を参照してください。
 
+<a id="install-tmi"></a>
 ### TMIインストール
 
 
@@ -681,6 +717,7 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
 
+<a id="install-tmi-complete-installation"></a>
 #### インストール完了
 
 dbcaコマンドを実行すると進行状況が表示され、nomountモードで データベースが作成されます。所要時間は10分以下です。 
@@ -698,6 +735,7 @@ SQL> Disconnected.
 ```
 
 
+<a id="install-tmi-check-the-operation-and-the-installation-log"></a>
 #### 動作確認とインストールログの確認
 
 Tiberoが動作していることを確認します。
@@ -744,9 +782,11 @@ drwxr-----   3 root root   19 10月17 14:13 .pki
 drwx------   2 root root   29 10月17 14:04 .ssh
 ```
 
+<a id="connect-to-tibero"></a>
 ### Tibero接続
 
 
+<a id="connect-to-tibero-change-the-account"></a>
 #### アカウント変更
 
 dbcaコマンドで作成したOS\_ACCOUNTにログインします。
@@ -768,6 +808,7 @@ dbcaコマンドで作成したOS\_ACCOUNTにログインします。
 
 ```
 
+<a id="connect-to-tibero-check-connection"></a>
 #### 接続確認
 
 ```
@@ -810,6 +851,7 @@ SQL>
 ```
 
 
+<a id="tibero-default-accounts"></a>
 ### Tibero基本アカウント
 
 Tiberoで提供する基本アカウントは次のとおりです。
@@ -834,7 +876,7 @@ Tiberoで提供する基本アカウントは次のとおりです。
 > [参考]
 > インスタンスタイプはc1m2(CPU 1core、Memory 2GB)以上の仕様で作成してください。
 
-<a id="how-to-startstop-postgresql"></a>
+<a id="start-and-stop-zookeeper-kafka-broker"></a>
 ### Zookeeper、Kafka broker起動/停止
 ```
 # Zookeeper、Kafka broker起動(Zookeeperを先に起動)
@@ -848,7 +890,7 @@ shell> sudo systemctl restart zookeeper.service
 shell> sudo systemctl restart kafka.service
 ```
 
-<a id="log-in-to-postgresql"></a>
+<a id="install-kafka-cluster"></a>
 ### Kafka Clusterインストール
 - 必ず新規インスタンスにインストールします。
 - インスタンスは3台以上、奇数で必要です。インスタンス1台でインストールスクリプトを実行します。
@@ -914,9 +956,10 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ##### Cluster Installation Complete #####
 ```
 
-<a id="create-postgresql-instance-and-perform-initial-setup"></a>
+<a id="initial-setup-after-creating-a-kafka-instance"></a>
 ### Kafkaインスタンス作成後の初期設定
 
+<a id="initial-setup-after-creating-a-kafka-instance-change-the-port"></a>
 #### ポート(port)変更
 最初のインストール後、ポートはKafkaデフォルトポート9092、Zookeeperデフォルトポート2181です。セキュリティのためにポートを変更することを推奨します。
 
@@ -960,6 +1003,7 @@ shell> netstat -ntl | grep [Kafka port]
 shell> netstat -ntl | grep [Zookeeper port]
 ```
 
+<a id="create-and-use-kafka-topic-and-data"></a>
 ### Kafkaトピックおよびデータ作成/使用
 
 トピックの作成/照会
@@ -982,8 +1026,10 @@ shell> ~/kafka/bin/kafka-console-producer.sh --broker-list [インスタンスIP
 shell> ~/kafka/bin/kafka-console-consumer.sh --bootstrap-server [インスタンスIP]:[Kafka PORT] --from-beginning --topic kafka
 ```
 
+<a id="redis-instance"></a>
 ## Redis Instance
 
+<a id="startstop-redis"></a>
 ### Redis起動/停止
 ```
 # Redisサービスの起動
@@ -996,21 +1042,25 @@ shell> sudo systemctl stop redis
 shell> sudo systemctl restart redis
 ```
 
+<a id="connect-to-redis"></a>
 ### Redis接続
 `redis-cli`コマンドでRedisインスタンスに接続できます。
 ```
 shell> redis-cli
 ```
 
+<a id="initial-setup-after-creating-a-redis-instance"></a>
 ### Redisインスタンス作成後の初期設定
 Redisインスタンスの基本設定ファイルは`~/redis/redis.conf`です。変更が必要なパラメータの説明は次のとおりです。
 
+<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
 #### bind
 - 基本値：`127.0.0.1 -::1`
 - 変更値：`<private ip> 127.0.0.1 -::1`
 
 Redisが使用するipの値です。サーバー外部からRedisインスタンスへのアクセスを許可するには該当パラメータにprivate ipを追加する必要があります。 private ipは`hostname -I`コマンドで確認できます。
 
+<a id="initial-setup-after-creating-a-redis-instance-port"></a>
 #### port
 - 基本値：`6379`
 
@@ -1020,12 +1070,13 @@ Redisが使用するipの値です。サーバー外部からRedisインスタ�
 shell> redis-cli -p <新しいポート>
 ```
 
+<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
 #### requirepass/masterauth
 - 基本値：`nhncloud`
 
 基本パスワードは`nhncloud`です。セキュリティ上、パスワードを変更することを推奨します。複製接続を使用する場合、`requirepass`と`masterauth`値を同時に変更する必要があります。
 
-<a id="postgresql-directory-description"></a>
+<a id="automatic-ha-configuration-script"></a>
 ### 自動HA構成スクリプト
 NHN CloudのRedisインスタンスは自動的にHA環境を構成するスクリプトを提供します。スクリプトは必ず**インストール直後の新規インスタンス**でのみ使用することができ、redis.confで設定値を変更した場合には使用できません。
 
@@ -1048,6 +1099,7 @@ Redisインスタンス間の通信に必要なセキュリティグループ(**
 | 受信|TCP | 16379| IPv4| インスタンスIP(CIDR)|
 | 受信|TCP | 26379| IPv4| インスタンスIP(CIDR)|
 
+<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
 #### Sentinel自動構成
 Sentinel構成のために3つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーし、以下のようにスクリプトを実行してください。
 
@@ -1070,6 +1122,7 @@ Enter Replica-2's IP: 192.168.0.97
 shell> Enter Pemkey's name: <キーペア>.pem
 ```
 
+<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
 #### Cluster自動構成
 Cluster構成のために6つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーし、以下のようにスクリプトを実行してください。
 
