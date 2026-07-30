@@ -1,13 +1,16 @@
 <a id="compute-instance-installation-component-guide"></a>
+
 ## Compute > Instance > 설치 구성 요소 가이드 
 
 <a id="nat-instance"></a>
 ## NAT Instance 
 
+
 NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주소 대역에 대해 인터넷에 액세스할 수 있게 하는 인스턴스입니다.
 
 <a id="key-features"></a>
-### 주요 기능 
+
+### 주요 기능
 
 * 인터넷 게이트웨이가 연결되지 않은 프라이빗 네트워크의 인스턴스가 NAT 인스턴스로 인터넷에 액세스할 수 있습니다.
 * NAT 인스턴스의 플로팅 IP를 소스 IP로 변경하여 인터넷에 액세스합니다.
@@ -34,7 +37,8 @@ NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주�
 > |SSH|사용 불가| 사용 가능|
 
 <a id="sourcetarget-check-setting"></a>
-### 스푸핑 방지 설정 
+
+### 스푸핑 방지 설정
 
 NAT 인스턴스가 정상적으로 동작하려면 네트워크 인터페이스 설정에서 **스푸핑 방지**를 **사용 안 함**으로 설정해야 합니다.
 
@@ -851,7 +855,8 @@ SQL>
 ```
 
 <a id="tibero-default-accounts"></a>
-### Tibero 기본 계정 
+
+### Tibero 기본 계정
 
 Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 
@@ -871,7 +876,8 @@ Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 * TIBERO/TIBERO1: example user이며 DBA 권한을 가지고 있습니다.
 
 <a id="kafka-instance"></a>
-## Kafka Instance 
+
+## Kafka Instance
 
 > [참고]
 > 인스턴스 타입은 c1m2(CPU 1core, Memory 2GB) 이상 사양으로 생성하세요.
@@ -963,7 +969,8 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ```
 
 <a id="initial-setup-after-creating-a-kafka-instance"></a>
-### Kafka 인스턴스 생성 후 초기 설정 
+
+### Kafka 인스턴스 생성 후 초기 설정
 
 <a id="initial-setup-after-creating-a-kafka-instance-change-the-port"></a>
 #### 포트(port) 변경
@@ -1018,7 +1025,8 @@ shell> netstat -ntl | grep [Zookeeper port]
 ```
 
 <a id="create-and-use-kafka-topic-and-data"></a>
-### Kafka 토픽 및 데이터 생성/사용 
+
+### Kafka 토픽 및 데이터 생성/사용
 
 토픽 생성/조회
 ```

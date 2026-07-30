@@ -1,11 +1,9 @@
-<!-- pre-align:aligned sig=660ef5a6860f -->
-
 <a id="third-party-user-guide-terraform-user-guide"></a>
-## サードパーティー使用ガイド > Terraform使用ガイド { #third-party-user-guide-terraform-user-guide }
+## サードパーティー使用ガイド > Terraform使用ガイド
 この文書はTerraformでNHN Cloudを使用する方法を説明します。
 
 <a id="terraform"></a>
-## Terraform { #terraform }
+## Terraform
 Terraformはインフラを簡単に構築し、安全に変更し、効率的にインフラの形状を管理できるオープンソースのツールです。Terraformの主な特徴は次のとおりです。
 
 * **Infrastructure as Code**
@@ -74,14 +72,14 @@ Terraformはインフラを簡単に構築し、安全に変更し、効率的�
 * nhncloud_kubernetes_nodegroup_v1
 
 <a id="note"></a>
-### 注意 { #note }
+### 注意
 
 * **下記例のすべてのデータは実際の情報ではありません。必ず正確な情報に修正して使用します。**
 * **下記の例はすべてTerraform 0.12.24を利用しました。**
 
 
 <a id="terraform-installation"></a>
-## Terraformインストール { #terraform-installation }
+## Terraformインストール
 [Terraformダウンロードページ](https://www.terraform.io/downloads.html)でローカルPCのOSに合ったファイルをダウンロードします。ファイルの圧縮を解凍し、任意の場所に入れた後、次の環境設定に該当パスを追加するとインストールが完了します。
 
 次はLinux(Ubuntu/Debian)のインストール例です。
@@ -95,7 +93,7 @@ Terraform v1.14.2
 ```
 
 <a id="terraform-provider-provided"></a>
-## Terraform NHN Cloud provider提供 { #terraform-provider-provided }
+## Terraform NHN Cloud provider提供
 
 Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互換性を提供し、リンクからバイナリファイルをダウンロードできます。
 現在提供するTerraform NHN Cloud providerのバージョンは**1.0.2**です。
@@ -119,7 +117,7 @@ Terraform NHN Cloud providerは次のような**OS/アーキテクチャ**の互
 
 
 <a id="terraform-initialization"></a>
-## Terraformの初期化 { #terraform-initialization }
+## Terraformの初期化
 Terraformを使用する前に、次のようにプロバイダー設定ファイルを作成します。
 
 プロバイダーファイルの名前は任意で設定可能で、この例では`provider.tf`を使用します。
@@ -173,7 +171,7 @@ $ terraform init
 ```
 
 <a id="terraform-usage"></a>
-## Terraform基本使用方法 { #terraform-usage }
+## Terraform基本使用方法
 
 Terraformを利用したインフラ構築は、通常下記のようなライフサイクルになります。
 
@@ -198,7 +196,7 @@ $ terraform apply
 次のセッションでは、この段階を例を用いて詳しく説明します。
 
 <a id="create-tf-files"></a>
-### tfファイル作成 { #create-tf-files }
+### tfファイル作成
 
 プロバイダー設定ファイルがあるパスにtfファイルを作成します。複数のリソース設定を1つのtfファイルに集めるか、リソースごとに別々のtfファイルでも作成可能です。Terraformは作成された全体tfファイルを一度に読み込んで構築計画を立てます。
 
@@ -230,7 +228,7 @@ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
 
 
 <a id="check-the-execution-plan"></a>
-### 構築計画の確認 { #check-the-execution-plan }
+### 構築計画の確認
 
 tfファイルを通して変更されるリソースを`plan`コマンドで確認できます。`plan`コマンドを実行すると、Terraformが.tfファイルをロードして設定が正しいかを確認し、DBと比較してプランを作成します。プラン作成が完了すると、プランをタイプごとに集計して出力します。
 
@@ -242,7 +240,7 @@ $ terraform plan
 
 
 <a id="create-resources"></a>
-### リソースを作成する { #create-resources }
+### リソースを作成する
 
 任意のプランでtfファイルを作成した後、`apply`コマンドでリソースを作成します。
 
@@ -265,7 +263,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 
 <a id="modify-resources"></a>
-### リソースを修正する { #modify-resources }
+### リソースを修正する
 
 変更するリソースが定義された`.tf`ファイルを開き、任意の情報を修正し、プランを適用します。変更できる仕様は一部プロパティに制限されます。もし変更できないプロパティを修正した場合、該当リソースは削除後に新たに再び作成されます。
 
@@ -318,7 +316,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 
 
 <a id="delete-resources"></a>
-### リソースを削除する { #delete-resources }
+### リソースを削除する
 
 Terraformで作成したリソースを削除するには、該当の`.tf`ファイルを削除します。
 
@@ -360,7 +358,7 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 
 <a id="data-sources"></a>
-## Data sources { #data-sources }
+## Data sources
 
 tfファイルの作成に必要なインスタンスタイプID、イメージIDなどは、コンソールを通して確認するか、Terraformが提供するdata sourcesを利用して取得できます。Data sourcesはtfファイル内に作成し、取得した情報は修正できません。参照のみ可能です。
 
@@ -393,7 +391,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 
 
 <a id="image"></a>
-### イメージ { #image }
+### イメージ
 
 イメージ情報を取得します。NHN Cloudが提供するパブリックイメージまたは個人イメージをサポートします。
 
@@ -428,7 +426,7 @@ data "nhncloud_images_image_v2" "windows2016_20200218" {
 
 
 <a id="block-storage"></a>
-### ブロックストレージ { #block-storage }
+### ブロックストレージ
 
 ```
 data "nhncloud_blockstorage_volume_v2" "volume_00" {
@@ -445,7 +443,7 @@ data "nhncloud_blockstorage_volume_v2" "volume_00" {
 
 
 <a id="instance-flavor"></a>
-### インスタンスタイプ { #instance-flavor }
+### インスタンスタイプ
 
 インスタンスタイプ名は**NHN CloudコンソールCompute > Instanceでインスタンス作成 > インスタンスタイプ選択ボタン**を押すと確認できます。
 
@@ -461,7 +459,7 @@ data "nhncloud_compute_flavor_v2" "m2c2m4"{
 
 
 <a id="key-pair"></a>
-### キーペア { #key-pair }
+### キーペア
 
 ```
 data "nhncloud_compute_keypair_v2" "my_keypair"{
@@ -474,7 +472,7 @@ data "nhncloud_compute_keypair_v2" "my_keypair"{
 | name | String | O  | 照会するキーペア名 |
 
 <a id="snapshot"></a>
-### スナップショット { #snapshot }
+### スナップショット
 
 ```
 data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
@@ -494,7 +492,7 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 
 
 <a id="vpc"></a>
-### VPC { #vpc }
+### VPC
 
 VPCネットワークのUUIDは、**NHN CloudコンソールNetwork > VPC**でVPCを選択して確認可能です。
 
@@ -516,7 +514,7 @@ data "nhncloud_networking_vpc_v2" "default_network" {
 
 
 <a id="vpc-subnet"></a>
-### VPCサブネット { #vpc-subnet }
+### VPCサブネット
 
 サブネットIDはNHN Cloudコンソール **Network > サブネット**でサブネットを選択して確認可能です。
 
@@ -539,7 +537,7 @@ data "nhncloud_networking_vpcsubnet_v2" "default_subnet" {
 | shared | Bool | - | 照会するサブネットの共有有無 |
 
 <a id="routing-table"></a>
-### ルーティングテーブル { #routing-table }
+### ルーティングテーブル
 ```
 data "nhncloud_networking_routingtable_v2" "default_rt" {
   id = "bf15f6f6-1339-4057-a7fe-5811d39bab18"
@@ -554,7 +552,7 @@ data "nhncloud_networking_routingtable_v2" "default_rt" {
 
 
 <a id="security-group"></a>
-### セキュリティグループ { #security-group }
+### セキュリティグループ
 ```
 data "nhncloud_networking_secgroup_v2" "default_sg" {
   name = "default"
@@ -569,7 +567,7 @@ data "nhncloud_networking_secgroup_v2" "default_sg" {
 
 
 <a id="secret"></a>
-### シークレット { #secret }
+### シークレット
 ```
 data "nhncloud_keymanager_secret_v1" "secret_01" {
   name      = "terraform_secret_01"
@@ -583,7 +581,7 @@ data "nhncloud_keymanager_secret_v1" "secret_01" {
 
 
 <a id="secret-container"></a>
-### シークレットコンテナ { #secret-container }
+### シークレットコンテナ
 ```
 data "nhncloud_keymanager_container_v1" "container_01" {
   name      = "terraform_container_01"
@@ -597,7 +595,7 @@ data "nhncloud_keymanager_container_v1" "container_01" {
 
 
 <a id="cluster"></a>
-### クラスター { #cluster }
+### クラスター
 ```
 # UUIDで照会
 data "nhncloud_kubernetes_cluster_v1" "cluster_01" {
@@ -616,7 +614,7 @@ data "nhncloud_kubernetes_cluster_v1" "cluster_02" {
 | name | String | - | クラスター名(UUIDまたはnameのいずれかが必須) |
 
 <a id="node-group"></a>
-### ノードグループ { #node-group }
+### ノードグループ
 ```
 # UUIDで照会
 data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_01" {
@@ -639,7 +637,7 @@ data "nhncloud_kubernetes_nodegroup_v1" "nodegroup_02" {
 
 
 <a id="resources"></a>
-## Resources { #resources }
+## Resources
 
 Terraform resourcesでリソースを作成、修正、削除できます。NHN Cloudでは、Terraformによる次のリソース管理をサポートします。
 
@@ -656,16 +654,16 @@ VPC
 次のセッションでは各リソースを使用する方法を説明します。
 
 <a id="resources-note"></a>
-### 特記事項 { #resources-note }
+### 特記事項
 
 * オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/third-party-tools-guide/)を参照してください。
 
 
 <a id="resources-instance"></a>
-## Resources - インスタンス { #resources-instance }
+## Resources - インスタンス
 
 <a id="create-instance"></a>
-### インスタンス作成 { #create-instance }
+### インスタンス作成
 
 ```
 
@@ -728,7 +726,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
 
 
 <a id="attach-block-storage"></a>
-### ブロックストレージ接続 { #attach-block-storage }
+### ブロックストレージ接続
 ```
 # インスタンス作成
 resource "nhncloud_compute_instance_v2" "tf_instance_01" {
@@ -753,7 +751,7 @@ resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
 
 
 <a id="resources-instance-key-pair"></a>
-### キーペア { #resources-instance-key-pair }
+### キーペア
 ```
 resource "nhncloud_compute_keypair_v2" "tf_kp_01" {
   name = "tf_kp_01"
@@ -774,10 +772,10 @@ resource "nhncloud_compute_keypair_v2" "tf_kp_02" {
 > Terraformを通じてキーペアを作成する場合、秘密鍵は状態ファイル(terraform.tfstate)に**暗号化されていない状態**で保存されます。
 
 <a id="resources-block-storage"></a>
-## Resources - ブロックストレージ { #resources-block-storage }
+## Resources - ブロックストレージ
 
 <a id="create-block-storage"></a>
-### ブロックストレージ作成 { #create-block-storage }
+### ブロックストレージ作成
 ```
 # HDDタイプの空ブロックストレージ作成
 resource "nhncloud_blockstorage_volume_v2" "volume_01" {
@@ -818,7 +816,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_03" {
 
 
 <a id="import-block-storage"></a>
-### ブロックストレージのインポート { #import-block-storage }
+### ブロックストレージのインポート
 
 コンソールまたはAPIで作成したブロックストレージを、Terraformでインポートして管理できます。
 
@@ -846,7 +844,7 @@ Import successful!
 
 
 <a id="resources-vpc"></a>
-## Resources - VPC { #resources-vpc }
+## Resources - VPC
 
 NHN CloudはTerraformを通して、下記のリソースの作成をサポートします。
 
@@ -860,7 +858,7 @@ NHN CloudはTerraformを通して、下記のリソースの作成をサポー�
 
 
 <a id="create-vpc"></a>
-### VPC作成 { #create-vpc }
+### VPC作成
 
 指定したIP帯域のVPCを作成します。
 
@@ -880,7 +878,7 @@ resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
 
 
 <a id="create-vpc-subnet-and-attach-routing-table"></a>
-### VPCサブネット作成およびルーティングテーブル接続 { #create-vpc-subnet-and-attach-routing-table }
+### VPCサブネット作成およびルーティングテーブル接続
 
 指定したVPCにユーザーが指定したIP帯域でサブネットを作成し、作成したサブネットに既存のルーティングテーブルを接続します。
 ルーティングテーブルはNHN Cloudコンソールで作成できます。
@@ -905,7 +903,7 @@ resource "nhncloud_networking_vpcsubnet_v2" "resource-vpcsubnet-01" {
 
 
 <a id="create-network-port"></a>
-### ネットワークポート作成 { #create-network-port }
+### ネットワークポート作成
 
 ```
 resource "nhncloud_networking_port_v2" "port_1" {
@@ -930,7 +928,7 @@ resource "nhncloud_networking_port_v2" "port_1" {
 
 
 <a id="create-floating-ip"></a>
-### Floating IP作成 { #create-floating-ip }
+### Floating IP作成
 
 ```
 resource "nhncloud_compute_floatingip_v2" "fip_01" {
@@ -944,7 +942,7 @@ resource "nhncloud_compute_floatingip_v2" "fip_01" {
 
 
 <a id="associate-floating-ip"></a>
-### Floating IP接続 { #associate-floating-ip }
+### Floating IP接続
 ```
 # ネットワークポートの作成
 resource "nhncloud_networking_port_v2" "port_1" {
@@ -976,7 +974,7 @@ resource "nhncloud_compute_floatingip_associate_v2" "fip_associate" {
 
 
 <a id="create-routing-table"></a>
-### ルーティングテーブルの作成 { #create-routing-table }
+### ルーティングテーブルの作成
 ```
 resource "nhncloud_networking_vpc_v2" "resource-vpc-01" {
   ...
@@ -995,7 +993,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 | distributed   | Boolean | -  | ルーティングテーブルのルーティング方式 </br>`true`:分散型、`false`:中央集中型(デフォルト値: `true`) |
 
 <a id="associate-internet-gateway-with-routing-table"></a>
-### ルーティングテーブルにインターネットゲートウェイを接続する { #associate-internet-gateway-with-routing-table }
+### ルーティングテーブルにインターネットゲートウェイを接続する
 
 ルーティングテーブルにインターネットゲートウェイを接続します。
 インターネットゲートウェイはNHN Cloudコンソールで作成できます。インターネットゲートウェイを作成する方法は[ユーザーガイド](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)を参照してください。
@@ -1016,10 +1014,10 @@ resource "nhncloud_networking_routingtable_attach_gateway_v2" "attach-gw-01" {
 | gateway_id | String  | O  | ルーティングテーブルに接続するインターネットゲートウェイのID<br>コンソールの**Network > Internet Gateway**メニューで使用するインターネットゲートウェイを選択すると、下部の詳細情報画面でゲートウェイのIDを確認可能 |
 
 <a id="resources-load-balancer"></a>
-## Resources - ロードバランサー { #resources-load-balancer }
+## Resources - ロードバランサー
 
 <a id="create-load-balancer"></a>
-### ロードバランサー作成 { #create-load-balancer }
+### ロードバランサー作成
 
 ```
 resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
@@ -1042,7 +1040,7 @@ resource "nhncloud_lb_loadbalancer_v2" "tf_loadbalancer_01"{
 | loadbalancer_type | String | - | ロードバランサータイプ<br>`shared`/`dedicated`使用可能<br>省略した場合、`shared`に設定される |
 
 <a id="create-listener"></a>
-### リスナー作成 { #create-listener }
+### リスナー作成
 
 ```
 # HTTPリスナー
@@ -1100,7 +1098,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
 
 
 <a id="create-pool"></a>
-### プール作成 { #create-pool }
+### プール作成
 
 ```
 resource "nhncloud_lb_pool_v2" "tf_pool_01"{
@@ -1132,7 +1130,7 @@ resource "nhncloud_lb_pool_v2" "tf_pool_01"{
 
 
 <a id="create-health-monitor"></a>
-### ヘルスモニター作成 { #create-health-monitor }
+### ヘルスモニター作成
 
 ```
 resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
@@ -1164,7 +1162,7 @@ resource "nhncloud_lb_monitor_v2" "tf_monitor_01"{
 | health_check_port | Integer | - | ヘルスチェックの対象となるメンバーポート |
 
 <a id="create-member"></a>
-### メンバー作成 { #create-member }
+### メンバー作成
 
 <font color='red'>**(注意)NHN Cloudでメンバー作成時に`subnet_id`を必ず指定します。また`name`はサポートしません。**</font>
 
@@ -1190,7 +1188,7 @@ resource "nhncloud_lb_member_v2" "tf_member_01"{
 
 
 <a id="create-a-secret"></a>
-### シークレットの作成 { #create-a-secret }
+### シークレットの作成
 
 ```
 resource "nhncloud_keymanager_secret_v1" "secret_01" {
@@ -1218,7 +1216,7 @@ resource "nhncloud_keymanager_secret_v1" "secret_01" {
 
 
 <a id="create-secret-container"></a>
-### シークレットコンテナの作成 { #create-secret-container }
+### シークレットコンテナの作成
 
 ```
 resource "nhncloud_keymanager_secret_v1" "secret_01" {
@@ -1243,10 +1241,10 @@ resource "nhncloud_keymanager_container_v1" "container_01" {
 
 
 <a id="resources-security-groups"></a>
-## Resources - セキュリティグループ { #resources-security-groups }
+## Resources - セキュリティグループ
 
 <a id="create-a-security-group"></a>
-### セキュリティグループの作成 { #create-a-security-group }
+### セキュリティグループの作成
 
 ```
 resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
@@ -1260,7 +1258,7 @@ resource "nhncloud_networking_secgroup_v2" "resource-sg-01" {
 | region | String | - | セキュリティグループが割り当てられるリージョン名 |
 
 <a id="create-a-security-rule"></a>
-### セキュリティルールの作成 { #create-a-security-rule }
+### セキュリティルールの作成
 
 ```
 resource "nhncloud_networking_secgroup_rule_v2" "resource-sg-rule-01" {
@@ -1291,10 +1289,10 @@ data "nhncloud_networking_secgroup_v2" "sg-01" {
 | description | String | - | セキュリティルールの説明 |
 
 <a id="resources-container"></a>
-## Resources - コンテナ { #resources-container }
+## Resources - コンテナ
 
 <a id="create-a-cluster"></a>
-### クラスター作成 { #create-a-cluster }
+### クラスター作成
 
 ```
 data "nhncloud_networking_vpc_v2" "default_network" {
@@ -1369,7 +1367,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 > NHN Cloudが提供するNKSクラスターアドオンの詳細一覧は、APIガイドの[NHN Cloudが提供するアドオン一覧を見る](/Container/NKS/ko/public-api/#nhn-cloud_3)及びユーザーガイドの[アドオン一覧](/Container/NKS/ko/user-guide#addon-mgmt-addon-list)の項目を参照してください。
 
 <a id="create-a-node-group"></a>
-### ノードグループ作成 { #create-a-node-group }
+### ノードグループ作成
 
 ```
 resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
@@ -1401,7 +1399,7 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | labels.ca_enable  | String  | O  | 基本ワーカーノードグループ適用:クラスターオートスケーラー機能有効かどうか("True" / "False")   |
 
 <a id="resize"></a>
-### リサイズ { #resize }
+### リサイズ
 
 !!! tip "「ポイント」"
     Terraformで作成したリソースに対してリサイズを実行すると、変更される`node_count`は、tfファイル内の`nhncloud_kubernetes_cluster_v1`、`nhncloud_kubernetes_nodegroup_v1`リソースの内容に自動的には適用されません。
@@ -1439,7 +1437,7 @@ resource "nhncloud_kubernetes_cluster_resize_v1" "resize_cluster" {
 | nodes_to_remove | List(String) | - | 削除したいノードのUUID |
 
 <a id="cluster-upgrade"></a>
-### クラスターアップグレード { #cluster-upgrade }
+### クラスターアップグレード
 
 ```
 resource "nhncloud_kubernetes_cluster_v1" "test_cluster" {
@@ -1473,5 +1471,5 @@ resource "nhncloud_kubernetes_nodegroup_upgrade_v1" "upgrde_nodegroup" {
 | num_max_unavailable_nodes | Integer | - | 最大サービス不可ノード数。最小値: 1、最大値: 当該ワーカーノードグループの現在のノード数、デフォルト: 1 |
 
 <a id="reference"></a>
-## 参考サイト { #reference }
+## 参考サイト
 Terraform Documentation - [https://www.terraform.io/docs/providers/index.html](https://www.terraform.io/docs/providers/index.html)

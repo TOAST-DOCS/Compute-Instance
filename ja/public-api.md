@@ -1,7 +1,5 @@
-<!-- pre-align:aligned sig=41074081f05b -->
-
 <a id="compute-instance-api-v2-guide"></a>
-## Compute > Instance > API v2ガイド { #compute-instance-api-v2-guide }
+## Compute > Instance > API v2ガイド
 
 Instanceは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
 
@@ -14,10 +12,10 @@ Instanceは、API呼び出し時の認証/認可のためにIaaSトークンを�
 APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
 <a id="instance-flavors"></a>
-## インスタンスタイプ { #instance-flavors }
+## インスタンスタイプ
 
 <a id="list-flavors"></a>
-### タイプリスト表示 { #list-flavors }
+### タイプリスト表示
 
 ```
 GET /v2/{tenantId}/flavors
@@ -91,7 +89,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-flavors-with-details"></a>
-### タイプリスト詳細表示 { #list-flavors-with-details }
+### タイプリスト詳細表示
 
 ```
 GET /v2/{tenantId}/flavors/detail
@@ -195,10 +193,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="availability-zones"></a>
-## アベイラビリティゾーン { #availability-zones }
+## アベイラビリティゾーン
 
 <a id="list-availability-zones"></a>
-### 可用性リスト表示 { #list-availability-zones }
+### 可用性リスト表示
 
 ```
 GET /v2/{tenantId}/os-availability-zone
@@ -251,10 +249,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="key-pairs"></a>
-## キーペア { #key-pairs }
+## キーペア
 
 <a id="list-key-pairs"></a>
-### キーペアリスト表示 { #list-key-pairs }
+### キーペアリスト表示
 ```
 GET /v2/{tenantId}/os-keypairs
 X-Auth-Token: {tokenId}
@@ -303,7 +301,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="show-key-pair"></a>
-### キーペア表示 { #show-key-pair }
+### キーペア表示
 ```
 GET /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
@@ -360,7 +358,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="createregister-key-pair"></a>
-### キーペアの作成/登録 { #createregister-key-pair }
+### キーペアの作成/登録
 
 ```
 POST /v2/{tenantId}/os-keypairs
@@ -425,7 +423,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-key-pair"></a>
-### キーペアを削除する { #delete-key-pair }
+### キーペアを削除する
 ```
 DELETE /v2/{tenantId}/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
@@ -447,10 +445,10 @@ X-Auth-Token: {tokenId}
 
 
 <a id="instance"></a>
-## インスタンス { #instance }
+## インスタンス
 
 <a id="instance-status"></a>
-### インスタンス状態 { #instance-status }
+### インスタンス状態
 
 インスタンスはさまざまな状態を持ち、状態によって行える動作が決められています。インスタンス状態リストは次のとおりです。
 
@@ -476,7 +474,7 @@ X-Auth-Token: {tokenId}
 | `UNKNOWN` | インスタンスの状態が不明な場合<br>`インスタンスがこの状態になった場合、管理者に問い合わせます。` | 
 
 <a id="list-instances"></a>
-### インスタンスリスト表示 { #list-instances }
+### インスタンスリスト表示
 
 ```
 GET /v2/{tenantId}/servers
@@ -541,7 +539,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-instances-with-details"></a>
-### インスタンスリスト詳細表示 { #list-instances-with-details }
+### インスタンスリスト詳細表示
 
 インスタンスリスト表示と同じように現在テナントに作成されているインスタンスリストを返します。ただし、各インスタンスの詳細な情報が一緒に照会されます。
 
@@ -697,7 +695,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="get-instance"></a>
-### インスタンス表示 { #get-instance }
+### インスタンス表示
 
 ```
 GET /v2/{tenantId}/servers/{serverId}
@@ -855,7 +853,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-instance"></a>
-### インスタンスを作成する { #create-instance }
+### インスタンスを作成する
 
 インスタンスを作成します。
 
@@ -997,7 +995,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="modify-instance"></a>
-### インスタンスを修正する { #modify-instance }
+### インスタンスを修正する
 作成されたインスタンスを修正します。変更できるプロパティは一部の項目に制限されます。
 
 ```
@@ -1037,7 +1035,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-instance"></a>
-### インスタンスを削除する { #delete-instance }
+### インスタンスを削除する
 作成されたインスタンスを削除します。
 
 ```
@@ -1062,10 +1060,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="manage-block-storage-attachment"></a>
-## ブロックストレージ接続管理 { #manage-block-storage-attachment }
+## ブロックストレージ接続管理
 
 <a id="list-additional-block-storage-attached-to-the-instance"></a>
-### インスタンスに接続されたブロックストレージリスト表示 { #list-additional-block-storage-attached-to-the-instance }
+### インスタンスに接続されたブロックストレージリスト表示
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
@@ -1122,7 +1120,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="show-additional-block-storage-attached-to-the-instance"></a>
-### インスタンスに接続されたブロックストレージ表示 { #show-additional-block-storage-attached-to-the-instance }
+### インスタンスに接続されたブロックストレージ表示
 ```
 GET /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
@@ -1170,7 +1168,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="attach-additional-block-storage-to-the-instance"></a>
-### インスタンスに追加ブロックストレージを接続する { #attach-additional-block-storage-to-the-instance }
+### インスタンスに追加ブロックストレージを接続する
 ```
 POST /v2/{tenantId}/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
@@ -1232,7 +1230,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="detach-block-storage-from-the-instance"></a>
-### インスタンスブロックストレージの接続を切る { #detach-block-storage-from-the-instance }
+### インスタンスブロックストレージの接続を切る
 ```
 DELETE /v2/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
@@ -1256,7 +1254,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="additional-instance-features"></a>
-## インスタンス追加機能 { #additional-instance-features }
+## インスタンス追加機能
 NHN Cloudは、次のようなインスタンス制御および付加機能を提供します。
 
 * インスタンスの起動、停止、終了、再起動
@@ -1265,7 +1263,7 @@ NHN Cloudは、次のようなインスタンス制御および付加機能を�
 * セキュリティグループの追加および削除
 
 <a id="start-stopped-instance"></a>
-### 停止したインスタンスの起動 { #start-stopped-instance }
+### 停止したインスタンスの起動
 
 停止したインスタンスを再び起動し、状態を**ACTIVE**に変更します。このAPIを呼び出すにはインスタンスの状態が**SHUTOFF**になっている必要があります。
 
@@ -1302,7 +1300,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="start-terminated-instance"></a>
-### 終了したインスタンスの起動 { #start-terminated-instance }
+### 終了したインスタンスの起動
 
 停止したインスタンスを再起動し、状態を**ACTIVE**に変更します。このAPIを呼び出すには、インスタンスの状態が**SHELVED_OFFLOADED**である必要があります。
 
@@ -1339,7 +1337,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="stop-instance"></a>
-### インスタンス停止 { #stop-instance }
+### インスタンス停止
 
 インスタンスを停止し、状態を**SHUTOFF**に変更します。このAPIを呼び出すにはインスタンスの状態が**ACTIVE**または**ERROR**になっている必要があります。
 
@@ -1376,7 +1374,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="terminate-instance"></a>
-### インスタンス停止 { #terminate-instance }
+### インスタンス停止
 
 インスタンスを終了し、状態を**SHELVED_OFFLOADED**に変更します。このAPIを呼び出すためには、インスタンスの状態が**ACTIVE**でなければなりません。
 
@@ -1413,7 +1411,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="restart-instance"></a>
-### インスタンス再起動 { #restart-instance }
+### インスタンス再起動
 
 インスタンスを再起動します。再起動の方法は**SOFT**と**HARD**があります。
 
@@ -1463,7 +1461,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="change-instance-flavor"></a>
-### インスタンスタイプ変更 { #change-instance-flavor }
+### インスタンスタイプ変更
 
 インスタンスタイプを変更します。インスタンスが**ACTIVE**または**SHUTOFF**状態の時のみインスタンスタイプを変更できます。インスタンスの状態が**ACTIVE**の場合はインスタンスタイプ変更過程でインスタンスは停止し、再起動します。
 
@@ -1506,7 +1504,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-instance-image"></a>
-### インスタンスイメージ作成 { #create-instance-image }
+### インスタンスイメージ作成
 
 インスタンスからイメージを作成します。`U2`タイプのインスタンスのみ、このAPIでイメージを作成できます。`U2`タイプ以外のインスタンスイメージを作成するには[ブロックストレージAPI](/Storage/Block Storage/ja/public-api/#create-image-with-block-storage)を参照します。
 
@@ -1563,7 +1561,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="add-security-group"></a>
-### セキュリティグループ追加 { #add-security-group }
+### セキュリティグループ追加
 
 インスタンスにセキュリティグループを追加します。追加したセキュリティグループはインスタンスのすべてのポートに適用されます。
 
@@ -1604,7 +1602,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-security-group"></a>
-### セキュリティグループ削除 { #delete-security-group }
+### セキュリティグループ削除
 
 インスタンスからセキュリティグループを削除します。インスタンスのすべてのポートから指定したセキュリティグループが削除されます。
 
@@ -1644,7 +1642,7 @@ X-Auth-Token: {tokenId}
 
 
 <a id="instance-metadata"></a>
-## インスタンスメタデータ { #instance-metadata }
+## インスタンスメタデータ
 
 インスタンスメタデータ値に基づいてコンソールの**Compute > Instance**サービスページでインスタンス詳細情報画面の内容を決定します。インスタンスメタデータの内容は次のとおりです。
 
@@ -1658,7 +1656,7 @@ X-Auth-Token: {tokenId}
 
 > [注意]インスタンスメタデータの変更及び削除の際、関連サービス及び機能に影響が発生する可能性があり、これによる結果に対する責任はユーザーにあります。
 <a id="view-a-list-of-instance-metadata"></a>
-### インスタンスメタデータリスト表示 { #view-a-list-of-instance-metadata }
+### インスタンスメタデータリスト表示
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata
@@ -1708,7 +1706,7 @@ X-Auth-Token: {tokenId}
 
 
 <a id="view-instance-metadata"></a>
-### インスタンスメタデータ表示 { #view-instance-metadata }
+### インスタンスメタデータ表示
 
 ```
 GET /v2/{tenantId}/servers/{serverId}/metadata/{key}
@@ -1748,7 +1746,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 <a id="createmodify-instance-metadata"></a>
-### インスタンスメタデータを作成/修正する { #createmodify-instance-metadata }
+### インスタンスメタデータを作成/修正する
 
 インスタンスのメタデータを作成または修正します。
 リクエストするキーが既存のキーと一致する場合、キーと値をリクエスト値に変更します。
@@ -1807,7 +1805,7 @@ X-Auth-Token: {tokenId}
 
 
 <a id="delete-instance-metadata"></a>
-### インスタンスメタデータを削除する { #delete-instance-metadata }
+### インスタンスメタデータを削除する
 
 リクエストするキーと一致するインスタンスのメタデータを削除します。
 
@@ -1833,10 +1831,10 @@ X-Auth-Token: {tokenId}
 
 
 <a id="placement-policy"></a>
-## 配置ポリシー { #placement-policy }
+## 配置ポリシー
 
 <a id="create-a-placement-policy"></a>
-### 配置ポリシーを作成する { #create-a-placement-policy }
+### 配置ポリシーを作成する
 
 配置ポリシーを作成します。
 分散バッチのための`anti-affinity`配置ポリシータイプのみ提供します。
@@ -1907,7 +1905,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 <a id="view-the-list-of-placement-policies"></a>
-### 配置ポリシーリスト表示 { #view-the-list-of-placement-policies }
+### 配置ポリシーリスト表示
 
 ```
 GET /v2/{tenantId}/os-server-groups
@@ -1971,7 +1969,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 <a id="view-placement-policies"></a>
-### 配置ポリシー表示 { #view-placement-policies }
+### 配置ポリシー表示
 
 ```
 GET /v2/{tenantId}/os-server-groups/{servergroupId}
@@ -2025,7 +2023,7 @@ X-Auth-Token: {tokenId}
 </details>
 
 <a id="deleting-a-placement-policy"></a>
-### 配置ポリシーを削除する { #deleting-a-placement-policy }
+### 配置ポリシーを削除する
 
 ```
 DELETE /v2/{tenantId}/os-server-groups/{servergroupId}

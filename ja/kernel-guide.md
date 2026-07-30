@@ -1,16 +1,14 @@
-<!-- pre-align:aligned sig=73ceeadcb5ee -->
-
 <a id="compute-instance-kernel-version-upgrade-guide"></a>
-## Compute > Instance > カーネルバージョンアップガイド { #compute-instance-kernel-version-upgrade-guide }
+## Compute > Instance > カーネルバージョンアップガイド
 
 > [注意] 
 > カーネルアップデートの際、OSが破損したり、起動に失敗する可能性があり、その結果に対する責任はユーザーにあります。
 
 <a id="rocky-linux-8"></a>
-## Rocky Linux 8 { #rocky-linux-8 }
+## Rocky Linux 8
 
 <a id="check-the-kernel-version"></a>
-### カーネルバージョン確認 { #check-the-kernel-version }
+### カーネルバージョン確認
 
 現在インストールされているカーネルバージョンを確認します。
 
@@ -20,7 +18,7 @@
 ```
 
 <a id="default-storage-settings"></a>
-### 基本リポジトリの設定 { #default-storage-settings }
+### 基本リポジトリの設定
 
 システムアーキテクチャとRocky Linuxのバージョンに合った基本リポジトリを変更します。
 
@@ -49,7 +47,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 > **mirrorlist**と **baseurl**の両方が設定されている場合は、**mirrorlist**が優先的に適用され、**baseurl**は代替オプションとして動作します。
 
 <a id="clear-the-cache-before-updating"></a>
-### アップデート前のキャッシュの削除 { #clear-the-cache-before-updating }
+### アップデート前のキャッシュの削除
 
 既存のダウンロードされたパッケージのメタデータが保存されているキャッシュを削除します。
 
@@ -58,7 +56,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rockyofficial
 ```
 
 <a id="install-the-kernel"></a>
-### カーネルインストール { #install-the-kernel }
+### カーネルインストール
 
 <a id="install-the-kernel-by-specifying-a-version"></a>
 #### バージョンを指定してカーネルをインストール
@@ -181,7 +179,7 @@ kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    
 ```
 
 <a id="reboot-the-os"></a>
-### OS再起動 { #reboot-the-os }
+### OS再起動
 
 カーネルアップデートを適用するためにOSを再起動します。
 
@@ -190,7 +188,7 @@ kernel-modules.x86_64                 4.18.0-553.16.1.el8_10                    
 ```
 
 <a id="select-create-a-configuration-file-for-the-grub2-bootloader"></a>
-### <span style="color:#e11d21;">**[選択]**</span> GRUB2ブートローダの設定ファイル作成 { #select-create-a-configuration-file-for-the-grub2-bootloader }
+### <span style="color:#e11d21;">**[選択]**</span> GRUB2ブートローダの設定ファイル作成
 システムのブートメニューをアップデートして、新しくインストールされたカーネルやその他のブート項目を反映します。
 
 dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
@@ -210,7 +208,7 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 ```
 
 <a id="change-the-kernel-boot-order"></a>
-### カーネル起動順序の変更 { #change-the-kernel-boot-order }
+### カーネル起動順序の変更
 
 複数のカーネルがインストールされている場合、希望のカーネルで起動できるように起動順序を変更します。
 
@@ -314,10 +312,10 @@ done
 ```
 
 <a id="rocky-linux-9"></a>
-## Rocky Linux 9 { #rocky-linux-9 }
+## Rocky Linux 9
 
 <a id="rocky-linux-9-check-the-kernel-version"></a>
-### カーネルバージョン確認 { #rocky-linux-9-check-the-kernel-version }
+### カーネルバージョン確認
 
 現在インストールされているカーネルバージョンを確認します。
 
@@ -327,7 +325,7 @@ done
 ```
 
 <a id="rocky-linux-9-default-storage-settings"></a>
-### 基本リポジトリの設定 { #rocky-linux-9-default-storage-settings }
+### 基本リポジトリの設定
 
 システムアーキテクチャとRocky Linuxのバージョンに合った基本リポジトリを変更します。
 
@@ -367,7 +365,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 > **mirrorlist**と **baseurl**の両方が設定されている場合は、**mirrorlist**が優先的に適用され、**baseurl**は代替オプションとして動作します。
 
 <a id="rocky-linux-9-clear-the-cache-before-updating"></a>
-### アップデート前のキャッシュの削除 { #rocky-linux-9-clear-the-cache-before-updating }
+### アップデート前のキャッシュの削除
 
 既存のダウンロードされたパッケージのメタデータが保存されているキャッシュを削除します。
 
@@ -377,7 +375,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
 ```
 
 <a id="rocky-linux-9-install-the-kernel"></a>
-### カーネルインストール { #rocky-linux-9-install-the-kernel }
+### カーネルインストール
 
 <a id="rocky-linux-9-install-the-kernel-install-the-kernel-by-specifying-a-version"></a>
 #### バージョンを指定してカーネルをインストール
@@ -558,7 +556,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
 <a id="rocky-linux-9-reboot-the-os"></a>
-### OS再起動 { #rocky-linux-9-reboot-the-os }
+### OS再起動
 
 カーネルアップデートを適用するためにOSを再起動します。
 
@@ -567,7 +565,7 @@ kernel-modules-core.x86_64             5.14.0-503.23.2.el9_5          @baseos
 ```
 
 <a id="rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader"></a>
-### <span style="color:#e11d21;">**[選択]**</span> GRUB2ブートローダの設定ファイル作成 { #rocky-linux-9-select-create-a-configuration-file-for-the-grub2-bootloader }
+### <span style="color:#e11d21;">**[選択]**</span> GRUB2ブートローダの設定ファイル作成
 システムのブートメニューをアップデートして、新しくインストールされたカーネルやその他のブート項目を反映します。
 
 dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
@@ -588,7 +586,7 @@ dnf, yumは自動的にGRUB2設定ファイルをアップデートします。
 
 
 <a id="rocky-linux-9-change-the-kernel-boot-order"></a>
-### カーネル起動順序の変更 { #rocky-linux-9-change-the-kernel-boot-order }
+### カーネル起動順序の変更
 
 複数のカーネルがインストールされている場合、希望のカーネルで起動できるように起動順序を変更します。
 
