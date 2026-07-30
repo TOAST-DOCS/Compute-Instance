@@ -1,13 +1,13 @@
 <a id="compute-instance-installation-component-guide"></a>
-## Compute > Instance > 설치 구성 요소 가이드
+## Compute > Instance > 설치 구성 요소 가이드 
 
 <a id="nat-instance"></a>
-## NAT Instance
+## NAT Instance 
 
 NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주소 대역에 대해 인터넷에 액세스할 수 있게 하는 인스턴스입니다.
 
 <a id="key-features"></a>
-### 주요 기능
+### 주요 기능 
 
 * 인터넷 게이트웨이가 연결되지 않은 프라이빗 네트워크의 인스턴스가 NAT 인스턴스로 인터넷에 액세스할 수 있습니다.
 * NAT 인스턴스의 플로팅 IP를 소스 IP로 변경하여 인터넷에 액세스합니다.
@@ -34,7 +34,7 @@ NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주�
 > |SSH|사용 불가| 사용 가능|
 
 <a id="sourcetarget-check-setting"></a>
-### 스푸핑 방지 설정
+### 스푸핑 방지 설정 
 
 NAT 인스턴스가 정상적으로 동작하려면 네트워크 인터페이스 설정에서 **스푸핑 방지**를 **사용 안 함**으로 설정해야 합니다.
 
@@ -122,7 +122,7 @@ Security Rule 추가 시 접속을 허용할 MS-SQL 서비스 포트(기본 포�
 <a id="data-volume-assignment"></a>
 ### 데이터 볼륨 할당
 
-MS-SQL의 데이터/로그 파일(MDF/LDF), 백업 파일은 별도의 Block Storage 사용을 권장합니다. 
+MS-SQL의 데이터/로그 파일(MDF/LDF), 백업 파일은 별도의 Block Storage 사용을 권장합니다.
 
 ![mssqlinstance_05_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_05_201812.png)
 
@@ -172,7 +172,7 @@ SQL Server 구성관리자의 **SQL Server 구성관리자(로컬) > SQL Server 
 <a id="checkset-automatic-microsoft-sql-service-execution"></a>
 ### MS-SQL 서비스 자동 실행 확인/설정
 
-MS-SQL의 서비스가 OS 구동 시 자동으로 시작하도록 설정되어 있는지 확인합니다. 
+MS-SQL의 서비스가 OS 구동 시 자동으로 시작하도록 설정되어 있는지 확인합니다.
 
 SQL Server 구성관리자의 SQL Server 구성관리자(로컬) > SQL Server 서비스에서 시작 모드를 확인할 수 있습니다. 
 
@@ -851,7 +851,7 @@ SQL>
 ```
 
 <a id="tibero-default-accounts"></a>
-### Tibero 기본 계정
+### Tibero 기본 계정 
 
 Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 
@@ -871,7 +871,7 @@ Tibero에서 제공하는 기본 계정은 다음과 같습니다.
 * TIBERO/TIBERO1: example user이며 DBA 권한을 가지고 있습니다.
 
 <a id="kafka-instance"></a>
-## Kafka Instance
+## Kafka Instance 
 
 > [참고]
 > 인스턴스 타입은 c1m2(CPU 1core, Memory 2GB) 이상 사양으로 생성하세요.
@@ -963,7 +963,7 @@ ls: cannot access /tmp/zookeeper: No such file or directory
 ```
 
 <a id="initial-setup-after-creating-a-kafka-instance"></a>
-### Kafka 인스턴스 생성 후 초기 설정
+### Kafka 인스턴스 생성 후 초기 설정 
 
 <a id="initial-setup-after-creating-a-kafka-instance-change-the-port"></a>
 #### 포트(port) 변경
@@ -1018,7 +1018,7 @@ shell> netstat -ntl | grep [Zookeeper port]
 ```
 
 <a id="create-and-use-kafka-topic-and-data"></a>
-### Kafka 토픽 및 데이터 생성/사용
+### Kafka 토픽 및 데이터 생성/사용 
 
 토픽 생성/조회
 ```
@@ -1044,83 +1044,74 @@ shell> ~/kafka/bin/kafka-console-producer.sh --broker-list [인스턴스IP]:[카
 shell> ~/kafka/bin/kafka-console-consumer.sh --bootstrap-server [인스턴스IP]:[카프카PORT] --from-beginning --topic kafka
 ```
 
-<a id="redis-instance"></a>
-## Redis Instance
+<a id="valkey-instance"></a>
+## Valkey Instance
 
-<a id="startstop-redis"></a>
-### Redis 시작/정지
-
+<a id="startstop-valkey"></a>
+### Valkey 시작/정지
 ```
-# Redis 서비스 시작
-shell> sudo systemctl start redis
+# Valkey 서비스 시작
+shell> sudo systemctl start valkey
 
-# Redis 서비스 정지
-shell> sudo systemctl stop redis
+# Valkey 서비스 정지
+shell> sudo systemctl stop valkey
 
-# Redis 서비스 재시작
-shell> sudo systemctl restart redis
-```
-
-<a id="connect-to-redis"></a>
-### Redis 접속
-
-`redis-cli` 명령어로 Redis 인스턴스에 접속할 수 있습니다.
-```
-shell> redis-cli
+# Valkey 서비스 재시작
+shell> sudo systemctl restart valkey
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance"></a>
-### Redis 인스턴스 생성 후 초기 설정
+<a id="connect-to-valkey"></a>
+### Valkey 접속
+`valkey-cli` 커맨드를 이용해 Valkey 인스턴스에 접속할 수 있습니다.
+```
+shell> valkey-cli
+```
 
-Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. 변경해야 할 파라미터에 대한 설명은 아래와 같습니다.
+<a id="initial-setup-after-creating-a-valkey-instance"></a>
+### Valkey 인스턴스 생성 후 초기 설정
+Valkey 인스턴스의 기본 설정 파일은 `~/valkey/valkey.conf` 입니다. 변경해야 할 파라미터에 대한 설명은 아래와 같습니다.
 
-<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
+<a id="initial-setup-after-creating-a-valkey-instance-bind"></a>
 #### bind
-
 - 기본 값: `127.0.0.1 -::1`
 - 변경 값: `<private ip> 127.0.0.1 -::1`
 
-Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스턴스로의 접근을 허용하려면 해당 파라미터에 private ip를 추가해야 합니다. private ip는 `hostname -I` 명령어로 확인할 수 있습니다.
+Valkey가 사용할 IP 값입니다. 서버 외부에서 Valkey 인스턴스에 접근하려면 해당 파라미터에 private IP를 추가해야 합니다. private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
 
-<a id="initial-setup-after-creating-a-redis-instance-port"></a>
+<a id="initial-setup-after-creating-a-valkey-instance-port"></a>
 #### port
-
 - 기본 값: `6379`
 
-포트는 Redis 기본값인 6379입니다. 보안상 포트 변경을 권장합니다. 포트를 변경한 뒤에는 아래 명령어로 Redis에 접속할 수 있습니다.
+포트는 Valkey 기본값인 6379입니다. 보안상 포트 변경을 권장합니다. 포트를 변경한 뒤에는 아래 커맨드로 Valkey에 접속할 수 있습니다.
 
 ```
-shell> redis-cli -p <새로운 포트>
+shell> valkey-cli -p <새로운 포트>
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
+<a id="initial-setup-after-creating-a-valkey-instance-requirepassmasterauth"></a>
 #### requirepass/masterauth
-
 - 기본 값: `nhncloud`
 
-기본 비밀번호는 `nhncloud`입니다. 보안상 비밀번호 변경을 권장합니다. 복제 연결을 사용할 경우 `requirepass`와 `masterauth` 값을 동시에 변경해야 합니다.
+기본 비밀번호는 `nhncloud`입니다. 보안상 비밀번호 변경을 권장합니다. 복제 연결을 사용할 경우 `requirepass`와 `masterauth`값을 동시에 변경해야 합니다.
 
-<a id="automatic-ha-configuration-script"></a>
-### 자동 HA 구성 스크립트
+<a id="valkey-automatic-ha-configuration-script"></a>
+### 자동 HA 구성 스크립트 
+NHN Cloud의 Valkey 인스턴스는 자동으로 HA 환경을 구성하는 스크립트를 제공합니다. 스크립트는 반드시 설치 직후의 신규 인스턴스에서만 사용할 수 있으며, `valkey.conf`에서 설정값을 변경한 경우에는 사용할 수 없습니다.
 
-NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 스크립트를 제공합니다. 스크립트는 반드시 **설치 직후의 신규 인스턴스**에서만 사용할 수 있으며, redis.conf에서 설정 값을 변경한 경우에는 사용할 수 없습니다.
+스크립트를 사용하기 위해서는 다음 설정이 필수적으로 필요합니다.
 
-스크립트를 사용하려면 다음 설정이 반드시 필요합니다.
-
-##### 키페어 복사
-
-설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키페어(PEM 파일)가 있어야 합니다. 키페어는 다음과 같이 복사할 수 있습니다.
+##### 키 페어 복사
+설치 스크립트를 수행하는 인스턴스에 타 인스턴스 접속에 필요한 키 페어(PEM 파일)가 있어야 합니다. 키 페어는 다음과 같이 복사할 수 있습니다.
 
 - ubuntu
 ```
-local> scp -i <키페어>.pem <키페어>.pem ubuntu@<floating ip>:/home/ubuntu/
+local> scp -i <키 페어>.pem <키 페어>.pem ubuntu@<floating ip>:/home/ubuntu/
 ```
 
-생성한 인스턴스들의 키페어는 모두 동일해야 합니다.
+생성한 인스턴스들의 키 페어는 모두 동일해야 합니다.
 
 ##### 보안 그룹 설정
-
-Redis 인스턴스 간의 통신에 필요한 보안 그룹(**Network** > **Security Groups**) 설정이 필요합니다. 아래 규칙으로 보안 그룹을 생성한 뒤 Redis 인스턴스에 적용하세요.
+Valkey 인스턴스 간의 통신을 위해 보안 그룹(**Network** > **Security Groups**) 설정이 필요합니다. 아래 규칙으로 보안 그룹을 생성한 뒤 Valkey 인스턴스에 적용하세요.
 
 | 방향 | IP 프로토콜| 포트 범위| Ether| 원격|
 | --- | --- | --- | --- | --- |
@@ -1128,43 +1119,41 @@ Redis 인스턴스 간의 통신에 필요한 보안 그룹(**Network** > **Secu
 | 수신|TCP | 16379| IPv4| 인스턴스 IP(CIDR)|
 | 수신|TCP | 26379| IPv4| 인스턴스 IP(CIDR)|
 
-<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+<a id="valkey-automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
 #### Sentinel 자동구성
-
-Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
-
-```
-shell> sh .redis_make_sentinel.sh
-```
-
-이후 접속 정보에서 사용할 마스터명(Master Name)과 마스터 및 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 명령어로 확인할 수 있습니다.
+Sentinel 구성을 위해 3개의 Valkey 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
 
 ```
-shell> sh .redis_make_sentinel.sh
+shell> sh .valkey_make_sentinel.sh
+```
+
+이후 접속 정보에서 사용할 마스터명(Master Name)과 마스터 및 복제본의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+
+```
+shell> sh .valkey_make_sentinel.sh
 Enter Master's Name (ex> mymaster) : mymaster
 Enter Master's IP: 192.168.0.33
 Enter Replica-1's IP: 192.168.0.27
 Enter Replica-2's IP: 192.168.0.97
 ```
 
-복사해 온 키페어의 파일명을 입력합니다.
+복사해 온 키 페어의 파일명을 입력합니다.
 ```
-shell> Enter Pemkey's name: <키페어>.pem
+shell> Enter Pemkey's name: <키 페어>.pem
 ```
 
-<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+<a id="valkey-automatic-ha-configuration-script-cluster-automatic-configuration"></a>
 #### Cluster 자동 구성
-
-Cluster 구성을 위해 6개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
-
-```
-shell> sh .redis_make_cluster.sh
-```
-
-이후 클러스터에 사용할 Redis 인스턴스의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 명령어로 확인할 수 있습니다.
+Cluster 구성을 위해 6개의 Valkey 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키 페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
 
 ```
-shell> sh .redis_make_cluster.sh
+shell> sh .valkey_make_cluster.sh
+```
+
+이후 클러스터에 사용할 Valkey 인스턴스의 private IP를 차례로 입력합니다. 각 인스턴스의 private IP는 `hostname -I` 커맨드로 확인할 수 있습니다.
+
+```
+shell> sh .valkey_make_cluster.sh
 Enter cluster-1'IP:  192.168.0.79
 Enter cluster-2'IP:  192.168.0.10
 Enter cluster-3'IP:  192.168.0.33
@@ -1173,10 +1162,10 @@ Enter cluster-5'IP:  192.168.0.91
 Enter cluster-6'IP:  192.168.0.32
 ```
 
-복사해 온 키페어의 파일명을 입력합니다.
+복사해 온 키 페어의 파일명을 입력합니다.
 
 ```
-shell> Enter Pemkey's name: <키페어>.pem
+shell> Enter Pemkey's name: <키 페어>.pem
 ```
 
 `yes`를 입력해 클러스터 구성을 완료합니다.
