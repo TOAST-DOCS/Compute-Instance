@@ -1,5 +1,18 @@
+{%- set variant = (
+      "gov"   if "gov"   in build_flags
+ else "ncgn"  if "ncgn"  in build_flags
+ else "ngoic" if "ngoic" in build_flags
+ else "ngovc" if "ngovc" in build_flags
+ else "ngsc"  if "ngsc"  in build_flags
+ else "ninc"  if "ninc"  in build_flags
+ else ""
+) -%}
+{#- 통합 후 in-repo · cross-file 링크는 variant suffix 를 붙이지 않음.
+    다른 문서/repo 도 같은 방식으로 통합되므로 링크 대상은 항상 base 파일 하나. -#}
+{% if not variant -%}
 <!-- pre-align:aligned sig=2c62441c8680 -->
 
+{% endif -%}
 <a id="compute-instance-installation-component-guide"></a>
 ## Compute > Instance > 설치 구성 요소 가이드 { #compute-instance-installation-component-guide }
 
@@ -7,7 +20,9 @@
 ## NAT Instance { #nat-instance }
 
 NAT 인스턴스는 프라이빗 네트워크 인스턴스에서 특정 IP 주소 대역에 대해 인터넷에 액세스할 수 있게 하는 인스턴스입니다.
+{% if not variant -%}
 한국(판교), 한국(평촌) 리전에서만 제공하는 기능입니다.
+{%- endif %}
 
 <a id="key-features"></a>
 ### 주요 기능 { #key-features }
@@ -439,11 +454,20 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQL 디렉터리 및 파일 설명은 아래와 같습니다.
 
+{% if variant == "gov" -%}
+| 이름 | 설명 |
+| --- | --- |
+| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
+| initdb.log | PostgreSQL 데이터베이스 클러스터 생성 log - /var/lib/pgsql/{version}/initdb.log |
+| DATADIR | PostgreSQL 데이터 파일 경로 - /var/lib/pgsql/{version}/data/ |
+| LOG | PostgreSQL log 파일 경로 - /var/lib/pgsql/{version}/data/log/\*.log |
+{%- else -%}
 | 이름 | 설명 | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | config 파일 | /etc/postgresql/${version}/main/postgresql.conf |
 | DATADIR | PostgreSQL 데이터 파일 경로 | /var/lib/postgresql/${version}/main |
 | LOG | PostgreSQL log 파일 경로 | /var/lib/postgresql/${version}/main/log/\*.log |
+{% endif %}
 
 <a id="cubrid-instance"></a>
 ## CUBRID Instance { #cubrid-instance }
