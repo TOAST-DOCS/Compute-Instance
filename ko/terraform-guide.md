@@ -748,7 +748,7 @@ resource "nhncloud_blockstorage_volume_v2" "volume_01" {
 resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
   volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
-{%- if not variant %}
+{% if not variant -%}
   vendor_options {
     ignore_volume_confirmation = true
   }
