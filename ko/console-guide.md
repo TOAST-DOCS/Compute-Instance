@@ -1,5 +1,18 @@
+{%- set variant = (
+      "gov"   if "gov"   in build_flags
+ else "ncgn"  if "ncgn"  in build_flags
+ else "ngoic" if "ngoic" in build_flags
+ else "ngovc" if "ngovc" in build_flags
+ else "ngsc"  if "ngsc"  in build_flags
+ else "ninc"  if "ninc"  in build_flags
+ else ""
+) -%}
+{#- 통합 후 in-repo · cross-file 링크는 variant suffix 를 붙이지 않음.
+    다른 문서/repo 도 같은 방식으로 통합되므로 링크 대상은 항상 base 파일 하나. -#}
+{% if not variant -%}
 <!-- pre-align:aligned sig=82f23cc3f97e -->
 
+{% endif -%}
 <a id="compute-instance-console-guide"></a>
 ## Compute > Instance > 콘솔 사용 가이드 { #compute-instance-console-guide }
 
