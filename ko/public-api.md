@@ -1,15 +1,46 @@
+{%- set variant = (
+      "gov"   if "gov"   in build_flags
+ else "ngoic" if "ngoic" in build_flags
+ else "ngovc" if "ngovc" in build_flags
+ else "ngsc"  if "ngsc"  in build_flags
+ else "ninc"  if "ninc"  in build_flags
+ else ""
+) -%}
+{#- 통합 후 in-repo · cross-file 링크는 variant suffix 를 붙이지 않음.
+    실제 환경 차이 (API 도메인, 엔드포인트 리스트) 만 conditional. -#}
+{%- set is_daegu = variant in ("ngoic", "ngovc", "ngsc", "ninc") -%}
+{%- set api_host_domain = {
+      "":      "nhncloudservice.com",
+      "gov":   "gov-nhncloudservice.com",
+      "ngoic": "ngoic.com",
+      "ngovc": "ngovc.com",
+      "ngsc":  "ngsc.go.kr",
+      "ninc":  "ninc.go.kr",
+}[variant] -%}
+{% if not variant -%}
 <!-- pre-align:aligned sig=41074081f05b -->
 
+{% endif -%}
 <a id="compute-instance-api-v2-guide"></a>
 ## Compute > Instance > API v2 가이드 { #compute-instance-api-v2-guide }
 
+{% if is_daegu -%}
+API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+{%- else -%}
 Instance는 API 호출 시 인증/인가를 위해 IaaS 토큰을 사용합니다. IaaS 토큰은 NHN Cloud의 OpenStack 기반 인프라 서비스(IaaS)에서 사용하는 인증 토큰입니다. IaaS 토큰 발급 및 사용에 대한 자세한 내용은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token) 을 참고하세요.
+{%- endif %}
 
 인스턴스 API는 `compute` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
 
 | 타입 | 리전 | 엔드포인트 |
 |---|---|---|
-| compute | 한국(판교) 리전<br>한국(평촌) 리전<br>한국(광주) 리전<br>일본 리전 | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://kr3-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
+{% if variant == "gov" -%}
+| compute | 한국(판교) 리전<br>한국(평촌) 리전 | https://kr1-api-instance-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-instance-infrastructure.gov-nhncloudservice.com |
+{%- elif is_daegu -%}
+| compute | 한국(대구) 리전 | https://kr4-api-instance-infrastructure.$[ api_host_domain ]$ |
+{%- else -%}
+| compute | 한국(판교) 리전<br>한국(평촌) 리전<br>한국(광주) 리전<br>일본 리전 | https://kr1-api-instance-infrastructure.$[ api_host_domain ]$<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://kr3-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
+{% endif %}
 
 API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
@@ -57,11 +88,11 @@ X-Auth-Token: {tokenId}
       "id": "013bea75-8541-4c6f-9abe-a03fee3d74fe",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "bookmark"
         }
       ],
@@ -71,11 +102,11 @@ X-Auth-Token: {tokenId}
       "id": "0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "bookmark"
         }
       ],
@@ -139,11 +170,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m256",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "bookmark"
         }
       ],
@@ -164,11 +195,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m128",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "bookmark"
         }
       ],
@@ -521,11 +552,11 @@ X-Auth-Token: {tokenId}
       "id": "aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -618,11 +649,11 @@ X-Auth-Token: {tokenId}
       },
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -631,7 +662,7 @@ X-Auth-Token: {tokenId}
         "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
         "links": [
           {
-            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+            "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
             "rel": "bookmark"
           }
         ]
@@ -643,7 +674,7 @@ X-Auth-Token: {tokenId}
         "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
         "links": [
           {
-            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+            "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
             "rel": "bookmark"
           }
         ]
@@ -777,11 +808,11 @@ X-Auth-Token: {tokenId}
     },
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "bookmark"
       }
     ],
@@ -790,7 +821,7 @@ X-Auth-Token: {tokenId}
       "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
           "rel": "bookmark"
         }
       ]
@@ -802,7 +833,7 @@ X-Auth-Token: {tokenId}
       "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+          "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
           "rel": "bookmark"
         }
       ]
@@ -979,11 +1010,11 @@ X-Auth-Token: {tokenId}
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.$[ api_host_domain ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "bookmark"
       }
     ]
