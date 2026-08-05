@@ -6,7 +6,7 @@
 {%- set ubuntu_id = "ubuntu_1804_20200218" if variant == "gov" else "ubuntu_2004_20201222" -%}
 {%- set ubuntu_name = "Ubuntu Server 18.04.3 LTS (2020.02.18)" if variant == "gov" else "Ubuntu Server 20.04.1 LTS (2020.12.22)" -%}
 {%- set windows_name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO" if variant == "gov" else "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO" -%}
-{%- set example_uuid = "8a8c5516-6762-4592-97ab-db8d3af629e6" if variant == "gov" else "$[ example_uuid ]$" -%}
+{%- set example_uuid = "8a8c5516-6762-4592-97ab-db8d3af629e6" if variant == "gov" else "1e846787-04e9-4701-957c-78001b4b7257" -%}
 {%- set registry_link_text = "Terraform Registry" if variant == "gov" else "NHN Cloud Terraform Registry" -%}
 {% if not variant -%}
 <!-- pre-align:aligned sig=660ef5a6860f -->
