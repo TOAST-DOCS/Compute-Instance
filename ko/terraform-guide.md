@@ -3,11 +3,6 @@
     실제 환경 차이 (도메인, 이미지 버전, 리전 목록 등) 만 conditional. -#}
 {%- set nhn_domain = "gov-nhncloudservice.com" if variant == "gov" else "nhncloudservice.com" -%}
 {%- set docs_host = "docs.gov-nhncloud.com" if variant == "gov" else "docs.nhncloud.com" -%}
-{%- set ubuntu_id = "ubuntu_1804_20200218" if variant == "gov" else "ubuntu_2004_20201222" -%}
-{%- set ubuntu_name = "Ubuntu Server 18.04.3 LTS (2020.02.18)" if variant == "gov" else "Ubuntu Server 20.04.1 LTS (2020.12.22)" -%}
-{%- set windows_name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO" if variant == "gov" else "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO" -%}
-{%- set example_uuid = "8a8c5516-6762-4592-97ab-db8d3af629e6" if variant == "gov" else "1e846787-04e9-4701-957c-78001b4b7257" -%}
-{%- set registry_link_text = "Terraform Registry" if variant == "gov" else "NHN Cloud Terraform Registry" -%}
 {% if not variant -%}
 <!-- pre-align:aligned sig=660ef5a6860f -->
 
@@ -119,7 +114,7 @@ Terraform을 사용하기 전에 다음과 같이 공급자 설정 파일을 생
 
 공급자 파일 이름은 임의로 설정 가능하며, 이 예제에서는 `provider.tf`를 사용합니다.
 
-provider 버전은 [$[ registry_link_text ]$](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)의 `VERSION` 정보를 참고하여 작성합니다.
+provider 버전은 [NHN Cloud Terraform Registry](https://registry.terraform.io/providers/nhn-cloud/nhncloud/latest)의 `VERSION` 정보를 참고하여 작성합니다.
 
 ```
 # Define required providers
@@ -248,20 +243,11 @@ $ terraform apply
 ...
 nhncloud_compute_instance_v2.terraform-instance-01: Creating...
 nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [10s elapsed]
-{% if variant == "gov" -%}
-...
-nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [50s elapsed]
-nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 53s [id=$[ example_uuid ]$]
-
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-...
-{%- else -%}
 nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [20s elapsed]
 nhncloud_compute_instance_v2.terraform-instance-01: Still creating... [30s elapsed]
-nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=$[ example_uuid ]$]
+nhncloud_compute_instance_v2.terraform-instance-01: Creation complete after 39s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-{%- endif %}
 ```
 
 `apply` 명령이 실행하면 플랜 변경 이력을 기록하는 자체 DB 파일(terraform.tfstate)이 현재 디렉터리에 생성됩니다. 이 파일을 삭제하지 않도록 주의합니다.
@@ -294,7 +280,7 @@ Terraform will perform the following actions:
 
   # nhncloud_compute_instance_v2.terraform-instance-01 will be updated in-place
   ~ resource "nhncloud_compute_instance_v2" "terraform-instance-01" {
-        id                  = "$[ example_uuid ]$"
+        id                  = "1e846787-04e9-4701-957c-78001b4b7257"
         name                = "terraform-instance-01"
       ~ security_groups     = [
           + "terraform-sg",
@@ -313,8 +299,8 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 $ terraform apply
 ...
-nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=$[ example_uuid ]$]
-nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=$[ example_uuid ]$]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Modifications complete after 5s [id=1e846787-04e9-4701-957c-78001b4b7257]
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
@@ -352,8 +338,8 @@ Plan: 0 to add, 0 to change, 1 to destroy.
 ```
 $ terraform apply
 ...
-nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=$[ example_uuid ]$]
-nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=$[ example_uuid ]$, 10s elapsed]
+nhncloud_compute_instance_v2.terraform-instance-01: Destroying... [id=1e846787-04e9-4701-957c-78001b4b7257]
+nhncloud_compute_instance_v2.terraform-instance-01: Still destroying... [id=1e846787-04e9-4701-957c-78001b4b7257, 10s elapsed]
 nhncloud_compute_instance_v2.terraform-instance-01: Destruction complete after 11s
 
 Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
@@ -365,11 +351,11 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
-Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.$[ ubuntu_id ]$`로 가져온 이미지 정보를 참조합니다.
+Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
 
 ```
-data "nhncloud_images_image_v2" "$[ ubuntu_id ]$" {
-  name = "$[ ubuntu_name ]$"
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 ```
@@ -399,14 +385,14 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 이미지 정보를 가져옵니다. NHN Cloud가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
 
 ```
-data "nhncloud_images_image_v2" "$[ ubuntu_id ]$" {
-  name = "$[ ubuntu_name ]$"
+data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
+  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
   most_recent = true
 }
 
 # 같은 이름의 이미지 중 가장 오래된 이미지 조회
 data "nhncloud_images_image_v2" "windows2016_20200218" {
-  name = "$[ windows_name ]$"
+  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
   sort_key = "created_at"
   sort_direction = "asc"
   owner = "c289b99209ca4e189095cdecebbd092d"
@@ -686,7 +672,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 
   block_device {
-    uuid                  = data.nhncloud_images_image_v2.{% if variant == "gov" %}centos_610_20200218{% else %}$[ ubuntu_id ]${% endif %}.id
+    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
