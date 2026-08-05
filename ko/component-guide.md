@@ -201,7 +201,7 @@ SQL Server 구성관리자의 SQL Server 구성관리자(로컬) > SQL Server �
 2. **서비스** 탭에서 **General > 시작 모드**를 **자동**으로 변경합니다.
 
 > [참고]
-> MS-SQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes/)를 참고합니다.
+> MS-SQL Instance의 릴리스 현황은 [인스턴스 릴리스 노트](/Compute/Compute/ko/release-notes/)를 {% if variant %}참고하세요{% else %}참고합니다{% endif %}.
 
 <a id="mysql-instance"></a>
 ## MySQL Instance { #mysql-instance }
@@ -277,13 +277,13 @@ shell> mysql -uroot -P[변경된 포트 번호]
 <a id="description-of-mycnf"></a>
 ### my.cnf 설명 { #description-of-mycnf }
 
-my.cnf의 기본 경로는 `/etc/my.cnf`이고 NHN Cloud 권장 변수(variable)가 설정되어 있으며, 내용은 아래와 같습니다.
+my.cnf의 기본 경로는 {% if variant %}/etc/my.cnf{% else %}`/etc/my.cnf`{% endif %}이고 NHN Cloud 권장 변수(variable)가 설정되어 있으며, 내용은 아래와 같습니다.
 
 | 이름 | 설명 |
 | --- | --- |
 | default\_storage\_engine | 기본 스토리지 엔진(storage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
 | expire\_logs\_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
-| innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
+| innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. {% if variant %}설정 값{% else %}설정값{% endif %} 수정 시 DB 재시작이 필요합니다. |
 | innodb\_file\_per\_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
 | innodb\_log\_files\_in\_group | innodb\_log\_file 파일의 개수를 설정하며 순환적\(circular\)으로 사용됩니다\. 최소 2개 이상으로 구성됩니다\. |
 | log_timestamps | MySQL 5.7의 기본 log 시간은 UTC로 표시됩니다. 그러므로 로그 시간을 SYSTEM 로컬 시간으로 변경합니다. |
@@ -642,7 +642,7 @@ shell> sudo systemctl restart mariadb.service
 이미지 생성 후 초기에는 아래와 같이 접속합니다.
 
 ``` sh
-shell> sudo mysql -u root
+{% if variant and variant != "gov" %}shell> mysql -u root{% else %}shell> sudo mysql -u root{% endif %}
 ```
 
 비밀번호 변경 후에는 아래와 같이 접속합니다.
@@ -739,8 +739,14 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 ##### Tibero 7 설치
 
 ```
+{% if variant -%}
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
+[root@tiberoinstance ~]# pwd
+{%- else -%}
 [rocky@tiberoinstance ~]$ sudo su - root
 [root@tiberoinstance ~]# pwd
+{%- endif %}
 /root
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
 ```
@@ -866,7 +872,7 @@ TIP_FILE
 tiberotestdb
 tiberoinstance.novalocal                                      NO
          0 7
-2024/12/23
+{% if variant %}2023/10/17{% else %}2024/12/23{% endif %}
 NORMAL           NO
 /db/tibero7/config/tiberotestdb.tip
 
@@ -1129,7 +1135,7 @@ shell> redis-cli -p <새로운 포트>
 <a id="automatic-ha-configuration-script"></a>
 ### 자동 HA 구성 스크립트 { #automatic-ha-configuration-script }
 
-NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 스크립트를 제공합니다. 스크립트는 반드시 **설치 직후의 신규 인스턴스**에서만 사용할 수 있으며, redis.conf에서 설정값을 변경한 경우에는 사용할 수 없습니다.
+NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 스크립트를 제공합니다. 스크립트는 반드시 **설치 직후의 신규 인스턴스**에서만 사용할 수 있으며, redis.conf에서 {% if variant %}설정 값{% else %}설정값{% endif %}을 변경한 경우에는 사용할 수 없습니다.
 
 스크립트를 사용하려면 다음 설정이 반드시 필요합니다.
 
