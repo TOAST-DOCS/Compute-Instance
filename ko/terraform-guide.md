@@ -1,5 +1,15 @@
+{%- set variant = ("gov" if "gov" in build_flags else "") -%}
+{#- 통합 후 in-repo · cross-file 링크는 variant suffix 를 붙이지 않음.
+    실제 환경 차이 (도메인, 이미지 버전, 리전 목록 등) 만 conditional. -#}
+{%- set nhn_domain = "gov-nhncloudservice.com" if variant == "gov" else "nhncloudservice.com" -%}
+{%- set docs_host = "docs.gov-nhncloud.com" if variant == "gov" else "docs.nhncloud.com" -%}
+{%- set ubuntu_id = "ubuntu_1804_20200218" if variant == "gov" else "ubuntu_2004_20201222" -%}
+{%- set ubuntu_name = "Ubuntu Server 18.04.3 LTS (2020.02.18)" if variant == "gov" else "Ubuntu Server 20.04.1 LTS (2020.12.22)" -%}
+{%- set windows_name = "Windows 2016 STD with MS-SQL 2016 Standard (2020.02.18) KO" if variant == "gov" else "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO" -%}
+{% if not variant -%}
 <!-- pre-align:aligned sig=660ef5a6860f -->
 
+{% endif -%}
 <a id="third-party-user-guide-terraform-user-guide"></a>
 ## 서드파티 사용 가이드 > Terraform 사용 가이드 { #third-party-user-guide-terraform-user-guide }
 이 문서는 Terraform으로 NHN Cloud를 사용하는 방법을 설명합니다.
@@ -125,7 +135,7 @@ provider "nhncloud" {
   user_name   = "terraform-guide@nhncloud.com"
   tenant_id   = "aaa4c0a12fd84edeb68965d320d17129"
   password    = "difficultpassword"
-  auth_url    = "https://api-identity-infrastructure.nhncloudservice.com/v2.0"
+  auth_url    = "https://api-identity-infrastructure.$[ nhn_domain ]$/v2.0"
   region      = "KR1"
 }
 ```
@@ -143,9 +153,9 @@ provider "nhncloud" {
 * **region**
     * NHN Cloud 리소스를 관리할 리전 정보를 입력합니다.
     * **KR1**: 한국(판교) 리전
-    * **KR2**: 한국(평촌) 리전
+{% if not variant %}    * **KR2**: 한국(평촌) 리전
     * **JP1**: 일본(도쿄) 리전
-
+{% endif %}
 공급자 설정 파일이 있는 경로에서 `init` 명령을 이용해 Terraform을 초기화합니다.
 
 ```
@@ -344,11 +354,11 @@ Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
 
 tf 파일 작성에 필요한 인스턴스 타입 ID, 이미지 ID 등은 콘솔에서 확인하거나, Terraform이 제공하는 data sources를 이용하여 가져올 수 있습니다. Data sources는 tf 파일 안에 작성하며, 가져온 정보는 수정할 수 없고 오직 참조만 가능합니다. NHN Cloud는 주기적으로 이미지를 업데이트하므로 이미지 이름이 변경될 수 있습니다. 사용하고자 하는 정확한 이미지 이름은 콘솔을 참조하여 명시합니다.
 
-Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.ubuntu_2004_20201222`로 가져온 이미지 정보를 참조합니다.
+Data sources는 `{data sources 자원 유형}.{data source 이름}`으로 참조합니다. 아래 예제에서는 `nhncloud_images_image_v2.$[ ubuntu_id ]$`로 가져온 이미지 정보를 참조합니다.
 
 ```
-data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
-  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
+data "nhncloud_images_image_v2" "$[ ubuntu_id ]$" {
+  name = "$[ ubuntu_name ]$"
   most_recent = true
 }
 ```
@@ -378,14 +388,14 @@ data "nhncloud_blockstorage_snapshot_v2" "my_snapshot" {
 이미지 정보를 가져옵니다. NHN Cloud가 제공하는 공용 이미지 또는 개인 이미지를 지원합니다.
 
 ```
-data "nhncloud_images_image_v2" "ubuntu_2004_20201222" {
-  name = "Ubuntu Server 20.04.1 LTS (2020.12.22)"
+data "nhncloud_images_image_v2" "$[ ubuntu_id ]$" {
+  name = "$[ ubuntu_name ]$"
   most_recent = true
 }
 
 # 같은 이름의 이미지 중 가장 오래된 이미지 조회
 data "nhncloud_images_image_v2" "windows2016_20200218" {
-  name = "Windows 2019 STD with MS-SQL 2019 Standard (2020.12.22) KO"
+  name = "$[ windows_name ]$"
   sort_key = "created_at"
   sort_direction = "asc"
   owner = "c289b99209ca4e189095cdecebbd092d"
@@ -642,7 +652,7 @@ Terraform resources를 통해 리소스를 생성, 수정, 삭제할 수 있습�
 <a id="resources-note"></a>
 ### 알아두기 { #resources-note }
 
-* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
+* 오브젝트 스토리지 리소스 사용법은 [사용자 가이드 > Storage > Object Storage > 서드 파티 도구 사용 가이드](https://$[ docs_host ]$/ko/Storage/Object%20Storage/ko/third-party-tools-guide/)를 참고하십시오.
 
 <a id="resources-instance"></a>
 ## Resources - 인스턴스 { #resources-instance }
@@ -665,7 +675,7 @@ resource "nhncloud_compute_instance_v2" "tf_instance_02" {
   }
 
   block_device {
-    uuid                  = data.nhncloud_images_image_v2.ubuntu_2004_20201222.id
+    uuid                  = data.nhncloud_images_image_v2.$[ ubuntu_id ]$.id
     source_type           = "image"
     destination_type      = "volume"
     boot_index            = 0
@@ -727,9 +737,11 @@ resource "nhncloud_blockstorage_volume_v2" "volume_01" {
 resource "nhncloud_compute_volume_attach_v2" "volume_to_instance"{
   instance_id = nhncloud_compute_instance_v2.tf_instance_02.id
   volume_id = nhncloud_blockstorage_volume_v2.volume_01.id
+{%- if not variant %}
   vendor_options {
     ignore_volume_confirmation = true
   }
+{% endif -%}
 }
 ```
 | 이름    | 타입 | 필수 | 설명       |
@@ -987,7 +999,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 ### 라우팅 테이블에 인터넷 게이트웨이 연결하기 { #associate-internet-gateway-with-routing-table }
 
 라우팅 테이블에 인터넷 게이트웨이를 연결합니다.
-인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
+인터넷 게이트웨이는 NHN Cloud 콘솔에서 생성할 수 있습니다. 인터넷 게이트웨이를 생성하는 방법은 [사용자 가이드](https://$[ docs_host ]$/ko/Network/Internet%20Gateway/ko/console-guide/#_2)를 참고하세요.
 
 ```
 resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
@@ -1065,7 +1077,7 @@ resource "nhncloud_lb_listener_v2" "tf_listener_01"{
   timeout_member_connect = 5000
   timeout_member_data = 5000
   timeout_tcp_inspect = 5000
-  default_tls_container_ref = "https://kr1-api-key-manager-infrastructure.nhncloudservice.com/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
+  default_tls_container_ref = "https://kr1-api-key-manager-infrastructure.$[ nhn_domain ]$/v1/containers/3258d456-06f4-48c5-8863-acf9facb26de"
   sni_container_refs = null
   admin_state_up = true
 }
