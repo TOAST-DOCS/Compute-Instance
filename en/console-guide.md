@@ -94,7 +94,7 @@ You can select various flavors depending on virtual hardware performance specifi
 > [Note] 
 > 1 vCPU refers to one socket composed of one thread and one core, the number of threads and the number of cores per socket are constant, one each.
 
-Instance flavors can be changed in the NHN Cloud console even after instance creation, from higher to lower specs and vice versa. However, note that some flavors cannot be changed. See [Modify flavor](./console-guide/#modify-flavor) for details.
+Instance flavors can be changed in the NHN Cloud console even after instance creation, from higher to lower specs and vice versa. However, note that some flavors cannot be changed. See [Modify flavor](#modify-flavor) for details.
 
 > [Caution] An instance's root block storagecannot be changed by changing instance flavors.
 
@@ -111,7 +111,7 @@ When you create multiple instances without specifying an availability zone, each
 <a id="key-pair"></a>
 ### Key Pair { #key-pair }
 
-Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](./console-guide/#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](./console-guide/#import-key-pairs-mac-and-linux) for Mac and Linux users.
+Use an existing key pair or create a new key pair. To register an existing key pair, see [Import Key Pair (Windows)](#import-key-pairs-windows) for Windows users, and [Import Key Pair (Mac and Linux)](#import-key-pairs-mac-and-linux) for Mac and Linux users.
 
 > [Note]
 > Key Pair is a resource assigned to the user account, so it's not deleted when you delete a project.
@@ -250,7 +250,7 @@ For more details on floating IP, see [VPC Overview](/Network/VPC/en/overview/).
 
 An instance's security groups can be modified regardless of the instance's status. Modified security groups are applied immediately.
 
-For more details on security groups, see [Security Group](./console-guide/#security-group) and [VPC Overview](/Network/VPC/en/overview/).
+For more details on security groups, see [Security Group](#security-group) and [VPC Overview](/Network/VPC/en/overview/).
 
 <a id="change-network-subnet"></a>
 ### Change Network Subnet { #change-network-subnet }
