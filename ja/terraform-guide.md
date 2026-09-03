@@ -658,7 +658,7 @@ VPC
 <a id="resources-note"></a>
 ### 特記事項 { #resources-note }
 
-* オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/third-party-tools-guide/)を参照してください。
+* オブジェクトストレージリソースの使い方は、[ユーザーガイド > Storage > Object Storage > サードパーティツール使用ガイド](/Storage/Object%20Storage/ja/third-party-tools-guide/)を参照してください。
 
 
 <a id="resources-instance"></a>
@@ -998,7 +998,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 ### ルーティングテーブルにインターネットゲートウェイを接続する { #associate-internet-gateway-with-routing-table }
 
 ルーティングテーブルにインターネットゲートウェイを接続します。
-インターネットゲートウェイはNHN Cloudコンソールで作成できます。インターネットゲートウェイを作成する方法は[ユーザーガイド](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2)を参照してください。
+インターネットゲートウェイはNHN Cloudコンソールで作成できます。インターネットゲートウェイを作成する方法は[ユーザーガイド](/Network/Internet%20Gateway/ja/console-guide/#network-internet-gateway-console-user-guide)を参照してください。
 
 ```
 resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
@@ -1366,7 +1366,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 | labels.master_lb_floating_ip_enabled  | String  | O   | Kubernetes APIエンドポイントへのパブリックドメインアドレス作成有無("True" / "False")<br>labels.external_network_idとexternal_subnet_id_listが設定されている場合のみ「True」に設定可能 |
 
 > [参考]
-> NHN Cloudが提供するNKSクラスターアドオンの詳細一覧は、APIガイドの[NHN Cloudが提供するアドオン一覧を見る](/Container/NKS/ko/public-api/#nhn-cloud_3)及びユーザーガイドの[アドオン一覧](/Container/NKS/ko/user-guide#addon-mgmt-addon-list)の項目を参照してください。
+> NHN Cloudが提供するNKSクラスターアドオンの詳細一覧は、APIガイドの[NHN Cloudが提供するアドオン一覧を見る](/Container/NKS/ja/public-api/#view-a-list-of-add-ons-offered-by-nhn-cloud)及びユーザーガイドの[アドオン一覧](/Container/NKS/ja/user-guide/#addon-mgmt-addon-list)の項目を参照してください。
 
 <a id="create-a-node-group"></a>
 ### ノードグループ作成 { #create-a-node-group }
