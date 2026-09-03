@@ -72,7 +72,13 @@ NATインスタンスをルートゲートウェイに指定します。 NATイ�
 <a id="allow-security-group-tcp-port-3389-rdp"></a>
 ### セキュリティグループTCPポート3389(RDP)許可 { #allow-security-group-tcp-port-3389-rdp }
 
-<!-- TODO: translate body -->
+インスタンスの作成完了後、RDP（remote desktop protocol）を使用してインスタンスにアクセスします。
+インスタンスにFloating IPが関連付けられている必要があり、セキュリティグループでTCPポート3389（RDP）が許可されている必要があります。
+
+![mssqlinstance_02_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_02_201812.png)
+
+**[+ パスワード確認]** ボタンをクリックし、インスタンス作成時に設定したキーペアを使用してパスワードを確認します。
+**[接続]** ボタンをクリックして .rdp ファイルをダウンロードし、取得したパスワードを使用してインスタンスに接続します。
 
 <a id="initial-settings-after-microsoft-sql-image-is-created"></a>
 ### MS-SQLイメージ作成後の初期設定 { #initial-settings-after-microsoft-sql-image-is-created }
