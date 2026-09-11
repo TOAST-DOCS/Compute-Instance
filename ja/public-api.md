@@ -218,7 +218,7 @@ X-Auth-Token: {tokenId}
 #### レスポンス
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| availabilityZoneInfo.hosts | Body | - | アベイラビリティゾーンに属しているホスト情報オブジェクト<br>常にnullと表示 |
+| availabilityZoneInfo | Body | Object | アベイラビリティゾーン情報オブジェクト |
 | availabilityZoneInfo.zoneName | Body | String | アベイラビリティゾーン名 |
 | availabilityZoneInfo.zoneState | Body | Object | アベイラビリティゾーン状態情報オブジェクト |
 | availabilityZoneInfo.available | Body | Object | アベイラビリティゾーンの状態 |
