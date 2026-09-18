@@ -1,6 +1,6 @@
 <!-- pre-align:aligned sig=2c62441c8680 -->
 
-{% set rn_suf = '' if 'public' in build_flags else '-'+build_flags[0] %}
+{% set rn_suf = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 <a id="compute-instance-installation-component-guide"></a>
 ## Compute > Instance > 설치 구성 요소 가이드 { #compute-instance-installation-component-guide }
 

@@ -1,7 +1,7 @@
 <!-- pre-align:aligned sig=82f23cc3f97e -->
 
 {% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
-{% set vpc_cg = '' if 'public' in build_flags else '-'+build_flags[0] %}
+{% set vpc_cg = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 <a id="compute-instance-console-guide"></a>
 ## Compute > Instance > 콘솔 사용 가이드 { #compute-instance-console-guide }
 

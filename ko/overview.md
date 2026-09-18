@@ -1,6 +1,6 @@
 <!-- pre-align:aligned sig=f2414300858d -->
 
-{% set f = build_flags[0] %}
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 {% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
 {% set price_dom = {"public":"www.toast.com","gov":"gov.toast.com","ncgn":"www.gncloud.go.kr","ninc":"www.ninc.go.kr","ngsc":"www.ngsc.go.kr","ngovc":"www.ngovc.com","ngoic":"www.ngoic.com"} %}
 <a id="compute-instance-overview"></a>
