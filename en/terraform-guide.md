@@ -1354,8 +1354,9 @@ resource "nhncloud_kubernetes_nodegroup_v1" "resource-nodegroup-01" {
 | image_id | UUID | O | Node group base image UUID |
 | labels | Object | O | Node group creation information object |
 | labels.availability_zone | String | O | Default worker node group applies: availability zone |
-| labels.boot_volume_type | String | O | Default worker node group applies: block storage size (GB) |
-| labels.ca_enable  | String  | O  | Applied to the worker node group: Whether Cluster Autoscaler is enabled Cluster Autoscaler activation status<br>("True" / "False") || labels.boot_volume_size | String | O | Default worker node group applies: whether to enable the feature<br>("True" / "False")      |
+| labels.boot_volume_type  | String  | O  | Applied to the default worker node group: Block storage type |
+| labels.boot_volume_size  | String  | O  | Applied to the default worker node group: Block storage size (GB) |
+| labels.ca_enable  | String  | O  | Applied to the default worker node group: Cluster Autoscaler: Whether to enable the feature<br>("True" / "False") |
 
 <a id="resize"></a>
 ### Resize { #resize }
