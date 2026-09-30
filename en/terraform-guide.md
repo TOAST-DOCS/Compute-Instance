@@ -618,7 +618,7 @@ The following sections describe how to use each resource.
 <a id="resources-note"></a>
 ### Note { #resources-note }
 
-* For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/third-party-tools-guide/).
+* For how to use Object Storage, see [User Guide > Storage > Object Storage > Third-Party Tools Usage Guide](/Storage/Object%20Storage/en/third-party-tools-guide/).
 
 <a id="resources-instance"></a>
 ## Resources - Instance { #resources-instance }
@@ -952,7 +952,7 @@ resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
 ### Associate Internet Gateway with Routing Table { #associate-internet-gateway-with-routing-table }
 
 Associate an Internet gateway to the routing table.
-You can create an Internet gateway in the NHN Cloud console. For information on how to create an Internet gateway, see the [User Guide](https://docs.nhncloud.com/ko/Network/Internet%20Gateway/ko/console-guide/#_2).
+You can create an Internet gateway in the NHN Cloud console. For information on how to create an Internet gateway, see the [User Guide](/Network/Internet%20Gateway/en/console-guide/#network-internet-gateway-console-user-guide).
 
 ```
 resource "nhncloud_networking_routingtable_v2" "resource-rt-01" {
@@ -1323,7 +1323,7 @@ resource "nhncloud_kubernetes_cluster_v1" "resource-cluster-01" {
 
 
 > [Note]
-> For a detailed list of NKS cluster add-ons provided by NHN Cloud, please refer to the [View List of Add-ons Provided by NHN Cloud](/Container/NKS/ko/public-api/#nhn-cloud_3) section in the API Guide and the [Add-on List](/Container/NKS/ko/user-guide#addon-mgmt-addon-list) section in the User Guide.
+> For a detailed list of NKS cluster add-ons provided by NHN Cloud, please refer to the [View List of Add-ons Provided by NHN Cloud](/Container/NKS/en/public-api/#view-a-list-of-add-ons-offered-by-nhn-cloud) section in the API Guide and the [Add-on List](/Container/NKS/en/user-guide/#addon-mgmt-addon-list) section in the User Guide.
 
 <a id="create-a-node-group"></a>
 ### Create a Node Group { #create-a-node-group }
