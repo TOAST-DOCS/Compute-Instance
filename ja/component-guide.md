@@ -1,4 +1,8 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=2c62441c8680 -->
+
+{% set rn_suf = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 
 <a id="compute-instance-installation-component-guide"></a>
 ## Compute > Instance > インストールコンポーネントガイド { #compute-instance-installation-component-guide }
@@ -6,7 +10,10 @@
 <a id="nat-instance"></a>
 ## NAT Instance { #nat-instance }
 NATインスタンスは、プライベートネットワークインスタンスから特定IPアドレス帯域にインターネットアクセスできるようにするインスタンスです。
+{% if "public" in build_flags %}
 韓国(パンギョ)、韓国(ピョンチョン)リージョンでのみ提供する機能です。
+{% else %}
+{% endif %}
 
 <a id="key-features"></a>
 ### 主な機能 { #key-features }
@@ -180,8 +187,11 @@ SQL Server構成管理者のSQL Server構成管理者(ローカル) > SQL Server
 2. **サービス**タブで **General > 起動モード**を **自動**に変更します。
 
 > [参考]
-> MS-SQL Instanceのリリース状況は、[インスタンスリリースノート](/Compute/Compute/ja/release-notes/)を参照します。
-
+{% if "public" in build_flags %}
+> MS-SQL Instanceのリリース状況は、[インスタンスリリースノート](/Compute/Compute/ja/release-notes$[ rn_suf ]$/)を参照します。
+{% else %}
+> MS-SQL Instanceのリリース状況は、[インスタンスリリースノート](/Compute/Compute/ja/release-notes$[ rn_suf ]$/)を参照してください。
+{% endif %}
 
 <a id="mysql-instance"></a>
 ## MySQL Instance { #mysql-instance }
@@ -257,13 +267,24 @@ shell> mysql -uroot -P[変更されたポート番号]
 <a id="description-of-mycnf"></a>
 ### my.cnf説明 { #description-of-mycnf }
 
+{% if "public" in build_flags %}
 my.cnfのデフォルトのパスは `/etc/my.cnf` で、NHN Cloud推奨変数(variable)が設定されています。内容は下記の通りです。
+{% else %}
+my.cnfのデフォルトのパスは /etc/my.cnfで、NHN Cloud推奨変数(variable)が設定されています。内容は下記の通りです。
+{% endif %}
 
 | 名前 | 説明 |
 | --- | --- |
 | default\_storage\_engine | 基本ストレージエンジン(storage engine)を指定します。InnoDBが指定され、Online-DDLとトランザクション(transaction)を使用できます。 |
 | expire\_logs\_days | binlog設定で、 ログを保存する日数を設定します。デフォルトで3日に指定されています。 |
+{% if "public" in build_flags %}
+
 | innodb\_log\_file\_size | トランザクション(transaction)のredo logを保存するログファイルのサイズを指定します。<br><br>実際の運営環境では256MB以上を推奨しており、現在512MBに設定されています。設定値を修正した時は、DBの再起動が必要です。 |
+{% else %}
+
+| innodb\_log\_file\_size | トランザクション (transaction) のredo logを保存するログファイルのサイズを指定します。<br><br>実際の運用環境では256MB以上を推奨しており、現在512MBに設定されています。設定値を変更する場合はDBの再起動が必要です。 |
+{% endif %}
+
 | innodb\_file\_per\_table | テーブルが削除されたりTRUNCATEされる時、テーブルスペースがOSにすぐに返却されます。 |
 | innodb\_log\_files\_in\_group | innodb\_log\_fileファイルの個数を設定し、循環的\(circular\)に使用されます。最小2個以上で構成されます。 |
 | log_timestamps | MySQL 5.7の基本log時間はUTCで表示されます。したがってログ時間をSYSTEMローカル時間に変更します。 |
@@ -283,8 +304,7 @@ MySQLディレクトリおよびファイル説明は下記の通りです。
 | SLOW_LOG | MySQL Slow Queryファイルのパス -  <span style="color:#333333">/var/lib/mysql/*slow.log</span> |
 
 
-> MySQL Instanceのリリース状況は[インスタンスリリースノート](/Compute/Compute/ja/release-notes/)を参照してください。
-
+> MySQL Instanceのリリース状況は[インスタンスリリースノート](/Compute/Compute/ja/release-notes$[ rn_suf ]$/)を参照してください。
 
 <a id="postgresql-instance"></a>
 ## PostgreSQL Instance { #postgresql-instance }
@@ -436,11 +456,30 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
 
+{% if "public" in build_flags %}
+
 | 名前 | 説明 | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
 | DATADIR | PostgreSQLデータファイルパス | /var/lib/postgresql/${version}/main |
 | LOG | PostgreSQL logファイルパス | /var/lib/postgresql/${version}/main/log/\*.log |
+
+{% elif "gov" in build_flags %}
+
+| 名前 | 説明 |
+| --- | --- |
+| postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
+| initdb.log | PostgreSQLデータベースクラスターの作成log - /var/lib/pgsql/{version}/initdb.log |
+| DATADIR | PostgreSQLデータファイルのパス - /var/lib/pgsql/{version}/data/ |
+| LOG | PostgreSQL logファイルのパス - /var/lib/pgsql/{version}/data/log/\*.log |
+{% else %}
+
+| 名前 | 説明 | Ubuntu |
+| --- | --- | --- |
+| postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
+| DATADIR | PostgreSQLデータファイルのパス | /var/lib/postgresql/${version}/main |
+| LOG | PostgreSQL logファイルのパス | /var/lib/postgresql/${version}/main/log/\*.log |
+{% endif %}
 
 <a id="cubrid-instance"></a>
 ## CUBRID Instance { #cubrid-instance }
@@ -616,7 +655,13 @@ shell> sudo systemctl restart mariadb.service
 イメージ作成後、最初は以下のように接続します。
 
 ``` sh
+{% if "public" in build_flags %}
 shell> sudo mysql -u root
+{% elif "gov" in build_flags %}
+shell> sudo mysql -u root
+{% else %}
+shell> mysql -u root
+{% endif %}
 ```
 
 パスワード変更後は以下のように接続します。
@@ -712,7 +757,12 @@ $ ./dbca OS_ACCOUNT DB_NAME DB_CHARACTERSET DB_TYPE DB_PORT
 
 ##### Tibero 7インストール
 ```
+{% if "public" in build_flags %}
 [rocky@tiberoinstance ~]$ sudo su - root
+{% else %}
+[rocky@tiberoinstance ~]$ sudo su root
+[root@tiberoinstance rocky]# cd
+{% endif %}
 [root@tiberoinstance ~]# pwd
 /root
 [root@tiberoinstance ~]# ./dbca nhncloud tiberotestdb utf8 $TYPE 8639
@@ -841,7 +891,11 @@ TIP_FILE
 tiberotestdb
 tiberoinstance.novalocal                                      NO
          0 7
-45216
+{% if "public" in build_flags %}
+2024/12/23
+{% else %}
+2023/10/17
+{% endif %}
 NORMAL           NO
 /db/tibero7/config/tiberotestdb.tip
 
@@ -850,7 +904,6 @@ NORMAL           NO
 
 SQL>
 ```
-
 
 <a id="tibero-default-accounts"></a>
 ### Tibero基本アカウント { #tibero-default-accounts }
@@ -1012,19 +1065,24 @@ shell> netstat -ntl | grep [Zookeeper port]
 # インスタンスIP = Private IP / Kafka基本port = 9092
 # トピック作成
 shell> ~/kafka/bin/kafka-topics.sh --create --bootstrap-server [インスタンスIP]:[Kafka PORT] --topic kafka
+
 # トピックリスト照会
 shell> ~/kafka/bin/kafka-topics.sh --list --bootstrap-server [インスタンスIP]:[Kafka PORT]
+
 # トピック詳細情報確認
 shell> ~/kafka/bin/kafka-topics.sh --describe --bootstrap-server [インスタンスIP]:[Kafka PORT] --topic kafka
+
 # トピック削除
 shell> ~/kafka/bin/kafka-topics.sh --delete --bootstrap-server [インスタンスIP]:[Kafka PORT] --topic kafka
 ```
-データ作成/使用
+データの作成/使用
 ```
 # producer起動
 shell> ~/kafka/bin/kafka-console-producer.sh --broker-list [インスタンスIP]:[Kafka PORT] --topic kafka
+
 # consumer起動
 shell> ~/kafka/bin/kafka-console-consumer.sh --bootstrap-server [インスタンスIP]:[Kafka PORT] --from-beginning --topic kafka
+{% if "public" in build_flags %}
 ```
 
 <a id="redis-instance"></a>
@@ -1178,6 +1236,175 @@ Can I set the above configuration? (type 'yes' to accept):
 >>> Check for open slots...
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
+{% elif "gov" in build_flags %}
+```
+
+<a id="redis-instance"></a>
+## Redis Instance { #redis-instance }
+
+<a id="startstop-redis"></a>
+### Redis起動/停止 { #startstop-redis }
+
+```
+# Redisサービスの起動
+shell> sudo systemctl start redis
+
+# Redisサービスの停止
+shell> sudo systemctl stop redis
+
+# Redisサービスの再起動
+shell> sudo systemctl restart redis
+```
+
+<a id="connect-to-redis"></a>
+### Redisへの接続 { #connect-to-redis }
+
+`redis-cli`コマンドでRedisインスタンスに接続できます。
+```
+shell> redis-cli
+```
+
+<a id="initial-setup-after-creating-a-redis-instance"></a>
+### Redisインスタンス作成後の初期設定 { #initial-setup-after-creating-a-redis-instance }
+
+Redisインスタンスのデフォルト設定ファイルは`~/redis/redis.conf`です。変更が必要なパラメータの説明は次のとおりです。
+
+<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
+#### bind
+
+- デフォルト値: `127.0.0.1 -::1`
+- 変更値: `<private ip> 127.0.0.1 -::1`
+
+Redisが使用するIPに関する値です。サーバー外部からRedisインスタンスへのアクセスを許可するには、該当パラメータにprivate IPを追加する必要があります。private IPは`hostname -I`コマンドで確認できます。
+
+<a id="initial-setup-after-creating-a-redis-instance-port"></a>
+#### port
+
+- デフォルト値: `6379`
+
+ポートはRedisのデフォルト値である6379です。セキュリティ上の理由から、ポートの変更をお勧めします。ポートを変更した後は、以下のコマンドでRedisに接続できます。
+
+```
+shell> redis-cli -p <新しいポート>
+```
+
+<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
+#### requirepass/masterauth
+
+- デフォルト値: `nhncloud`
+
+デフォルトのパスワードは`nhncloud`です。セキュリティのため、パスワードの変更をお勧めします。レプリカ接続を使用する場合は、`requirepass`と`masterauth`の値を同時に変更する必要があります。
+
+<a id="automatic-ha-configuration-script"></a>
+### 自動HA構成スクリプト { #automatic-ha-configuration-script }
+
+NHN CloudのRedisインスタンスは、HA環境を自動的に構成するスクリプトを提供します。スクリプトは必ず**インストール直後の新規インスタンス**でのみ使用できます。redis.confで設定値を変更した場合は、使用することはできません。
+
+スクリプトを使用するには、次の設定が必要です。
+
+##### キーペアのコピー
+
+インストールスクリプトを実行するインスタンスに、他のインスタンスへの接続に必要なキーペア(PEMファイル)が必要です。キーペアは次のようにコピーできます。
+
+- ubuntu
+```
+local> scp -i <キーペア>.pem <キーペア>.pem ubuntu@<floating ip>:/home/ubuntu/
+```
+
+作成したインスタンスのキーペアはすべて同一である必要があります。
+
+##### セキュリティグループの設定
+
+Redisインスタンス間の通信に必要なセキュリティグループ(**Network** > **Security Groups**)の設定が必要です。以下のルールでセキュリティグループを作成し、Redisインスタンスに適用します。
+
+| 方向 | IPプロトコル | ポート範囲 | Ether | 遠隔 |
+| --- | --- | --- | --- | --- |
+| 受信 | TCP | 6379 | IPv4 | インスタンスIP(CIDR) |
+| 受信 | TCP | 16379 | IPv4 | インスタンスIP(CIDR) |
+| 受信 | TCP | 26379 | IPv4 | インスタンスIP(CIDR) |
+
+<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+#### Sentinel自動構成
+
+Sentinel構成には3つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーした後、以下のようにスクリプトを実行します。
+
+```
+shell> sh .redis_make_sentinel.sh
+```
+
+その後、接続情報で使用するマスター名（Master Name）と、マスターおよびレプリカのprivate IPを順番に入力します。各インスタンスのprivate IPは`hostname -I`コマンドで確認できます。
+
+```
+shell> sh .redis_make_sentinel.sh
+Enter Master's Name (ex> mymaster) : mymaster
+Enter Master's IP: 192.168.0.33
+Enter Replica-1's IP: 192.168.0.27
+Enter Replica-2's IP: 192.168.0.97
+```
+
+コピーしてきたキーペアのファイル名を入力します。
+```
+shell> Enter Pemkey's name: <キーペア>.pem
+```
+
+<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+#### Cluster自動構成
+
+Cluster構成には6つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーし、次のようにスクリプトを実行します。
+
+```
+shell> sh .redis_make_cluster.sh
+```
+
+次に、クラスターで使用するRedisインスタンスのプライベートIPを順番に入力します。各インスタンスのプライベートIPは、`hostname -I`コマンドで確認できます。
+
+```
+shell> sh .redis_make_cluster.sh
+Enter cluster-1'IP:  192.168.0.79
+Enter cluster-2'IP:  192.168.0.10
+Enter cluster-3'IP:  192.168.0.33
+Enter cluster-4'IP:  192.168.0.116
+Enter cluster-5'IP:  192.168.0.91
+Enter cluster-6'IP:  192.168.0.32
+```
+
+コピーしてきたキーペアのファイル名を入力します。
+
+```
+shell> Enter Pemkey's name: <キーペア>.pem
+```
+
+`yes`を入力してクラスター構成を完了します。
+```
+>>> Performing hash slots allocation on 6 nodes...
+Master[0] -> Slots 0 - 5460
+Master[1] -> Slots 5461 - 10922
+Master[2] -> Slots 10923 - 16383
+Adding replica 192.168.0.91:6379 to 192.168.0.79:6379
+Adding replica 192.168.0.32:6379 to 192.168.0.10:6379
+Adding replica 192.168.0.116:6379 to 192.168.0.33:6379
+M: 0a6ee5bf24141f0058c403d8cc42b349cdc09752 192.168.0.79:6379
+   slots:[0-5460] (5461 slots) master
+M: b5d078bd7b30ddef650d9a7fa9735e7648efc86f 192.168.0.10:6379
+   slots:[5461-10922] (5462 slots) master
+M: 0da9b78108b6581bdb90002cbdde3506e9173dd8 192.168.0.33:6379
+   slots:[10923-16383] (5461 slots) master
+S: 078b4ce014a52588e23577b3fc2dabf408723d68 192.168.0.116:6379
+   replicates 0da9b78108b6581bdb90002cbdde3506e9173dd8
+S: caaae4ebd3584c0481205e472d6bd0f9dc5c574e 192.168.0.91:6379
+   replicates 0a6ee5bf24141f0058c403d8cc42b349cdc09752
+S: ab2aa9e37cee48ef8e4237fd63e8301d81193818 192.168.0.32:6379
+   replicates b5d078bd7b30ddef650d9a7fa9735e7648efc86f
+Can I set the above configuration? (type 'yes' to accept):
+```
+
+```
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
+{% else %}
+{% endif %}
 ```
 
 <a id="valkey-instance"></a>
