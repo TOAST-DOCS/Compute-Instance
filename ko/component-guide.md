@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=2c62441c8680 -->
+<!-- pre-align:aligned sig=7e25219fc178 -->
 
 {% set rn_suf = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 <a id="compute-instance-installation-component-guide"></a>
@@ -1260,11 +1260,11 @@ Can I set the above configuration? (type 'yes' to accept):
 {% elif "gov" in build_flags %}
 ```
 
-<a id="redis-instance"></a>
-## Redis Instance { #redis-instance }
+<a id="redis-instance-2"></a>
+## Redis Instance { #redis-instance-2 }
 
-<a id="startstop-redis"></a>
-### Redis 시작/정지 { #startstop-redis }
+<a id="redis-instance-2-startstop-redis"></a>
+### Redis 시작/정지 { #redis-instance-2-startstop-redis }
 
 ```
 # Redis 서비스 시작
@@ -1277,20 +1277,20 @@ shell> sudo systemctl stop redis
 shell> sudo systemctl restart redis
 ```
 
-<a id="connect-to-redis"></a>
-### Redis 접속 { #connect-to-redis }
+<a id="redis-instance-2-connect-to-redis"></a>
+### Redis 접속 { #redis-instance-2-connect-to-redis }
 
 `redis-cli` 명령어로 Redis 인스턴스에 접속할 수 있습니다.
 ```
 shell> redis-cli
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance"></a>
-### Redis 인스턴스 생성 후 초기 설정 { #initial-setup-after-creating-a-redis-instance }
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance"></a>
+### Redis 인스턴스 생성 후 초기 설정 { #redis-instance-2-initial-setup-after-creating-a-redis-instance }
 
 Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. 변경해야 할 파라미터에 대한 설명은 아래와 같습니다.
 
-<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-bind"></a>
 #### bind
 
 - 기본 값: `127.0.0.1 -::1`
@@ -1298,7 +1298,7 @@ Redis 인스턴스의 기본 설정 파일은 `~/redis/redis.conf` 입니다. �
 
 Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스턴스로의 접근을 허용하려면 해당 파라미터에 private ip를 추가해야 합니다. private ip는 `hostname -I` 명령어로 확인할 수 있습니다.
 
-<a id="initial-setup-after-creating-a-redis-instance-port"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-port"></a>
 #### port
 
 - 기본 값: `6379`
@@ -1309,15 +1309,15 @@ Redis가 사용할 ip에 대한 값입니다. 서버 외부에서 Redis 인스�
 shell> redis-cli -p <새로운 포트>
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
 #### requirepass/masterauth
 
 - 기본 값: `nhncloud`
 
 기본 비밀번호는 `nhncloud`입니다. 보안상 비밀번호 변경을 권장합니다. 복제 연결을 사용할 경우 `requirepass`와 `masterauth` 값을 동시에 변경해야 합니다.
 
-<a id="automatic-ha-configuration-script"></a>
-### 자동 HA 구성 스크립트 { #automatic-ha-configuration-script }
+<a id="redis-instance-2-automatic-ha-configuration-script"></a>
+### 자동 HA 구성 스크립트 { #redis-instance-2-automatic-ha-configuration-script }
 
 NHN Cloud의 Redis 인스턴스는 자동으로 HA 환경을 구성해 주는 스크립트를 제공합니다. 스크립트는 반드시 **설치 직후의 신규 인스턴스**에서만 사용할 수 있으며, redis.conf에서 설정 값을 변경한 경우에는 사용할 수 없습니다.
 
@@ -1344,7 +1344,7 @@ Redis 인스턴스 간의 통신에 필요한 보안 그룹(**Network** > **Secu
 | 수신|TCP | 16379| IPv4| 인스턴스 IP(CIDR)|
 | 수신|TCP | 26379| IPv4| 인스턴스 IP(CIDR)|
 
-<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
 #### Sentinel 자동구성
 
 Sentinel 구성을 위해 3개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.
@@ -1368,7 +1368,7 @@ Enter Replica-2's IP: 192.168.0.97
 shell> Enter Pemkey's name: <키페어>.pem
 ```
 
-<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-cluster-automatic-configuration"></a>
 #### Cluster 자동 구성
 
 Cluster 구성을 위해 6개의 Redis 인스턴스가 필요합니다. 마스터로 사용할 인스턴스에 키페어를 복사한 뒤 아래와 같이 스크립트를 수행하세요.

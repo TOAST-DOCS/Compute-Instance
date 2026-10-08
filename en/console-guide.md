@@ -1,4 +1,9 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=82f23cc3f97e -->
+
+{% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
+{% set vpc_cg = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 
 <a id="compute-instance-console-guide"></a>
 ## Compute > Instance > Console Guide { #compute-instance-console-guide }
@@ -121,14 +126,14 @@ Use an existing key pair or create a new key pair. To register an existing key p
 
 Select a subnet defined in your VPC to connect to an instance. For each selected subnet, a network interface is created in the instance to connect to that subnet. You can change the order of selected subnets to change network interfaces, in which case the first network interface (`eth0`) will be set as the default gateway.
 
-For more details on creating and managing networks, refer to [VPC Overview](/Network/VPC/en/overview/).
+For more details on creating and managing networks, refer to [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/).
 
 <a id="floating-ip"></a>
 ### Floating IP { #floating-ip }
 
 Select whether you will use a floating IP after instance creation. If you enable this option, a new floating IP is created and connected to the first network interface. Note that the first network interface must be connected to a subnet where an internet gateway is configured.
 
-Floating IP can be managed from Instance > Management, or Instance > Floating IP. For more details on floating IP, see [VPC Console Guide](/Network/VPC/en/console-guide/).
+Floating IP can be managed from Instance > Management, or Instance > Floating IP. For more details on floating IP, see [VPC Console Guide](/Network/VPC/en/console-guide$[ vpc_cg ]$/).
 
 <a id="security-group"></a>
 ### Security Group { #security-group }
@@ -138,7 +143,7 @@ Select security groups that the instance will be included in. One instance can b
 - The instance can communicate over the network with all other instances included in each security group. When you are dealing with an instance with sensitive data that is not meant to be accessible by other instances, you must carefully select security groups.
 - The rules of each security group are aggregated and applied to the instance's external network communication.
 
-For more details on security groups, see [VPC Console Guide](/Network/VPC/en/console-guide/).
+For more details on security groups, see [VPC Console Guide](/Network/VPC/en/console-guide$[ vpc_cg ]$/).
 
 <a id="additional-block-storage"></a>
 ### Additional Block Storage { #additional-block-storage }
@@ -243,14 +248,14 @@ Created images are registered as private images in **Compute > Image**. You can 
 
 Floating IP can be associated with or disassociated from an instance, regardless of the instance's status. If you have no available floating IP or if the floating IP you want is not available, you can create one by clicking **Create**. Alternatively, floating IP can also be created from **Network > VPC > Floating IP**.
 
-For more details on floating IP, see [VPC Overview](/Network/VPC/en/overview/).
+For more details on floating IP, see [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/).
 
 <a id="modify-security-group"></a>
 ### Modify Security Group { #modify-security-group }
 
 An instance's security groups can be modified regardless of the instance's status. Modified security groups are applied immediately.
 
-For more details on security groups, see [Security Group](#security-group) and [VPC Overview](/Network/VPC/en/overview/).
+For more details on security groups, see [Security Group](#security-group) and [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/).
 
 <a id="change-network-subnet"></a>
 ### Change Network Subnet { #change-network-subnet }
