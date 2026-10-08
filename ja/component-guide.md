@@ -1239,11 +1239,11 @@ Can I set the above configuration? (type 'yes' to accept):
 {% elif "gov" in build_flags %}
 ```
 
-<a id="redis-instance"></a>
-## Redis Instance { #redis-instance }
+<a id="redis-instance-2"></a>
+## Redis Instance { #redis-instance-2 }
 
-<a id="startstop-redis"></a>
-### Redis起動/停止 { #startstop-redis }
+<a id="redis-instance-2-startstop-redis"></a>
+### Redis起動/停止 { #redis-instance-2-startstop-redis }
 
 ```
 # Redisサービスの起動
@@ -1256,20 +1256,20 @@ shell> sudo systemctl stop redis
 shell> sudo systemctl restart redis
 ```
 
-<a id="connect-to-redis"></a>
-### Redisへの接続 { #connect-to-redis }
+<a id="redis-instance-2-connect-to-redis"></a>
+### Redisへの接続 { #redis-instance-2-connect-to-redis }
 
 `redis-cli`コマンドでRedisインスタンスに接続できます。
 ```
 shell> redis-cli
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance"></a>
-### Redisインスタンス作成後の初期設定 { #initial-setup-after-creating-a-redis-instance }
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance"></a>
+### Redisインスタンス作成後の初期設定 { #redis-instance-2-initial-setup-after-creating-a-redis-instance }
 
 Redisインスタンスのデフォルト設定ファイルは`~/redis/redis.conf`です。変更が必要なパラメータの説明は次のとおりです。
 
-<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-bind"></a>
 #### bind
 
 - デフォルト値: `127.0.0.1 -::1`
@@ -1277,7 +1277,7 @@ Redisインスタンスのデフォルト設定ファイルは`~/redis/redis.con
 
 Redisが使用するIPに関する値です。サーバー外部からRedisインスタンスへのアクセスを許可するには、該当パラメータにprivate IPを追加する必要があります。private IPは`hostname -I`コマンドで確認できます。
 
-<a id="initial-setup-after-creating-a-redis-instance-port"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-port"></a>
 #### port
 
 - デフォルト値: `6379`
@@ -1288,15 +1288,15 @@ Redisが使用するIPに関する値です。サーバー外部からRedisイ�
 shell> redis-cli -p <新しいポート>
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
 #### requirepass/masterauth
 
 - デフォルト値: `nhncloud`
 
 デフォルトのパスワードは`nhncloud`です。セキュリティのため、パスワードの変更をお勧めします。レプリカ接続を使用する場合は、`requirepass`と`masterauth`の値を同時に変更する必要があります。
 
-<a id="automatic-ha-configuration-script"></a>
-### 自動HA構成スクリプト { #automatic-ha-configuration-script }
+<a id="redis-instance-2-automatic-ha-configuration-script"></a>
+### 自動HA構成スクリプト { #redis-instance-2-automatic-ha-configuration-script }
 
 NHN CloudのRedisインスタンスは、HA環境を自動的に構成するスクリプトを提供します。スクリプトは必ず**インストール直後の新規インスタンス**でのみ使用できます。redis.confで設定値を変更した場合は、使用することはできません。
 
@@ -1323,7 +1323,7 @@ Redisインスタンス間の通信に必要なセキュリティグループ(**
 | 受信 | TCP | 16379 | IPv4 | インスタンスIP(CIDR) |
 | 受信 | TCP | 26379 | IPv4 | インスタンスIP(CIDR) |
 
-<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
 #### Sentinel自動構成
 
 Sentinel構成には3つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーした後、以下のようにスクリプトを実行します。
@@ -1347,7 +1347,7 @@ Enter Replica-2's IP: 192.168.0.97
 shell> Enter Pemkey's name: <キーペア>.pem
 ```
 
-<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-cluster-automatic-configuration"></a>
 #### Cluster自動構成
 
 Cluster構成には6つのRedisインスタンスが必要です。マスターとして使用するインスタンスにキーペアをコピーし、次のようにスクリプトを実行します。
