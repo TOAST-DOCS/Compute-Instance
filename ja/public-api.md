@@ -1,15 +1,36 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=41074081f05b -->
+
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set ep_domain = {"ninc":"ninc.go.kr","ngsc":"ngsc.go.kr","ngovc":"ngovc.com","ngoic":"ngoic.com"} %}
 
 <a id="compute-instance-api-v2-guide"></a>
 ## Compute > Instance > API v2ガイド { #compute-instance-api-v2-guide }
 
-Instanceは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
+{% if "public" in build_flags %}
+InstanceはAPI呼び出し時の認証/認可にIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行および使用の詳細については、[IaaSトークン](/nhncloud/ja/public-api/iaas-token)を参照してください。
+{% elif "gov" in build_flags %}
+InstanceはAPI呼び出し時の認証/認可にIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行および使用の詳細については、[IaaSトークン](/nhncloud/ja/public-api/iaas-token-gov)を参照してください。
+{% else %}
+APIを使用するには、APIエンドポイントとトークンなどが必要です。[API使用の準備](/Compute/Compute/ja/identity-api/)を参照して、API使用に必要な情報を準備します。
+{% endif %}
 
 インスタンスAPIは`compute`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
 
 | タイプ | リージョン | エンドポイント |
 |---|---|---|
+{% if "public" in build_flags %}
+
 | compute | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン<br>韓国(クァンジュ)リージョン<br>日本リージョン | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://kr3-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
+
+{% elif "gov" in build_flags %}
+
+| compute | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン | https://kr1-api-instance-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-instance-infrastructure.gov-nhncloudservice.com |
+{% else %}
+
+| compute | 韓国(大邱)リージョン | https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$ |
+{% endif %}
 
 APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
@@ -57,11 +78,23 @@ X-Auth-Token: {tokenId}
       "id": "013bea75-8541-4c6f-9abe-a03fee3d74fe",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -71,11 +104,23 @@ X-Auth-Token: {tokenId}
       "id": "0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -113,6 +158,8 @@ X-Auth-Token: {tokenId}
 <a id="list-flavors-with-details-response"></a>
 #### レスポンス
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 説明            |
 |---|---|---|----------------|
 | flavors | Body | Object | インスタンスタイプリストオブジェクト |
@@ -127,6 +174,24 @@ X-Auth-Token: {tokenId}
 | flavors.os-flavor-access:is_public | Body | Boolean | 共有有無          |
 | flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB) |
+{% else %}
+
+| 名前 | 種類 | 形式 | 説明                      |
+|---|---|---|-------------------------|
+| flavors | Body | Object | インスタンスタイプリストオブジェクト           |
+| flavors.id | Body | UUID | インスタンスタイプID              |
+| flavors.links | Body | Object | インスタンスタイプパスオブジェクト           |
+| flavors.name | Body | String | インスタンスタイプ名前              |
+| flavors.ram | Body | Integer | メモリサイズ(MB)              |
+| flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 有効化の有無                  |
+| flavors.vcpus | Body | Integer | vCPU数                 |
+| flavors.extra_specs | Body | Object | 追加仕様オブジェクト                |
+| flavors.swap | Body | Integer | スワップ領域サイズ(GB)           |
+| flavors.os-flavor-access:is_public | Body | Boolean | 共有の有無                   |
+| flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率        |
+| flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB)            |
+{% endif %}
+
 | flavors.disk | Body | Integer | ルートブロックストレージサイズ(GB) |
 
 <details><summary>例</summary>
@@ -139,11 +204,23 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m256",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -164,11 +241,23 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m128",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -521,11 +610,23 @@ X-Auth-Token: {tokenId}
       "id": "aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -618,11 +719,23 @@ X-Auth-Token: {tokenId}
       },
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -631,7 +744,13 @@ X-Auth-Token: {tokenId}
         "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
         "links": [
           {
+{% if "public" in build_flags %}
             "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% elif "gov" in build_flags %}
+            "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% else %}
+            "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% endif %}
             "rel": "bookmark"
           }
         ]
@@ -643,7 +762,13 @@ X-Auth-Token: {tokenId}
         "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
         "links": [
           {
+{% if "public" in build_flags %}
             "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% elif "gov" in build_flags %}
+            "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% else %}
+            "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% endif %}
             "rel": "bookmark"
           }
         ]
@@ -777,11 +902,23 @@ X-Auth-Token: {tokenId}
     },
     "links": [
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+        "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
         "rel": "self"
       },
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% else %}
+        "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+{% endif %}
         "rel": "bookmark"
       }
     ],
@@ -790,7 +927,13 @@ X-Auth-Token: {tokenId}
       "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+{% endif %}
           "rel": "bookmark"
         }
       ]
@@ -802,7 +945,13 @@ X-Auth-Token: {tokenId}
       "id": "35a73b57-58a7-434d-aa08-5249aaa95b3e",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% else %}
+          "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/35a73b57-58a7-434d-aa08-5249aaa95b3e",
+{% endif %}
           "rel": "bookmark"
         }
       ]
@@ -876,6 +1025,10 @@ X-Auth-Token: {tokenId}
 
 
 
+{% if "public" in build_flags %}
+
+{% else %}
+{% endif %}
 ```
 POST /v2/{tenantId}/servers
 X-Auth-Token: {tokenId}
@@ -884,16 +1037,42 @@ X-Auth-Token: {tokenId}
 <a id="create-instance-request"></a>
 #### リクエスト
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+{% else %}
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|---|---|---|---|---|
+| tenantId | URL | String | O | テナントID |
+| tokenId | Header | String | O | トークンID |
+{% endif %}
+
 | server | body | Object | O | サーバーオブジェクト |
+{% if "public" in build_flags %}
+
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略する場合`default`グループが追加される |
 | server.security_groups.name | body | String | - | **(条件付き必須)** インスタンスに追加するセキュリティグループ名 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可 |
+{% elif "gov" in build_flags %}
+
+| server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略した場合、`default` グループが追加されます |
+| server.security_groups.name | body | String | - | **(条件付き必須)** インスタンスに追加するセキュリティグループの名前 |
+| server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコードされた文字列で65535バイトまで許可 |
+{% else %}
+
+| server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略した場合は`default`グループが追加されます |
+| server.security_groups.name | body | String | - | インスタンスに追加するセキュリティグループ名 |
+| server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコードされた文字列で65535バイトまで許可 |
+{% endif %}
+
 | server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意のゾーンが選択される<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合、元のブロックストレージのアベイラビリティゾーンと同じに設定する必要があります。 |
 | server.imageRef | Body | String | - | インスタンスを作成する際に使用するイメージID<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合は設定不要 |
+{% if "public" in build_flags %}
+
 | server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、サブネットID、ポートID、固定IPの中から1つ指定 |
 | server.networks.uuid | Body | UUID | - |  **(条件付き必須)**インスタンスを作成する時に使用するネットワークID |
@@ -902,21 +1081,79 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - |  **(条件付き必須)**インスタンスを作成する時に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
+{% elif "gov" in build_flags %}
+
+| server.flavorRef | Body | String | O | インスタンスを作成する際に使用するインスタンスタイプID |
+| server.networks | Body | Object | O | インスタンスを作成する際に使用するネットワーク情報オブジェクト<br>指定した数だけNICが追加され、ネットワークID、サブネットID、ポートID、固定IPのいずれかで指定 |
+| server.networks.uuid | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するネットワークID |
+| server.networks.subnet | Body | UUID | - | **(条件付き必須)** インスタンスの作成時に使用するネットワークのサブネットID |
+| server.networks.port | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するポートID<br>ポートIDを指定した場合、リクエストしたセキュリティグループは指定した既存のポートに適用されません |
+| server.networks.fixed_ip | Body | String | - | **(条件付き必須)** インスタンス作成時に使用する固定IP |
+| server.name | Body | String | O | インスタンスの名前<br>英字基準で255文字まで許可されますが、Windowsイメージの場合は15文字以下である必要があります |
+| server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>最大255文字以下のキーと値のペア |
+{% else %}
+
+| server.flavorRef | Body | String | O | インスタンスを作成する際に使用するインスタンスタイプID |
+| server.networks | Body | Object | O | インスタンスを作成する際に使用するネットワーク情報オブジェクト<br>指定した数だけNICが追加され、ネットワークID、サブネットID、ポートID、固定IPのいずれか一つで指定 |
+| server.networks.uuid | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するネットワークID |
+| server.networks.subnet | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するネットワークのサブネットID |
+| server.networks.port | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するポートID<br>ポートIDを指定した場合、リクエストしたセキュリティグループは指定した既存のポートに適用されません |
+| server.networks.fixed_ip | Body | String | - | **(条件付き必須)** インスタンスを作成する際に使用する固定IP |
+| server.name | Body | String | O | インスタンスの名前<br>英字基準で255文字まで許可されますが、Windowsイメージの場合は15文字以下である必要があります |
+| server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>最大255文字以下のキーと値のペア |
+{% endif %}
+
 | server.block_device_mapping_v2 | Body | Object | O | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージ作成(ルートブロックストレージとして使用できない)<br>- `volume`:既存のブロックストレージを使用<br>- `snapshot`:スナップショットを利用してブロックストレージ作成 |
 | server.block_device_mapping_v2.uuid | Body | String | - |  **(条件付き必須)**ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
+{% if "public" in build_flags %}
+
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：GPUインスタンス、U2インスタンスタイプを利用する場合。<br>- `volume`：その他のインスタンスタイプを利用する場合。 |
+{% elif "gov" in build_flags %}
+
+| server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>`0`の場合はルートブロックストレージ<br>それ以外は追加ブロックストレージ<br>値が大きいほど起動順序は低くなります |
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスのブロックストレージの場所。インスタンスタイプに応じて異なる設定が必要です。<br>- `local`: GPUインスタンス、U2インスタンスタイプを使用する場合<br>- `volume`: その他のインスタンスタイプを使用する場合 |
+{% else %}
+
+| server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>- `0`の場合はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>値が大きいほど起動順序は低くなります |
+{% endif %}
+
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - |  **(条件付き必須)**作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`, `snapshot`の場合設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
+{% if "public" in build_flags %}
+
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のブロックストレージ処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
+{% elif "gov" in build_flags %}
+
+| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンス削除時のブロックストレージの処理方法。デフォルト値は`false`。<br>`true`の場合は削除、`false`の場合は維持 |
+{% else %}
+
+| server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの場所。インスタンスタイプによって異なる設定が必要です。<br>- `local`: U2インスタンスタイプを使用する場合<br>- `volume`: U2以外のインスタンスタイプを使用する場合                                                                          |
+| server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンス削除時のブロックストレージの処理方法。デフォルト値は`false`。<br>`true`の場合は削除、`false`の場合は保持 |
+{% endif %}
+
 | server.block_device_mapping_v2.volume_size | Body | Integer | - | **(条件付き必須)**作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合は設定不要<br>- ソースタイプが`snapshot`の場合は原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
+{% if "public" in build_flags %}
+
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(条件付き必須)**ブロックストレージの暗号化情報                                                                                                                                                                                      |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(条件付き必須)**Secure Key Managerサービスのアプリケーションキー                                                                                                                                                                            |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(条件付き必須)**暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID                                                                                                                                  |
 | server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
+{% else %}
+
+| server.key_name | Body | String | O | インスタンスへの接続に使用するキーペア |
+{% endif %}
+
 | server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
 | server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
+{% if "public" in build_flags %}
+
 | server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエスト予約ID。<br>Trueに指定すると、インスタンス作成情報の代わりに予約IDを返す。<br>デフォルト値はFalse |
+{% else %}
+
+| server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエストの予約ID。<br>Trueに設定すると、インスタンス作成情報の代わりに予約IDを返します。<br>デフォルト値はFalseです。 |
+{% endif %}
+
 | os:scheduler_hints | Body | Object | - | スケジューラヒントオブジェクト |
 | os:scheduler_hints.group | Body | String | - | 配置ポリシーID |
 
@@ -960,10 +1197,7 @@ X-Auth-Token: {tokenId}
 <a id="create-instance-response"></a>
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明                                                                                                                                                                                                          |
-|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名                                                                                                                                                                                          |
-| server.id | Body | UUID | 作成したインスタンスのID                                                                                                                                                                                                 |
+<todo: translate>
 
 <details><summary>例</summary>
 <p>
@@ -979,11 +1213,23 @@ X-Auth-Token: {tokenId}
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% else %}
+        "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% endif %}
         "rel": "self"
       },
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-instance-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% else %}
+        "href": "https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+{% endif %}
         "rel": "bookmark"
       }
     ]
@@ -2047,3 +2293,7 @@ X-Auth-Token: {tokenId}
 #### レスポンス
 
 このAPIはレスポンス本文を返しません。
+{% if "public" in build_flags %}
+
+{% else %}
+{% endif %}
