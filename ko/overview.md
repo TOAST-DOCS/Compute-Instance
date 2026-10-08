@@ -1,5 +1,8 @@
 <!-- pre-align:aligned sig=f2414300858d -->
 
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
+{% set price_dom = {"public":"www.toast.com","gov":"gov.toast.com","ncgn":"www.gncloud.go.kr","ninc":"www.ninc.go.kr","ngsc":"www.ngsc.go.kr","ngovc":"www.ngovc.com","ngoic":"www.ngoic.com"} %}
 <a id="compute-instance-overview"></a>
 ## Compute > Instance > 개요 { #compute-instance-overview }
 
@@ -67,7 +70,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 <a id="security-groups"></a>
 ### 보안 그룹(Security groups) { #security-groups }
 
-보안 그룹은 인스턴스에 전달되는 네트워크 트래픽을 결정하는 가상의 방화벽입니다. 보안 그룹에 대한 자세한 설명은 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
+보안 그룹은 인스턴스에 전달되는 네트워크 트래픽을 결정하는 가상의 방화벽입니다. 보안 그룹에 대한 자세한 설명은 [VPC 개요](/Network/VPC/ko/overview$[ vpc_ov ]$/)를 참고합니다.
 
 > [참고]
 > 기본 보안 그룹은 외부에서 들어오는 인바운드(in-bound) 네트워크 트래픽을 모두 무시하도록 되어 있습니다. SSH로 인스턴스에 접속할 때 인스턴스가 속한 보안 그룹에 SSH 포트를 열도록 설정한 뒤에 인스턴스에 접속합니다.
@@ -75,7 +78,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 <a id="network"></a>
 ### 네트워크 { #network }
 
-인스턴스가 외부와 통신하려면 VPC에서 정의된 네트워크 중 적어도 하나 이상에 연결되어 있어야 합니다. 네트워크에 연결되어 있지 않은 인스턴스에는 접근할 수 없습니다. 네트워크를 새로 생성하거나 변경하려면 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
+인스턴스가 외부와 통신하려면 VPC에서 정의된 네트워크 중 적어도 하나 이상에 연결되어 있어야 합니다. 네트워크에 연결되어 있지 않은 인스턴스에는 접근할 수 없습니다. 네트워크를 새로 생성하거나 변경하려면 [VPC 개요](/Network/VPC/ko/overview$[ vpc_ov ]$/)를 참고합니다.
 
 <a id="pricing"></a>
 ## 과금 { #pricing }
@@ -87,7 +90,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 * 인스턴스가 중지되면 90일 동안 홈페이지 요금 기준으로 90% 할인된 금액을 적용합니다. 중지 상태가 90일을 초과하면 중지 상태를 유지하면서 정상 요금으로 전환됩니다.
 * 종료된 인스턴스는 과금되지 않습니다.
 
-과금에 대한 더 자세한 사항은 서비스별 [요금 페이지](https://www.toast.com/kr/service/compute/instance#price)를 참고합니다.
+과금에 대한 더 자세한 사항은 서비스별 [요금 페이지](https://$[ price_dom[f] ]$/kr/service/compute/instance#price)를 참고합니다.
 
 <a id="how-to-access-instances"></a>
 ## 인스턴스 접속 방법 { #how-to-access-instances }
@@ -95,7 +98,7 @@ NHN Cloud는 물리 하드웨어 문제로 생기는 장애에 대비하기 위�
 <a id="how-to-access-linux-instances"></a>
 ### Linux 인스턴스 접속 방법 { #how-to-access-linux-instances }
 
-Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 NHN Cloud 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview/)를 참고합니다.
+Linux 인스턴스에 접속할 때는 SSH 클라이언트를 이용합니다. 인스턴스의 보안 그룹에 SSH 접근 포트(기본값 22)가 열려 있지 않다면 접속할 수 없습니다. SSH 접근을 허용하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview$[ vpc_ov ]$/)를 참고합니다. 인스턴스에 플로팅 IP가 할당되어 있지 않다면 NHN Cloud 외부에서 접속할 수 없습니다. 플로팅 IP를 할당하는 방법에 대해서는 [VPC 개요](/Network/VPC/ko/overview$[ vpc_ov ]$/)를 참고합니다.
 
 <a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### Mac 또는 Linux의 SSH 클라이언트로 Linux 인스턴스에 접속하는 방법
@@ -205,10 +208,11 @@ Windows 서버에 접속하려면, NHN Cloud 콘솔에서 접속하려는 Window
 
 **비밀번호 확인** 옆의 **연결** 버튼을 클릭해 원격 데스크톱 접속 설정이 저장된 .rdp 파일을 받아서 실행하면 Windows 서버에 접속합니다. Windows 서버의 ID는 `Administrator`이며, 비밀번호는 NHN Cloud 콘솔에서 확인한 비밀번호를 이용합니다.
 
+{% if "public" in build_flags %}
 <a id="how-to-connect-serial-console"></a>
 ### 시리얼 콘솔 접속 방법 { #how-to-connect-serial-console }
 
-부팅 실패, 네트워크 구성 문제와 같이 SSH 클라이언트를 사용할 수 없는 상황에서 시리얼 콘솔에 연결하여 인스턴스에 접속할 수 있습니다. 
+부팅 실패, 네트워크 구성 문제와 같이 SSH 클라이언트를 사용할 수 없는 상황에서 시리얼 콘솔에 연결하여 인스턴스에 접속할 수 있습니다.
 
 시리얼 콘솔 기능은 다음과 같은 제약 조건이 있습니다.
 
@@ -241,3 +245,5 @@ GRUB_SERIAL_COMMAND="serial --speed=9600 --unit=0 --word=8 --parity=no --stop=1"
 ```
 $ sudo update-grub
 ```
+{% else %}
+{% endif %}
