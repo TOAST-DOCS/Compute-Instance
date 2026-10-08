@@ -1223,11 +1223,11 @@ Can I set the above configuration? (type 'yes' to accept):
 {% elif "gov" in build_flags %}
 ```
 
-<a id="redis-instance"></a>
-## Redis Instance { #redis-instance }
+<a id="redis-instance-2"></a>
+## Redis Instance { #redis-instance-2 }
 
-<a id="startstop-redis"></a>
-### Start/Stop Redis { #startstop-redis }
+<a id="redis-instance-2-startstop-redis"></a>
+### Start/Stop Redis { #redis-instance-2-startstop-redis }
 
 ```
 # Start Redis Service
@@ -1240,20 +1240,20 @@ shell> sudo systemctl stop redis
 shell> sudo systemctl restart redis
 ```
 
-<a id="connect-to-redis"></a>
-### Connect to Redis { #connect-to-redis }
+<a id="redis-instance-2-connect-to-redis"></a>
+### Connect to Redis { #redis-instance-2-connect-to-redis }
 
 Connect to a Redis instance by using the `redis-cli` command.
 ```
 shell> redis-cli
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance"></a>
-### Initial Setup After Creating a Redis Instance { #initial-setup-after-creating-a-redis-instance }
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance"></a>
+### Initial Setup After Creating a Redis Instance { #redis-instance-2-initial-setup-after-creating-a-redis-instance }
 
 The default configuration file for a Redis instance is the `~/redis/redis.conf` file. The description for the parameters to be changed is as follows:
 
-<a id="initial-setup-after-creating-a-redis-instance-bind"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-bind"></a>
 #### bind
 
 - Default value: `127.0.0.1 -::1`
@@ -1261,7 +1261,7 @@ The default configuration file for a Redis instance is the `~/redis/redis.conf` 
 
 Value for an IP used by Redis. To allow access to a Redis instance from outside the server, add a private IP to the parameter. You can check the private IP with the `hostname -I` command.
 
-<a id="initial-setup-after-creating-a-redis-instance-port"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-port"></a>
 #### port
 
 - Default value: `6379`
@@ -1272,15 +1272,15 @@ The port is 6379, the default for Redis. It is recommended to change the port fo
 shell> redis-cli -p <new port>
 ```
 
-<a id="initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
+<a id="redis-instance-2-initial-setup-after-creating-a-redis-instance-initial-setup-after-creating-a-redis-instance-requirepassmasterauth"></a>
 #### requirepass/masterauth
 
 - Default value: `nhncloud`
 
 The default password is `nhncloud`. For security reasons, it is recommended to change the password. If you are using a replication connection, you must change the `requirepass` and `masterauth` values at the same time.
 
-<a id="automatic-ha-configuration-script"></a>
-### Automatic HA Configuration Script { #automatic-ha-configuration-script }
+<a id="redis-instance-2-automatic-ha-configuration-script"></a>
+### Automatic HA Configuration Script { #redis-instance-2-automatic-ha-configuration-script }
 
 A Redis instance of NHN Cloud provides a script that automatically configures an HA environment. You can use the script only for **a new instance right immediately after installation**, and cannot use it after changing the set values from redis.conf.
 
@@ -1307,7 +1307,7 @@ You must configure a security group (**Network** > **Security Groups**) for comm
 | Inbound | TCP | 16379 | IPv4 | Instance IP(CIDR) |
 | Inbound | TCP | 26379 | IPv4 | Instance IP(CIDR) |
 
-<a id="automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-sentinel-automatic-configuration"></a>
 #### Sentinel Automatic Configuration
 
 You will need 3 Redis instances to configure Sentinel. After copying the key pair to the instance used as the master, run the script as follows.
@@ -1331,7 +1331,7 @@ Enter the file name of the copied key pair.
 shell> Enter Pemkey's name: <key pair>.pem
 ```
 
-<a id="automatic-ha-configuration-script-cluster-automatic-configuration"></a>
+<a id="redis-instance-2-automatic-ha-configuration-script-automatic-ha-configuration-script-cluster-automatic-configuration"></a>
 #### Automatic Cluster Configuration
 
 6 Redis instances are required for Cluster configuration. After copying the key pair to the instance used as the master, run the script as follows:
