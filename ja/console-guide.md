@@ -1,4 +1,9 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=82f23cc3f97e -->
+
+{% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
+{% set vpc_cg = '' if 'public' in build_flags else '-'+(build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
 
 <a id="compute-instance-console-guide"></a>
 ## Compute > Instance > コンソール使用ガイド { #compute-instance-console-guide }
@@ -121,14 +126,14 @@
 
 VPCで定義されたサブネットの中からインスタンスに接続するサブネットを選択します。サブネットを一つ選択するたびに、インスタンスに該当のサブネットに接続するネットワークインターフェイスが作られます。選択されたサブネットの順序を変えてネットワークインターフェイスを変更することもできます。この場合、最初のネットワークインターフェイス(`eth0`)が基本ゲートウェイに設定されます。
 
-ネットワーク作成と管理の詳細については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+ネットワーク作成と管理の詳細については[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 <a id="floating-ip"></a>
 ### Floating IP { #floating-ip }
 
 インスタンス作成後、Floating IPを使用するかどうかを指定します。Floating IP使用を選択すると、Floating IPを新たに作成して最初のネットワークインターフェイスに接続します。この時、最初のネットワークインターフェイスは必ずインターネットゲートウェイが設定されているサブネットに接続されている必要があります。
 
-Floating IP管理は、Instance > 管理ページまたはInstance > Floating IPページで行えます。Floating IPの詳細は、[VPCコンソール使用ガイド](/Network/VPC/ja/console-guide/)を参照してください。
+Floating IP管理は、Instance > 管理ページまたはInstance > Floating IPページで行えます。Floating IPの詳細は、[VPCコンソール使用ガイド](/Network/VPC/ja/console-guide$[ vpc_cg ]$/)を参照してください。
 
 <a id="security-group"></a>
 ### セキュリティグループ { #security-group }
@@ -138,7 +143,7 @@ Floating IP管理は、Instance > 管理ページまたはInstance > Floating IP
 - 各セキュリティグループに属している全てのインスタンスとネットワーク通信ができます。別のインスタンスの意図していないアクセスを防ぐ必要のある機密データを持つインスタンスの場合は、慎重にセキュリティグループを指定する必要があります。
 - 各セキュリティグループの全てのルールが合わさって、該当のインスタンスの外部通信に適用されます。
 
-セキュリティグループの詳細については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+セキュリティグループの詳細については[VPCコンソール使用ガイド](/Network/VPC/ja/console-guide$[ vpc_cg ]$/)を参照してください。
 
 <a id="additional-block-storage"></a>
 ### 追加ブロックストレージ { #additional-block-storage }
@@ -243,14 +248,14 @@ BatchスクリプトとPowerShellスクリプトを一緒に使用したい場�
 
 インスタンスの状態にかかわらずFloating IPを接続または解除できます。使用できるFloating IPがない場合や、希望するFloating IPがない場合、**生成**ボタンをクリックしてFloating IPを生成して接続できます。また**Network > VPC > Floating IP**でFloating IPを生成して使用することもできます。
 
-Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+Floating IPの詳細については[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 <a id="modify-security-group"></a>
 ### セキュリティグループ修正 { #modify-security-group }
 
 インスタンスの状態に関わらずインスタンスのセキュリティグループを修正できます。修正されたセキュリティグループはすぐに適用されます。
 
-セキュリティグループの詳細については[セキュリティグループ](#security-group)と[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+セキュリティグループの詳細については[セキュリティグループ](#security-group)と[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 <a id="change-network-subnet"></a>
 ### サブネット変更 { #change-network-subnet }

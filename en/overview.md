@@ -1,4 +1,10 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=f2414300858d -->
+
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
+{% set price_dom = {"public":"www.toast.com","gov":"gov.toast.com","ncgn":"www.gncloud.go.kr","ninc":"www.ninc.go.kr","ngsc":"www.ngsc.go.kr","ngovc":"www.ngovc.com","ngoic":"www.ngoic.com"} %}
 
 <a id="compute-instance-overview"></a>
 ## Compute > Instance > Overview { #compute-instance-overview }
@@ -67,7 +73,7 @@ When a key pair is newly generated, its private key is downloaded. As private ke
 <a id="security-groups"></a>
 ### Security Groups { #security-groups }
 
-A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
+A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/).
 
 > [Note]
 The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
@@ -75,7 +81,7 @@ The default security group is configured to ignore all inbound network traffic. 
 <a id="network"></a>
 ### Network { #network }
 
-An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview/).
+An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/).
 
 <a id="pricing"></a>
 ## Pricing { #pricing }
@@ -87,7 +93,7 @@ Instances are charged using the following criteria.
 * When an instance is stopped, a 90% discount based on the website rate is applied for 90 days. If your suspension exceeds 90 days, you will revert to normal rates while maintaining your suspension.
 * Terminated instances are not billed.
 
-For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
+For more details on pricing, see [Pricing](https://$[ price_dom[f] ]$/kr/service/compute/instance#price).
 
 <a id="how-to-access-instances"></a>
 ## How to Access Instances { #how-to-access-instances }
@@ -95,7 +101,7 @@ For more details on pricing, see [Pricing](https://www.toast.com/kr/service/comp
 <a id="how-to-access-linux-instances"></a>
 ### How to Access Linux Instances { #how-to-access-linux-instances }
 
-You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.
+You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview$[ vpc_ov ]$/) for more details on how to assign floating IP.
 
 <a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### How to Access Linux Instances from Mac or Linux Using an SSH Client
@@ -202,6 +208,8 @@ Your key pair's private key that you input in **Confirm Password** is not sent t
 
 Click **Connect** next to **Confirm Password** to receive the rdp file configured for remote desktop access and run it to access your Windows server. Use `Administrator` for your Windows server ID, and use the password that you checked from the NHN Cloud console.
 
+{% if "public" in build_flags %}
+
 <a id="how-to-connect-serial-console"></a>
 ### How to Connect Serial Console { #how-to-connect-serial-console }
 
@@ -238,3 +246,5 @@ Apply the changed setting. The command to apply GRUB settings may vary depending
 ```
 $ sudo update-grub
 ```
+{% else %}
+{% endif %}

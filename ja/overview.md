@@ -1,4 +1,10 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=f2414300858d -->
+
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set vpc_ov = '-gov' if 'gov' in build_flags else '' %}
+{% set price_dom = {"public":"www.toast.com","gov":"gov.toast.com","ncgn":"www.gncloud.go.kr","ninc":"www.ninc.go.kr","ngsc":"www.ngsc.go.kr","ngovc":"www.ngovc.com","ngoic":"www.ngoic.com"} %}
 
 <a id="compute-instance-overview"></a>
 ## Compute > Instance > 概要 { #compute-instance-overview }
@@ -69,7 +75,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 <a id="security-groups"></a>
 ### セキュリティグループ(Security groups) { #security-groups }
 
-セキュリティグループはインスタンスに伝達されるネットワークトラフィックを決定する仮想のファイアウォールです。セキュリティグループの詳細は[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+セキュリティグループはインスタンスに伝達されるネットワークトラフィックを決定する仮想のファイアウォールです。セキュリティグループの詳細は[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 > [参考]
 > 基本セキュリティグループは外部からのインバウンド(in-bound)ネットワークトラフィックを全て無視するようになっています。SSHでインスタンスに接続する時、インスタンスが属するセキュリティグループにSSHポートを開くように設定した後、インスタンスに接続します。
@@ -77,7 +83,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 <a id="network"></a>
 ### ネットワーク { #network }
 
-インスタンスが外部と通信するには、VPCで定義されたネットワークのうち少なくとも1つ以上に接続されている必要があります。ネットワークに接続されていないインスタンスにはアクセスできません。ネットワークを新たに作成したり変更したりするには[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+インスタンスが外部と通信するには、VPCで定義されたネットワークのうち少なくとも1つ以上に接続されている必要があります。ネットワークに接続されていないインスタンスにはアクセスできません。ネットワークを新たに作成したり変更したりするには[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 <a id="pricing"></a>
 ## 課金 { #pricing }
@@ -89,7 +95,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 * インスタンスが停止すると、90日間Webサイト料金基準で90%割引された金額を適用します。停止状態が90日を超えると停止状態を維持したまま正常料金に切り替わります。
 * 終了したインスタンスは課金されません。
 
-課金の詳細については、サービス別[料金ページ](https://www.toast.com/kr/service/compute/instance#price)を参照してください。
+課金の詳細については、サービス別[料金ページ](https://$[ price_dom[f] ]$/kr/service/compute/instance#price)を参照してください。
 
 <a id="how-to-access-instances"></a>
 ## インスタンス接続方法 { #how-to-access-instances }
@@ -97,7 +103,7 @@ NHN Cloudは物理ハードウェアの問題で発生する障害に備える�
 <a id="how-to-access-linux-instances"></a>
 ### Linuxインスタンス接続方法 { #how-to-access-linux-instances }
 
-Linuxインスタンスに接続する時はSSHクライアントを利用します。インスタンスのセキュリティグループにSSHアクセスポート(デフォルト値22)が開いていない場合は接続できません。SSHアクセスを許可する方法は[VPC概要](/Network/VPC/ja/overview/)を参照してください。インスタンスにFloating IPが割り当てられていない場合は、NHN Cloud外部からアクセスできません。Floating IPを割り当てる方法については[VPC概要](/Network/VPC/ja/overview/)を参照してください。
+Linuxインスタンスに接続する時はSSHクライアントを利用します。インスタンスのセキュリティグループにSSHアクセスポート(デフォルト値22)が開いていない場合は接続できません。SSHアクセスを許可する方法については[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。インスタンスにFloating IPが割り当てられていない場合は、NHN Cloud外部からアクセスできません。Floating IPを割り当てる方法については[VPC概要](/Network/VPC/ja/overview$[ vpc_ov ]$/)を参照してください。
 
 <a id="how-to-access-linux-instances-from-mac-or-linux-using-an-ssh-client"></a>
 #### MacまたはLinuxのSSHクライアントでLinuxインスタンスに接続する方法
@@ -209,6 +215,8 @@ Windowsインスタンスに接続するには、NHN Cloudコンソールから�
 
 **パスワード確認**横の**接続**ボタンをクリックしてリモートデスクトップ接続設定が保存された.rdpファイルをダウンロードして実行するとWindowsインスタンスに接続します。WindowsサーバーのIDは「Administrator」で、パスワードはNHN Cloudコンソールで確認したパスワードを利用します。
 
+{% if "public" in build_flags %}
+
 <a id="how-to-connect-serial-console"></a>
 ### シリアルコンソール接続方法 { #how-to-connect-serial-console }
 
@@ -245,3 +253,5 @@ GRUB_SERIAL_COMMAND="serial --speed=9600 --unit=0 --word=8 --parity=no --stop=1"
 ```
 $ sudo update-grub
 ```
+{% else %}
+{% endif %}
