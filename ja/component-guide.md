@@ -139,6 +139,7 @@ RDPでインスタンスに接続し、 **コンピュータ管理**を実行し
 ![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812_en.png)
 
 接続されたBlock Storageが探知されたことを確認できます。使用するには先にディスク初期化を実行する必要があります。
+
 1. **ディスク1** ブロックをマウスの右ボタンでクリックした後、**ディスク初期化**をクリックします。
 2. パーティション形式選択後、 **確認** ボタンをクリックします。
 
@@ -176,6 +177,7 @@ SQL Server構成管理者のSQL Server構成管理者(ローカル) > SQL Server
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
 **SQL SERVER (MSSQLSERVER)** および **SQL Serverエージェント(MSSQLSERVER)** などのサービス起動モードが **自動**ではない場合：
+
 1. サービスをマウスの右ボタンでクリックした後、 **プロパティ**を選択します。
 2. **サービス**タブで **General > 起動モード**を **自動**に変更します。
 
@@ -1085,6 +1087,7 @@ NHN CloudのRedisインスタンスは自動的にHA環境を構成するスク�
 
 ##### キーペアコピー
 インストールスクリプトを実行するインスタンスに他のインスタンス接続に必要なキーペア(PEMファイル)が必要です。キーペアは次のようにコピーできます。
+
 - ubuntu
 ```
 local> scp -i <キーペア>.pem <キーペア>.pem ubuntu@<floating ip>:/home/ubuntu/

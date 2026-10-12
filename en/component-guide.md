@@ -139,6 +139,7 @@ Access instance with RDP and execute **Computer Management**, and go to **Storag
 ![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812_en.png)
 
 You can find the associated block storage is detected. To use it, initialize disk first.
+
 1. Right-click the **Disk 1** block and click **Initialize Disk**.
 2. Select a partition type and click **OK**.
 
@@ -176,6 +177,7 @@ Go to **SQL Server Configuration Manager (local) > SQL Server** in the SQL Serve
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812_en.png)
 
 When the service start mode for **SQL SERVER (MSSSQLSERVER) and SQL Server Agent (MSSQLSERVER)** are not **automatic**, do the followings:
+
 1. Click the service and right-click it. Select **Properties** on the menu.
 2. Change **Service** on **General > Start Mode** to **Automatic**.
 
