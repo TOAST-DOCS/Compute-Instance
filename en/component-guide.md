@@ -273,14 +273,11 @@ The default path of my.cnf is /etc/my.cnf, and NHN Cloud recommended variables a
 | --- | --- |
 | default\_storage\_engine | Specify a default storage engine: Default is InnoDB with Online-DDL and transactions available. |
 | expire\_logs\_days | Set log expiration period for logs provided by binlog settings. Default is three days. |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | innodb\_log\_file\_size | Specify the size of log files which save redo logs of transactions. <br>Recommended size is 256MB or higher in actual environment, and it is set as 512MB by default. In order for the changes to take effect, please restart the database. |
-{% else %}
-
+{%- else %}
 | innodb\_log\_file\_size | Specify the size of log files which save redo logs of transactions. <br><br>Recommended size is 256MB or later in actual environment, and it is set as 512MB by default. In order for the changes to take effect, please restart the database. |
-{% endif %}
-
+{%- endif %}
 | innodb\_file\_per\_table | When a table is deleted or truncated, the table space is immediately returned to the OS. |
 | innodb\_log\_files\_in\_group | Set the number of innodb\_log\_file files and use them in circular fashion: requires at least two. |
 | log_timestamps | Default log time of MySQL 5.7 is displayed in UTC time format; therefore, change log time to system local time. |
@@ -440,15 +437,12 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 PostgreSQL directory and file description is as follows:
 
 {% if "public" in build_flags %}
-
 | Name | Description | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | config file | /etc/postgresql/${version}/main/postgresql.conf |
 | DATADIR | PostgreSQL data file path | /var/lib/postgresql/${version}/main |
 | LOG | PostgreSQL log file path | /var/lib/postgresql/${version}/main/log/\*.log |
-
 {% elif "gov" in build_flags %}
-
 | name | description |
 | --- | --- |
 | postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
@@ -456,7 +450,6 @@ PostgreSQL directory and file description is as follows:
 | DATADIR | PostgreSQL data file path - /var/lib/pgsql/{version}/data/ |
 | LOG | PostgreSQL log file path - /var/lib/pgsql/{version}/data/log/\*.log |
 {% else %}
-
 | Name | Description | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | Config file | /etc/postgresql/${version}/main/postgresql.conf |

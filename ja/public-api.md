@@ -20,15 +20,11 @@ APIを使用するには、APIエンドポイントとトークンなどが必�
 
 | タイプ | リージョン | エンドポイント |
 |---|---|---|
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | compute | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン<br>韓国(クァンジュ)リージョン<br>日本リージョン | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://kr3-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
-
 {% elif "gov" in build_flags %}
-
 | compute | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン | https://kr1-api-instance-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-instance-infrastructure.gov-nhncloudservice.com |
 {% else %}
-
 | compute | 韓国(大邱)リージョン | https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$ |
 {% endif %}
 
@@ -159,7 +155,6 @@ X-Auth-Token: {tokenId}
 #### レスポンス
 
 {% if "public" in build_flags %}
-
 | 名前 | 種類 | 形式 | 説明            |
 |---|---|---|----------------|
 | flavors | Body | Object | インスタンスタイプリストオブジェクト |
@@ -174,8 +169,7 @@ X-Auth-Token: {tokenId}
 | flavors.os-flavor-access:is_public | Body | Boolean | 共有有無          |
 | flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB) |
-{% else %}
-
+{%- else %}
 | 名前 | 種類 | 形式 | 説明                      |
 |---|---|---|-------------------------|
 | flavors | Body | Object | インスタンスタイプリストオブジェクト           |
@@ -190,8 +184,7 @@ X-Auth-Token: {tokenId}
 | flavors.os-flavor-access:is_public | Body | Boolean | 共有の有無                   |
 | flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率        |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB)            |
-{% endif %}
-
+{%- endif %}
 | flavors.disk | Body | Integer | ルートブロックストレージサイズ(GB) |
 
 <details><summary>例</summary>
@@ -1038,41 +1031,33 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 
 {% if "public" in build_flags %}
-
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
-{% else %}
-
+{%- else %}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
-{% endif %}
-
+{%- endif %}
 | server | body | Object | O | サーバーオブジェクト |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略する場合`default`グループが追加される |
 | server.security_groups.name | body | String | - | **(条件付き必須)** インスタンスに追加するセキュリティグループ名 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコーディングされた文字列で65535バイトまで許可 |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略した場合、`default` グループが追加されます |
 | server.security_groups.name | body | String | - | **(条件付き必須)** インスタンスに追加するセキュリティグループの名前 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコードされた文字列で65535バイトまで許可 |
-{% else %}
-
+{%- else %}
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略した場合は`default`グループが追加されます |
 | server.security_groups.name | body | String | - | インスタンスに追加するセキュリティグループ名 |
 | server.user_data | body | String | - | インスタンス起動後に実行するスクリプトおよび設定<br>base64エンコードされた文字列で65535バイトまで許可 |
-{% endif %}
-
+{%- endif %}
 | server.availability_zone | body | String | - | インスタンスを作成するアベイラビリティゾーン<br>指定しない場合、任意のゾーンが選択される<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合、元のブロックストレージのアベイラビリティゾーンと同じに設定する必要があります。 |
 | server.imageRef | Body | String | - | インスタンスを作成する際に使用するイメージID<br>ルートブロックストレージのソースタイプが`volume`, `snapshot`の場合は設定不要 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.flavorRef | Body | String | O | インスタンスを作成する時に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する時に使用するネットワーク情報オブジェクト<br>指定した数のNICが追加される。ネットワークID、サブネットID、ポートID、固定IPの中から1つ指定 |
 | server.networks.uuid | Body | UUID | - |  **(条件付き必須)**インスタンスを作成する時に使用するネットワークID |
@@ -1081,8 +1066,7 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - |  **(条件付き必須)**インスタンスを作成する時に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準255文字まで許可、ただし、Windowsイメージの場合は15文字以下にする必要がある。 |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>255文字以下のキーと値のペア |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.flavorRef | Body | String | O | インスタンスを作成する際に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する際に使用するネットワーク情報オブジェクト<br>指定した数だけNICが追加され、ネットワークID、サブネットID、ポートID、固定IPのいずれかで指定 |
 | server.networks.uuid | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するネットワークID |
@@ -1091,8 +1075,7 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | **(条件付き必須)** インスタンス作成時に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準で255文字まで許可されますが、Windowsイメージの場合は15文字以下である必要があります |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>最大255文字以下のキーと値のペア |
-{% else %}
-
+{%- else %}
 | server.flavorRef | Body | String | O | インスタンスを作成する際に使用するインスタンスタイプID |
 | server.networks | Body | Object | O | インスタンスを作成する際に使用するネットワーク情報オブジェクト<br>指定した数だけNICが追加され、ネットワークID、サブネットID、ポートID、固定IPのいずれか一つで指定 |
 | server.networks.uuid | Body | UUID | - | **(条件付き必須)** インスタンスを作成する際に使用するネットワークID |
@@ -1101,59 +1084,44 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | **(条件付き必須)** インスタンスを作成する際に使用する固定IP |
 | server.name | Body | String | O | インスタンスの名前<br>英字基準で255文字まで許可されますが、Windowsイメージの場合は15文字以下である必要があります |
 | server.metadata | Body | Object | - | インスタンスに追加するメタデータオブジェクト<br>最大255文字以下のキーと値のペア |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2 | Body | Object | O | インスタンスのブロックストレージ情報オブジェクト<br>**ローカルブロックストレージを使用するU2以外のインスタンスタイプを使用する場合は必ず指定する必要がある。** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | 作成するブロックストレージ原本のタイプ<br>- `image`:イメージを利用してブロックストレージを作成<br>- `blank`:空のブロックストレージ作成(ルートブロックストレージとして使用できない)<br>- `volume`:既存のブロックストレージを使用<br>- `snapshot`:スナップショットを利用してブロックストレージ作成 |
 | server.block_device_mapping_v2.uuid | Body | String | - |  **(条件付き必須)**ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`image`の場合、イメージIDを設定<br>- ソースタイプが`volume`の場合、既存のブロックストレージIDを設定<br>- ソースタイプが`snapshot`の場合、スナップショットIDを設定<br>- ソースタイプが`blank`の場合、設定不要<br>ルートブロックストレージの場合、必ず起動可能な原本である必要があります。 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>-`0`はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>サイズが大きいほど起動順序が下がる。 |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの位置。インスタンスタイプに応じて別々に設定必要。<br>- `local`：GPUインスタンス、U2インスタンスタイプを利用する場合。<br>- `volume`：その他のインスタンスタイプを利用する場合。 |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>`0`の場合はルートブロックストレージ<br>それ以外は追加ブロックストレージ<br>値が大きいほど起動順序は低くなります |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスのブロックストレージの場所。インスタンスタイプに応じて異なる設定が必要です。<br>- `local`: GPUインスタンス、U2インスタンスタイプを使用する場合<br>- `volume`: その他のインスタンスタイプを使用する場合 |
-{% else %}
-
+{%- else %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | 指定したブロックストレージの起動順序<br>- `0`の場合はルートブロックストレージ<br>- それ以外は追加ブロックストレージ<br>値が大きいほど起動順序は低くなります |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - |  **(条件付き必須)**作成するブロックストレージのタイプ<br>ブロックストレージのソースタイプが`volume`, `snapshot`の場合設定不要<br>`ユーザーガイド > Storage > Block Storage > API v2ガイド`で**ブロックストレージタイプリスト表示**レスポンスの`name`参考 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンスを削除する時のブロックストレージ処理。デフォルト値は`false`。<br>`true`なら削除、`false`なら維持 |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンス削除時のブロックストレージの処理方法。デフォルト値は`false`。<br>`true`の場合は削除、`false`の場合は維持 |
-{% else %}
-
+{%- else %}
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | インスタンスブロックストレージの場所。インスタンスタイプによって異なる設定が必要です。<br>- `local`: U2インスタンスタイプを使用する場合<br>- `volume`: U2以外のインスタンスタイプを使用する場合                                                                          |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | インスタンス削除時のブロックストレージの処理方法。デフォルト値は`false`。<br>`true`の場合は削除、`false`の場合は保持 |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2.volume_size | Body | Integer | - | **(条件付き必須)**作成するブロックストレージサイズ<br>ブロックストレージのソースタイプによって異なる設定が必要<br>- ソースタイプが`volume`の場合は設定不要<br>- ソースタイプが`snapshot`の場合は原本ブロックストレージサイズ以上に設定<br>`GB`単位<br>U2インスタンスタイプを使用してルートブロックストレージを作成する場合にはU2インスタンスタイプに明示されたサイズで作成され、この値は無視される。<br>インスタンスタイプによって作成できるルートブロックストレージのサイズが異なるため、詳細は`ユーザーガイド > Compute > Instance > コンソール使用ガイド > インスタンス作成 > ブロックストレージサイズ`を参考 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(条件付き必須)**ブロックストレージの暗号化情報                                                                                                                                                                                      |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(条件付き必須)**Secure Key Managerサービスのアプリケーションキー                                                                                                                                                                            |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(条件付き必須)**暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID                                                                                                                                  |
 | server.key_name | Body | String | O | インスタンスの接続に使用するキーペア |
-{% else %}
-
+{%- else %}
 | server.key_name | Body | String | O | インスタンスへの接続に使用するキーペア |
-{% endif %}
-
+{%- endif %}
 | server.min_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最小値。<br>デフォルト値は1。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
 | server.max_count | Body | Integer | - | 現在のリクエストで作成するインスタンス数の最大値。<br>デフォルト値はmin_count、最大値は10。<br>ブロックストレージのソースタイプが`volume`の場合、`1`のみ設定可能 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエスト予約ID。<br>Trueに指定すると、インスタンス作成情報の代わりに予約IDを返す。<br>デフォルト値はFalse |
-{% else %}
-
+{%- else %}
 | server.return_reservation_id | Body | Boolean | - | インスタンス作成リクエストの予約ID。<br>Trueに設定すると、インスタンス作成情報の代わりに予約IDを返します。<br>デフォルト値はFalseです。 |
-{% endif %}
-
+{%- endif %}
 | os:scheduler_hints | Body | Object | - | スケジューラヒントオブジェクト |
 | os:scheduler_hints.group | Body | String | - | 配置ポリシーID |
 
@@ -1197,7 +1165,10 @@ X-Auth-Token: {tokenId}
 <a id="create-instance-response"></a>
 #### レスポンス
 
-<todo: translate>
+| 名前 | 種類 | 形式 | 説明                                                                                                                                                                                                          |
+|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server.security_groups.name | Body | String | 作成したインスタンスのセキュリティグループ名                                                                                                                                                                                          |
+| server.id | Body | UUID | 作成したインスタンスのID                                                                                                                                                                                                 |
 
 <details><summary>例</summary>
 <p>

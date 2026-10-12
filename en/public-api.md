@@ -20,15 +20,11 @@ The Instance API uses the `compute` type endpoint. For the exact endpoint, see `
 
 | Type | Region | Endpoint |
 |---|---|---|
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | compute | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region<br>Korea (Gwangju) Region<br>Japan Region | https://kr1-api-instance-infrastructure.nhncloudservice.com<br>https://kr2-api-instance-infrastructure.nhncloudservice.com<br>https://kr3-api-instance-infrastructure.nhncloudservice.com<br>https://jp1-api-instance-infrastructure.nhncloudservice.com |
-
 {% elif "gov" in build_flags %}
-
 | compute | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region | https://kr1-api-instance-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-instance-infrastructure.gov-nhncloudservice.com |
 {% else %}
-
 | compute | Korea (Daegu) region | https://kr4-api-instance-infrastructure.$[ ep_domain[f] ]$ |
 {% endif %}
 
@@ -159,7 +155,6 @@ This API does not require a request body.
 #### Response
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Description             |
 |---|---|---|----------------|
 | flavors | Body | Object | Instance flavor list object  |
@@ -174,8 +169,7 @@ This API does not require a request body.
 | flavors.os-flavor-access:is_public | Body | Boolean | Indicates whether the flavor is publicly visible          |
 | flavors.rxtx_factor | Body | Float | Network transmission packet rate |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Temporary block storage size (GB)     |
-{% else %}
-
+{%- else %}
 | Name | Type | Format | Description |
 |---|---|---|---|
 | flavors | Body | Object | Instance flavor list object |
@@ -190,8 +184,7 @@ This API does not require a request body.
 | flavors.os-flavor-access:is_public | Body | Boolean | Whether shared |
 | flavors.rxtx_factor | Body | Float | Network transmission packet rate |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Temporary block storage size (GB) |
-{% endif %}
-
+{%- endif %}
 | flavors.disk | Body | Integer | Root block storage size (GB) |
 
 <details><summary>Example</summary>
@@ -1037,41 +1030,33 @@ X-Auth-Token: {tokenId}
 #### Request
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-{% else %}
-
+{%- else %}
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-{% endif %}
-
+{%- endif %}
 | server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server | body | Object | O | Server Objects |
 | server.security_groups.name | body | String | - | **(Conditionally required)** Name of security group to be added to instance |
 | server.user_data | body | String | - | Script to be executed or settings to apply after instance boot<br>Allows up to 65535 bytes of base 64-encoded character strings |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
 | server.security_groups.name | body | String | - | **(Conditionally Required)** Name of security group to be added to instance |
 | server.user_data | body | String | - | Script to be executed after instance booting and its configuration<br>Allows up to 65535 bytes of base 64-encoded character strings |
-{% else %}
-
+{%- else %}
 | server.security_groups | body | Object | - | List object of security groups<br>If left blank, the `default` group is added. |
 | server.security_groups.name | body | String | - | Name of security group to be added to instance |
 | server.user_data | body | String | - | Script to be executed after instance booting and its configuration<br>Allows up to 65,535 bytes of base64-encoded character strings |
-{% endif %}
-
+{%- endif %}
 | server.availability_zone | body | String | - | Availability zone where instance will be created<br>If left blank, a random zone will be selected<br>If the source type of the root block storage is `volume`, `snapshot`, it must be set to the same availability zone as the source block storage |
 | server.imageRef | Body | String | - | Image ID to create instance<br>No configuration required if the source type of the root block storage is `volume`, `snapshot` |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.flavorRef | Body | String | O | Instance flavor ID to create instance |
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | **(Conditionally required)** Network ID to create instance |
@@ -1080,8 +1065,7 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | **(Conditionally required)** Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.flavorRef | Body | String | O | Instance flavor ID to create instance |
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | **(Conditionally required)** Network ID to create instance |
@@ -1090,8 +1074,7 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | **(Conditionally required)** Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
-{% else %}
-
+{%- else %}
 | server.flavorRef | Body | String | O | Instance flavor ID to create instance |
 | server.networks | Body | Object | O | Network information object to use when creating instance<br>A NIC is added for each network specified. Specify each network using Network ID, Subnet ID, Port ID, or Fixed IP. |
 | server.networks.uuid | Body | UUID | - | **(Conditionally required)** Network ID to create instance |
@@ -1100,59 +1083,44 @@ X-Auth-Token: {tokenId}
 | server.networks.fixed_ip | Body | String | - | **(Conditionally required)** Fixed IP to create instance |
 | server.name | Body | String | O | Instance name<br>Up to 255 alphabetical characters allowed, max 15 characters for Windows images |
 | server.metadata | Body | Object | - | Metadata object to add to instance<br>Key-value pairs of max 255 characters |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2 | Body | Object | O | Block storage information object<br>**Must be specified for any instance flavors other than U2 flavor which uses local block storage** |
 | server.block_device_mapping_v2.source_type | Body | Enum | O | Source type of block storage to create<br>- `image`: Use an image to create a block storage<br>- `blank`: Create an empty block storage (cannot be used as root block storage)<br>- `volume`: Use previously created block storage<br>- `snapshot`: Create block storage with snapshots |
 | server.block_device_mapping_v2.uuid | Body | String | - | **(Conditionally required)** Different settings required for different types of block storage sources<br>- Set the image ID if the source type is `image`<br>- Set an existing created block storage ID if the source type is `volume`<br>- Set `snapshot` ID if the source type is `snapshot`<br>- No settings required if source type is ` blank`<br>For root block storage, it must be a bootable source. |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance’s block storage or flavor<br>- `local`: For GPU and U2 instance flavors<br>- `volume`: For other instance flavors |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance's block storage or flavor.<br>- `local`: For GPU instance flavors or U2 instance flavors<br>- `volume`: For other instance flavors |
-{% else %}
-
+{%- else %}
 | server.block_device_mapping_v2.boot_index | Body | Integer | O | Order to boot the specified block storage<br>- If `0`, root block storage<br>- If not, additional block storage<br>A larger value indicates lower booting priority |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2.volume_type | Body | Enum    | - | **(Conditionally required)** Type of block storage to create<br>No configuration required if the source type of block storage is `volume`, `snapshot`<br>See `Name` from the response of **List Block Storage Types** in the `User Guide > Storage > Block Storage > API v2 guide`. |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>Delete the volume if `true`, keep the volume if `false`. |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>`true` to delete, `false` to retain |
-{% else %}
-
+{%- else %}
 | server.block_device_mapping_v2.destination_type | Body | Enum | O | Requires different settings depending on the location of instance's block storage or flavor.<br>- `local`: For U2 instance flavors<br>- `volume`: For other instances flavors                                                                          |
 | server.block_device_mapping_v2.delete_on_termination | Body | Boolean | - | Indicates whether block storage is deleted when an instance is terminated. Default value is `false`.<br>`true` to delete, `false` to retain |
-{% endif %}
-
+{%- endif %}
 | server.block_device_mapping_v2.volume_size | Body | Integer | - | **(Conditionally required)** Size of block storage to create<br>Different settings required for different types of block storage sources<br>- No configuration required if source type is `volume`<br>- Set equal to or larger than the original block storage size if the source type is `snapshot`<br>GB (unit)<br>Uses the U2 instance type and root block storage is created with the size specified in the U2 instance type and this value will be ignored<br>Different instance types have different sizes of root block storage that can be created. For more details, see `User Guide > Compute > Instance > Console User Guide > Create Instance > Block Storage Size`. |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.block_device_mapping_v2.nhn_encryption                   | Body | Object | - | **(Conditionally required)** Block storage encryption information                                                                                                                                                                                        |
 | server.block_device_mapping_v2.nhn_encryption.skm_appkey        | Body | String | - | **(Conditionally required)** AppKeys for Secure Key Manager products                                                                                                                                                                              |
 | server.block_device_mapping_v2.nhn_encryption.skm_key_id        | Body | String | - | **(Conditionally required)** Symmetric key ID of Secure Key Manager to be used to create encrypted block storage.                                            |               
 | server.key_name | Body | String | O | Key pair to access instance |
-{% else %}
-
+{%- else %}
 | server.key_name | Body | String | O | Key pair to access instance |
-{% endif %}
-
+{%- endif %}
 | server.min_count | Body | Integer | - | Minimum number of instances to create with this request.<br>Default value is 1.<br>Can only be set to `1` if the source type of the block storage is `volume` |
 | server.max_count | Body | Integer | - | Maximum number of instances to create with this request.<br>Default value is min_count, max value is 10.<br>Can only be set to `1` if the source type of the block storage is `volume` |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | server.return_reservation_id | Body | Boolean | - | Instance creation request reservation ID.<br>If set to True, reservation ID is returned instead of instance creation information.<br>Default value is False |
-{% else %}
-
+{%- else %}
 | server.return_reservation_id | Body | Boolean | - | Reservation ID for instance creation.<br>If set to True, reservation ID is returned instead of instance creation information.<br>The default value is False |
-{% endif %}
-
+{%- endif %}
 | os:scheduler_hints | Body | Object | - | Scheduler Hint Objects |
 | os:scheduler_hints.group | Body | String | - | Placement Policy ID |
 
@@ -1196,7 +1164,10 @@ X-Auth-Token: {tokenId}
 <a id="create-instance-response"></a>
 #### Response
 
-<todo: translate>
+| Name | Type | Format | Description                                                                                                                                                                                                           |
+|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server.security_groups.name | Body | String | Security group name of created instance                                                                                                                                                                                           |
+| server.id | Body | UUID | Created instance ID                                                                                                                                                                                                 |
 
 <details><summary>Example</summary>
 <p>

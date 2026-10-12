@@ -279,14 +279,11 @@ my.cnfのデフォルトのパスは /etc/my.cnfで、NHN Cloud推奨変数(vari
 | --- | --- |
 | default\_storage\_engine | 基本ストレージエンジン(storage engine)を指定します。InnoDBが指定され、Online-DDLとトランザクション(transaction)を使用できます。 |
 | expire\_logs\_days | binlog設定で、 ログを保存する日数を設定します。デフォルトで3日に指定されています。 |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | innodb\_log\_file\_size | トランザクション(transaction)のredo logを保存するログファイルのサイズを指定します。<br><br>実際の運営環境では256MB以上を推奨しており、現在512MBに設定されています。設定値を修正した時は、DBの再起動が必要です。 |
-{% else %}
-
+{%- else %}
 | innodb\_log\_file\_size | トランザクション (transaction) のredo logを保存するログファイルのサイズを指定します。<br><br>実際の運用環境では256MB以上を推奨しており、現在512MBに設定されています。設定値を変更する場合はDBの再起動が必要です。 |
-{% endif %}
-
+{%- endif %}
 | innodb\_file\_per\_table | テーブルが削除されたりTRUNCATEされる時、テーブルスペースがOSにすぐに返却されます。 |
 | innodb\_log\_files\_in\_group | innodb\_log\_fileファイルの個数を設定し、循環的\(circular\)に使用されます。最小2個以上で構成されます。 |
 | log_timestamps | MySQL 5.7の基本log時間はUTCで表示されます。したがってログ時間をSYSTEMローカル時間に変更します。 |
@@ -459,15 +456,12 @@ shell> pg_ctl reload -D /var/lib/postgresql/${version}/main
 PostgreSQLディレクトリおよびファイルの説明は下記のとおりです。
 
 {% if "public" in build_flags %}
-
 | 名前 | 説明 | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
 | DATADIR | PostgreSQLデータファイルパス | /var/lib/postgresql/${version}/main |
 | LOG | PostgreSQL logファイルパス | /var/lib/postgresql/${version}/main/log/\*.log |
-
 {% elif "gov" in build_flags %}
-
 | 名前 | 説明 |
 | --- | --- |
 | postgresql.cnf | /var/lib/pgsql/{version}/data/postgresql.cnf |
@@ -475,7 +469,6 @@ PostgreSQLディレクトリおよびファイルの説明は下記のとおり�
 | DATADIR | PostgreSQLデータファイルのパス - /var/lib/pgsql/{version}/data/ |
 | LOG | PostgreSQL logファイルのパス - /var/lib/pgsql/{version}/data/log/\*.log |
 {% else %}
-
 | 名前 | 説明 | Ubuntu |
 | --- | --- | --- |
 | postgresql.cnf | configファイル | /etc/postgresql/${version}/main/postgresql.conf |
