@@ -495,7 +495,7 @@ This API does not require a request body.
 | image | Query | UUID | - | Image ID<br>Return list of instances with specified image |
 | flavor | Query | UUID | - | Instance flavor ID<br>Return list of instances with specified flavor |
 | name | Query | String | - | Instance name<br>Return list of instances with specified name, regex is supported |
-| status | Query | Enum | - | Instance status<br>Return list of instances with specified status<br>`UNKNOWN` cannot be specified. Specifying it returns `400` |
+| status | Query | Enum | - | Instance status<br>Return list of instances with specified status |
 | limit | Query | Integer | - | Number of instances to query<br>Return list with up to specified number of instances |
 | marker | Query | UUID | - | UUID of first instance in the list <br>Return list of up to `limit` instances from the instance specified as the `marker`, according to the sort order |
 
