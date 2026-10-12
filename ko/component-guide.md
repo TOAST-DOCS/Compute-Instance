@@ -147,6 +147,7 @@ RDP로 인스턴스에 접속한 후 **컴퓨터 관리**를 실행하고 **저�
 ![mssqlinstance_07_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_07_201812.png)
 
 연결된 Block Storage가 탐지된 것을 확인할 수 있습니다. 사용하려면 먼저 디스크 초기화를 실행해야 합니다.
+
 1. **디스크 1** 블록을 마우스 오른쪽 버튼으로 클릭한 다음 **디스크 초기화**를 클릭합니다.
 2. 파티션 형식을 선택한 후 **확인** 버튼을 클릭합니다.
 
@@ -186,6 +187,7 @@ SQL Server 구성관리자의 SQL Server 구성관리자(로컬) > SQL Server �
 ![mssqlinstance_11_201812](https://static.toastoven.net/prod_ms_sql/mssqlinstance_11_201812.png)
 
 **SQL SERVER (MSSQLSERVER)** 및 **SQL Server 에이전트 (MSSQLSERVER)** 등의 서비스 시작 모드가 **자동**이 아닐 경우:
+
 1. 해당 서비스를 마우스 오른쪽 버튼으로 클릭한 다음 **속성**을 선택합니다.
 2. **서비스** 탭에서 **General > 시작 모드**를 **자동**으로 변경합니다.
 
@@ -280,11 +282,11 @@ my.cnf의 기본 경로는 /etc/my.cnf이고 NHN Cloud 권장 변수(variable)�
 | --- | --- |
 | default\_storage\_engine | 기본 스토리지 엔진(storage engine)을 지정합니다. InnoDB로 지정되며 Online-DDL과 트랜잭션(transaction)을 사용할 수 있습니다. |
 | expire\_logs\_days | binlog 설정으로 쌓이는 로그 저장일을 설정합니다. 기본 3일로 지정되어 있습니다. |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정값 수정 시 DB 재시작이 필요합니다. |
-{% else %}
+{%- else %}
 | innodb\_log\_file\_size | 트랜잭션(transaction)의 redo log를 저장하는 로그 파일의 크기를 지정합니다. <br><br>실제 운영 환경에서는 256MB 이상을 권장하며, 현재 512MB로 설정되어 있습니다. 설정 값 수정 시 DB 재시작이 필요합니다. |
-{% endif %}
+{%- endif %}
 | innodb\_file\_per\_table | 테이블이 삭제되거나 TRUNCATE될 때, 테이블 공간이 OS로 바로 반납됩니다. |
 | innodb\_log\_files\_in\_group | innodb\_log\_file 파일의 개수를 설정하며 순환적\(circular\)으로 사용됩니다\. 최소 2개 이상으로 구성됩니다\. |
 | log_timestamps | MySQL 5.7의 기본 log 시간은 UTC로 표시됩니다. 그러므로 로그 시간을 SYSTEM 로컬 시간으로 변경합니다. |
