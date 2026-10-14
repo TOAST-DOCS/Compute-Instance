@@ -1,5 +1,7 @@
 <!-- machine_translated: true -->
 
+<!-- pre-align:aligned sig=92796381842e -->
+
 <a id="compute-instance-api-v2-1-guide"></a>
 
 ## Compute > Instance > API v2.1 Guide { #compute-instance-api-v2-1-guide }
