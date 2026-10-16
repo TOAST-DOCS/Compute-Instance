@@ -165,7 +165,7 @@ X-Auth-Token: {tokenId}
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 有効/無効         |
 | flavors.vcpus | Body | Integer | vCPU数       |
 | flavors.extra_specs | Body | Object | 追加仕様オブジェクト      |
-| flavors.swap | Body | Integer | スワップ領域サイズ(GB)  |
+| flavors.swap | Body | Integer | スワップ領域サイズ(MB)  |
 | flavors.os-flavor-access:is_public | Body | Boolean | 共有有無          |
 | flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB) |
@@ -180,7 +180,7 @@ X-Auth-Token: {tokenId}
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 有効化の有無                  |
 | flavors.vcpus | Body | Integer | vCPU数                 |
 | flavors.extra_specs | Body | Object | 追加仕様オブジェクト                |
-| flavors.swap | Body | Integer | スワップ領域サイズ(GB)           |
+| flavors.swap | Body | Integer | スワップ領域サイズ(MB)           |
 | flavors.os-flavor-access:is_public | Body | Boolean | 共有の有無                   |
 | flavors.rxtx_factor | Body | Float | ネットワーク送信/受信パケット比率        |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 臨時ブロックストレージサイズ(GB)            |

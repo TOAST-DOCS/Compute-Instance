@@ -162,7 +162,7 @@ X-Auth-Token: {tokenId}
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 활성화 여부         |
 | flavors.vcpus | Body | Integer | vCPU 개수        |
 | flavors.extra_specs | Body | Object | 추가 사양 객체       |
-| flavors.swap | Body | Integer | 스와프 영역 크기(GB)  |
+| flavors.swap | Body | Integer | 스와프 영역 크기(MB)  |
 | flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부          |
 | flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율 |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 블록 스토리지 크기(GB)     |
@@ -177,7 +177,7 @@ X-Auth-Token: {tokenId}
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | 활성화 여부                  |
 | flavors.vcpus | Body | Integer | vCPU 개수                 |
 | flavors.extra_specs | Body | Object | 추가 사양 객체                |
-| flavors.swap | Body | Integer | 스와프 영역 크기(GB)           |
+| flavors.swap | Body | Integer | 스와프 영역 크기(MB)           |
 | flavors.os-flavor-access:is_public | Body | Boolean | 공유 여부                   |
 | flavors.rxtx_factor | Body | Float | 네트워크 송신/수신 패킷 비율        |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | 임시 블록 스토리지 크기(GB)            |

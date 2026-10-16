@@ -165,7 +165,7 @@ This API does not require a request body.
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | Indicates whether the flavor is enabled         |
 | flavors.vcpus | Body | Integer | Number of vCPUs        |
 | flavors.extra_specs | Body | Object | Extra specifications object       |
-| flavors.swap | Body | Integer | Swap space size (GB)  |
+| flavors.swap | Body | Integer | Swap space size (MB)  |
 | flavors.os-flavor-access:is_public | Body | Boolean | Indicates whether the flavor is publicly visible          |
 | flavors.rxtx_factor | Body | Float | Network transmission packet rate |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Temporary block storage size (GB)     |
@@ -180,7 +180,7 @@ This API does not require a request body.
 | flavors.OS-FLV-DISABLED:disabled | Body | Boolean | Whether enabled |
 | flavors.vcpus | Body | Integer | Number of vCPUs |
 | flavors.extra_specs | Body | Object | Additional specifications object |
-| flavors.swap | Body | Integer | Swap space size (GB) |
+| flavors.swap | Body | Integer | Swap space size (MB) |
 | flavors.os-flavor-access:is_public | Body | Boolean | Whether shared |
 | flavors.rxtx_factor | Body | Float | Network transmission packet rate |
 | flavors.OS-FLV-EXT-DATA:ephemeral | Body | Integer | Temporary block storage size (GB) |
