@@ -18,7 +18,7 @@ API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니
 ### 타입 목록 보기 { #list-flavors }
 
 ```
-GET /v2.1/{tenantId}/flavors
+GET /v2.1/flavors
 X-Auth-Token: {tokenId}
 ```
 
@@ -29,7 +29,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | minDisk | Query | Integer | - | 최소 블록 스토리지 크기(GB)<br>지정한 크기보다 블록 스토리지 크기가 큰 타입만 반환 |
 | minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
@@ -55,11 +54,11 @@ X-Auth-Token: {tokenId}
       "id": "013bea75-8541-4c6f-9abe-a03fee3d74fe",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "bookmark"
         }
       ],
@@ -69,11 +68,11 @@ X-Auth-Token: {tokenId}
       "id": "0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "bookmark"
         }
       ],
@@ -92,7 +91,7 @@ X-Auth-Token: {tokenId}
 ### 타입 목록 상세 보기 { #list-flavors-with-details }
 
 ```
-GET /v2.1/{tenantId}/flavors/detail
+GET /v2.1/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -103,7 +102,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | minDisk | Query | Integer | - | 최소 블록 스토리지 크기(GB)<br>지정한 크기보다 블록 스토리지 크기가 큰 타입만 반환 |
 | minRam | Query | Integer | - | 최소 RAM 크기(MB)<br>지정한 크기보다 RAM 크기가 큰 타입만 반환 |
@@ -137,11 +135,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m256",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "bookmark"
         }
       ],
@@ -162,11 +160,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m128",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "bookmark"
         }
       ],
@@ -199,7 +197,7 @@ X-Auth-Token: {tokenId}
 ### 가용성 목록 보기 { #list-availability-zones }
 
 ```
-GET /v2.1/{tenantId}/os-availability-zone
+GET /v2.1/os-availability-zone
 X-Auth-Token: {tokenId}
 ```
 
@@ -209,7 +207,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 <a id="list-availability-zones-response"></a>
@@ -254,7 +251,7 @@ X-Auth-Token: {tokenId}
 <a id="list-key-pairs"></a>
 ### 키페어 목록 보기 { #list-key-pairs }
 ```
-GET /v2.1/{tenantId}/os-keypairs
+GET /v2.1/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
@@ -264,7 +261,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 <a id="list-key-pairs-response"></a>
@@ -303,7 +299,7 @@ X-Auth-Token: {tokenId}
 <a id="show-key-pair"></a>
 ### 키페어 보기 { #show-key-pair }
 ```
-GET /v2.1/{tenantId}/os-keypairs/{keypairName}
+GET /v2.1/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
@@ -313,7 +309,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | keypairName | URL | String | O | 키페어 이름 |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -361,7 +356,7 @@ X-Auth-Token: {tokenId}
 ### 키페어 생성/등록하기 { #createregister-key-pair }
 
 ```
-POST /v2.1/{tenantId}/os-keypairs
+POST /v2.1/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
@@ -370,7 +365,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | keypair | Body | Object | O | 키페어 객체 |
 | keypair.name | Body | String | O | 생성 또는 등록할 키페어 이름 |
@@ -425,7 +419,7 @@ X-Auth-Token: {tokenId}
 <a id="delete-key-pair"></a>
 ### 키페어 삭제하기 { #delete-key-pair }
 ```
-DELETE /v2.1/{tenantId}/os-keypairs/{keypairName}
+DELETE /v2.1/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
@@ -435,7 +429,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | keypairName | URL | String | O | 키페어 이름 |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -477,7 +470,7 @@ X-Auth-Token: {tokenId}
 ### 인스턴스 목록 보기 { #list-instances }
 
 ```
-GET /v2.1/{tenantId}/servers
+GET /v2.1/servers
 X-Auth-Token: {tokenId}
 ```
 
@@ -488,7 +481,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | reservation_id | Query | String | - | 인스턴스 생성 예약 ID. <br>예약 ID를 지정하면 동시에 생성된 인스턴스 목록만 반환함 |
 | changes-since | Query | Datetime | - | 지정된 시각 이후로 변경된 인스턴스 목록을 반환. `YYYY-MM-DDThh:mm:ss`의 형태. |
@@ -519,11 +511,11 @@ X-Auth-Token: {tokenId}
       "id": "aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -544,7 +536,7 @@ X-Auth-Token: {tokenId}
 인스턴스 목록 보기와 동일하게 현재 테넌트에 생성된 인스턴스 목록을 반환합니다. 단, 인스턴스별 상세한 정보가 같이 조회됩니다.
 
 ```
-GET /v2.1/{tenantId}/servers/detail
+GET /v2.1/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -621,11 +613,11 @@ X-Auth-Token: {tokenId}
       },
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -634,7 +626,7 @@ X-Auth-Token: {tokenId}
         "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
         "links": [
           {
-            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
             "rel": "bookmark"
           }
         ]
@@ -705,7 +697,7 @@ X-Auth-Token: {tokenId}
 ### 인스턴스 보기 { #get-instance }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}
+GET /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -716,7 +708,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -787,11 +778,11 @@ X-Auth-Token: {tokenId}
     },
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "bookmark"
       }
     ],
@@ -800,7 +791,7 @@ X-Auth-Token: {tokenId}
       "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
           "rel": "bookmark"
         }
       ]
@@ -889,7 +880,7 @@ Windows 인스턴스는 안정적인 동작을 위해 다음과 같은 생성 �
 
 
 ```
-POST /v2.1/{tenantId}/servers
+POST /v2.1/servers
 X-Auth-Token: {tokenId}
 ```
 
@@ -898,7 +889,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | server | body | Object | O | 서버 객체 |
 | server.security_groups | body | Object | - | 보안 그룹 목록 객체<br>생략할 경우 `default` 그룹이 추가됨 |
@@ -991,11 +981,11 @@ X-Auth-Token: {tokenId}
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "bookmark"
       }
     ]
@@ -1013,7 +1003,7 @@ X-Auth-Token: {tokenId}
 생성된 인스턴스를 수정합니다. 변경할 수 있는 속성은 일부 항목으로 제한됩니다.
 
 ```
-PUT /v2.1/{tenantId}/servers/{serverId}
+PUT /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1022,7 +1012,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | server | Body | Object | O | 인스턴스 변경 요청 객체 |
@@ -1053,7 +1042,7 @@ X-Auth-Token: {tokenId}
 생성된 인스턴스를 삭제합니다.
 
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}
+DELETE /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1063,7 +1052,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 삭제할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -1079,7 +1067,7 @@ X-Auth-Token: {tokenId}
 <a id="list-additional-block-storage-attached-to-the-instance"></a>
 ### 인스턴스에 연결된 블록 스토리지 목록 보기 { #list-additional-block-storage-attached-to-the-instance }
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments
+GET /v2.1/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1089,7 +1077,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | limit | Query | Integer | - | 조회할 목록 개수 |
@@ -1136,7 +1123,7 @@ X-Auth-Token: {tokenId}
 <a id="show-additional-block-storage-attached-to-the-instance"></a>
 ### 인스턴스에 연결된 블록 스토리지 보기 { #show-additional-block-storage-attached-to-the-instance }
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
+GET /v2.1/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1146,7 +1133,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 인스턴스 ID |
 | volumeId | URL | UUID | O | 조회할 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
@@ -1184,7 +1170,7 @@ X-Auth-Token: {tokenId}
 <a id="attach-additional-block-storage-to-the-instance"></a>
 ### 인스턴스에 추가 블록 스토리지 연결하기 { #attach-additional-block-storage-to-the-instance }
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments
+POST /v2.1/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1193,7 +1179,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | volumeAttachment | Body | Object | O | 블록 스토리지 연결 요청 객체 |
@@ -1246,7 +1231,7 @@ X-Auth-Token: {tokenId}
 <a id="detach-block-storage-from-the-instance"></a>
 ### 인스턴스 블록 스토리지 연결 끊기 { #detach-block-storage-from-the-instance }
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
+DELETE /v2.1/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1256,7 +1241,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 인스턴스 ID |
 | volumeId | URL | UUID | O | 연결을 끊을 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
@@ -1282,7 +1266,7 @@ NHN Cloud는 다음과 같은 인스턴스 제어 및 부가 기능을 제공합
 중지된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHUTOFF**여야 합니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1290,7 +1274,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | os-start | Body | none | O | 인스턴스 시작 요청 |
@@ -1319,7 +1302,7 @@ X-Auth-Token: {tokenId}
 종료된 인스턴스를 다시 시작하고 상태를 **ACTIVE**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **SHELVED_OFFLOADED**여야 합니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1327,7 +1310,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |--|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | unshelve | Body | none | O | 인스턴스 시작 요청 |
@@ -1356,7 +1338,7 @@ X-Auth-Token: {tokenId}
 인스턴스를 중지하고 상태를 **SHUTOFF**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE** 또는 **ERROR**여야 합니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1364,7 +1346,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | os-stop | Body | none | O | 인스턴스 중지 요청 |
@@ -1393,7 +1374,7 @@ X-Auth-Token: {tokenId}
 인스턴스를 종료하고 상태를 **SHELVED_OFFLOADED**로 변경합니다. 이 API를 호출하려면 인스턴스의 상태가 **ACTIVE**여야 합니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1401,7 +1382,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명          |
 |---|---|---|---|-------------|
-| tenantId | URL | String | O | 테넌트 ID      |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID       |
 | shelve | Body | none | O | 인스턴스 종료 요청  |
@@ -1440,7 +1420,7 @@ X-Auth-Token: {tokenId}
     * **SUSPENDED**
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1448,7 +1428,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | reboot | Body | Object | O | 인스턴스 재부팅 요청 객체 |
@@ -1483,7 +1462,7 @@ X-Auth-Token: {tokenId}
 
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1491,7 +1470,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명                                                                                                                                                                                                                 |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| tenantId | URL | String | O | 테넌트 ID                                                                                                                                                                                                             |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID                                                                                                                                                                                                        |
 | tokenId | Header | String | O | 토큰 ID                                                                                                                                                                                                              |
 | resize | Body | Object | O | 인스턴스 타입 변경 요청                                                                                                                                                                                                      |
@@ -1530,7 +1508,7 @@ X-Auth-Token: {tokenId}
 > 생성된 이미지의 크기는 루트 블록 스토리지의 실제 사용량보다 더 클 수 있습니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1538,7 +1516,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | createImage | Body | Object | O | 이미지 생성 요청 |
@@ -1590,7 +1567,7 @@ X-Auth-Token: {tokenId}
 인스턴스에 보안 그룹을 추가합니다. 추가한 보안 그룹은 인스턴스의 모든 포트에 적용됩니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1598,7 +1575,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | addSecurityGroup | Body | Object | O | 보안 그룹 추가 요청 객체 |
@@ -1631,7 +1607,7 @@ X-Auth-Token: {tokenId}
 인스턴스에서 보안 그룹을 삭제합니다. 인스턴스의 모든 포트로부터 지정한 보안 그룹이 삭제됩니다.
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1639,7 +1615,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | 테넌트 ID |
 | serverId | URL | UUID | O | 변경할 인스턴스 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | removeSecurityGroup | Body | Object | O | 보안 그룹 삭제 요청 객체 |
@@ -1684,7 +1659,7 @@ X-Auth-Token: {tokenId}
 ### 인스턴스 메타데이터 목록 보기 { #view-a-list-of-instance-metadata }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/metadata
+GET /v2.1/servers/{serverId}/metadata
 X-Auth-Token: {tokenId}
 ```
 
@@ -1694,7 +1669,6 @@ X-Auth-Token: {tokenId}
 
 | 이름       | 종류 | 형식 | 필수 | 설명                                               |
 |----------|---|---|---|--------------------------------------------------|
-| tenantId | URL | String | O | 테넌트 ID                                           |
 | serverId | URL | UUID | O | 인스턴스 ID                                          |
 | tokenId  | Header | String | O | 토큰 ID                                            |
 
@@ -1734,7 +1708,7 @@ X-Auth-Token: {tokenId}
 ### 인스턴스 메타데이터 보기 { #view-instance-metadata }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+GET /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1744,7 +1718,6 @@ X-Auth-Token: {tokenId}
 
 | 이름       | 종류 | 형식 | 필수 | 설명                       |
 |----------|---|---|---|--------------------------|
-| tenantId | URL | String | O | 테넌트 ID                   |
 | serverId | URL | UUID | O | 인스턴스 ID                  |
 | key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키 |
 | tokenId  | Header | String | O | 토큰 ID                    |
@@ -1777,7 +1750,7 @@ X-Auth-Token: {tokenId}
 요청하는 키가 기존 키와 일치하는 경우 키-값을 요청 값으로 변경합니다.
 
 ```
-PUT /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+PUT /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1785,7 +1758,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름       | 종류 | 형식 | 필수 | 설명                                               |
 |----------|---|---|---|--------------------------------------------------|
-| tenantId | URL | String | O | 테넌트 ID                                           |
 | serverId | URL | UUID | O | 인스턴스 ID                                          |
 | key      | URL | String | O | 인스턴스에 생성 혹은 수정할 메타데이터의 키                         |
 | tokenId  | Header | String | O | 토큰 ID                                            |
@@ -1835,7 +1807,7 @@ X-Auth-Token: {tokenId}
 요청하는 키와 일치하는 인스턴스의 메타데이터를 삭제합니다.
 
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+DELETE /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1845,7 +1817,6 @@ X-Auth-Token: {tokenId}
 
 | 이름       | 종류 | 형식 | 필수 | 설명                  |
 |----------|---|---|---|---------------------|
-| tenantId | URL | String | O | 테넌트 ID              |
 | serverId | URL | UUID | O | 인스턴스 ID             |
 | key      | URL | String | O | 인스턴스에서 삭제할 메타데이터의 키 |
 | tokenId  | Header | String | O | 토큰 ID               |
@@ -1865,7 +1836,7 @@ X-Auth-Token: {tokenId}
 분산 배치를 위한 `anti-affinity` 배치 정책 유형만 제공합니다.
 
 ```
-POST /v2.1/{tenantId}/os-server-groups
+POST /v2.1/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
@@ -1873,7 +1844,6 @@ X-Auth-Token: {tokenId}
 #### 요청
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | server_group | Body | Object | O | 배치 정책 객체 |
 | server_group.name | Body | String | O | 배치 정책 이름 |
@@ -1933,7 +1903,7 @@ X-Auth-Token: {tokenId}
 ### 배치 정책 목록 보기 { #view-the-list-of-placement-policies }
 
 ```
-GET /v2.1/{tenantId}/os-server-groups
+GET /v2.1/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
@@ -1944,7 +1914,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 <a id="view-the-list-of-placement-policies-response"></a>
@@ -1997,7 +1966,7 @@ X-Auth-Token: {tokenId}
 ### 배치 정책 보기 { #view-placement-policies }
 
 ```
-GET /v2.1/{tenantId}/os-server-groups/{servergroupId}
+GET /v2.1/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -2008,7 +1977,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | 테넌트 ID |
 | servergroupId | URL | String | O | 배치 정책 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -2051,7 +2019,7 @@ X-Auth-Token: {tokenId}
 ### 배치 정책 삭제하기 { #deleting-a-placement-policy }
 
 ```
-DELETE /v2.1/{tenantId}/os-server-groups/{servergroupId}
+DELETE /v2.1/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -2062,7 +2030,6 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | 테넌트 ID |
 | servergroupId | URL | String | O | 배치 정책 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
