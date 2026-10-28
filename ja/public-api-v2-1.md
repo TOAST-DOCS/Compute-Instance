@@ -24,7 +24,7 @@ APIレスポンスには、ガイドに記載されていないフィールド�
 ### タイプ一覧の表示 { #list-flavors }
 
 ```
-GET /v2.1/{tenantId}/flavors
+GET /v2.1/flavors
 X-Auth-Token: {tokenId}
 ```
 
@@ -35,7 +35,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ブロックストレージサイズ(GB)<br>指定したサイズより大きいブロックストレージサイズのタイプのみ返却 |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズより大きいRAMサイズのタイプのみ返却 |
@@ -61,11 +60,11 @@ X-Auth-Token: {tokenId}
       "id": "013bea75-8541-4c6f-9abe-a03fee3d74fe",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/013bea75-8541-4c6f-9abe-a03fee3d74fe",
           "rel": "bookmark"
         }
       ],
@@ -75,11 +74,11 @@ X-Auth-Token: {tokenId}
       "id": "0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/0f19a344-bc66-4228-8cb1-fb9ca82c54f5",
           "rel": "bookmark"
         }
       ],
@@ -98,7 +97,7 @@ X-Auth-Token: {tokenId}
 ### タイプ一覧の詳細表示 { #list-flavors-with-details }
 
 ```
-GET /v2.1/{tenantId}/flavors/detail
+GET /v2.1/flavors/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -109,7 +108,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | minDisk | Query | Integer | - | 最小ブロックストレージサイズ(GB)<br>指定したサイズより大きいブロックストレージサイズのタイプのみ返却 |
 | minRam | Query | Integer | - | 最小RAMサイズ(MB)<br>指定したサイズより大きいRAMサイズのタイプのみ返却 |
@@ -143,11 +141,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m256",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/97604802-a090-43fa-a5ce-c7cfd737fbba",
           "rel": "bookmark"
         }
       ],
@@ -168,11 +166,11 @@ X-Auth-Token: {tokenId}
       "name": "x1.c32m128",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/flavors/31fa632d-aeec-4f12-8a57-ce9d146228e5",
           "rel": "bookmark"
         }
       ],
@@ -206,7 +204,7 @@ X-Auth-Token: {tokenId}
 ### アベイラビリティゾーン一覧の表示 { #list-availability-zones }
 
 ```
-GET /v2.1/{tenantId}/os-availability-zone
+GET /v2.1/os-availability-zone
 X-Auth-Token: {tokenId}
 ```
 
@@ -216,7 +214,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 <a id="list-availability-zones-response"></a>
@@ -262,7 +259,7 @@ X-Auth-Token: {tokenId}
 <a id="list-key-pairs"></a>
 ### キーペア一覧の表示 { #list-key-pairs }
 ```
-GET /v2.1/{tenantId}/os-keypairs
+GET /v2.1/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
@@ -272,7 +269,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 <a id="list-key-pairs-response"></a>
@@ -311,7 +307,7 @@ X-Auth-Token: {tokenId}
 <a id="show-key-pair"></a>
 ### キーペアの表示 { #show-key-pair }
 ```
-GET /v2.1/{tenantId}/os-keypairs/{keypairName}
+GET /v2.1/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
@@ -321,7 +317,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | keypairName | URL | String | O | キーペア名 |
 | tokenId | Header | String | O | トークンID |
 
@@ -369,7 +364,7 @@ X-Auth-Token: {tokenId}
 ### キーペアの作成/登録 { #createregister-key-pair }
 
 ```
-POST /v2.1/{tenantId}/os-keypairs
+POST /v2.1/os-keypairs
 X-Auth-Token: {tokenId}
 ```
 
@@ -378,7 +373,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | keypair | Body | Object | O | キーペアオブジェクト |
 | keypair.name | Body | String | O | 作成または登録するキーペア名 |
@@ -433,7 +427,7 @@ X-Auth-Token: {tokenId}
 <a id="delete-key-pair"></a>
 ### キーペアの削除 { #delete-key-pair }
 ```
-DELETE /v2.1/{tenantId}/os-keypairs/{keypairName}
+DELETE /v2.1/os-keypairs/{keypairName}
 X-Auth-Token: {tokenId}
 ```
 
@@ -443,7 +437,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | keypairName | URL | String | O | キーペア名 |
 | tokenId | Header | String | O | トークンID |
 
@@ -488,7 +481,7 @@ X-Auth-Token: {tokenId}
 ### インスタンス一覧の表示 { #list-instances }
 
 ```
-GET /v2.1/{tenantId}/servers
+GET /v2.1/servers
 X-Auth-Token: {tokenId}
 ```
 
@@ -499,7 +492,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | reservation_id | Query | String | - | インスタンス作成予約ID。<br>予約IDを指定すると、同時に作成されたインスタンス一覧のみを返します |
 | changes-since | Query | Datetime | - | 指定した時刻以降に変更されたインスタンス一覧を返します。`YYYY-MM-DDThh:mm:ss`の形式。 |
@@ -530,11 +522,11 @@ X-Auth-Token: {tokenId}
       "id": "aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -556,7 +548,7 @@ X-Auth-Token: {tokenId}
 インスタンス一覧の表示と同様に、現在のテナントに作成されたインスタンス一覧を返します。ただし、インスタンスごとの詳細情報も合わせて照会されます。
 
 ```
-GET /v2.1/{tenantId}/servers/detail
+GET /v2.1/servers/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -635,11 +627,11 @@ X-Auth-Token: {tokenId}
       },
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
           "rel": "bookmark"
         }
       ],
@@ -648,7 +640,7 @@ X-Auth-Token: {tokenId}
         "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
         "links": [
           {
-            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+            "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
             "rel": "bookmark"
           }
         ]
@@ -720,7 +712,7 @@ X-Auth-Token: {tokenId}
 ### インスタンスの表示 { #get-instance }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}
+GET /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -732,7 +724,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | インスタンスID |
 | tokenId | Header | String | O | トークンID |
 
@@ -804,11 +795,11 @@ X-Auth-Token: {tokenId}
     },
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/aaf2778b-ea03-4ccc-8b1b-92f4b686c3ec",
         "rel": "bookmark"
       }
     ],
@@ -817,7 +808,7 @@ X-Auth-Token: {tokenId}
       "id": "8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
       "links": [
         {
-          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
+          "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/images/8b9f8d47-b89b-45af-b1d6-3f7ce7e06a11",
           "rel": "bookmark"
         }
       ]
@@ -907,7 +898,7 @@ Windowsインスタンスは、安定した動作のために次の作成制約�
 
 
 ```
-POST /v2.1/{tenantId}/servers
+POST /v2.1/servers
 X-Auth-Token: {tokenId}
 ```
 
@@ -916,7 +907,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | server | body | Object | O | サーバーオブジェクト |
 | server.security_groups | body | Object | - | セキュリティグループリストオブジェクト<br>省略した場合、`default`グループが追加されます |
@@ -1009,11 +999,11 @@ X-Auth-Token: {tokenId}
     "id": "3a005d5b-63cf-4493-bfc6-49db990b5b50",
     "links": [
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/v2.1/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
+        "href": "https://kr1-api-instance-infrastructure.nhncloudservice.com/servers/3a005d5b-63cf-4493-bfc6-49db990b5b50",
         "rel": "bookmark"
       }
     ]
@@ -1032,7 +1022,7 @@ X-Auth-Token: {tokenId}
 作成されたインスタンスを修正します。変更できる属性は一部の項目に制限されます。
 
 ```
-PUT /v2.1/{tenantId}/servers/{serverId}
+PUT /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1041,7 +1031,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | server | Body | Object | O | インスタンス変更リクエストオブジェクト |
@@ -1073,7 +1062,7 @@ X-Auth-Token: {tokenId}
 作成されたインスタンスを削除します。
 
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}
+DELETE /v2.1/servers/{serverId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1083,7 +1072,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 削除するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 
@@ -1100,7 +1088,7 @@ X-Auth-Token: {tokenId}
 <a id="list-additional-block-storage-attached-to-the-instance"></a>
 ### インスタンスに接続されたブロックストレージ一覧の表示 { #list-additional-block-storage-attached-to-the-instance }
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments
+GET /v2.1/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1110,7 +1098,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | limit | Query | Integer | - | 照会するリストの件数 |
@@ -1157,7 +1144,7 @@ X-Auth-Token: {tokenId}
 <a id="show-additional-block-storage-attached-to-the-instance"></a>
 ### インスタンスに接続されたブロックストレージの表示 { #show-additional-block-storage-attached-to-the-instance }
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
+GET /v2.1/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1167,7 +1154,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | インスタンスID |
 | volumeId | URL | UUID | O | 照会するブロックストレージID |
 | tokenId | Header | String | O | トークンID |
@@ -1205,7 +1191,7 @@ X-Auth-Token: {tokenId}
 <a id="attach-additional-block-storage-to-the-instance"></a>
 ### インスタンスへの追加ブロックストレージの接続 { #attach-additional-block-storage-to-the-instance }
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments
+POST /v2.1/servers/{serverId}/os-volume_attachments
 X-Auth-Token: {tokenId}
 ```
 
@@ -1214,7 +1200,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | volumeAttachment | Body | Object | O | ブロックストレージ接続リクエストオブジェクト |
@@ -1267,7 +1252,7 @@ X-Auth-Token: {tokenId}
 <a id="detach-block-storage-from-the-instance"></a>
 ### インスタンスのブロックストレージの接続解除 { #detach-block-storage-from-the-instance }
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}/os-volume_attachments/{volumeId}
+DELETE /v2.1/servers/{serverId}/os-volume_attachments/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1277,7 +1262,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | インスタンスID |
 | volumeId | URL | UUID | O | 接続を解除するブロックストレージID |
 | tokenId | Header | String | O | トークンID |
@@ -1304,7 +1288,7 @@ NHN Cloudは次のインスタンス制御および追加機能を提供しま�
 停止したインスタンスを再起動し、状態を**ACTIVE**に変更します。このAPIを呼び出すには、インスタンスの状態が**SHUTOFF**である必要があります。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1312,7 +1296,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | os-start | Body | none | O | インスタンスの起動リクエスト |
@@ -1341,7 +1324,7 @@ X-Auth-Token: {tokenId}
 終了したインスタンスを再起動し、状態を**ACTIVE**に変更します。このAPIを呼び出すには、インスタンスの状態が**SHELVED_OFFLOADED**である必要があります。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1349,7 +1332,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |--|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | unshelve | Body | none | O | インスタンスの起動リクエスト |
@@ -1378,7 +1360,7 @@ X-Auth-Token: {tokenId}
 インスタンスを停止し、状態を**SHUTOFF**に変更します。このAPIを呼び出すには、インスタンスの状態が**ACTIVE**または**ERROR**である必要があります。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1386,7 +1368,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | os-stop | Body | none | O | インスタンスの停止リクエスト |
@@ -1415,7 +1396,7 @@ X-Auth-Token: {tokenId}
 インスタンスを終了し、状態を**SHELVED_OFFLOADED**に変更します。このAPIを呼び出すには、インスタンスの状態が**ACTIVE**である必要があります。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1423,7 +1404,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明          |
 |---|---|---|---|-------------|
-| tenantId | URL | String | O | テナントID      |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID       |
 | shelve | Body | none | O | インスタンスの終了リクエスト  |
@@ -1462,7 +1442,7 @@ X-Auth-Token: {tokenId}
     * **SUSPENDED**
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1470,7 +1450,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | reboot | Body | Object | O | インスタンス再起動リクエストオブジェクト |
@@ -1505,7 +1484,7 @@ X-Auth-Token: {tokenId}
 
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1513,7 +1492,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明                                                                                                                                                                                                                 |
 |---|---|---|---|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| tenantId | URL | String | O | テナントID                                                                                                                                                                                                             |
 | serverId | URL | UUID | O | 変更するインスタンスID                                                                                                                                                                                                        |
 | tokenId | Header | String | O | トークンID                                                                                                                                                                                                              |
 | resize | Body | Object | O | インスタンスタイプ変更リクエスト                                                                                                                                                                                                      |
@@ -1552,7 +1530,7 @@ X-Auth-Token: {tokenId}
 > 作成されたイメージのサイズは、ルートブロックストレージの実際の使用量より大きくなる場合があります。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1560,7 +1538,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | createImage | Body | Object | O | イメージ作成リクエスト |
@@ -1612,7 +1589,7 @@ X-Auth-Token: {tokenId}
 インスタンスにセキュリティグループを追加します。追加したセキュリティグループは、インスタンスのすべてのポートに適用されます。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1620,7 +1597,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | addSecurityGroup | Body | Object | O | セキュリティグループ追加リクエストオブジェクト |
@@ -1653,7 +1629,7 @@ X-Auth-Token: {tokenId}
 インスタンスからセキュリティグループを削除します。インスタンスのすべてのポートから指定したセキュリティグループが削除されます。
 
 ```
-POST /v2.1/{tenantId}/servers/{serverId}/action
+POST /v2.1/servers/{serverId}/action
 X-Auth-Token: {tokenId}
 ```
 
@@ -1661,7 +1637,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|--|
-| tenantId | URL | String | O | テナントID |
 | serverId | URL | UUID | O | 変更するインスタンスID |
 | tokenId | Header | String | O | トークンID |
 | removeSecurityGroup | Body | Object | O | セキュリティグループ削除リクエストオブジェクト |
@@ -1707,7 +1682,7 @@ X-Auth-Token: {tokenId}
 ### インスタンスメタデータ一覧の表示 { #view-a-list-of-instance-metadata }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/metadata
+GET /v2.1/servers/{serverId}/metadata
 X-Auth-Token: {tokenId}
 ```
 
@@ -1717,7 +1692,6 @@ X-Auth-Token: {tokenId}
 
 | 名前       | 種類 | 形式 | 必須 | 説明                                               |
 |----------|---|---|---|--------------------------------------------------|
-| tenantId | URL | String | O | テナントID                                           |
 | serverId | URL | UUID | O | インスタンスID                                          |
 | tokenId  | Header | String | O | トークンID                                            |
 
@@ -1757,7 +1731,7 @@ X-Auth-Token: {tokenId}
 ### インスタンスメタデータの表示 { #view-instance-metadata }
 
 ```
-GET /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+GET /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1767,7 +1741,6 @@ X-Auth-Token: {tokenId}
 
 | 名前       | 種類 | 形式 | 必須 | 説明                       |
 |----------|---|---|---|--------------------------|
-| tenantId | URL | String | O | テナントID                   |
 | serverId | URL | UUID | O | インスタンスID                  |
 | key      | URL | String | O | インスタンスに作成または更新するメタデータのキー |
 | tokenId  | Header | String | O | トークンID                    |
@@ -1800,7 +1773,7 @@ X-Auth-Token: {tokenId}
 リクエストするキーが既存のキーと一致する場合は、キーと値をリクエストの値に変更します。
 
 ```
-PUT /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+PUT /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1808,7 +1781,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前       | 種類 | 形式 | 必須 | 説明                                               |
 |----------|---|---|---|--------------------------------------------------|
-| tenantId | URL | String | O | テナントID                                           |
 | serverId | URL | UUID | O | インスタンスID                                          |
 | key      | URL | String | O | インスタンスに作成または更新するメタデータのキー                         |
 | tokenId  | Header | String | O | トークンID                                            |
@@ -1858,7 +1830,7 @@ X-Auth-Token: {tokenId}
 リクエストするキーと一致するインスタンスのメタデータを削除します。
 
 ```
-DELETE /v2.1/{tenantId}/servers/{serverId}/metadata/{key}
+DELETE /v2.1/servers/{serverId}/metadata/{key}
 X-Auth-Token: {tokenId}
 ```
 
@@ -1868,7 +1840,6 @@ X-Auth-Token: {tokenId}
 
 | 名前       | 種類 | 形式 | 必須 | 説明                  |
 |----------|---|---|---|---------------------|
-| tenantId | URL | String | O | テナントID              |
 | serverId | URL | UUID | O | インスタンスID             |
 | key      | URL | String | O | インスタンスから削除するメタデータのキー |
 | tokenId  | Header | String | O | トークンID               |
@@ -1889,7 +1860,7 @@ X-Auth-Token: {tokenId}
 分散配置のための`anti-affinity`配置ポリシータイプのみ提供します。
 
 ```
-POST /v2.1/{tenantId}/os-server-groups
+POST /v2.1/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
@@ -1897,7 +1868,6 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | server_group | Body | Object | O | 配置ポリシーオブジェクト |
 | server_group.name | Body | String | O | 配置ポリシー名 |
@@ -1957,7 +1927,7 @@ X-Auth-Token: {tokenId}
 ### 配置ポリシー一覧の表示 { #view-the-list-of-placement-policies }
 
 ```
-GET /v2.1/{tenantId}/os-server-groups
+GET /v2.1/os-server-groups
 X-Auth-Token: {tokenId}
 ```
 
@@ -1968,7 +1938,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 <a id="view-the-list-of-placement-policies-response"></a>
@@ -2021,7 +1990,7 @@ X-Auth-Token: {tokenId}
 ### 配置ポリシーの表示 { #view-placement-policies }
 
 ```
-GET /v2.1/{tenantId}/os-server-groups/{servergroupId}
+GET /v2.1/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -2032,7 +2001,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | テナントID |
 | servergroupId | URL | String | O | 配置ポリシーID |
 | tokenId | Header | String | O | トークンID |
 
@@ -2075,7 +2043,7 @@ X-Auth-Token: {tokenId}
 ### 配置ポリシーの削除 { #deleting-a-placement-policy }
 
 ```
-DELETE /v2.1/{tenantId}/os-server-groups/{servergroupId}
+DELETE /v2.1/os-server-groups/{servergroupId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -2086,7 +2054,6 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |-----|-----|-----|-----|-----|
-| tenantId | URL | String | O | テナントID |
 | servergroupId | URL | String | O | 配置ポリシーID |
 | tokenId | Header | String | O | トークンID |
 
